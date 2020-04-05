@@ -50,7 +50,9 @@
     <Compile Include="AusenciaEntity.cs" />
     <Compile Include="BaseCampagnaEntity.cs" />
     <Compile Include="BusquedaLicenciasEntity.cs" />
+
     <Compile Include="CargasFamiliaresEntity.cs" />
+
     <Compile Include="CarteraFFVVEntity.cs" />
     <Compile Include="ContrasenaEntity.cs" />
     <Compile Include="CargoEntity.cs" />

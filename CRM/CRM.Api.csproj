@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
@@ -203,6 +203,7 @@
     <Compile Include="Areas\AppPage\Controllers\MantenedoresController.cs" />
     <Compile Include="Areas\AppPage\Controllers\SegurosController.cs" />
     <Compile Include="Areas\AppPage\Controllers\UpdateController.cs" />
+
     <Compile Include="Areas\EmpresasPage\App_Start\Controllers\CarteraEmpresaEjecutivoController.cs" />
     <Compile Include="Areas\EmpresasPage\App_Start\Controllers\ComiteParitarioController.cs" />
     <Compile Include="Areas\EmpresasPage\App_Start\Controllers\CarteraEmpresasController.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Areas\EmpresasPage\App_Start\Controllers\FichaEmpresaController.cs" />
     <Compile Include="Areas\EmpresasPage\App_Start\Controllers\IncorporacionesController.cs" />
     <Compile Include="Areas\EmpresasPage\App_Start\Controllers\InfoEmpresaController.cs" />
+
     <Compile Include="Areas\EmpresasPage\EmpresasPageAreaRegistration.cs" />
     <Compile Include="Areas\EmpresasPage\App_Start\EmpresasPageConfig.cs" />
     <Compile Include="Areas\EmpresasPage\App_Start\Controllers\InicioController.cs" />
@@ -554,7 +556,9 @@
     <Content Include="Areas\EmpresasPage\Views\InfoEmpresa\Index.cshtml" />
     <Content Include="Areas\AppPage\Views\DistribucionWapp\Index.cshtml" />
     <Content Include="Areas\AppPage\Views\Licencias\BusquedaLicencia.cshtml" />
+
     <Content Include="Areas\AppPage\Views\Gestion\CargasFamiliares.cshtml" />
+
     <None Include="Properties\PublishProfiles\CharlyMOTOR.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\Settings.settings">
