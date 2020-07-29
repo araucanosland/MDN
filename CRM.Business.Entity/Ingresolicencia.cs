@@ -102,6 +102,48 @@ namespace CRM.Business.Entity
 
         public bool Editable { get; set; }
         public int OficinaDerivacion { get; set; }
+        public int viaIngresoLicenica { get; set; }
+        public int quienEnvia { get; set; }
+        public string email { get; set; }
+        public string telefono { get; set; }
+
+        public string EtapaActual { get; set; }
+
+        public int Folionovalido { get; set; }
+        public int Otromotivo { get; set; }
+
+        public long EstadoRevision { get; set; }
+        public int LmIncompleta { get; set; }
+        public int Lmnolegible { get; set; }
+        public int Lmsindiagnostico { get; set; }
+        public int Lmsoncarta { get; set; }
+        public string Observacion { get; set; }
+        public string RutAuditor { get; set; }
+        public string DescripcionEstadoRevision { get; set; }
+        public string OficinaDescripcion { get; set; }
+        public string estadoLicencia { get; set; }
+        public string descripcionquienEnvia { get; set; }
+        public int esBanner { get; set; }
+        public string DescripcionesBanner { get; set; }
+        public string Responsable { get; set; }
+        public string EstadoCarga { get; set; }
+        public string compincentralizado { get; set; }
+        public string FolioCompin { get; set; }
+        public string Subcomision { get; set; }
+        public DateTime Subido_a_plataforma_compin { get; set; }
+        public string EstadoActivo { get; set; }
+
+        public DateTime FechaGestion { get; set; }
+        public string EjecutadoPor { get; set; }
+
+        public int Flagas400 { get; set; }
+
+
+        public int DiasLicencia { get; set; }
+        public DateTime FechaLicenciaDesde { get; set; }
+        public DateTime FechaLicenciaHasta { get; set; }
+
+
         /// <summary>
         /// Inicializa una nueva instancia de la clase <see cref="Ingresolicencia"/>.
         /// </summary>
@@ -121,9 +163,44 @@ namespace CRM.Business.Entity
             TipoLM = null;
             FormatoLM = string.Empty;
             Editable = true;
-
+            EtapaActual = string.Empty;
             FlagLM = string.Empty;
             OficinaDerivacion = 0;
+            viaIngresoLicenica = 0;
+            quienEnvia = 0;
+            email = string.Empty;
+            telefono = string.Empty;
+            EstadoRevision = 0;
+            LmIncompleta = 0;
+            Lmnolegible = 0;
+            Lmsindiagnostico = 0;
+            Lmsoncarta = 0;
+            Observacion = string.Empty;
+            RutAuditor = string.Empty;
+            DescripcionEstadoRevision = string.Empty;
+            OficinaDescripcion = string.Empty;
+            estadoLicencia = string.Empty;
+            descripcionquienEnvia = string.Empty;
+            Folionovalido = 0;
+            Otromotivo = 0;
+            esBanner = 0;
+            DescripcionesBanner = string.Empty;
+            Responsable = string.Empty;
+            EstadoCarga = string.Empty;
+            compincentralizado = string.Empty;
+            Subcomision = string.Empty;
+            Subido_a_plataforma_compin = new DateTime(1900, 1, 1);
+            FolioCompin = string.Empty;
+            EstadoActivo = string.Empty;
+            FechaGestion = new DateTime(1900, 1, 1);
+            EjecutadoPor = string.Empty;
+            Flagas400 = 0;
+            DiasLicencia = 0;
+            FechaLicenciaDesde = new DateTime(1900, 1, 1);
+            FechaLicenciaHasta = new DateTime(1900, 1, 1);
+
+
         }
+
     }
 }

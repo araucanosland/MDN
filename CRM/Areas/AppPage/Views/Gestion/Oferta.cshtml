@@ -10,11 +10,11 @@
 <div id="page-content">
 
     <div class="row">
-        
+
         <div class="panel">
             <!--Panel heading-->
             <div class="panel-heading">
-                <div class="panel-control" id="myLargeModalLabel">  
+                <div class="panel-control" id="myLargeModalLabel">
                 </div>
                 <h3 class="panel-title" id="titulo_gestion">Gestión</h3>
             </div>
@@ -199,7 +199,27 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
+
+
+
+
+
+
+
+                        <div class="row msjCovid" style="display:none; margin-top: 14px; width: 350px;">
+                            <div class="col-sm-12 covidNTFContainer">
+
+                            </div>
+                        </div>
+
+                        <div class="row msjCovidEmp" style="display:none; margin-top: 14px; width: 350px;">
+                            <div class="col-sm-12 covidEmpNTFContainer">
+
+                            </div>
+                        </div>
+
                         <div class="row NotfGenerica" style="display:none;">
                             <div class="col-sm-12 NotfGenericaContainer">
                                 <br />
@@ -211,7 +231,68 @@
 
                             </div>
                         </div>
+
+
+
                     </form>
+
+
+
+                    <div id="divBancos">
+                        <hr />
+                        <div id="msBanco"></div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">BANCO</label>
+                                    <select class="form-control" id="afi_banco" name="afi_banco" v-model="modelos.banco">
+                                        <option value="">Seleccione...</option>
+                                        <option v-for="bancos in filtros.banco" :value="bancos.nombre_banco">{{bancos.nombre_banco}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">TIPO CUENTA</label>
+                                    <select class="form-control" id="afi_tipo_cuenta" name="afi_tipo_cuenta">
+                                        <option value="">Seleccione...</option>
+                                        <option value="CUENTA DE AHORRO">CUENTA DE AHORRO</option>
+                                        <option value="CUENTA CORRIENTE">CUENTA CORRIENTE</option>
+                                        <option value="CUENTA VISTA">CUENTA VISTA</option>
+                                        <option value="CUENTA RUT">CUENTA RUT</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">N° CUENTA</label>
+                                    <input class="form-control" id="afi_n_cuenta" neme="afi_n_cuenta" type="text">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">EMAIL</label>
+                                    <input class="form-control" id="afi_email_banco" neme="afi_email_banco" type="text">
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">TELEFONO</label>
+                                    <input class="form-control" id="afi_fono_banco" neme="afi_fono_banco" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary esconder" id="btn_bancos" style="border-radius: 8px;" v-on:click="guardaRegistroBancario" type="submit">Guardar datos Bancarios</button>
+                        <hr />
+
+
+                    </div>
+
+
+
+
+
+
                 </div>
                 <div id="tab-gestion-2" class="tab-pane fade">
                     <div class="list-group" id="gestiones_realizadas" style="min-height:290px;">
@@ -442,7 +523,7 @@
                 </form>
             </div>
         </div>
-        
+
 
     </div>
 </div>
@@ -452,7 +533,9 @@
 <input type="hidden" id="periodo" value="@Html.Raw(ViewBag.periodo != null ? ViewBag.periodo : "0")" />
 <input type="hidden" id="tipo" value="@Html.Raw(ViewBag.tipo != null ? ViewBag.tipo : "0")" />
 
+<script src="~/Assets/js/vue.js"></script>
 <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
 <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
 <script src="~/Assets/js.App/gestion/oferta.js?v=@Html.Raw(ViewBag.hash)"></script>
+<script src="~/Assets/js.App/src/venta-remota.js?g=@Guid.NewGuid().ToString()"></script>
 

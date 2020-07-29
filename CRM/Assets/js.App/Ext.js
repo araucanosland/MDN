@@ -639,7 +639,7 @@ Number.prototype.toMoney = function (decimals, decimal_sep, thousands_sep) {
 $(function () {
 
 
-    //debugger;
+    //
     $(document).ajaxError(function (event, jqxhr, settings, thrownError) {
 
 
@@ -667,12 +667,12 @@ $(function () {
 
 
     $.SecGetJSON(BASE_URL + "/motor/api/Config/noticia-leida-rut", function (datos) {
-        //debugger;
+        //
         var nid = datos[0].usr_noticia_inicio;
         console.log("cookie noticia " + nid.toString());
-        //debugger;
+        //
         if (nid > 0) {
-          //  debugger;
+            //  
             var modalOptions = { show: true }
             modalOptions.backdrop = 'static';
             modalOptions.keyboard = false;
@@ -692,18 +692,53 @@ $(function () {
 
 
 
-    //debugger;
+    //
     if (sessionStorage.getItem('menu_principal') == null) {
+
         $.SecGetJSON(BASE_URL + "/motor/api/Auth/menu", function (categorias) {
 
-            sessionStorage.setItem('menu_principal', JSON.stringify(categorias));
 
-            $.each(categorias, function (i, categoriaItm) {
+            if (getCookie("Cargo") == "Auditor LM") {
+                let menu =
+                    `<li class="list-header">Herramientas</li>
+                
+                <li>
+                <a href="/motor/App/Licencias/ListarAuditoriaLicencia">
+                    <i class="ion-medkit"></i>
+                    <span class="menu-title">Auditoría LM</span>
+                    <i class="arrow"></i>
+                </a>
+                
+            </li>`
+                $("#mainnav-menu").html(menu);
 
-                $("#mainnav-menu").append($("<li>").addClass("list-header").text(categoriaItm.Nombre))
+            } else if (getCookie("Cargo") == "Regímenes Legales") {
 
-                Recxve(categoriaItm.Menus, $("#mainnav-menu"));
-            });
+                let menu =
+                    `<li class="list-header">Herramientas</li>
+                
+                <li>
+                <a href="/motor/App/Licencias/ListarRRLL">
+                    <i class="ion-medkit"></i>
+                    <span class="menu-title">Licencias Médicas</span>
+                    <i class="arrow"></i>
+                </a>
+                
+            </li>`
+                $("#mainnav-menu").html(menu);
+            }
+            else {
+                sessionStorage.setItem('menu_principal', JSON.stringify(categorias));
+
+                $.each(categorias, function (i, categoriaItm) {
+
+                    $("#mainnav-menu").append($("<li>").addClass("list-header").text(categoriaItm.Nombre))
+
+                    Recxve(categoriaItm.Menus, $("#mainnav-menu"));
+                });
+            }
+
+
 
 
 
@@ -728,6 +763,7 @@ $(function () {
                 });
 
                 if (algunaCamp > 0) {
+
                     //.addClass("active-link")
                     $("#mainnav-menu").append($("<li>").addClass("list-header").text("Otras Campañas"))
                     $("#mainnav-menu").append($("<li>").append(
@@ -751,15 +787,44 @@ $(function () {
         });
     }
     else {
-        //debugger;
+
         var categorias = JSON.parse(sessionStorage.getItem('menu_principal'));
-        $.each(categorias, function (i, categoriaItm) {
 
-            $("#mainnav-menu").append($("<li>").addClass("list-header").text(categoriaItm.Nombre))
+        if (getCookie("Cargo") == "Regímenes Legales") {
 
-            Recxve(categoriaItm.Menus, $("#mainnav-menu"));
-        });
+            let menu =
+                `<li>
+                <a href="/motor/App/Licencias/ListarRRLL">
+                    <i class="ion-medkit"></i>
+                    <span class="menu-title">Licencias Médicas</span>
+                    <i class="arrow"></i>
+                </a>
+            </li>`
+            $("#mainnav-menu").html(menu);
 
+        } else if (getCookie("Cargo") == "Auditor LM") {
+
+            let menu =
+                `<li>
+                <a href="/motor/App/Licencias/ListarAuditoriaLicencia">
+                    <i class="ion-medkit"></i>
+                    <span class="menu-title">Auditoría LM</span>
+                    <i class="arrow"></i>
+                </a>
+                            </li>`
+            $("#mainnav-menu").html(menu);
+
+
+
+        } else {
+
+            $.each(categorias, function (i, categoriaItm) {
+
+                $("#mainnav-menu").append($("<li>").addClass("list-header").text(categoriaItm.Nombre))
+
+                Recxve(categoriaItm.Menus, $("#mainnav-menu"));
+            });
+        }
 
         var menus = JSON.parse(sessionStorage.getItem('menu_campasejec'));
         var algunaCamp = 0, cUL = $("<ul>");
@@ -778,6 +843,7 @@ $(function () {
         });
 
         if (algunaCamp > 0) {
+
             //.addClass("active-link")
             $("#mainnav-menu").append($("<li>").addClass("list-header").text("Otras Campañas"))
             $("#mainnav-menu").append($("<li>").append(
@@ -949,7 +1015,7 @@ $(function () {
 
 
     $('#btn_popup_noticia').on('click', function (e) {
-        //debugger;
+        //
         let flag = 0;
         let rut = getCookie('Rut');
 

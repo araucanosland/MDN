@@ -15,12 +15,11 @@ $(function () {
     $('#buscar-prospecto').click(function () {
         $("#tbody_prospectos").html("");
         debugger;
-        var estados=$('#cmb_estados').val();
+        var estados = $('#cmb_estados').val();
         $.SecGetJSON(BASE_URL + "/motor/api/CarteraEmpresas/obtener-incorporaciones", { estado: estados }, function (result) {
 
             console.log(result);
             $.each(result, function (i, e) {
-              
                 var $wrapper = (`
                         <tr>
                             <td>${e.RutEmpresa}</td>
@@ -154,11 +153,11 @@ $(function () {
 
         },
         cargarTablaProspectos: function () {
-          
+
 
             $("#tbody_prospectos").html("");
             var estados = $('#cmb_estados').val();
-            $.SecGetJSON(BASE_URL + "/motor/api/CarteraEmpresas/obtener-incorporaciones", { estado: 'Todos'}, function (result) {
+            $.SecGetJSON(BASE_URL + "/motor/api/CarteraEmpresas/obtener-incorporaciones", { estado: 'Todos' }, function (result) {
 
                 console.log(result);
                 $.each(result, function (i, e) {

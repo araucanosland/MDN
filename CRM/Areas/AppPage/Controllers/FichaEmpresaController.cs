@@ -14,6 +14,12 @@ namespace CRM.Areas.AppPage.Controllers
             return View();
         }
 
+        public ActionResult CargasFamiliares()
+        {
+
+            return View();
+        }
+
         // GET: AppPage/FichaEmpresa
         public ActionResult Listado()
         {

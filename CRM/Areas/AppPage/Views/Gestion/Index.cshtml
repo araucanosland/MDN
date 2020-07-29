@@ -1,4 +1,4 @@
-@{
+﻿@{
     Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
 }
 
@@ -37,6 +37,9 @@
                     <li class="" style="display:none;">
                         <a data-toggle="tab" href="#demo-lft-tab-7" aria-expanded="false" id="tab_referidos" class="tab-principal">Referidos</a>
                     </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#demo-lft-tab-beneficios" aria-expanded="false" id="tab_beneficios" class="tab-principal">Beneficios</a>
+                    </li>
                 </ul>
 
                 <!--Tabs Content-->
@@ -73,6 +76,7 @@
                                                 <option value="Cumpleanos">Cumpleaños</option>
                                                 <option value="Cartera">Compra Cartera</option>
                                                 <option value="BNF">Beneficios</option>
+                                                @* <option value="PDG">Prioridad Gestión</option>*@
                                             </select>
                                         </div>
                                     </div>
@@ -593,6 +597,9 @@
                         @Html.Partial("Ign")
                     </div>
 
+                    <div id="demo-lft-tab-beneficios" class="tab-pane fade">
+                        @Html.Partial("Beneficios")
+                    </div>
                 </div>
             </div>
         </div>
@@ -610,6 +617,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Rut Afiliado</label>
                                     <input class="form-control" id="afi_rut_busc" type="text">
+                                    <input class="form-control" id="afi_rut_busc_b" type="text" style="display:none;">
                                 </div>
                             </div>
                         </div>
@@ -799,6 +807,23 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="col-sm-3" style="border-radius: 9px; font-size: 11px">
+                                                <div class="row msjCovid" style="display:none; margin-top: 14px;">
+                                                    <div class="col-sm-12 covidNTFContainer">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3" style="border-radius: 9px; font-size: 11px">
+                                                <div class="row msjCovidEmp" style="display:none; margin-top: 14px;">
+                                                    <div class="col-sm-12 covidEmpNTFContainer">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
 
                                         @*<div class="alert alert-purple" style="border-radius: 5px; display:none" id="lbMensajeEncuesta">
@@ -946,6 +971,51 @@
                                                 <input type="text" class="form-control" id="ges_prox_gestion" name="ges_prox_gestion">
                                                 <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*SERGIO*@
+                            <div id="divBancos" style="display:none">
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">BANCO</label>
+                                            <select class="form-control" id="afi_banco" name="afi_banco" v-model="modelos.banco">
+                                                <option value="">Seleccione...</option>
+                                                <option v-for="bancos in filtros.banco" :value="bancos.nombre_banco">{{bancos.nombre_banco}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">TIPO CUENTA</label>
+                                            <select class="form-control" id="afi_tipo_cuenta" name="afi_tipo_cuenta">
+                                                <option value="">Seleccione...</option>
+                                                <option value="CUENTA DE AHORRO">CUENTA DE AHORRO</option>
+                                                <option value="CUENTA CORRIENTE">CUENTA CORRIENTE</option>
+                                                <option value="CUENTA VISTA">CUENTA VISTA</option>
+                                                <option value="CUENTA RUT">CUENTA RUT</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">N° CUENTA</label>
+                                            <input class="form-control" id="afi_n_cuenta" neme="afi_n_cuenta" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">EMAIL</label>
+                                            <input class="form-control" id="afi_email_banco" neme="afi_email_banco" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">TELEFONO</label>
+                                            <input class="form-control" id="afi_fono_banco" neme="afi_fono_banco" type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -1714,6 +1784,323 @@
     </div>
 </div>
 
+<!--MODAL BENEFICIOS-->
+<div id="modal_beneficios" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header" style="background: #337ab7;">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" style="color: #f1f1f1;">GESTION BENEFICIOS</h4>
+            </div>
+            <div id="msjIgn"></div>
+            <div class="modal-body">
+                <div class="tab-base" style="margin-bottom: 0px !important;">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-gestion-bnf" aria-expanded="false">GESTION</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-historial-bnf" aria-expanded="false">HISTORIAL</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-contabilidad-bnf" aria-expanded="false">CONTACTABILIDAD</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-gestion-bnf" class="tab-pane fade active in">
+                            <div id="msjBnf"></div>
+                            <div class="panel-body">
+                                <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0;">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">RUT</label>
+                                                    <input class="form-control" id="txtRutBnf" type="text" readonly="readonly">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">NOMBRE</label>
+                                                    <input class="form-control" type="text" id="txtNombreBnf" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group has-success">
+                                                    <label class="control-label">OFERTA</label>
+                                                    <div class="input-group mar-btm">
+                                                        <span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+                                                        <input class="form-control text-lg-right" id="txtOfertaBnf" type="text" readonly="readonly">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">CAMPAÑA BENEFICIO</label>
+                                                    <input class="form-control" id="txtCampBenf" type="text" readonly="readonly">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">FECHA NACIMIENTO</label>
+                                                    <input class="form-control" type="text" id="txtFechaNac" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">CARGAS</label>
+                                                    <input class="form-control" type="text" id="txtNombreBnf" readonly="readonly">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0;">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <div class="form-group">
+                                                                <label class="control-label"><strong>SEGMENTO</strong></label>
+                                                                <select id="dllSegmentoBenf" class="form-control">
+                                                                    <option value="">Todos</option>
+                                                                    <option value="Pensionados">Pensionados</option>
+                                                                    <option value="Privados">Privados</option>
+                                                                    <option value="Publicos">Públicos</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><strong>USO REEMB. MEDICO</strong></label>
+                                                            <input class="form-control" type="text" id="txtNombreBnf">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><strong>USOS FARMACIA</strong></label>
+                                                            <input class="form-control" type="text" id="txtNombreBnf">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; height: 200px;">
+                                            <div class="form-group pad-ver">
+                                                <label class="col-md-4 control-label"> <strong>Estado</strong> </label>
+                                                <div class="col-md-10" id="dvRbEstadoBnf"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; height: 200px;">
+                                            <div class="form-group pad-ver">
+                                                <label class="col-md-5 control-label"> <strong>Sub-Estado</strong> </label>
+                                                <div class="col-md-10" id="dvRbSubEstadoBnf"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; height: 200px;">
+                                            <div class="form-group pad-ver">
+                                                <label class="col-md-7 control-label"><strong>Área de Beneficio</strong> </label>
+                                                <div class="checkbox col-md-12">
+                                                    <input id="checkbox_salud" class="magic-checkbox" type="checkbox" disabled>
+                                                    <label for="checkbox_salud">Salud</label>
+                                                </div>
+
+                                                <div class="checkbox col-md-12">
+                                                    <input id="checkbox_educacion" class="magic-checkbox" type="checkbox" disabled>
+                                                    <label for="checkbox_educacion">Educación</label>
+                                                </div>
+
+                                                <div class="checkbox col-md-12">
+                                                    <input id="checkbox_turismo" class="magic-checkbox" type="checkbox" disabled>
+                                                    <label for="checkbox_turismo">Turismo y recreación</label>
+                                                </div>
+
+                                                <div class="checkbox col-md-12">
+                                                    <input id="checkbox_hogar" class="magic-checkbox" type="checkbox" disabled>
+                                                    <label for="checkbox_hogar">Hogar y Servicio</label>
+                                                </div>
+
+                                                <div class="checkbox col-md-12">
+                                                    <input id="checkbox_telefonia" class="magic-checkbox" type="checkbox" disabled>
+                                                    <label for="checkbox_telefonia">Telefonía</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0;">
+                                            <div class="form-group pad-ver">
+                                                <label class="col-md-3 control-label"><strong>Beneficios Comodin</strong></label>
+                                                <div class="col-md-9">
+                                                    <div class="checkbox" style="margin-top: 0px;" id="dvComodin">
+
+                                                
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <hr />
+                                <div class="row">
+                                    <div class="form-group pad-ver">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+
+                                                <textarea placeholder="Observación" rows="3" id="txtObservacionBnf" name="txtObservacionBnf" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+
+                                                <textarea placeholder="Sugerencia" rows="3" id="txtSugenrenciaBnf" name="txtSugenrenciaBnf" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+
+                                        <div class="col-sm-10">
+                                            <div class="form-group">
+                                                <div id="btComercialBnf"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <button class="btn btn-primary" style="border-radius: 8px;" v-on:click="handleSubmitGestionBnf" id="btn_save_bnf" type="submit">Guardar Gestion</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-historial-bnf" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div class="list-group" style="min-height:290px;">
+                                    <div v-for="gestion in dataModalBnf">
+                                        <a href="#">
+                                            <h4 class="list-group-item-heading"><strong>Gestor: </strong>{{gestion.rutEjecutivo != undefined && gestion.rutEjecutivo}}</h4>
+                                            <p class="list-group-item-text">
+                                                <strong>Fecha Gestión: </strong>{{gestion.fechaGestion != undefined && gestion.fechaGestion.toFechaHoraPrueba()}}
+                                            </p>
+                                            <p class="list-group-item-text">
+                                                <strong>Estado: </strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado: '------'}}
+                                                <strong>Sub-Estado: </strong>{{gestion.subEstado != undefined && gestion.subEstado != null ? gestion.subEstado: '------'}}
+                                            </p>
+                                            <p class="list-group-item-text">
+                                                <strong>Observación: </strong> {{gestion.observacion}}
+                                            </p>
+                                            <p class="list-group-item-text">
+                                                <strong>Sugerencias: </strong> {{gestion.sugerencia}}
+                                            </p>
+                                        </a>
+                                        <hr />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tab-contabilidad-bnf" class="tab-pane fade">
+                            <div class="row">
+                                <button type="button" id="btn-add-contac_beneficio" class="btn btn-primary btn-xs">+</button>
+                            </div>
+                            <div class="mar-btm" style="display: none;" id="formulario-contac_beneficio">
+                                <form id="form-registro-bnf" action="#" method="post">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Tipo de Contacto</label>
+                                                    <select class="selectpicker" id="cbtippContac_beneficio" name="cbtippContac_beneficio">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Celular</option>
+                                                        <option value="2">Teléfono</option>
+                                                        <option value="3">Mail</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Clasificación de Contacto</label>
+                                                    <select class="selectpicker" id="cbClasificacionConctac_beneficio" name="cbClasificacionConctac_beneficio">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Personal</option>
+                                                        <option value="2">Comercial</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Datos de Contacto</label>
+                                                <input class="form-control" id="afi_NewContacto_beneficio" type="text" value="" maxlength="150" name="afi_NewContacto_beneficio">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" id="btGuardaContacto_beneficio" type="submit">Guardar Contacto</button>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <table class="table table-hover table-vcenter" style="font-size: 11px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Gestión</th>
+                                            <th>Datos Contacto</th>
+                                            <th>Tipo contacto</th>
+                                            <th>Indice</th>
+                                            <th>Ultimo Contacto Valido</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bdy_datos_contactos_beneficio"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section script{
 
     <script src="~/Assets/js/vue.js"></script>
@@ -1730,21 +2117,15 @@
     <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
     <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
     <script src="~/Assets/js.App/printThis.js"></script>
-
-
-   
     <script src="~/Assets/js.App/src/acuerdo_pagos.js?g=@Guid.NewGuid().ToString()"></script>
-
     <script src="~/Assets/js.App/src/index.js?g=@Guid.NewGuid().ToString()"></script>
-
     <!--<script src="~/Assets/js.App/gestion/index.js?v=@Html.Raw(ViewBag.hash)"></script>-->
     <script src="~/Assets/js.App/src/normalizacion.js?g=@Guid.NewGuid().ToString()"></script>
-
     <script src="~/Assets/js.App/src/seguro_cesantia.js?g=@Guid.NewGuid().ToString()"></script>
     <script src="~/Assets/js.App/src/pensionados.js?g=@Guid.NewGuid().ToString()"></script>
     <script src="~/Assets/js.App/src/ign.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/js.App/src/beneficios.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/js.App/src/venta-remota.js?g=@Guid.NewGuid().ToString()"></script>
 
-
-
-}
+    }
 

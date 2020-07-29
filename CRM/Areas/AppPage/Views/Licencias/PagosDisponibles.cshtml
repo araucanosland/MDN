@@ -15,7 +15,7 @@
 <script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
 
 
- <!--Page content-->
+<!--Page content-->
 <!--===================================================-->
 <div id="page-content">
 
@@ -50,8 +50,8 @@
                             <tbody id="result_list"></tbody>
                         </table>
                     </div>
-                    
-                    
+
+
                 </div>
             </div>
         </div>
@@ -84,16 +84,16 @@
                     }
                     res.forEach(function (e) {
 
-                        html += `<tr>  
-                                    <td>${e.fullRut}</td>
-                                    <td>${e.folioLicencia}</td>
-                                    <td>${e.diasReposo}</td>
-                                    <td>desde ${new Date(e.fechaInicioReposo).toLocaleDateString()} hasta ${new Date(e.fechaTerminoReposo).toLocaleDateString()}</td>
-                                    <td>$ ${e.montoSubsidio.toMoney(0)}</td>
-                                </tr>`
+                        html += `<tr>
+                                        <td>${e.fullRut}</td>
+                                        <td>${e.folioLicencia}</td>
+                                        <td>${e.diasReposo}</td>
+                                        <td>desde ${new Date(e.fechaInicioReposo).toLocaleDateString()} hasta ${new Date(e.fechaTerminoReposo).toLocaleDateString()}</td>
+                                        <td>$ ${e.montoSubsidio.toMoney(0)}</td>
+                                    </tr>`
                     });
 
-                    
+
 
                     $('#result_list').append(html)
                 })

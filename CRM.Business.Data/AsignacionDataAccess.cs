@@ -325,7 +325,7 @@ namespace CRM.Business.Data
 
             if (TipoAsignacion == 1)
             {
-                sql = "select count(*) Retorno from dbo.TabMotor_Asignacion x Inner  join(  select distinct RutAfiliado from BD_herramientas.scafi.TabMotor_Contactibilidad b where B.iTipoDato<>3 and B.IndiceContactab<>8 And B.OrigenBaja='' ) y on x.afiliado_rut=y.RutAfiliado where Periodo = (select max(Periodo) from dbo.TabMotor_Asignacion) and x.Ejec_Asignacion = @rutEjec and x.TipoAsignacion=@tipAsig and x.Oficina=@CodOffice and x.Cuadrante = 1";
+                sql = "select count(*) Retorno from dbo.TabMotor_Asignacion x Inner  join(  select distinct RutAfiliado from BD_herramientas.scafi.TabMotor_Contactibilidad b where B.iTipoDato<>3 and B.IndiceContactab<>8 And B.OrigenBaja='' ) y on x.afiliado_rut=y.RutAfiliado where Periodo = (select max(Periodo) from dbo.TabMotor_Asignacion) and x.Ejec_Asignacion = @rutEjec and x.TipoAsignacion=@tipAsig and x.Oficina=@CodOffice and x.Cuadrante = 1 and x.CredVigente = 1";
             }
             if (TipoAsignacion == 2)
             {
@@ -340,7 +340,7 @@ namespace CRM.Business.Data
             {
                 sql = "select count(*) Retorno from dbo.TabMotor_Asignacion where Periodo = (select max(Periodo) from dbo.TabMotor_Asignacion) and Ejec_Asignacion = @rutEjec and TipoAsignacion=@tipAsig and Oficina=@CodOffice and (Celular<>'' Or Telefono1<>'' Or Telefono2<>'')";
             }
-            
+
 
             return DBHelper.InstanceCRM.ObtenerEscalarFromSql<int>(sql, pram);
         }
@@ -493,6 +493,9 @@ namespace CRM.Business.Data
             retorno.Seguimiento.OFERTA_FINAL_TOTAL = row["OFERTA_FINAL_TOTAL"] != DBNull.Value ? row["OFERTA_FINAL_TOTAL"].ToString() : string.Empty;
             retorno.Seguimiento.MARCA_CC = row["MARCA_CC"] != DBNull.Value ? Convert.ToInt32(row["MARCA_CC"]) : 0;
             retorno.Seguimiento.MarcaPsu = row["MarcaPsu"] != DBNull.Value ? Convert.ToInt32(row["MarcaPsu"]) : 0;
+
+            retorno.Seguimiento.Telefono1 = row["Telefono1"] != DBNull.Value ? row["Telefono1"].ToString() : string.Empty;
+            retorno.Seguimiento.Telefono2 = row["Telefono2"] != DBNull.Value ? row["Telefono2"].ToString() : string.Empty;
 
 
             retorno.UltimaGestion = new GestionGenerica();

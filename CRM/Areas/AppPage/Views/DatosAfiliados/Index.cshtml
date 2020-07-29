@@ -83,7 +83,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             @*   <h5><label class="control-label" id="RutAfiliado">Sin Información</label></h5>*@
-                                            <input type="text" class="control-label text-dark" name="RutAfiliado" id="RutAfiliado" readonly="readonly" style="font-weight:bold" />
+                                            <input type="text" class="form-control" name="RutAfiliado" id="RutAfiliado" readonly="readonly" style="font-weight:bold" />
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
@@ -106,7 +106,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             @*<h5><label class="control-label" id="FDNAfiliado">Sin Información</label>&nbsp;(<label class="control-label" id="AniosAfiliado"></label>&nbsp;Años)</h5>*@
-                                            <input type="text" class="control-label text-dark" name="FDNAfiliado" id="FDNAfiliado" readonly="readonly" style="font-weight: bold;" />
+                                            <input type="text" class="form-control" name="FDNAfiliado" id="FDNAfiliado" readonly="readonly" style="font-weight: bold;" />
                                             <div class="label label-table label-success" style="display:none">Cumpleaños</div>
                                         </div>
                                     </div>
@@ -118,7 +118,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             @*  <h5><label class="control-label" id="NombreEmpresaAfi">Sin Información</label></h5>*@
-                                            <input type="text" class="control-label text-dark" name="NombreEmpresaAfi" id="NombreEmpresaAfi" readonly="readonly" style="font-weight: bold;" />
+                                            <input type="text" class="form-control" name="NombreEmpresaAfi" id="NombreEmpresaAfi" readonly="readonly" style="font-weight: bold;" />
                                         </div>
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             @*<h5><label class="control-label" id="CelAfiliado">Sin Información</label></h5>*@
-                                            <input type="text" class="control-label text-dark" name="CelAfiliado" id="CelAfiliado" readonly="readonly" style="font-weight: bold;" />
+                                            <input type="text" class="form-control" name="CelAfiliado" id="CelAfiliado" readonly="readonly" style="font-weight: bold;" />
                                         </div>
                                     </div>
 
@@ -144,7 +144,7 @@
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             @*<h5><label class="control-label" id="FonoAfiliado">Sin Información</label></h5>*@
-                                            <input type="text" class="control-label text-dark" name="FonoAfiliado" id="FonoAfiliado" readonly="readonly" style="font-weight: bold;" />
+                                            <input type="text" class="form-control" name="FonoAfiliado" id="FonoAfiliado" readonly="readonly" style="font-weight: bold;" />
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +158,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             @*<h5><label class="control-label" id="EmailAfiliado">Sin Información</label></h5>*@
-                                            <input type="text" class="control-label text-dark" name="EmailAfiliado" id="EmailAfiliado" readonly="readonly" style="font-weight: bold;" />
+                                            <input type="text" class="form-control" name="EmailAfiliado" id="EmailAfiliado" readonly="readonly" style="font-weight: bold;" />
                                         </div>
                                     </div>
 
@@ -170,7 +170,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-group">
                                             @*<h5><label class="control-label" id="OrigenAfiliado">Sin Información</label></h5>*@
-                                            <input type="text" class="control-label text-dark" name="OrigenAfiliado" id="OrigenAfiliado" readonly="readonly" style="font-weight: bold;" />
+                                            <input type="text" class="form-control" name="OrigenAfiliado" id="OrigenAfiliado" readonly="readonly" style="font-weight: bold;" />
                                         </div>
                                     </div>
                                 </div>
@@ -183,15 +183,32 @@
                                     <div class="col-sm-7">
                                         <div class="form-group">
                                             @*<h5>$<label class="control-label" id="RentaAfiliado">Sin Información</label>&nbsp;(<label class="control-label" id="RentaAfiPeriodo"></label>&nbsp;Última Informada)</h5>*@
-                                            <span class="control-label text-dark" style="font-weight: bold;">$</span><input type="text" class="control-label text-dark" name="RentaAfiliado" id="RentaAfiliado" readonly="readonly" style="font-weight: bold;" /><br />&nbsp;&nbsp;<span class="control-label" style="font-size: 11px;">(</span><label class="control-label" id="RentaAfiPeriodo" style="font-size: 11px;"></label>&nbsp;<span class="control-label" style="font-size: 11px;">&Uacute;ltima Informada)</span>
+                                            <input type="text" class="form-control" name="RentaAfiliado" id="RentaAfiliado" readonly="readonly" style="font-weight: bold; width: 56%;" /><br />&nbsp;&nbsp;<span class="control-label" style="font-size: 11px;">(</span><label class="control-label" id="RentaAfiPeriodo" style="font-size: 11px;"></label>&nbsp;<span class="control-label" style="font-size: 11px;">&Uacute;ltima Informada)</span>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="row">
                                 </div>
                                 <div class="row NotfGenerica" style="display:none;">
                                     <div class="col-sm-12 NotfGenericaContainer">
                                         <br />
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3" style="border-radius: 9px; font-size: 11px">
+                                    <div class="row msjCovid" style="display:none; margin-top: 14px;">
+                                        <div class="col-sm-12 covidNTFContainer">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3" style="border-radius: 9px; font-size: 11px">
+                                    <div class="row msjCovidEmp" style="display:none; margin-top: 14px;">
+                                        <div class="col-sm-12 covidEmpNTFContainer">
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -440,6 +457,52 @@
                                             <input type="text" class="form-control" id="ges_prox_gestion" name="ges_prox_gestion">
                                             <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="divBancos" style="display:none;">
+                            <hr />
+                            <div id="msBanco"></div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="control-label">BANCO</label>
+                                        <select class="form-control" id="afi_banco" name="afi_banco" v-model="modelos.banco">
+                                            <option value="">Seleccione...</option>
+                                            <option v-for="bancos in filtros.banco" :value="bancos.nombre_banco">{{bancos.nombre_banco}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">TIPO CUENTA</label>
+                                        <select class="form-control" id="afi_tipo_cuenta" name="afi_tipo_cuenta">
+                                            <option value="">Seleccione...</option>
+                                            <option value="CUENTA DE AHORRO">CUENTA DE AHORRO</option>
+                                            <option value="CUENTA CORRIENTE">CUENTA CORRIENTE</option>
+                                            <option value="CUENTA VISTA">CUENTA VISTA</option>
+                                            <option value="CUENTA RUT">CUENTA RUT</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">N° CUENTA</label>
+                                        <input class="form-control" id="afi_n_cuenta" neme="afi_n_cuenta" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="control-label">EMAIL</label>
+                                        <input class="form-control" id="afi_email_banco" neme="afi_email_banco" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">TELEFONO</label>
+                                        <input class="form-control" id="afi_fono_banco" neme="afi_fono_banco" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -1503,9 +1566,13 @@
 
     <script src="~/Assets/js.App/src/normalizacion.js?g=@Guid.NewGuid().ToString()"></script>
     <script src="~/Assets/js.App/src/seguro_cesantia.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/js.App/src/venta-remota.js?g=@Guid.NewGuid().ToString()"></script>
 
 
     <script type="text/javascript">
+
+
+
 
         $(document).on('nifty.ready', function () {
             $("#demo-editable-sex").editable({
@@ -1656,6 +1723,7 @@
                         $("#NomAfiliado").html(' Señor(a)  ' + e.Nombres);
 
                         $("#OrigenAfiliado").val(e.InicioValidezRol);
+                        appVentaRemota.cargaLeadFiltroCall(e.RutAfiliado)
                     }
 
                     if (e.Sexo == 'F') {
@@ -1697,6 +1765,8 @@
                     $('#EditComentarios').html('')
 
 
+
+
                     $.SecGetJSON(BASE_URL + "/motor/api/Afiliados/lista-rut-empresa", { RutAfiliado: p_rut }, function (datos) {
 
                         $("#slRutEmpresa").html("");
@@ -1707,6 +1777,8 @@
                     });
 
                 });
+
+
             },
             CargaDatosCumpleanos: function (rutCumpleanos) {
                 $.SecGetJSON(BASE_URL + "/motor/api/Afiliados/obtener-cumpleanos", { RutAfiliado: rutCumpleanos }, function (e) {
@@ -1819,7 +1891,7 @@
                             else { alertFecha = e.FechaContacto.toFecha() }
                         }
 
-                       
+
                         $("#bdy_datos_contactos")
                             .append(
                                 $("<tr>")
@@ -1880,7 +1952,7 @@
                             tag = '<span class="label label-success" style="border-radius: 5px">' + e.TipoGestion + '</span>'
                         }
                         else if (e.TipoGestion == 'Campaña seguro Cesantia') {
-                            tag = '<span class="label label-info" style="border-radius: 5px">' + e.TipoGestion +'</span>'
+                            tag = '<span class="label label-info" style="border-radius: 5px">' + e.TipoGestion + '</span>'
                         }
                         else if (e.TipoGestion == 'Campaña Normalización') {
                             tag = '<span class="label label-danger" style="border-radius: 5px">' + e.TipoGestion + '</span>'
@@ -1889,7 +1961,7 @@
                             tag = '<span class="label label-warning" style="border-radius: 5px">' + e.TipoGestion + '</span>'
                         }
 
-     
+
 
                         if (e.EstadoGestion == 1) {
                             i_img = $('<img>').attr('src', '../Assets/img/M.png').attr('alt', 'Profile picture')
@@ -2251,6 +2323,10 @@
                     );
                 });
 
+                if ($('#ges_subestado').val() == '307' || $('#ges_subestado').val() == '308') {
+                    appVentaRemota.guardaRegistroBancario();
+                }
+
                 if (respuesta.Objeto.length > 0 && respuesta.Objeto[0].EstadoGestion.ejes_terminal === "CERRADOS") {
                     $(".esconder").hide();
                 }
@@ -2510,6 +2586,7 @@
                     );
                 });
 
+
                 if (respuesta.Objeto != null && respuesta.Objeto.length > 0 && respuesta.Objeto[0].EstadoGestion.ejes_terminal === "CERRADOS") {
                     $(".esconder").hide();
                 }
@@ -2529,6 +2606,8 @@
                 });
             });
 
+         
+
         });
 
         var rutAfilado = httpGet("RutBuscar").replace('.', '');
@@ -2546,7 +2625,7 @@
                     var tag = "";
                     if (e.EstadoGestion == 1) {
 
-                     
+
                         if (e.TipoGestion == 'Gestion Comercial') {
                             tag = '<span class="label label-success" style="border-radius: 5px">' + e.TipoGestion + '</span>'
                         }
@@ -2565,7 +2644,7 @@
 
                         i_img = $('<img>').attr('src', '../Assets/img/M.png').attr('alt', 'Profile picture')
 
-                        var iB2_4 = $('<a>').html('   Motor -- '+ tag )
+                        var iB2_4 = $('<a>').html('   Motor -- ' + tag)
                         var aB2_5 = $('<a>').addClass('text-main text-bold').html('Gestion:  ').append(iB2_4).append('<br/>')
 
                         var iB2_4_ = $('<a>').html(e.Estado + '  -  ' + e.SubEstado)
@@ -3260,6 +3339,67 @@
         });
 
 
+
+        var rutCont = httpGet("RutBuscar")
+        var fechaHoy = new Date();
+        var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
+        $.SecGetJSON(BASE_URL + "/motor/api/Gestion/obtener-seguimiento", { periodo: periodo, afiRut: rutCont, tipoCampagna: 1 }, function (datos) {
+            const Asignacion = datos.Objeto;
+            const afiData = Asignacion.Seguimiento;
+
+            if (afiData.Telefono1 != "") {
+                $(".msjCovid").show();
+                $(".covidNTFContainer").html("");
+
+                $.niftyNoty({
+                    type: "danger",
+                    container: '.covidNTFContainer',
+                    html: "<strong>" + afiData.Telefono1 + "</strong>",
+                    focus: false,
+                    closeBtn: false
+                });
+            }
+            else {
+                $(".msjCovid").hide();
+            }
+
+
+            if (afiData.Telefono2 != "") {
+                $(".msjCovidEmp").show();
+                $(".covidEmpNTFContainer").html("");
+
+                $.niftyNoty({
+                    type: "danger",
+                    container: '.covidEmpNTFContainer',
+                    html: "<strong>" + afiData.Telefono2 + "</strong>",
+                    focus: false,
+                    closeBtn: false,
+                    font: 11,
+
+                });
+            }
+            else {
+                $(".msjCovidEmp").hide();
+            }
+
+
+        });
+
+        $("#ges_subestado").on("change", function () {
+            switch (this.value) {
+                case "307":
+                    $('#divBancos').css('display', 'block');
+                    break;
+                case "308":
+                    $('#divBancos').css('display', 'block');
+                    break;
+            }
+            if (this.value != '307' && this.value != '308') {
+                $('#divBancos').css('display', 'none');
+            }
+        });
+
+        
 
 
     </script>

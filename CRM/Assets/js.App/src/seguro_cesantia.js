@@ -265,7 +265,7 @@ $(function () {
         const rut = event.relatedTarget != undefined ? $(event.relatedTarget).data('rut') : $('#afi_rut_busc').val();
         console.log({ rut })
         var rutCont = rut
-        rutCont = rutCont.substring(0, rutCont.length - 2)
+       // rutCont = rutCont.substring(0, rutCont.length - 2)
         await appSeguroCesantiaModal.obtenerLead(rut);
         cargaDatosDeContacto(rutCont, '#bdy_datos_contactos_seguro_cesantia')
         appSeguroCesantiaModal.setDefaultsModal();

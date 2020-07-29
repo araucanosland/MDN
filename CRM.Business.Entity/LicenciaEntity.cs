@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CRM.Business.Entity
 {
-   public class LicenciaEntity
+    public class LicenciaEntity
     {
         public string EmpresaRut { get; set; }
         public DateTime FechaRecepcion { get; set; }
@@ -25,7 +25,7 @@ namespace CRM.Business.Entity
         public int EmpresaRut { get; set; }
         public string EmpresaDv { get; set; }
         public string EmpresaRutDv { get; set; }
-        public string EmpresaNombre { get; set; } 
+        public string EmpresaNombre { get; set; }
     }
     public class LicenciaCompinEntity
     {
@@ -50,6 +50,13 @@ namespace CRM.Business.Entity
         public int codOficinaCompin { get; set; }
         public string OficinaCompin { get; set; }
     }
-   
-    
+
+    public class EstadosLMEntity
+    {
+        public int Id { get; set; }
+        public string Estado { get; set; }
+
+    }
+
+
 }

@@ -1,0 +1,203 @@
+﻿
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Motor de Negocios</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href="~/Assets/css.App/bundle.min.css" rel="stylesheet">
+    <link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+    <link href="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+    <link href="~/Assets/plugins/x-editable/css/bootstrap-editable.css" rel="stylesheet">
+    <!--TypeaheadJS [ OPTIONAL ]-->
+    <link href="~/Assets/plugins/x-editable/inputs-ext/typeaheadjs/lib/typeahead.js-bootstrap.css" rel="stylesheet">
+    <!--Address [ OPTIONAL ]-->
+    <link href="~/Assets/plugins/x-editable/inputs-ext/address/address.css" rel="stylesheet">
+    <link href="~/Assets/css/demo/nifty-demo-icons.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/demo/nifty-demo.min.css" rel="stylesheet">
+
+    <link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+
+    <link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+
+    <link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+    <script src="~/Assets/js.App/bundle.min.js?g=@Guid.NewGuid().ToString()"></script>
+
+    <script src="~/Assets/js/vue.js"></script>
+
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+
+
+
+</head>
+<body>
+    <div id="contactoGestion">
+        <br />
+        <div class="panel" style="border-radius: 7px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">ESTADO REQUERIMIENTO</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div id="msjAtencion"></div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="control-label">ESTADO</label>
+                            <select class="form-control" id="dllEstadoCall" name="dllEstadoCall" v-on:change="eventoCambiaEstado" v-model="modelos.estados">
+                                <option value="">Seleccione...</option>
+                                <option v-for="estadoCall in filtros.estados" :value="estadoCall.id">{{estadoCall.nombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label class="control-label">SUB-ESTADO</label>
+                            <select class="form-control" id="dllSubEstadoCall" name="dllSubEstadoCall" v-model="modelos.subEstado">
+                                <option value="">Seleccione...</option>
+                                <option v-for="subestadoCall in filtros.subEstado" :value="subestadoCall.id">{{subestadoCall.nombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">OBSERVACION</label>
+                    <textarea rows="3" id="txtestadoObs" name="txtestadoObs" class="form-control"></textarea>
+                </div>
+
+                <div class="modal-footer"> <button class="btn btn-primary" v-on:click="guardaGestion">Guardar</button></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var motor_api_server = "motordenegocios"//"localhost";
+        var appContactoDiferimiento = new Vue({
+            el: '#contactoGestion',
+            data: {
+                filtros: {
+                    estados: [],
+                    subEstado: [],
+                },
+                modelos: {
+                    estados: '',
+                    subEstado: '',
+                }
+            },
+            dataContacto: {},
+            mounted() {
+                this.obtenerEstado();
+            },
+            methods: {
+
+                obtenerEstado() {
+                    fetch(`http://${motor_api_server}:4002/call-center/lista-estados`, {
+                        method: 'GET',
+                        mode: 'cors',
+                        cache: 'default'
+                    })
+                        .then(response => response.json())
+                        .then(estadosJSON => {
+                            this.filtros.estados = estadosJSON;
+                        });
+                },
+                obtenerSubEstados(padreId) {
+                    fetch(`http://${motor_api_server}:4002/call-center/lista-estados?padreId=${padreId}`, {
+                        method: 'GET',
+                        mode: 'cors',
+                        cache: 'default'
+                    })
+                        .then(response => response.json())
+                        .then(estadosSubJSON => {
+                            this.filtros.subEstado = estadosSubJSON;
+                        });
+                },
+                eventoCambiaEstado() {
+                    this.obtenerSubEstados(this.modelos.estados)
+                },
+
+                guardaGestion() {
+
+                    if ($('#dllEstadoCall').val() == '') {
+                        $.niftyNoty({
+                            type: 'danger',
+                            message: 'Debe ingresar un Estado.',
+                            container: '#msjContacto',
+                            timer: 3000
+                        });
+                        return false;
+                    }
+
+                    if ($('#dllSubEstadoCall').val() == '') {
+                        $.niftyNoty({
+                            type: 'danger',
+                            message: 'Debe ingresar un Sub-Estado.',
+                            container: '#msjContacto',
+                            timer: 3000
+                        });
+                        return false;
+                    }
+
+                    const formData = {
+                        rut_afiliado: httpGet("RutAfi"),
+                        nombre_afiliado: httpGet("NombreAfi"),
+                        estado: $('select[name="dllEstadoCall"] option:selected').text(),
+                        sub_estado: $('select[name="dllSubEstadoCall"] option:selected').text(),
+                        observacion: $('#txtestadoObs').val(),
+                        rut_ejecutivo: httpGet("ejecutivo"),
+                    };
+
+                    fetch(`http://${motor_api_server}:4002/call-center/guarda-gestion-call`, {
+                        method: 'POST',
+                        body: JSON.stringify(formData),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Token': getCookie('Token')
+                        }
+                    }).then(async (response) => {
+                        if (!response.ok) {
+                            $.niftyNoty({
+                                type: 'danger',
+                                message: 'Error al intentar guardar.',
+                                container: '#msjAtencion',
+                                timer: 3000
+                            });
+                            return false;
+                        }
+                        $.niftyNoty({
+                            type: 'success',
+                            icon: 'pli-like-2 icon-2x',
+                            message: 'Se Guardo Correctamente.',
+                            container: '#msjAtencion',
+                            timer: 3000
+                        });
+                        $('#dllEstadoCall').val('')
+                        $('#dllSubEstadoCall').val('')
+                        $('#txtestadoObs').val('')
+
+                    });
+                },
+            }
+        });
+
+    </script>
+
+</body>
+</html>

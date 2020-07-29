@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewBag.Title = "Ingreso";
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!--Magic Checkbox [ OPTIONAL ]-->
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
+
+
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Línea Tiempo Licencia</h3>
+                </div>
+
+                <!--Block Styled Form -->
+                <!--===================================================-->
+                <form id="frm-data-lc">
+                    <div class="panel-body">
+                                               
+                        <div class="col-lg-4">
+                           
+                            <h4>Datos de la Licencia </h4>
+
+                            <table class="table text-left">
+                                <tr>
+                                    <td><strong>Folio Licencia</strong></td>
+                                    <td><label id="lblfolic"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Rut Afiliado</strong></td>
+                                    <td><label id="lblRutAfiliado"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fecha Ingreso</strong></td>
+                                    <td><label id="lblfechaingreso"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong></strong></td>
+                                    <td></td>
+                                </tr>
+
+                            </table>
+                        </div>
+
+                        <div class="col-lg-7 col-lg-offset-1">
+                            <h4>Seguimiento de Licencia Médica</h4>
+                            <!-- Timeline -->
+                            <!--===================================================-->
+                            <div class="timeline  contenedor-folios">
+
+
+                            </div>
+                            <!--===================================================-->
+                            <!-- End Timeline -->
+
+                        </div>
+                    </div>
+
+                </form>
+                <!--===================================================-->
+                <!--End Block Styled Form -->
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+<!--===================================================-->
+<!--End page content-->
+
+
+@section script{
+
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <!--Masked Input [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/masked-input/jquery.maskedinput.min.js"></script>
+
+
+    <script>
+
+        var cargador = {
+
+        }
+
+        $(function () {
+
+            var CodIng = httpGet("ci");
+
+
+            $('.contenedor-folios').html("");
+            $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-LM-TimeLine", { codIngreso: CodIng }, function (datos) {
+                
+                $("#lblfolic").text('');
+                $("#lblRutAfiliado").text('');
+                $("#lblfechaingreso").text('');
+                $.each(datos, function (i, licencia) {
+                    
+                    $("#lblfolic").text(licencia.FolioLicencia);
+                    $("#lblRutAfiliado").text(licencia.RutAfiliado);
+                    $("#lblfechaingreso").text(licencia.FechaIngreso.toFecha());
+                    
+
+                    let html = `<div class="timeline-entry" >
+                     <div class="timeline-stat">` ;
+                    if (licencia.Estado == "Activada") {
+                        html = html + `<div class="timeline-icon" ></div>` ;
+                    }
+                    else {
+                        html = html + `<div class="timeline-icon" ></div>`;
+                    }
+                    
+                    html = html + `  <div class="timeline-time">${licencia.FechaInicio.toFecha()}</div>
+                     </div>
+                     <div class="timeline-label text-left">
+                    <p class="text-bold text-warning"> Estado : ${licencia.Estado}</p>`;
+                   
+    
+                    debugger;
+                    if (licencia.EstadoId == "1") {
+                        html = html + ` <p class="mar-no pad-btm" > <strong>Ejecuta :  ${ licencia.Ejecutado}</strong></p>`;
+                        html = html + ` <p class="mar-no pad-btm" >Etapa Actual : <strong> ${licencia.Etapa}</strong></p>`;
+                        html = html + ` <p class="mar-no pad-btm">Estado Licencia Médica :<strong> ${licencia.Etapa}</strong></p>`;
+                    } else {
+
+                        if (licencia.Ejecutado == "Oficina") {
+                            //html = html + `    <p class="mar-no pad-btm">Etapa Flujo: ${licencia.Etapa}</p>`;
+                            html = html + ` <p class="mar-no pad-btm">Responsable ${licencia.Asignado}</p>`;
+                            html = html + ` <p class="mar-no pad-btm">Estado  Licencia Médica : <strong>${licencia.Etapa}</strong></p>`;
+                        }
+                        else if (licencia.Ejecutado == "Auditoría") {
+                           
+                            html = html + ` <p class="mar-no pad-btm">Responsable ${licencia.Asignado}</p>`;
+                            html = html + ` <p class="mar-no pad-btm">Estado  Auditoría : <strong>${licencia.EtapaAuditoria}</strong></p>`;
+                            html = html + ` <p class="mar-no pad-btm">Estado  Licencia Médica : <strong>${licencia.Etapa}</strong></p>`;
+
+                        }
+                    }
+             
+                    html = html + `  </div>
+            </div>` ;
+                    
+                    console.log(html);
+                    $('.contenedor-folios').append(html);
+                });
+
+            });
+
+        });
+
+    </script>
+
+
+}
+
+

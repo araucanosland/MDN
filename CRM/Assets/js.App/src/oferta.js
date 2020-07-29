@@ -8,11 +8,11 @@
             $("#gestiones_realizadas").html("");
             $.each(gesList, function (i, e) {
                 $("#gestiones_realizadas").append($("<a>").attr("href", '#')
-                     .append($("<h4>").addClass("list-group-item-heading").html("<strong>Gestor:</strong> " + e.Gestor.EjecutivoData.Nombres))
-                     .append($("<p>").addClass("list-group-item-text").html("<strong>Fecha Gestión:</strong>" + e.GestionBase.FechaAccion.toFechaHora() + ", <strong>Fecha Prox. Gestión:</strong> " + e.GestionBase.FechaCompromete.toFecha()))
-                     .append($("<p>").addClass("list-group-item-text").html("<strong>Estado:</strong> " + e.EstadoGestion.eges_nombre + ",  <strong>Sub Estado:</strong> " + e.SubEstadoGestion.eges_nombre))
-                     .append($("<p>").addClass("list-group-item-text").html("<strong>Comentario:</strong> " + e.GestionBase.Descripcion))
-                 );
+                    .append($("<h4>").addClass("list-group-item-heading").html("<strong>Gestor:</strong> " + e.Gestor.EjecutivoData.Nombres))
+                    .append($("<p>").addClass("list-group-item-text").html("<strong>Fecha Gestión:</strong>" + e.GestionBase.FechaAccion.toFechaHora() + ", <strong>Fecha Prox. Gestión:</strong> " + e.GestionBase.FechaCompromete.toFecha()))
+                    .append($("<p>").addClass("list-group-item-text").html("<strong>Estado:</strong> " + e.EstadoGestion.eges_nombre + ",  <strong>Sub Estado:</strong> " + e.SubEstadoGestion.eges_nombre))
+                    .append($("<p>").addClass("list-group-item-text").html("<strong>Comentario:</strong> " + e.GestionBase.Descripcion))
+                );
             });
 
             if (gesList.length > 0 && gesList[0].EstadoGestion.ejes_terminal === "CERRADOS") {
@@ -30,14 +30,14 @@
                 var consecuencia = (e.ConsecuenciaGestion !== null) ? ", <strong>Consecuencia:</strong> " + e.ConsecuenciaGestion.eges_nombre : "";
                 var estatus = (e.EstadoGestion !== null) ? ", <strong>Estado:</strong> " + e.EstadoGestion.eges_nombre : "";
                 $("#gestiones_realizadas").append($("<a>").attr("href", '#')
-                     .append($("<h4>").addClass("list-group-item-heading").html("<strong>Gestor:</strong> " + e.Gestor.EjecutivoData.Nombres))
-                     .append($("<p>").addClass("list-group-item-text").html("<strong>Fecha Gestión:</strong>" + e.GestionBase.FechaAccion.toFechaHora() + ", <strong>Fecha Prox. Gestión:</strong> " + e.GestionBase.FechaCompromete.toFecha()))
-                     .append($("<p>").addClass("list-group-item-text").html("<strong>Causa basal:</strong> " + e.CausaBasalGestion.eges_nombre + consecuencia + estatus))
-                     .append($("<p>").addClass("list-group-item-text").html("<strong>Comentario:</strong> " + e.GestionBase.Descripcion))
-                 );
+                    .append($("<h4>").addClass("list-group-item-heading").html("<strong>Gestor:</strong> " + e.Gestor.EjecutivoData.Nombres))
+                    .append($("<p>").addClass("list-group-item-text").html("<strong>Fecha Gestión:</strong>" + e.GestionBase.FechaAccion.toFechaHora() + ", <strong>Fecha Prox. Gestión:</strong> " + e.GestionBase.FechaCompromete.toFecha()))
+                    .append($("<p>").addClass("list-group-item-text").html("<strong>Causa basal:</strong> " + e.CausaBasalGestion.eges_nombre + consecuencia + estatus))
+                    .append($("<p>").addClass("list-group-item-text").html("<strong>Comentario:</strong> " + e.GestionBase.Descripcion))
+                );
             });
         }
-        
+
     }
 
 
@@ -56,10 +56,13 @@
         location.href = BASE_URL + '/Motor/App/Gestion';
     });
 
+
+
+
+
     $.SecGetJSON(BASE_URL + "/motor/api/Gestion/obtener-seguimiento", { periodo: tperiodo, afiRut: trutAfiliado, tipoCampagna: tipoCamp }, function (datos) {
 
-        if (datos.Estado === "OK")
-        {
+        if (datos.Estado === "OK") {
             const Asignacion = datos.Objeto;
             const afiData = Asignacion.Seguimiento;
             const gesList = Asignacion.HistorialGestion;
@@ -78,6 +81,28 @@
             $('#afi_oficina_preferencia').val(Asignacion.OficinaPreferencia.Valor_preferencia);
             $('#afi_horario_preferencia').val(Asignacion.HorarioPreferencia.Valor_preferencia);
             $("#OficinaAsig").val(Asignacion.NombreOficina)
+
+
+            var rutCont = $("#afi_rut").val().replace('.', '').replace('.', ''),
+                rutCont = rutCont.substring(0, rutCont.length - 2)
+            $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-comercial-beneficios", { Rut_: rutCont }, function (datos) {
+                $(".NotfGenericaContainer").html("");
+                let text = "";
+                var type = "info";
+                $.each(datos, function (i, e) {
+                    $(".NotfGenerica").show();
+                    text = e.Glosa;
+                    $.niftyNoty({
+                        type: type,
+                        container: '.NotfGenericaContainer',
+                        html: text,
+                        focus: false,
+                        closeBtn: false
+                    });
+                });
+            });
+
+            appVentaRemota.cargaLeadFiltroCall(afiData.Afiliado_Rut + '-' + afiData.Afiliado_Dv)
 
 
             //CONTACTO
@@ -142,12 +167,10 @@
                         text += "<strong>Seguros: </strong> Afiliado cuenta con <strong>Seguro de Cesantía</strong>"
                     }
 
-                    if (e.Tipo == "ACUERPAG")
-                    {
+                    if (e.Tipo == "ACUERPAG") {
                         sx = true;
                     }
-                    else
-                    {
+                    else {
                         $.niftyNoty({
                             type: 'success',
                             container: '.charlyNTFContainer',
@@ -164,8 +187,7 @@
                     $(".charlyNTF").show();
                 }
             }
-            else
-            {
+            else {
                 $(".charlyNTF").hide();
             }
 
@@ -183,23 +205,20 @@
                 });
             });
 
-            
-            if (tipoCamp === '1' || tipoCamp === '5')
-            {
+
+            if (tipoCamp === '1' || tipoCamp === '5') {
                 render.HistorialGestion(gesList);
                 $("#myLargeModalLabel").html(afiData.Prioridad.toString().toEtiquetaPrioridad() + " " + info_xxx);
                 $("#titulo_gestion").text("Gestión Comercial");
             }
 
-            if (tipoCamp === '2')
-            {
+            if (tipoCamp === '2') {
                 render.HistorialGestionRecuperaciones(gesList);
                 $("#morfeable_monto").text("Monto Adeudado");
                 $("#titulo_gestion").text("Gestión de Normalización, Folio Crédito: " + afiData.RiesgoPerfil);
             }
 
-            if (tipoCamp === '4')
-            {
+            if (tipoCamp === '4') {
                 render.HistorialGestion(gesList);
                 $("#myLargeModalLabel").html(afiData.Prioridad.toString().toEtiquetaPrioridad() + " Folios:" + afiData.RiesgoPerfil);// + afiData.Prioridad.toString().toEtiquetaPrioridad() + " " + info_xxx);
                 $('#titulo_gestion').text('Gestión Seg Cesantía');
@@ -226,9 +245,46 @@
                 });
 
             }
+
+
+            if (afiData.Telefono1 != "") {
+                $(".msjCovid").show();
+                $(".covidNTFContainer").html("");
+
+                $.niftyNoty({
+                    type: "danger",
+                    container: '.covidNTFContainer',
+                    html: "<strong>" + afiData.Telefono1 + "</strong>",
+                    focus: false,
+                    closeBtn: false
+                });
+            }
+            else {
+                $(".msjCovid").hide();
+            }
+
+
+            if (afiData.Telefono2 != "") {
+                $(".msjCovidEmp").show();
+                $(".covidEmpNTFContainer").html("");
+
+                $.niftyNoty({
+                    type: "danger",
+                    container: '.covidEmpNTFContainer',
+                    html: "<strong>" + afiData.Telefono2 + "</strong>",
+                    focus: false,
+                    closeBtn: false,
+                    font: 11,
+
+                });
+            }
+            else {
+                $(".msjCovidEmp").hide();
+            }
+
+
         }
-        else
-        {
+        else {
             $.niftyNoty({
                 type: 'primary',
                 container: '#bdy_busqueda',
@@ -237,6 +293,9 @@
                 timer: 3000
             });
         }
+
+
+
     });
 
 
@@ -342,10 +401,9 @@
     });
 
     //COMERCIAL
-    if (tipoCamp === '1' || tipoCamp === '5')
-    {
+    if (tipoCamp === '1' || tipoCamp === '5') {
         $('#datos-gestion').show();
-        
+
         //Datepicker de Pre Aprobados
         $('#demo-dp-component .input-group.date').datepicker(
             { autoclose: true, format: 'dd-mm-yyyy', startDate: "0d", language: "es", daysOfWeekDisabled: [6, 0], todayHighlight: true }
@@ -421,7 +479,7 @@
             $.SecPostJSON(BASE_URL + "/motor/api/Gestion/guardar-gestion", $form.serialize(), function (respuesta) {
 
                 if (respuesta.Estado === 'OK') {
-                    
+
                     $.niftyNoty({
                         type: 'success',
                         container: 'floating',
@@ -430,7 +488,9 @@
                         timer: 3000
                     });
 
-
+                    if ($('#ges_subestado').val() == '307' || $('#ges_subestado').val() == '308') {
+                        appVentaRemota.guardaRegistroBancario();
+                    }
                     render.HistorialGestion(respuesta.Objeto);
 
                     /*const idAsig = parseInt($('#ges_id_asignacion').val());
@@ -467,7 +527,7 @@
                     //$("#datos-gestion").bootstrapValidator('resetForm', true);
 
 
-                    
+
                 } else {
                     $.niftyNoty({
                         type: 'danger',
@@ -484,12 +544,11 @@
     }
 
     //RECUPERACIONES
-    if (tipoCamp === '2')
-    {
+    if (tipoCamp === '2') {
         $('#datos-gestion_normalizacion').show();
 
         $('#demo-dp-component_normalizacion .input-group.date').datepicker({ autoclose: true, format: 'dd-mm-yyyy', startDate: "0d", language: "es", daysOfWeekDisabled: [6, 0], todayHighlight: true });
-        
+
         //Carga de selects
         $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-estados-gestion", { tipoCampagna: tipoCamp, padre: 0 }, function (datos) {
             $("#ges_causa_basal_normalizacion").data("TipoAsignacion", tipoCamp);
@@ -581,8 +640,7 @@
 
             $.SecPostJSON(BASE_URL + "/motor/api/Gestion/guardar-gestion-normalizacion", $form.serialize(), function (respuesta) {
 
-                if (respuesta.Estado === 'OK')
-                {
+                if (respuesta.Estado === 'OK') {
                     render.HistorialGestionRecuperaciones(respuesta.Objeto);
 
                     /*const idAsig = parseInt($('#ges_id_asignacion').val());
@@ -610,7 +668,7 @@
                     }
 
                     sessionStorage.setItem('lista_seguimientos_recuperaciones', JSON.stringify(segimientos));*/
-                    
+
 
                     if (respuesta.Objeto.length > 0 && respuesta.Objeto[0].EstadoGestion.ejes_terminal === "CERRADOS") {
                         $(".esconder").hide();
@@ -627,8 +685,7 @@
                         timer: 3000
                     });
                 }
-                else
-                {
+                else {
                     $.niftyNoty({
                         type: 'danger',
                         container: 'floating',
@@ -644,8 +701,7 @@
     }
 
     //SEGURO CESANTIA
-    if (tipoCamp === '4')
-    {
+    if (tipoCamp === '4') {
         $('#datos-gestion-sc').show();
 
 
@@ -719,9 +775,9 @@
             var $form = $(e.target);
             $.SecPostJSON(BASE_URL + "/motor/api/Gestion/guardar-gestion-normalizacionSC", $form.serialize(), function (respuesta) {
 
-                if (respuesta.Estado === 'OK')
-                {
+                if (respuesta.Estado === 'OK') {
                     render.HistorialGestion(respuesta.Objeto);
+
 
                     $("#datos-gestion-sc").bootstrapValidator('resetForm', true);
                     //$("#mensaje_guardar").fadeIn();
@@ -734,8 +790,7 @@
                         timer: 3000
                     });
                 }
-                else
-                {
+                else {
                     $.niftyNoty({
                         type: 'danger',
                         container: 'floating',
@@ -747,9 +802,9 @@
 
             });
         });
-        
+
     }
-    
+
 
     //CONTACTABILIDAD
     $("#afi_telefonos").on("change", function (e) {
@@ -1161,28 +1216,20 @@
                 }
             });
         }
-
-
     });
 
-    var rutCont = $("#afi_rut").val().replace('.', '').replace('.', ''),
-    rutCont = rutCont.substring(0, rutCont.length - 2)
-    $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-comercial-beneficios", { Rut_: rutCont }, function (datos) {
-        $(".NotfGenericaContainer").html("");
-        let text = "";
-        var type = "info";
-        $.each(datos, function (i, e) {
-            $(".NotfGenerica").show();
-            text = e.Glosa;
-            $.niftyNoty({
-                type: type,
-                container: '.NotfGenericaContainer',
-                html: text,
-                focus: false,
-                closeBtn: false
-            });
-        });
+    $("#ges_subestado").on("change", function () {
+        switch (this.value) {
+            case "307":
+                $('#divBancos').css('display', 'block');
+                break;
+            case "308":
+                $('#divBancos').css('display', 'block');
+                break;
+        }
+        if (this.value != '307' && this.value != '308') {
+            $('#divBancos').css('display', 'none');
+        }
     });
-
 
 });

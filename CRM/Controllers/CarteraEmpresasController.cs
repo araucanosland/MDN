@@ -20,7 +20,6 @@ namespace CRM.Controllers
     public class CarteraEmpresasController : ApiController
     {
 
-
         // GET: CarteraEmpresas
         [AuthorizationRequired]
         [HttpGet]
@@ -31,7 +30,7 @@ namespace CRM.Controllers
             int codOficina = Convert.ToInt32(cookie.Cookies.FirstOrDefault(s => s.Name == "Oficina").Value);
             if (estado == null)
                 estado = "Todos";
-            return CarteraEmpresaDataAccess.ObtenerEmpresaIncorporacion(codOficina,estado);
+            return CarteraEmpresaDataAccess.ObtenerEmpresaIncorporacion(codOficina, estado);
         }
 
         // GET: CarteraEmpresas

@@ -21,9 +21,7 @@ var appIgn = new Vue({
         this.estadoNominaIgn();
     },
     methods: {
-
         cargalistaIgn() {
-
             var fechaHoy = new Date();
             var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
 
@@ -43,7 +41,6 @@ var appIgn = new Vue({
         loadTablaAcuerdoPago() {
             $("#tblIgn").bootstrapTable();
         },
-
 
         obEstadoIgn() {
             fetch(`http://${motor_api_server}:4002/ign/estados-ign`, {
@@ -185,7 +182,6 @@ var appIgnModal = new Vue({
                 fechaCompromiso = null;
             }
 
-
             if ($('#dllEstadoIgn').val() == '') {
                 $.niftyNoty({
                     type: 'danger',
@@ -195,7 +191,6 @@ var appIgnModal = new Vue({
                 });
                 return false;
             }
-
 
             if ($('#dllEstadoIgn').val() != 4 && $('#dllEstadoIgn').val() != 5) {
 
@@ -222,7 +217,6 @@ var appIgnModal = new Vue({
                 });
                 return false;
             }
-
 
             if ($('#slSubEstadoIng').val() == 12 && $('#ges_prox_compromiso_ign').val() == "") {
                 $.niftyNoty({

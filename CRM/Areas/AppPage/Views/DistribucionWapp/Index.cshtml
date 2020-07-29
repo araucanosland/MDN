@@ -3,10 +3,11 @@
 
     Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
 }
-
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
 
 <div id="page-content">
     <div id="contWapp">
@@ -17,61 +18,104 @@
             <div class="panel-body">
                 <div id="msjIgn"></div>
                 <div class="row">
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label class="control-label">RUT</label>
-                            <input type="text" class="form-control" id="txtRutIng" maxlength="8">
+                    <div class="col-md-4">
+                        <p class="text-main text-bold">DESEA CREAR UNA NUEVA LISTA DE DIFUSION ?</p>
+                        <div class="box-inline mar-rgt">
+                            <input id="demo-sw-checkstate" type="checkbox" checked>
                         </div>
-                    </div>
-                    <div class="col-sm-1">
-                        <div class="form-group">
-                            <label class="control-label">DV</label>
-                            <input type="text" class="form-control" id="txtDvIng" maxlength="1">
-                        </div>
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="form-group">
-                            <label class="control-label">NOMBRE CONTACTO</label>
-                            <input type="text" class="form-control" id="txtNomContIng">
-                        </div>
+                        <span id="demo-sw-checkstate-field" class="label label-info"></span>
                     </div>
                 </div>
+                <hr />
                 <div class="row">
                     <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="control-label">PUNTO ATENCION</label>
-                            <input type="text" class="form-control" id="txtPuntotIng">
+                        <div class="form-group" id="slNewList">
+                            <label class="control-label">INGRESE NUEVA LISTA DIFUSION</label>
+                            <input type="text" class="form-control" id="txtListDifusion" maxlength="250">
+                            <input type="text" class="form-control" id="txtId" style="display:none">
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="control-label">ESTAMENTO</label>
-                            <select class="form-control" id="txtEstamentotIng">
+                        <div class="form-group" id="slSearchList" style="display:none;">
+                            <label class="control-label">BUSCAR LISTA DIFUSION</label>
+                            <select class="lista-distribucion" name="lista-distribucion" id="lista-distribucion" v-model="modelos.listaDis" data-placeholder="Seleccione un Ejecutivo">
                                 <option value="">Seleccione...</option>
-                                <option value="Afiliado">AFILIADO</option>
-                                <option value="Pensionado">PENSIONADO</option>
-                                <option value="Representante Empresa">REPRESENTANTE EMPRESA</option>
-                                <option value="Representante Trabajadores">REPRESENTANTE TRABAJADORES</option>
+                                <option v-for="lisDis in filtros.listaDis" :value="lisDis.id">{{lisDis.listaDifusion}}</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="control-label">N° CELUALR</label>
-                            
-
-                            <div class="input-group mar-btm">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-mint" type="button" disabled style="background-color: #e8e4e4; border-color: #e8e4e4; color: #0e0d0d;">+56 9</button>
-                                </span>
-                                <input type="text" placeholder="Ej. 99887700" class="form-control" id="txtCelulartIng" maxlength="8">
+                </div>
+                <hr />
+                <div class="panel panel-bordered-primary" style="border-radius: 7px;">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">SELECCIONE EMPRESA</label>
+                                        <select class="form-control slEmpresa" v-model="modelos.empresa" id="slEmpresa" name="slEmpresa">
+                                            <option value="">Seleccione...</option>
+                                            <option v-for="emp in filtros.empresa" :value="emp.RutEmpresa">{{emp.NombreEmpresa}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">SELECCIONE PUNTO DE ATENCION</label>
+                                        <select class="form-control" id="slPuntoAtencion" name="slPuntoAtencion"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">RUT</label>
+                                    <input type="text" class="form-control" id="txtRutIng" maxlength="8">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label class="control-label">DV</label>
+                                    <input type="text" class="form-control" id="txtDvIng" maxlength="1">
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label class="control-label">NOMBRE CONTACTO</label>
+                                    <input type="text" class="form-control" id="txtNomContIng">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">ESTAMENTO</label>
+                                    <select class="form-control" id="txtEstamentotIng">
+                                        <option value="">Seleccione...</option>
+                                        <option value="Afiliado">AFILIADO</option>
+                                        <option value="Pensionado">PENSIONADO</option>
+                                        <option value="Representante Empresa">REPRESENTANTE EMPRESA</option>
+                                        <option value="Representante Trabajadores">REPRESENTANTE TRABAJADORES</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">N° CELULAR</label>
+                                    <div class="input-group mar-btm">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-mint" type="button" disabled style="background-color: #e8e4e4; border-color: #e8e4e4; color: #0e0d0d;">+56 9</button>
+                                        </span>
+                                        <input type="text" placeholder="Ej. 99887700" class="form-control" id="txtCelulartIng" maxlength="8">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="panel-footer text-right">
+            <div class="panel-footer text-right" id="btGuardar">
                 <button class="btn btn-success" type="submit" style="border-radius: 14px;" v-on:click="handleSubmitGuadarWapp">GUARDAR</button>
+            </div>
+            <div class="panel-footer text-right" id="btActualiza" style="display:none;">
+                <button class="btn btn-success" type="submit" style="border-radius: 14px;" v-on:click="handleSubmitActualizaWapp">ACTUALIZAR</button>
             </div>
         </div>
         <div class="row">
@@ -118,12 +162,15 @@
                                data-pagination="true" id="tblWapp" style="font-size: 12px">
                             <thead>
                                 <tr>
+                                    <th data-field="listaDifusion" data-sortable="true">NOM. LISTA DIFUSION</th>
                                     <th data-field="rut" data-sortable="true">RUT</th>
                                     <th data-field="dv" data-sortable="true">DV</th>
                                     <th data-field="nombreContacto" data-sortable="true">NOM. CONTACTO </th>
-                                    <th data-field="puntoAtencion" data-sortable="true">PUNTO ATENCION </th>
+                                    <th data-field="nombreAnexo" data-sortable="true">PUNTO ATENCION </th>
                                     <th data-field="estamento" data-sortable="true">ESTAMENTO</th>
                                     <th data-field="nCelular" data-sortable="true">N° CELULAR</th>
+                                    <th data-field="" data-sortable="true" data-formatter="formaterEdita">EDITAR</th>
+                                    <th data-field="" data-sortable="true" data-formatter="formaterElimina">ELIMINAR</th>
                                 </tr>
                             </thead>
                         </table>
@@ -133,7 +180,6 @@
         </div>
     </div>
 </div>
-
 
 @section script{
     <script src="~/Assets/js/vue.js"></script>
@@ -145,5 +191,7 @@
     <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
     <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
     <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
     <script src="~/Assets/js.App/src/distribucion-wapp.js?g=@Guid.NewGuid().ToString()"></script>
 }

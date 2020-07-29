@@ -64,10 +64,9 @@ namespace CRM.Business.Entity
         public string NombreEmpresa { get; set; }
 
     }
-
     public class IncorporacionesaEmpresaEntity
     {
-        
+
         public string RutEmpresa { get; set; }
         public string NombreEmpresa { get; set; }
         public string Comuna { get; set; }
@@ -85,9 +84,7 @@ namespace CRM.Business.Entity
         public string Region { get; set; }
         public string Estado { get; set; }
         public string Comentarios { get; set; }
-       
-       
+
+
     }
-
-
 }

@@ -1,0 +1,398 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+}
+
+<!--Masked Input [ OPTIONAL ]-->
+<script src="~/Assets/plugins/masked-input/jquery.maskedinput.min.js"></script>
+<!--Magic Checkbox [ OPTIONAL ]-->
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+
+<link href="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
+<!--Bootstrap Select [ OPTIONAL ]-->
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+<script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
+
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+
+    <div class="tab-base">
+        <!--Nav Tabs-->
+        <ul class="nav nav-tabs">
+
+            <li class="active">
+                <a data-toggle="tab" href="#demo-lft-tab-3" aria-expanded="false" id="tab_auditoria" class="tab-principal">Auditoría LM</a>
+            </li>
+
+        </ul>
+        <div class="tab-content">
+
+
+            <div id="demo-lft-tab-3" class="class=" tab-pane fade active in">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Auditoría Licencias Médicas</h3>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-1" style="margin-left:20px;margin-top:20px;">
+                                    <div class="input-group">
+                                        <button class="btn btn-warning" type="button" id="btn-buscar-exportar-xls">Exportar Excel</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="panel-body">
+
+                                <table id="demo-foo-filtering_busqueda_auditoria" class="table table-bordered table-hover toggle-circle" data-page-size="20">
+                                    <thead>
+                                        <tr>
+                                            <th data-toggle="true">Rut Afiliado</th>
+                                            <th style="width:10%;" data-toggle="true">Fecha Estado Oficina</th>
+                                            <th style="width:10%;" data-hide="phone">Fecha Ingreso LM</th>
+                                            <th data-hide="phone">Oficina</th>
+                                            <th data-hide="phone">Folio</th>
+                                            <th data-hide="phone">Tipo</th>
+                                            <th data-hide="phone">Es Banner</th>
+                                            <th data-hide="phone">Quien Envia</th>
+                                            <th style="width:10%;" data-hide="phone">Est. Oficina</th>
+                                            <th data-hide="phone">Est. Auditoría</th>
+                                            <th style="width:10%;" data-hide="phone">Responsable</th>
+                                            <th data-hide="phone">Acción</th>
+
+                                        </tr>
+                                    </thead>
+                                    <div class="pad-btm">
+
+                                        <div class="col-sm-2 mar-top">
+                                            <div class="form-group">
+                                                <label class="control-label">Oficina</label>
+                                                <select class="form-control" id="ddloficina" name="ddloficina"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2 mar-top">
+                                            <div class="form-group">
+                                                <label class="control-label">Estado Oficina</label>
+                                                <select class="form-control" id="ddlestados" name="ddlestados"></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2 mar-top">
+                                            <div class="form-group">
+                                                <label class="control-label">Fecha Oficina Desde</label>
+                                                <div id="auditoria-dp-component">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" id="flt_dia_auditoria_desde" name="flt_dia_auditoria_desde" readonly>
+                                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2 mar-top">
+                                            <div class="form-group">
+                                                <label class="control-label">Fecha Oficina Hasta</label>
+                                                <div id="auditoria-dp-component">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" id="flt_dia_auditoria_hasta" name="flt_dia_auditoria_hasta" readonly>
+                                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2 mar-top">
+                                            <div class="form-group">
+                                                <label class="control-label">Estado Auditoría</label>
+                                                <select class="form-control" id="ddlestadoAuditoria" name="ddlestadoAuditoria">
+                                                    <option value="-1">Todos...</option>
+                                                    <option value="1">No Encontrada</option>
+                                                    <option value="2">No Conforme</option>
+                                                    <option value="0">Conforme</option>
+                                                    <option value="-2">Pendiente</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2 mar-top">
+                                            <div class="form-group">
+                                                <label class="control-label" id="lbl_rut">Folio LM</label>
+                                                <input id="txt_folio_LM" type="text" placeholder="" class="form-control" autocomplete="off">
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-2 " style="margin-right:250px;">
+                                                <div class="form-group">
+                                                    <label class="control-label">Est. Responsable</label>
+                                                    <select class="form-control" id="ddlresponsable" name="ddlresponsable">
+                                                        <option value="Todos">Todos...</option>
+                                                        <option value="Auditoría">Auditoría</option>
+                                                        <option value="Oficina">Oficina</option>
+                                                        <option value="OK Contraloría">OK Contraloría</option>
+                                                        <option value="RRLL">Reg. Legales</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2" style="margin-top:22px;margin-left:-200px;">
+
+                                                <div class="input-group">
+                                                    <button class="btn btn-success" type="button" id="btn-buscar-licencia-auditoria">Buscar</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <tbody id="bdy_datos_busqueda_auditoria"></tbody>
+                                    <tfoot>
+                                        <tr>
+
+                                            <td colspan="12">
+                                                <div class="text-left">
+                                                    Cantidad de Registros <label id="cantLM" class="control-label"></label>
+                                                </div>
+                                                <div class="text-right">
+                                                    <ul class="pagination"></ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================================-->
+<!--End page content-->
+@section script{
+
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <!--Bootbox Modals [ OPTIONAL ]-->
+    @*<script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>*@
+    <script src="~/Assets/plugins/masked-input/jquery.maskedinput.min.js"></script>
+    <script src="~/Assets/js/jquery.rut.chileno.min.js"></script>
+
+    <script>
+
+
+        var cargador = {
+
+            //-----------tab_ingreso
+            CargaDatosEncabezado: function (enc_dia) {
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/datos-encabezado-lic", { codOficina: getCookie("Oficina"), dia: enc_dia }, function (menus) {
+                    $("#number_one").html(menus.Lm_Verde);
+                    $("#number_two").html(menus.Lm_Amarillo);
+                    $("#number_folios").html(menus.Lm_Naranjo);
+                    $("#number_three").html(menus.Lm_Rojo);
+                    $("#fecha_actualizacion").html(menus.Lm_Actualizacion);
+
+                });
+            },
+
+
+            CargaDatosTablaTab3Auditoria: function (folioLM, dia_desde, dia_hasta, TipoSeleccion, CodOficina, estadoRecepcion, responsable) {
+
+                $("#bdy_datos_busqueda_auditoria").html("");
+
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-licencias-auditoria", { folioLic: folioLM, diadesde: dia_desde, diahasta: dia_hasta, codOficina: CodOficina, tipoSeleccion: TipoSeleccion, estadoRecepcion: estadoRecepcion, Responsable: responsable }, function (result) {
+
+                    console.log(result);
+                    $.each(result, function (i, e) {
+
+                        $("#bdy_datos_busqueda_auditoria").append(
+                            $("<tr>").append($("<td>").html(e.RutAfiliado))
+                                // .append($("<td>").append($("<a>").prop({ "href": "/motor/App/Licencias/Ingreso?ci=" + e.CodIngreso }).addClass("btn-link").html(e.FolioLicencia)))
+                                .append($("<td>").html(e.FechaDf.toFecha()))
+                                .append($("<td>").html(e.FechaIngreso.toFecha()))
+                                .append($("<td>").html(e.OficinaDescripcion))
+                                .append($("<td>").html(e.FolioLicencia))
+                                .append($("<td>").html(e.FormatoLM))
+                                .append($("<td>").html(e.DescripcionesBanner))
+                                .append($("<td>").html(e.descripcionquienEnvia))
+                                .append($("<td>").html(e.estadoLicencia))
+                                .append($("<td>").html(e.DescripcionEstadoRevision))
+                                .append($("<td>").html(e.Responsable))
+                                .append($("<td>")
+                                    .append(e.Responsable != "Auditoría" ? $("") : $("<a>").addClass("btn").addClass("btn-primary").addClass("mar-lft").append($('<i>').addClass("ion-edit")).prop({ "title": "Editar", "href": "/motor/App/Licencias/auditorialicencia?ci=" + e.CodIngreso + "&tab=principal" }))
+                                ))
+                        $("#cantLM").html(i + 1)
+
+                    });
+
+                    //$("#btn-buscar-exportar-xls").prop("href", "/motor/api/Licencias/exportar-Visualizacion-Auditoria?codOficina=" + getCookie("Oficina") + "&dia=" + el_dia);
+
+
+                });
+                //$("#exportar").prop("href", "/motor/api/Licencias/export-pdf?codOficina=" + getCookie("Oficina") + "&dia=" + el_dia);
+                //$("#expLmMixta").prop("href", "/motor/api/Licencias/export-pdf-mixta?codOficina=" + getCookie("Oficina") + "&dia=" + el_dia);
+
+
+                $("#btn-buscar-exportar-xls").prop("href", "/motor/api/Licencias/exportar-Visualizacion-Auditoria?folioLic=" + folioLM + "&diadesde=" + dia_desde + "&diahasta=" + dia_hasta + "&codOficina=" + CodOficina + "&tipoSeleccion=" + TipoSeleccion + "&estadoRecepcion=" + estadoRecepcion + "&Responsable=" + $("#ddlresponsable").val());
+
+            }
+
+        }
+
+
+
+        //$(function () {
+        $(document).ready(function () {
+            var hoy = new Date();
+            var d = hoy.getDate().toString().paddingLeft("00") + "-" + (hoy.getMonth() + 1).toString().paddingLeft("00") + "-" + hoy.getFullYear().toString();
+
+            $("#flt_dia_auditoria_desde").val("01-04-2020")
+            $("#flt_dia_auditoria_hasta").val(d)
+
+
+            $('#auditoria-dp-component .input-group.date').datepicker({
+                autoclose: true,
+                format: 'dd-mm-yyyy',
+                language: "es",
+                daysOfWeekDisabled: [6, 0],
+                todayHighlight: true,
+                //startDate: '-7d'
+            });
+
+
+            $('#demo-foo-filtering_busqueda_auditoria').footable().on('footable_filtering', function (e) {
+
+                e.clear = !e.filter;
+            });
+
+
+
+            $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-suc-derivacion", function (datos) {
+
+                $("#ddloficina").html("");
+                $.each(datos, function (i, oficina) {
+                    $("#ddloficina").append($("<option>").val(oficina.codOficina).html(oficina.DescOficina).data("id", oficina.codOficinaCompin).data("nombre", oficina.OficinaCompin));
+                });
+            });
+
+            $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-estado-LM", function (datos) {
+
+                $("#ddlestados").html("");
+                $.each(datos, function (i, estado) {
+
+                    $("#ddlestados").append($("<option>").val(estado.Id).html(estado.Estado));
+                });
+            });
+
+
+
+
+            if (sessionStorage.getItem('folioLM') != null)
+                $("#txt_folio_LM").val(sessionStorage.getItem('folioLM'));
+
+
+            if (sessionStorage.getItem('dia_desde') != null)
+                $("#flt_dia_auditoria_desde").val(sessionStorage.getItem('dia_desde'));
+
+
+            if (sessionStorage.getItem('dia_hasta') != null)
+                $("#flt_dia_auditoria_hasta").val(sessionStorage.getItem('dia_hasta'));
+
+
+            if (sessionStorage.getItem('TipoSeleccion') != null)
+                $("#TipoSeleccion").val(sessionStorage.getItem('TipoSeleccion'));
+
+            if (sessionStorage.getItem('codoficina') != null)
+                $("#ddloficina").val(sessionStorage.getItem('codoficina'));
+
+
+            if (sessionStorage.getItem('estadoRecepcion') != null)
+                $("#ddlestadoAuditoria").val(sessionStorage.getItem('estadoRecepcion'));
+
+
+            if (sessionStorage.getItem('responsable') != null)
+                $("#ddlresponsable").val(sessionStorage.getItem('responsable'));
+
+
+            cargador.CargaDatosTablaTab3Auditoria(sessionStorage.getItem('folioLM'), sessionStorage.getItem('dia_desde'), sessionStorage.getItem('dia_hasta'), sessionStorage.getItem('TipoSeleccion'), sessionStorage.getItem('codoficina'), sessionStorage.getItem('estadoRecepcion'), sessionStorage.getItem('responsable'));
+
+            $("#bt-nueva").on("click", function () {
+                location.href = BASE_URL + "/motor/App/Licencias/Ingreso";
+            });
+
+
+
+
+
+
+            $('#btn-buscar-exportar-xls').on('click', function () {
+                debugger;
+                //cargador.CargaDatosTablaTab3Auditoria(sessionStorage.getItem('folioLM'), sessionStorage.getItem('dia_desde'), sessionStorage.getItem('dia_hasta'), sessionStorage.getItem('TipoSeleccion'), sessionStorage.getItem('codoficina'), sessionStorage.getItem('estadoRecepcion'), sessionStorage.getItem('responsable'));
+                sessionStorage.setItem('folioLM', $("#txt_folio_LM").val());
+                sessionStorage.setItem('dia_desde', $("#flt_dia_auditoria_desde").val());
+                sessionStorage.setItem('dia_hasta', $("#flt_dia_auditoria_hasta").val());
+                sessionStorage.setItem('TipoSeleccion', $("#ddlestados").val());
+                sessionStorage.setItem('codoficina', $("#ddloficina").val());
+                sessionStorage.setItem('estadoRecepcion', $("#ddlestadoAuditoria").val());
+                sessionStorage.setItem('responsable', $("#ddlresponsable").val());
+                location.href = BASE_URL + "/motor/api/Licencias/exportar-Visualizacion-Auditoria?folioLic=" + sessionStorage.getItem('folioLM') + "&diadesde=" + sessionStorage.getItem('dia_desde') + "&diahasta=" + sessionStorage.getItem('dia_hasta') + "&codOficina=" + sessionStorage.getItem('codoficina') + "&tipoSeleccion=" + sessionStorage.getItem('TipoSeleccion') + "&estadoRecepcion=" + sessionStorage.getItem('estadoRecepcion') + "&Responsable=" + sessionStorage.getItem('responsable');
+            });
+
+
+
+
+
+            $('#btn-buscar-licencia-auditoria').on('click', function () {
+
+
+                sessionStorage.setItem('folioLM', $("#txt_folio_LM").val());
+                sessionStorage.setItem('dia_desde', $("#flt_dia_auditoria_desde").val());
+                sessionStorage.setItem('dia_hasta', $("#flt_dia_auditoria_hasta").val());
+                sessionStorage.setItem('TipoSeleccion', $("#ddlestados").val());
+                sessionStorage.setItem('codoficina', $("#ddloficina").val());
+                sessionStorage.setItem('estadoRecepcion', $("#ddlestadoAuditoria").val());
+                sessionStorage.setItem('responsable', $("#ddlresponsable").val());
+
+
+
+                //cargador.CargaDatosTablaTab3Auditoria(folioLM, dia_desde, dia_hasta, TipoSeleccion, codoficina, estadoRecepcion, responsable);
+                cargador.CargaDatosTablaTab3Auditoria(sessionStorage.getItem('folioLM'), sessionStorage.getItem('dia_desde'), sessionStorage.getItem('dia_hasta'), sessionStorage.getItem('TipoSeleccion'), sessionStorage.getItem('codoficina'), sessionStorage.getItem('estadoRecepcion'), sessionStorage.getItem('responsable'));
+
+            })
+
+
+
+        });
+
+        $.fn.datepicker.dates['es'] = {
+            days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+            daysShort: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+            daysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"],
+            months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+            monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+            today: "Hoy",
+            clear: "Borrar",
+            format: "dd/mm/yyyy",
+            titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+            weekStart: 1
+        };
+
+
+
+
+
+
+    </script>
+
+}

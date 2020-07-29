@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CRM.Business.Entity
 {
-   public  class BusquedaLicenciasEntity
+    public class BusquedaLicenciasEntity
     {
 
         /// <summary>
@@ -100,7 +100,11 @@ namespace CRM.Business.Entity
         public int OficinaDerivacion { get; set; }
         public string EstadoLicencia { get; set; }
 
-        
+        public string descripcionEstadoRevision { get; set; }
+
+        public int viaIngresoLicenica { get; set; }
+        public string Responsable { get; set; }
+        public string compincentralizado { get; set; }
 
         /// <summary>
         /// Inicializa una nueva instancia de la clase <see cref="BusquedaLicenciasEntity"/>.
@@ -126,6 +130,16 @@ namespace CRM.Business.Entity
             OficinaDescripcion = string.Empty;
             NombreEjecutivo = string.Empty;
             EstadoLicencia = string.Empty;
+            descripcionEstadoRevision = string.Empty;
+            Responsable = string.Empty;
+            viaIngresoLicenica = 0;
+            compincentralizado = string.Empty;
+        }
+
+        public class FechaLMEntity
+        {
+            public int Id { get; set; }
+            public string Fecha { get; set; }
 
         }
     }

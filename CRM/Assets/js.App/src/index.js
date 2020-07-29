@@ -220,31 +220,31 @@ $(function () {
         //        });
         //    });
         //},
-       /* CargaEjecutivoPensionados: function () {
-            $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-ejecutivo-pensionados", { Token: getCookie('Token') }, function (datos) {
-                $("#dllEjePensiondos").html("");
-                $("#dllEjecutivo").html("");
-                $("#dllEjePensiondos").append($("<option>").attr("value", "0").html("Seleccione..."));
-                $("#dllEjecutivo").append($("<option>").attr("value", "").html("Todos"));
-                $.each(datos, function (i, e) {
-                    $("#dllEjePensiondos").append($("<option>").attr("value", e.Rut).html(e.Nombre))
-                    $("#dllEjecutivo").append($("<option>").attr("value", e.Rut).html(e.Nombre))
-                });
-            });
-        },
-        CargaHistorialGestPensionados: function (id) {
-            $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-historial-gestion-pensionados", { ges_bcam_uid: id }, function (datos) {
-                $("#gestiones_realizadas_pensionados").html("");
-                $.each(datos, function (i, e) {
-                    $("#gestiones_realizadas_pensionados").append($("<a>").attr("href", '#')
-                        .append($("<h4>").addClass("list-group-item-heading").html("<strong>Gestor:</strong> " + e.Ejecutivo.OrdenaNombreCompleto()))
-                        .append($("<p>").addClass("list-group-item-text").html("<strong>Fecha Gestión:</strong>" + e.ges_fecha_accion.toFechaHora() + ", <strong>Fecha Prox. Gestión:</strong> " + e.ges_fecha_compromete.toFechaHora()))
-                        .append($("<p>").addClass("list-group-item-text").html("<strong>Estado:</strong> " + e.estado + ",  <strong>Sub Estado:</strong> " + e.subEstado))
-                        .append($("<p>").addClass("list-group-item-text").html("<strong>Comentario:</strong> " + e.ges_descripcion_gst))
-                    );
-                });
-            });
-        },*/
+        /* CargaEjecutivoPensionados: function () {
+             $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-ejecutivo-pensionados", { Token: getCookie('Token') }, function (datos) {
+                 $("#dllEjePensiondos").html("");
+                 $("#dllEjecutivo").html("");
+                 $("#dllEjePensiondos").append($("<option>").attr("value", "0").html("Seleccione..."));
+                 $("#dllEjecutivo").append($("<option>").attr("value", "").html("Todos"));
+                 $.each(datos, function (i, e) {
+                     $("#dllEjePensiondos").append($("<option>").attr("value", e.Rut).html(e.Nombre))
+                     $("#dllEjecutivo").append($("<option>").attr("value", e.Rut).html(e.Nombre))
+                 });
+             });
+         },
+         CargaHistorialGestPensionados: function (id) {
+             $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-historial-gestion-pensionados", { ges_bcam_uid: id }, function (datos) {
+                 $("#gestiones_realizadas_pensionados").html("");
+                 $.each(datos, function (i, e) {
+                     $("#gestiones_realizadas_pensionados").append($("<a>").attr("href", '#')
+                         .append($("<h4>").addClass("list-group-item-heading").html("<strong>Gestor:</strong> " + e.Ejecutivo.OrdenaNombreCompleto()))
+                         .append($("<p>").addClass("list-group-item-text").html("<strong>Fecha Gestión:</strong>" + e.ges_fecha_accion.toFechaHora() + ", <strong>Fecha Prox. Gestión:</strong> " + e.ges_fecha_compromete.toFechaHora()))
+                         .append($("<p>").addClass("list-group-item-text").html("<strong>Estado:</strong> " + e.estado + ",  <strong>Sub Estado:</strong> " + e.subEstado))
+                         .append($("<p>").addClass("list-group-item-text").html("<strong>Comentario:</strong> " + e.ges_descripcion_gst))
+                     );
+                 });
+             });
+         },*/
         //ModalUltimaGestion: function (id) {
         //    $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-ultima-gestion-contacto", { Id: id, Cod_oficina: getCookie("Oficina") }, function (respuesta) {
         //        //console.log({
@@ -836,6 +836,7 @@ $(function () {
                 sortable: true,
                 formatter: function (value, row, index) {
                     return '<a href="#" class="btn-link" data-target="#mdl_data" data-toggle="modal" data-periodo="' + row.Seguimiento.Periodo + '" data-rut="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-tipo="' + row.Seguimiento.TipoAsignacion + '">' + value.toMoney(0).toString() + '-' + row.Seguimiento.Afiliado_Dv + '</a>';
+                    //  return '<a href="#" class="btn-link" data-target="#modal_beneficios" data-toggle="modal" data-periodo="' + row.Seguimiento.Periodo + '" data-rut="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-tipo="' + row.Seguimiento.TipoAsignacion + '">' + value.toMoney(0).toString() + '-' + row.Seguimiento.Afiliado_Dv + '</a>';
                 }
             },
             {
@@ -986,7 +987,9 @@ $(function () {
                 title: 'Rut',
                 sortable: true,
                 formatter: function (value, row, index) {
+                    //sergio
                     return '<a href="#" class="btn-link" data-target="#mdl_data" data-toggle="modal" data-tieneEncuesta="' + row.TieneEncuesta + '" data-periodo="' + row.Seguimiento.Periodo + '" data-rutafipsu="' + value + '" data-rut="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-tipo="' + row.Seguimiento.TipoAsignacion + '">' + value.toMoney(0).toString() + '-' + row.Seguimiento.Afiliado_Dv + '</a>';
+                    //return '<a href="#" class="btn-link" data-target="#modal_beneficios" data-toggle="modal" data-rutBnf="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-nombreBnf="' + row.Seguimiento.Nombre + ' ' + row.Seguimiento.Apellido + '"data-origen="' + 'Comercial' + '" data-tieneEncuesta="' + row.TieneEncuesta + '" data-ofertabnf="' + row.Seguimiento.OFERTA_FINAL_TOTAL + '" data-periodo="' + row.Seguimiento.Periodo + '" data-rutafipsu="' + value + '" data-rut="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-tipo="' + row.Seguimiento.TipoAsignacion + '">' + value.toMoney(0).toString() + '-' + row.Seguimiento.Afiliado_Dv + '</a>'; 
                 }
             },
             {
@@ -994,13 +997,27 @@ $(function () {
                 title: 'Nombre',
                 sortable: false,
                 formatter: function (value, row, index) {
-                    return value + ' ' + row.Seguimiento.Apellido
+                    //return value + ' ' + row.Seguimiento.Apellido
+                    if (row.Seguimiento.Telefono1 != "") {
+                        return value + ' ' + row.Seguimiento.Apellido + " " + ' <span class="badge badge-danger">Dif.</span>'
+                    }
+                    else {
+                        return value + ' ' + row.Seguimiento.Apellido
+                    }
                 }
             },
             {
                 field: 'Seguimiento.Empresa',
                 title: 'Empresa',
-                sortable: true
+                sortable: true,
+                formatter: function (value, row, index) {
+                    if (row.Seguimiento.Telefono2 != "") {
+                        return value + " " + '<span class="badge badge-danger">LE.</span>'
+                    }
+                    else {
+                        return value
+                    }
+                }
             },
             {
                 field: 'Seguimiento.Segmento',
@@ -1038,7 +1055,36 @@ $(function () {
                     let descripcion = "";
                     $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-comercial-beneficios", { Rut_: row.Seguimiento.Afiliado_Rut }, function (datos) {
                         $.each(datos, function (i, e) {
-                            descripcion = descripcion + ' ' + '<span class="badge badge-info">' + e.Descripcion + '</span>';
+
+                            if (e.color != '') {
+                                if (e.Color == 'azul') {
+                                    descripcion = descripcion + ' ' + '<span class="badge badge-primary">' + e.Descripcion + '</span>';
+                                }
+                                else if (e.Color == 'amarillo') {
+                                    descripcion = descripcion + ' ' + '<span class="badge badge-warning">' + e.Descripcion + '</span>';
+                                }
+
+                                else if (e.Color == 'gris') {
+                                    descripcion = descripcion + ' ' + '<span class="badge badge-warning" style="background-color: #999;">' + e.Descripcion + '</span>';
+                                }
+
+                                else if (e.Color == 'rojo') {
+                                    descripcion = descripcion + ' ' + '<span class="badge badge-danger">' + e.Descripcion + '</span>';
+                                }
+
+                                else if (e.Color == 'verde') {
+                                    descripcion = descripcion + ' ' + '<span class="badge badge-success">' + e.Descripcion + '</span>';
+                                }
+
+                                else if (e.Color == 'celeste') {
+                                    descripcion = descripcion + ' ' + '<span class="badge badge-info">' + e.Descripcion + '</span>';
+                                }
+
+
+                            }
+                            else {
+                                descripcion = descripcion + ' ' + '<span class="badge badge-info">' + e.Descripcion + '</span>';
+                            }
                         });
                     });
 
@@ -1082,21 +1128,21 @@ $(function () {
                     var mostrar = ''
                     switch (row.UltimaGestion.SubEstadoGestion.eges_id) {
                         case 202:
-                            mostrar = '<div class="label label-table label-success">' + row.UltimaGestion.SubEstadoGestion.eges_nombre + '</div>';
+                            mostrar = '<div class="label label-table label-success" style="border-radius: 9px">' + row.UltimaGestion.SubEstadoGestion.eges_nombre + '</div>';
                             break;
                         case 201:
                         case 203:
                         case 204:
                         case 205:
                         case 206:
-                            mostrar = '<div class="label label-table label-danger">' + row.UltimaGestion.SubEstadoGestion.eges_nombre + '</div>';
+                            mostrar = '<div class="label label-table label-danger" style="border-radius: 9px">' + row.UltimaGestion.SubEstadoGestion.eges_nombre + '</div>';
                             break;
                         default:
-                            mostrar = '<div class="label label-table label-warning">' + row.UltimaGestion.SubEstadoGestion.eges_nombre + '</div>';
+                            mostrar = '<div class="label label-table label-warning" style="border-radius: 9px">' + row.UltimaGestion.SubEstadoGestion.eges_nombre + '</div>';
 
                     }
 
-                    return value > 0 ? mostrar : '<div class="label label-table label-default">Sin Gestión</div>';
+                    return value > 0 ? mostrar : '<div class="label label-table label-default" style="border-radius: 9px">Sin Gestión</div>';
                 }
             },
         ]
@@ -1221,20 +1267,28 @@ $(function () {
 
 
     $('#mdl_data').on('show.bs.modal', function (e) {
-
+        $('#modal_beneficios').modal('hide')
         var rutPSU = $(e.relatedTarget).data("rutafipsu") // TEMPORAL BORRAR AL TERMINAR CAMPAÑA
         var trutAfiliado = $(e.relatedTarget).data("rut")
         var tperiodo = $(e.relatedTarget).data("periodo")
         var tipoCamp = $(e.relatedTarget).data("tipo")
         var idEncuesta = $(e.relatedTarget).data("tieneencuesta")
-        $('#linkencuesta').prop('href', '/motor/App/DatosAfiliados?RutBuscar=' + trutAfiliado)
+        $('#afi_rut_busc_b').val(trutAfiliado)
 
+        //console.log('rut 1 :' + trutAfiliado + 'Rut 2 : ' + rutPSU)
+
+       
+       // appVentaRemota.obtenerBanco()
+        
+
+        $('#linkencuesta').prop('href', '/motor/App/DatosAfiliados?RutBuscar=' + trutAfiliado)
         $.SecGetJSON(BASE_URL + "/motor/api/Gestion/obtener-seguimiento", { periodo: tperiodo, afiRut: trutAfiliado, tipoCampagna: tipoCamp }, function (datos) {
 
             if (datos.Estado === "OK") {
                 const Asignacion = datos.Objeto;
                 const afiData = Asignacion.Seguimiento;
                 const gesList = Asignacion.HistorialGestion;
+                console.log({ prueba_x: afiData })
 
                 if (idEncuesta == 0) {
                     $("#lbMensajeEncuesta").css('display', 'block');
@@ -1432,6 +1486,43 @@ $(function () {
                     }
 
 
+
+                    if (afiData.Telefono1 != "") {
+                        $(".msjCovid").show();
+                        $(".covidNTFContainer").html("");
+
+                        $.niftyNoty({
+                            type: "danger",
+                            container: '.covidNTFContainer',
+                            html: "<strong>" + afiData.Telefono1 + "</strong>",
+                            focus: false,
+                            closeBtn: false
+                        });
+                    }
+                    else {
+                        $(".msjCovid").hide();
+                    }
+
+
+                    if (afiData.Telefono2 != "") {
+                        $(".msjCovidEmp").show();
+                        $(".covidEmpNTFContainer").html("");
+
+                        $.niftyNoty({
+                            type: "danger",
+                            container: '.covidEmpNTFContainer',
+                            html: "<strong>" + afiData.Telefono2 + "</strong>",
+                            focus: false,
+                            closeBtn: false,
+                            font: 11,
+
+                        });
+                    }
+                    else {
+                        $(".msjCovidEmp").hide();
+                    }
+
+
                     render.HistorialGestion(gesList);
                     $("#myLargeModalLabel").html("Gestión Comercial " + afiData.Prioridad.toString().toEtiquetaPrioridad() + " " + info_xxx);
 
@@ -1478,8 +1569,8 @@ $(function () {
                 let lerut = $('#afi_empresa_rut').val().replace(/\./g, '')
                 lerut = lerut.substring(0, 8);
 
-                console.log('Sergio:' +  lerut)
-               // appInfoEmpresa.obtenerInfoEmpresa(lerut);
+                console.log('Sergio:' + lerut)
+                // appInfoEmpresa.obtenerInfoEmpresa(lerut);
 
 
             }
@@ -1497,7 +1588,7 @@ $(function () {
 
         /// TEMPORAL BORRA CAMPAÑA PARA PSU SERGIO
 
-        console.log(rutPSU)
+        // console.log(rutPSU)
 
         $.SecGetJSON(BASE_URL + "/motor/api/Gestion/obtener-afi-psu", { Afiliado_Rut: rutPSU }, function (datos) {
             $(".psuNTF").show();
@@ -1570,6 +1661,8 @@ $(function () {
                 $("#ges_subestadoDR").html("");
                 $("#ges_subestadoDR").attr("disabled", true);
             }
+
+
         });
 
         //Evento de estado maestro tmc
@@ -1700,13 +1793,15 @@ $(function () {
 
                         render.HistorialGestion(respuesta.Objeto);
 
+                        if ($('#ges_subestado').val() == '307' || $('#ges_subestado').val() == '308') {
+                            appVentaRemota.guardaRegistroBancario();
+                        }
+
                         if (respuesta.Objeto != null && respuesta.Objeto.length > 0 && respuesta.Objeto[0].EstadoGestion.ejes_terminal === "CERRADOS") {
                             $(".esconder").hide();
                         }
 
                         $("#datos-gestion").bootstrapValidator('resetForm', true);
-
-
                     } else {
                         $.niftyNoty({
                             type: 'danger',
@@ -1995,7 +2090,9 @@ $(function () {
                 });
             });
 
-        });
+            });
+
+        appVentaRemota.cargaLeadFiltroCall(trutAfiliado)
     });
 
     $('#form-registro-contacto_norm').bootstrapValidator({
@@ -2222,6 +2319,7 @@ $(function () {
                 $("#labelrutempresa").text("Rut Empresa");
                 break;
         }
+        appVentaRemota.setDefaultsModalData();
     });
 
     //PREFERENCIAS AFILIADO
@@ -2731,8 +2829,6 @@ $(function () {
     });
 
 
-
-
     if (getCookie('Cargo') == 'Agente' || getCookie('Cargo') == 'Jefe Servicio al Cliente') {
         $('#divAgente').css('display', 'block')
         $('#mdAsigEjePen').css('display', 'block');
@@ -2752,12 +2848,26 @@ $(function () {
 
         $('[href="#demo-lft-tab-6"]').tab('show');
         $('[href="#demo-lft-tab-5"]').tab('hide');
-
     }
+
+    $("#ges_subestado").on("change", function () {
+        switch (this.value) {
+            case "307":
+                $('#divBancos').css('display', 'block');
+                break;
+            case "308":
+                $('#divBancos').css('display', 'block');
+                break;
+        }
+        if (this.value != '307' && this.value != '308') {
+            $('#divBancos').css('display', 'none');
+        }
+    });
+
 
     //Ejecutivos Incorporación y Prospección Pensionados
     //Ejecutivo Pensiona
-   // render.CargaEjecutivoPensionados();
+    // render.CargaEjecutivoPensionados();
     //render.CargaEstadosGestion();
     //GUARDA CONTACTO
 
@@ -3375,7 +3485,7 @@ $(function () {
         });
     });*/
 
-//NUEVO MEDELO SERGIO
+    //NUEVO MEDELO SERGIO
     /*
     $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-comuna-pensionados", function (menus) {
         $("#pen_comuna").html("");

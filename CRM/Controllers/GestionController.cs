@@ -63,29 +63,6 @@ namespace CRM.Controllers
 
 
 
-        [AuthorizationRequired]
-        [HttpGet]
-        [Route("v2/lista-afiliados")]
-        public BootstrapTableResult<CargasFamiliaresEntity> ListaAfiliados(int limit = 30, int offset = 0, string sort = "asc", string order = "")
-        {
-            string token = ActionContext.Request.Headers.GetValues("Token").First();
-            List<CargasFamiliaresEntity> res = new List<CargasFamiliaresEntity>();
-            BootstrapTableResult<CargasFamiliaresEntity> xd = new BootstrapTableResult<CargasFamiliaresEntity>();
-            CookieHeaderValue cookie = Request.Headers.GetCookies("Oficina").FirstOrDefault();
-            int codOficina = Convert.ToInt32(cookie.Cookies.FirstOrDefault(s => s.Name == "Oficina").Value);
-
-            sort = sort.Substring(sort.IndexOf(".") + 1);
-            sort = sort.IndexOf(".") >= 0 ? sort.Substring(sort.IndexOf(".") + 1) : sort;
-            res = CargasFamiliaresDataAccess.obtenerCargasFamiliaresByOficina(codOficina);
-
-
-            //return res;
-            xd.rows = res;
-            xd.total = res.Count > 0 ? res[0].TotalRegistros : 0;
-
-            return xd;
-
-        }
 
         [AuthorizationRequired]
         [HttpGet]

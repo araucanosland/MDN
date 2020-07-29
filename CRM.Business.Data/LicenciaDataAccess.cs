@@ -7,6 +7,7 @@ using CRM.Business.Entity;
 using System.Data;
 using CDK.Data;
 using CDK.Integration;
+using static CRM.Business.Entity.BusquedaLicenciasEntity;
 
 namespace CRM.Business.Data
 {
@@ -14,10 +15,17 @@ namespace CRM.Business.Data
     {
         public static List<EmpresaLicenciaEntity> ListarEmpresaLicencia()
         {
-            return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_ObtenerEmpresaLicencia",  ConstructorEntidad);
+            return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_ObtenerEmpresaLicencia", ConstructorEntidad);
         }
 
-        public static LicenciaEntity ObtenerRecepcionLicencia(string empresaRut, DateTime fecha )
+        public static List<FechaLMEntity> ListaFechaLM()
+        {
+            //return DBHelper.InstanceReportes.ObtenerColeccion("negocios.spReporte_ListaPeriodos", ConstructorEntidad);
+            return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_DocumentosFaltantes_listar_fechasLM", ConstructorFechaLM);
+        }
+
+
+        public static LicenciaEntity ObtenerRecepcionLicencia(string empresaRut, DateTime fecha)
         {
             Parametros prms = new Parametros()
             {
@@ -63,13 +71,18 @@ namespace CRM.Business.Data
             };
             return DBHelper.InstanceCRM.ObtenerEscalar<int>("spMotor_LicenciaEnvioCompin_Guardar", parametros);
         }
-        public static List<OficinaDerivacionEntity>ListaOficinaDerivacion()
+        public static List<OficinaDerivacionEntity> ListaOficinaDerivacion()
         {
             //return DBHelper.InstanceReportes.ObtenerColeccion("negocios.spReporte_ListaPeriodos", ConstructorEntidad);
             return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_ListaOficinaMaestra", ConstructorOfiDerivacion);
         }
 
-        
+        public static List<EstadosLMEntity> ListaEstadoLM()
+        {
+            //return DBHelper.InstanceReportes.ObtenerColeccion("negocios.spReporte_ListaPeriodos", ConstructorEntidad);
+            return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_Listar_Estados", ConstructorEstadoLM);
+        }
+
         #region CONSTRUCTORES
 
         private static LicenciaCompinEntity ConstructorLicenciaCompin(DataRow row)
@@ -110,10 +123,31 @@ namespace CRM.Business.Data
         {
             return new OficinaDerivacionEntity
             {
-                codOficina= row["Cod_Oficina"] != DBNull.Value ? Convert.ToInt32(row["Cod_Oficina"]) : 0,
-                DescOficina= row["Oficina"] != DBNull.Value ? row["Oficina"].ToString() : string.Empty,
+                codOficina = row["Cod_Oficina"] != DBNull.Value ? Convert.ToInt32(row["Cod_Oficina"]) : 0,
+                DescOficina = row["Oficina"] != DBNull.Value ? row["Oficina"].ToString() : string.Empty,
                 codOficinaCompin = row["CodOficinaCompin"] != DBNull.Value ? Convert.ToInt32(row["CodOficinaCompin"]) : 0,
                 OficinaCompin = row["OficinaCompin"] != DBNull.Value ? row["OficinaCompin"].ToString() : string.Empty,
+
+            };
+        }
+
+        private static EstadosLMEntity ConstructorEstadoLM(DataRow row)
+        {
+            return new EstadosLMEntity
+            {
+                Id = row["Id"] != DBNull.Value ? Convert.ToInt32(row["Id"]) : 0,
+                Estado = row["Estado"] != DBNull.Value ? row["Estado"].ToString() : string.Empty,
+
+
+            };
+        }
+
+        private static FechaLMEntity ConstructorFechaLM(DataRow row)
+        {
+            return new FechaLMEntity
+            {
+                Id = row["Id"] != DBNull.Value ? Convert.ToInt32(row["Id"]) : 0,
+                Fecha = row["fecha"] != DBNull.Value ? row["fecha"].ToString() : string.Empty,
 
             };
         }

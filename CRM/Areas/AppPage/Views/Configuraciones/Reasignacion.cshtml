@@ -697,29 +697,38 @@
                                     }
                                 }
 
-                                $.SecPostJSON(BASE_URL + "/motor/api/Gestion/procesar-reasignacion", WebReasignacion, function (respuesta) {
-                                    if (respuesta.Estado === "OK") {
+                                //setTimeout(function () {
 
-                                        $("#nameOrigen").html($("#slEjecutivOrigen").find(':selected').html())
-                                        $("#nameDestino").html($("#slEjecutivDestino").find(':selected').html())
-                                        $("#resumen_tipo_camp").html($("#slTipoCamp").find(':selected').html())
-                                        $("#resumen_cantidad_asignaciones").html($("#nroCasosAsignar").val());
-                                        $("#origenAntes").html(respuesta.Objeto.AuxLog.OrigenAntes);
-                                        $("#origenDespues").html(respuesta.Objeto.AuxLog.OrigenDespues);
-                                        $("#destinoAntes").html(respuesta.Objeto.AuxLog.DestinoAntes);
-                                        $("#destinoDespues").html(respuesta.Objeto.AuxLog.DestinoDespues);
+                                    $.SecPostJSON(BASE_URL + "/motor/api/Gestion/procesar-reasignacion", WebReasignacion, function (respuesta) {
+                                        if (respuesta.Estado === "OK") {
+
+                                            $("#nameOrigen").html($("#slEjecutivOrigen").find(':selected').html())
+                                            $("#nameDestino").html($("#slEjecutivDestino").find(':selected').html())
+                                            $("#resumen_tipo_camp").html($("#slTipoCamp").find(':selected').html())
+                                            $("#resumen_cantidad_asignaciones").html($("#nroCasosAsignar").val());
+                                            $("#origenAntes").html(respuesta.Objeto.AuxLog.OrigenAntes);
+                                            $("#origenDespues").html(respuesta.Objeto.AuxLog.OrigenDespues);
+                                            $("#destinoAntes").html(respuesta.Objeto.AuxLog.DestinoAntes);
+                                            $("#destinoDespues").html(respuesta.Objeto.AuxLog.DestinoDespues);
 
 
-                                        $("#origenAntes").html($("#nroCasosOrigen").val());
-                                        $("#origenDespues").html($("#Resumen_EjecutivoOrigen_nroCasos_despues").val());
+                                            $("#origenAntes").html($("#nroCasosOrigen").val());
+                                            $("#origenDespues").html($("#Resumen_EjecutivoOrigen_nroCasos_despues").val());
 
-                                        $("#destinoAntes").html($("#nroCasosDestinoActual").val());
-                                        $("#destinoDespues").html($("#Resumen_EjecutivoDestino_nroCasos_despues").val());
+                                            $("#destinoAntes").html($("#nroCasosDestinoActual").val());
+                                            $("#destinoDespues").html($("#Resumen_EjecutivoDestino_nroCasos_despues").val());
 
-                                        $(".CharlyWizardContainer").hide();
-                                        $("#CharlyFinallyContainer").show();
-                                    }
-                                });
+                                            $(".CharlyWizardContainer").hide();
+                                            $("#CharlyFinallyContainer").show();
+                                        }
+                                    });
+
+                               // }, 1000);
+
+
+
+
+
                             }
                             else {
 

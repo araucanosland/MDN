@@ -196,26 +196,29 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\AppPage\Controllers\AtencionClienteController.cs" />
+    <Compile Include="Areas\AppPage\Controllers\CallBackController.cs" />
+    <Compile Include="Areas\AppPage\Controllers\CallCenterController.cs" />
     <Compile Include="Areas\AppPage\Controllers\CampanaPexController.cs" />
     <Compile Include="Areas\AppPage\Controllers\CarteraFFVVController.cs" />
+    <Compile Include="Areas\AppPage\Controllers\CopagoController.cs" />
     <Compile Include="Areas\AppPage\Controllers\CosalController.cs" />
     <Compile Include="Areas\AppPage\Controllers\DistribucionWappController.cs" />
     <Compile Include="Areas\AppPage\Controllers\MantenedoresController.cs" />
+    <Compile Include="Areas\AppPage\Controllers\RecertificaciónController.cs" />
     <Compile Include="Areas\AppPage\Controllers\SegurosController.cs" />
     <Compile Include="Areas\AppPage\Controllers\UpdateController.cs" />
-
-    <Compile Include="Areas\EmpresasPage\App_Start\Controllers\CarteraEmpresaEjecutivoController.cs" />
-    <Compile Include="Areas\EmpresasPage\App_Start\Controllers\ComiteParitarioController.cs" />
-    <Compile Include="Areas\EmpresasPage\App_Start\Controllers\CarteraEmpresasController.cs" />
-    <Compile Include="Areas\EmpresasPage\App_Start\Controllers\DetalleGestionController.cs" />
-    <Compile Include="Areas\EmpresasPage\App_Start\Controllers\DetalleVisitaController.cs" />
-    <Compile Include="Areas\EmpresasPage\App_Start\Controllers\FichaEmpresaController.cs" />
-    <Compile Include="Areas\EmpresasPage\App_Start\Controllers\IncorporacionesController.cs" />
-    <Compile Include="Areas\EmpresasPage\App_Start\Controllers\InfoEmpresaController.cs" />
-
+    <Compile Include="Areas\EmpresasPage\Controllers\CarteraEmpresaEjecutivoController.cs" />
+    <Compile Include="Areas\EmpresasPage\Controllers\ComiteParitarioController.cs" />
+    <Compile Include="Areas\EmpresasPage\Controllers\CarteraEmpresasController.cs" />
+    <Compile Include="Areas\EmpresasPage\Controllers\DetalleGestionController.cs" />
+    <Compile Include="Areas\EmpresasPage\Controllers\DetalleVisitaController.cs" />
+    <Compile Include="Areas\EmpresasPage\Controllers\FichaEmpresaController.cs" />
+    <Compile Include="Areas\EmpresasPage\Controllers\IncorporacionesController.cs" />
+    <Compile Include="Areas\EmpresasPage\Controllers\InfoEmpresaController.cs" />
     <Compile Include="Areas\EmpresasPage\EmpresasPageAreaRegistration.cs" />
     <Compile Include="Areas\EmpresasPage\App_Start\EmpresasPageConfig.cs" />
-    <Compile Include="Areas\EmpresasPage\App_Start\Controllers\InicioController.cs" />
+    <Compile Include="Areas\EmpresasPage\Controllers\InicioController.cs" />
     <Compile Include="Areas\AppPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\AppPage\App_Start\AppPageConfig.cs" />
     <Compile Include="Areas\AppPage\Controllers\CarteraEmpresasController.cs" />
@@ -383,9 +386,13 @@
     <Content Include="Assets\js.App\jspdf.plugin.standard_fonts_metrics.js" />
     <Content Include="Assets\js.App\printThis.js" />
     <Content Include="Assets\js.App\src\acuerdo_pagos.js" />
+    <Content Include="Assets\js.App\src\atencion-cliente.js" />
+    <Content Include="Assets\js.App\src\beneficios.js" />
     <Content Include="Assets\js.App\src\BuscadorGrilla.js" />
+    <Content Include="Assets\js.App\src\call-back.js" />
     <Content Include="Assets\js.App\src\CargasFamiliares.js" />
     <Content Include="Assets\js.App\src\contactabilidad-empresa.js" />
+    <Content Include="Assets\js.App\src\copago.js" />
     <Content Include="Assets\js.App\src\distribucion-wapp.js" />
     <Content Include="Assets\js.App\src\dotacion-asignable.js" />
     <Content Include="Assets\js.App\src\empresas.incorporaciones.prospectos-visados.reasignacion.js" />
@@ -404,8 +411,10 @@
     <Content Include="Assets\js.App\src\oferta.js" />
     <Content Include="Assets\js.App\src\pensionados.js" />
     <Content Include="Assets\js.App\src\pex.js" />
+    <Content Include="Assets\js.App\src\recertificación.js" />
     <Content Include="Assets\js.App\src\seguros.js" />
     <Content Include="Assets\js.App\src\seguro_cesantia.js" />
+    <Content Include="Assets\js.App\src\venta-remota.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -556,9 +565,21 @@
     <Content Include="Areas\EmpresasPage\Views\InfoEmpresa\Index.cshtml" />
     <Content Include="Areas\AppPage\Views\DistribucionWapp\Index.cshtml" />
     <Content Include="Areas\AppPage\Views\Licencias\BusquedaLicencia.cshtml" />
-
+    <Content Include="Areas\AppPage\Views\AtencionCliente\Index.cshtml" />
+    <Content Include="Areas\AppPage\Views\CallBack\Index.cshtml" />
+    <Content Include="Areas\AppPage\Views\AtencionCliente\busquedaDiferimiento.cshtml" />
+    <Content Include="Areas\AppPage\Views\FichaEmpresa\CargasFamiliares.cshtml" />
     <Content Include="Areas\AppPage\Views\Gestion\CargasFamiliares.cshtml" />
-
+    <Content Include="Areas\AppPage\Views\Recertificación\Index.cshtml" />
+    <Content Include="Areas\AppPage\Views\CallBack\DiferimientoCall.cshtml" />
+    <Content Include="Areas\AppPage\Views\Licencias\ListarAuditoriaLicencia.cshtml" />
+    <Content Include="Areas\AppPage\Views\Licencias\AuditoriaLicencia.cshtml" />
+    <Content Include="Areas\AppPage\Views\Licencias\VistaCallMultiOficina.cshtml" />
+    <Content Include="Areas\AppPage\Views\CallCenter\Index.cshtml" />
+    <Content Include="Areas\AppPage\Views\Gestion\Beneficios.cshtml" />
+    <Content Include="Areas\AppPage\Views\Copago\Index.cshtml" />
+    <Content Include="Areas\AppPage\Views\Licencias\LineaTiempoLM.cshtml" />
+    <Content Include="Areas\AppPage\Views\Licencias\ListarRRLL.cshtml" />
     <None Include="Properties\PublishProfiles\CharlyMOTOR.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\Settings.settings">
@@ -678,6 +699,7 @@
     <Folder Include="Areas\EmpresasPage\Models\" />
     <Folder Include="Areas\EmpresasPage\SampleGeneration\" />
     <Folder Include="Assets\AfiliadoExcel\" />
+    <Folder Include="Assets\CargaExcelRRLL\EnvioTaTa\" />
     <Folder Include="Views\Afiliados\" />
     <Folder Include="Views\ArchivoGP\" />
     <Folder Include="Views\Buscar\" />

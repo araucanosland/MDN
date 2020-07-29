@@ -1,0 +1,270 @@
+﻿
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Motor de Negocios</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href="~/Assets/css.App/bundle.min.css" rel="stylesheet">
+    <link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+    <link href="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+    <link href="~/Assets/plugins/x-editable/css/bootstrap-editable.css" rel="stylesheet">
+    <!--TypeaheadJS [ OPTIONAL ]-->
+    <link href="~/Assets/plugins/x-editable/inputs-ext/typeaheadjs/lib/typeahead.js-bootstrap.css" rel="stylesheet">
+    <!--Address [ OPTIONAL ]-->
+    <link href="~/Assets/plugins/x-editable/inputs-ext/address/address.css" rel="stylesheet">
+    <link href="~/Assets/css/demo/nifty-demo-icons.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/demo/nifty-demo.min.css" rel="stylesheet">
+
+    <link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+
+    <link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+
+    <link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+    <script src="~/Assets/js.App/bundle.min.js?g=@Guid.NewGuid().ToString()"></script>
+
+    <script src="~/Assets/js/vue.js"></script>
+
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+
+
+
+</head>
+<body>
+
+    <div id="page-content">
+
+        <div id="contactoDiferimiento">
+            <div class="panel" style="border-radius: 7px;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">DATOS REQUERIMIENTO</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="panel" style="border-radius: 7px;">
+                            <div class="panel-body">
+                                <div id="msjContacto"></div>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">RUT</label>
+                                            <input class="form-control" type="text" id="txtRutContacto" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="form-group">
+                                            <label class="control-label">DV</label>
+                                            <input class="form-control" id="txtDvContacto" type="text" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label class="control-label">NOMBRE</label>
+                                            <input class="form-control" id="txtNombreContacto" type="text" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">RUT(Correcto)</label>
+                                            <input class="form-control" id="txtRutClieCoContacto" maxlength="8" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">DV(Correcto)</label>
+                                            <input class="form-control" id="txtdvClieCoContacto" maxlength="1" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">FONO</label>
+                                            <input class="form-control" id="txtFonoContacto" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">EMAIL</label>
+                                            <input class="form-control" id="txtMailContacto" type="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">REQUERIMIENTO</label>
+                                            <input class="form-control" id="txtReqContacto" type="text" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" style="margin-top: 21px;" v-on:click="actualizaContactoDif">ACTUALIZAR CONTACTO</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">DETALLE REQUERIMIENTO</label>
+                                    <textarea rows="3" id="txtDetalleContacto" name="txtDetalleContacto" class="form-control" disabled></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel" style="border-radius: 7px;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">ESTADO REQUERIMIENTO</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">ESTADO</label>
+                                <input class="form-control" id="txtEstadoEstado" type="text" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label class="control-label">EJECUTIVO</label>
+                                <input class="form-control" id="txtEstadoEjecutivo" type="text" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">OBSERVACION</label>
+                        <textarea rows="3" id="txtestadoObs" name="txtestadoObs" class="form-control" disabled></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        var motor_api_server = "motordenegocios"//"localhost";
+        var appContactoDiferimiento = new Vue({
+            el: '#contactoDiferimiento',
+            dataContacto: {},
+            mounted() {
+                this.obtenerContactoDiferimiento();
+            },
+            methods: {
+
+                obtenerContactoDiferimiento() {
+                    let rut = httpGet("RutBuscar");
+                    let rutS = rut.substr(0, rut.length - 2)
+                    fetch(`http://${motor_api_server}:4002/atencion-cliente/lista-contacto-diferimiento/${rutS}`, {
+                        method: 'GET',
+                        mode: 'cors',
+                        cache: 'default'
+                    })
+                        .then(response => response.json())
+                        .then(datos => {
+                            this.dataContacto = datos;
+
+                            $('#txtRutContacto').val(datos.rut);
+                            $('#txtDvContacto').val(datos.dv);
+                            $('#txtNombreContacto').val(datos.nombre);
+                            // $('#txtEstadoContacto').val(datos.ultimaGestion.estado);
+                            $('#txtFonoContacto').val(datos.telefono);
+                            $('#txtMailContacto').val(datos.email);
+                            $('#txtReqContacto').val(datos.requerimiento);
+                            $('#txtDetalleContacto').val(datos.observacion);
+                            $('#txtRutClieCoContacto').val(datos.rutCorrecto);
+                            $('#txtdvClieCoContacto').val(datos.dvCorrecto);
+
+                            $('#txtEstadoEstado').val(datos.estado);
+                            $('#txtEstadoEjecutivo').val(datos.nombreEjecutivo);
+                            $('#txtestadoObs').val(datos.observacionEstado);
+
+                            return datos
+                        })
+                },
+                actualizaContactoDif() {
+                    if ($('#txtFonoContacto').val() == '') {
+                        $.niftyNoty({
+                            type: 'danger',
+                            message: 'Debe ingresar un fono.',
+                            container: '#msjContacto',
+                            timer: 3000
+                        });
+                        return false;
+                    }
+
+                    if ($('#txtMailContacto').val() == '') {
+                        $.niftyNoty({
+                            type: 'danger',
+                            message: 'Debe ingresar un email.',
+                            container: '#msjContacto',
+                            timer: 3000
+                        });
+                        return false;
+                    }
+
+                    const formData = {
+                        telefono: $('#txtFonoContacto').val(),
+                        email: $('#txtMailContacto').val(),
+                        rut: $('#txtRutContacto').val(),
+                        oficina: parseInt(getCookie('Oficina')),
+                        rut_ejecutivo: getCookie('Rut'),
+                        rut_correcto: $('#txtRutClieCoContacto').val(),
+                        dv_correcto: $('#txtdvClieCoContacto').val(),
+                    };
+
+                    fetch(`http://${motor_api_server}:4002/atencion-cliente/actualiza-contacto-diferimiento`, {
+                        method: 'POST',
+                        body: JSON.stringify(formData),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Token': getCookie('Token')
+                        }
+                    }).then(async (response) => {
+                        if (!response.ok) {
+                            $.niftyNoty({
+                                type: 'danger',
+                                message: 'Error al intentar actualizar.',
+                                container: '#msjContacto',
+                                timer: 3000
+                            });
+                            return false;
+                        }
+                        $.niftyNoty({
+                            type: 'success',
+                            icon: 'pli-like-2 icon-2x',
+                            message: 'Se actualizo Correctamente.',
+                            container: '#msjContacto',
+                            timer: 3000
+                        });
+
+                    });
+                },
+            }
+        });
+
+    </script>
+
+</body>
+</html>

@@ -10,7 +10,7 @@ namespace CRM.Business.Data
 {
     public class CarteraEmpresaDataAccess
     {
-        public static List<IncorporacionesaEmpresaEntity> ObtenerEmpresaIncorporacion(int Oficina,string estado)
+        public static List<IncorporacionesaEmpresaEntity> ObtenerEmpresaIncorporacion(int Oficina, string estado)
         {
 
             Parametros pram = new Parametros
@@ -108,29 +108,29 @@ namespace CRM.Business.Data
 
         private static IncorporacionesaEmpresaEntity ListadoEmpresasIncorporacion(DataRow row)
         {
-           
-                return new IncorporacionesaEmpresaEntity
-                {
-                    RutEmpresa = row["Rut"] != DBNull.Value ? row["Rut"].ToString() : string.Empty,
-                    NombreEmpresa = row["nombre"] != DBNull.Value ? row["nombre"].ToString() : string.Empty,
-                    Comuna = row["comuna"] != DBNull.Value ? row["comuna"].ToString() : string.Empty,
-                    Direccion = row["direccion"] != DBNull.Value ? row["direccion"].ToString() : string.Empty,
-                    CajaOrigen = row["CajaOrigen"] != DBNull.Value ? row["CajaOrigen"].ToString() : string.Empty,
-                    //NTrabajador = row["CantidadTrabajadores"] != DBNull.Value ? Convert.ToInt32(row["CantidadTrabajadores"].ToString()) : 0,
-                    //Rubro = row["Rubro"] != DBNull.Value ? row["CantidadTrabajadores"].ToString() : string.Empty,
-                    //Segmento = row["Segmento"] != DBNull.Value ? row["Segmento"].ToString() : string.Empty,
-                    //Categoria = row["Categoria"] != DBNull.Value ? row["Categoria"].ToString() : string.Empty,
-                    //FechaIngreso = row["FechaIngreso"] != DBNull.Value ? Convert.ToDateTime(row["FechaIngreso"]) : new DateTime(1900, 1, 1),
-                    //codOficina = row["oficina"] != DBNull.Value ? Convert.ToInt32(row["oficina"].ToString()) : 0,
-                    //ejecutivo = row["ejecutivo"] != DBNull.Value ? row["ejecutivo"].ToString() : string.Empty,
-                    //rutHolding = row["rutHolding"] != DBNull.Value ? row["rutHolding"].ToString() : string.Empty,
-                    Holding = row["NombreHolding"] != DBNull.Value ? row["NombreHolding"].ToString() : string.Empty,
-                   // Region = row["Region"] != DBNull.Value ? row["Region"].ToString() : string.Empty,
-                    Estado = row["Estado"] != DBNull.Value ? row["Estado"].ToString() : string.Empty,
-                    Comentarios = row["observacion"] != DBNull.Value ? row["observacion"].ToString() : string.Empty,
 
-                };
-            
+            return new IncorporacionesaEmpresaEntity
+            {
+                RutEmpresa = row["Rut"] != DBNull.Value ? row["Rut"].ToString() : string.Empty,
+                NombreEmpresa = row["nombre"] != DBNull.Value ? row["nombre"].ToString() : string.Empty,
+                Comuna = row["comuna"] != DBNull.Value ? row["comuna"].ToString() : string.Empty,
+                Direccion = row["direccion"] != DBNull.Value ? row["direccion"].ToString() : string.Empty,
+                CajaOrigen = row["CajaOrigen"] != DBNull.Value ? row["CajaOrigen"].ToString() : string.Empty,
+                //NTrabajador = row["CantidadTrabajadores"] != DBNull.Value ? Convert.ToInt32(row["CantidadTrabajadores"].ToString()) : 0,
+                //Rubro = row["Rubro"] != DBNull.Value ? row["CantidadTrabajadores"].ToString() : string.Empty,
+                //Segmento = row["Segmento"] != DBNull.Value ? row["Segmento"].ToString() : string.Empty,
+                //Categoria = row["Categoria"] != DBNull.Value ? row["Categoria"].ToString() : string.Empty,
+                //FechaIngreso = row["FechaIngreso"] != DBNull.Value ? Convert.ToDateTime(row["FechaIngreso"]) : new DateTime(1900, 1, 1),
+                //codOficina = row["oficina"] != DBNull.Value ? Convert.ToInt32(row["oficina"].ToString()) : 0,
+                //ejecutivo = row["ejecutivo"] != DBNull.Value ? row["ejecutivo"].ToString() : string.Empty,
+                //rutHolding = row["rutHolding"] != DBNull.Value ? row["rutHolding"].ToString() : string.Empty,
+                Holding = row["NombreHolding"] != DBNull.Value ? row["NombreHolding"].ToString() : string.Empty,
+                // Region = row["Region"] != DBNull.Value ? row["Region"].ToString() : string.Empty,
+                Estado = row["Estado"] != DBNull.Value ? row["Estado"].ToString() : string.Empty,
+                Comentarios = row["observacion"] != DBNull.Value ? row["observacion"].ToString() : string.Empty,
+
+            };
+
 
         }
 

@@ -1,0 +1,863 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href="~/Assets/css.App/bundle.min.css" rel="stylesheet">
+    <link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+    <link href="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+    <link href="~/Assets/plugins/x-editable/css/bootstrap-editable.css" rel="stylesheet">
+    <!--TypeaheadJS [ OPTIONAL ]-->
+    <link href="~/Assets/plugins/x-editable/inputs-ext/typeaheadjs/lib/typeahead.js-bootstrap.css" rel="stylesheet">
+    <!--Address [ OPTIONAL ]-->
+    <link href="~/Assets/plugins/x-editable/inputs-ext/address/address.css" rel="stylesheet">
+    <link href="~/Assets/css/demo/nifty-demo-icons.min.css" rel="stylesheet" />
+    <link href="~/Assets/css/demo/nifty-demo.min.css" rel="stylesheet">
+
+    <link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+
+    <link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+
+    <link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+
+
+    <script src="~/Assets/js.App/bundle.min.js?g=@Guid.NewGuid().ToString()"></script>
+
+
+
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+
+
+
+
+
+    <!--Masked Input [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/masked-input/jquery.maskedinput.min.js"></script>
+
+
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <!--Bootbox Modals [ OPTIONAL ]-->
+    @*<script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>*@
+    <script src="~/Assets/plugins/masked-input/jquery.maskedinput.min.js"></script>
+    <script src="~/Assets/js/jquery.rut.chileno.min.js"></script>
+
+    <!--Magic Checkbox [ OPTIONAL ]-->
+
+    <script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
+
+
+
+    <style>
+
+        .nav-tabs .badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <!--Page content-->
+    <!--===================================================-->
+    <div id="page-content">
+
+        <div class="tab-base">
+            <!--Nav Tabs-->
+            <ul class="nav nav-tabs">
+                <li class="active" style="display:none">
+                    <a data-toggle="tab" href="#demo-lft-tab-1" aria-expanded="true" id="tab_ingreso" class="tab-principal">Ingreso</a>
+                </li>
+                <li class="">
+                    <a data-toggle="tab" href="#demo-lft-tab-2" aria-expanded="false" id="tab_buscar" class="tab-principal">Licencias Multi Oficina</a>
+                </li>
+
+
+
+                <li class="" style="display:none">
+                    <a data-toggle="tab" href="#demo-lft-tab-3" aria-expanded="false" id="tab_auditoria" class="tab-principal">No Conformes Auditoria<span class="badge"><label id="conteoPendientes"></label></span></a>
+                </li>
+
+            </ul>
+            <div class="tab-content">
+                <div id="demo-lft-tab-1" class="tab-pane" style="display:none">
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Listado Licencias No Visadas de Hoy</h3>
+
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-sm-4 text-xs-center">
+                                        <h5></h5>
+                                    </div>
+                                    <div class="col-sm-4 text-xs-center">
+                                        <h5></h5>
+                                    </div>
+                                    <div class="col-sm-4 text-xs-center">
+                                        <h5>
+                                            Actualización AS400: <label id="fecha_actualizacion"></label>Hrs.
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+
+
+
+                                    <table id="demo-foo-filtering" class="table table-bordered table-hover toggle-circle" data-page-size="20">
+                                        <thead>
+                                            <tr>
+                                                <th data-toggle="true">Rut Afiliado</th>
+                                                <th data-toggle="true">Nombre Afiliado</th>
+                                                <th data-hide="phone">Folio</th>
+                                                <th data-hide="phone">Tipo</th>
+                                                <th data-hide="phone">Ejecutivo Ingreso</th>
+                                                <th data-hide="phone">Est. Oficina</th>
+                                                <th data-hide="phone">Est. Auditoría</th>
+                                                <th data-hide="phone">Responsable</th>
+                                                <th data-hide="phone">Estado</th>
+                                                @*<th data-hide="phone">Validación</th>*@
+                                                @*<th data-hide="phone">Estado Actual</th>*@
+                                                <th data-hide="phone">Acción</th>
+                                            </tr>
+                                        </thead>
+
+                                        <div class="pad-btm">
+                                            <div class="row">
+
+
+                                                <div class="col-sm-4 mar-top">
+                                                    <div class="input-group">
+                                                        <button class="btn btn-success" type="button" id="bt-nueva">Ingresar Licencias</button>
+                                                        @*<a class="btn btn-primary mar-lft" href="#" id="exportar">Exportar LM Manual</a>
+                                                            <a class="btn btn-primary mar-lft" href="#" id="expLmMixta">Exportar LM Mixta</a>*@
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-sm-3 col-sm-offset-1">
+
+                                                    <div class="form-group">
+                                                        <label class="control-label">Filtro</label>
+                                                        <input id="flt_general" type="text" placeholder="Ej. 11.111.111-1" class="form-control" autocomplete="off">
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="col-sm-2 ">
+                                                    <label class="control-label">Día</label>
+                                                    <div id="demo-dp-component">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control" id="flt_dia" name="flt_dia" readonly>
+                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label class="control-label">Validación LM Manuales</label>
+                                                    &nbsp;
+                                                    &nbsp;
+                                                    &nbsp;
+                                                    &nbsp;
+                                                    &nbsp;
+                                                    &nbsp;
+                                                    @*<span class="badge badge-mint control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Total" id="cantLM"></span>*@
+                                                    <span class="badge badge-success control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Folio y rut idénticos AS400–Motor" id="number_one">0</span>
+                                                    <span class="badge badge-yelow control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Inconsistencia:Rut distinto AS400–Motor" id="number_two">0</span>
+                                                    <span class="badge badge-warning control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Inconsistencia:Folios Diferentes" id="number_folios">0</span>
+                                                    <span class="badge badge-danger control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Folio no encontrado en AS400" id="number_three">0</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-4 mar-top">
+                                                    <div class="input-group">
+
+                                                        <a class="btn btn-primary mar-lft" href="#" id="exportar">Exportar LM Manual</a>
+                                                        <a class="btn btn-mint" href="#" id="expLmMixta">Exportar LM Mixta</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <tbody id="bdy_datos"></tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="10">
+                                                    <div class="text-right">
+                                                        <ul class="pagination"></ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="demo-lft-tab-2" class="tab-pane fade active in">
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Licencias Multi Oficinas </h3>
+
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-sm-4 text-xs-center">
+                                        <h5></h5>
+                                    </div>
+                                    <div class="col-sm-4 text-xs-center">
+                                        <h5></h5>
+                                    </div>
+                                    @*<div class="col-sm-4 text-xs-center">
+                                            <h5>
+                                                Actualización AS400: <label id="fecha_actualizacion"></label>Hrs.
+                                            </h5>
+                                        </div>*@
+                                </div>
+                                <div class="panel-body">
+
+
+
+                                    <table id="demo-foo-filtering_busqueda" class="table table-bordered table-hover toggle-circle" data-page-size="20">
+                                        <thead>
+                                            <tr>
+                                                <th data-toggle="true">Rut Afiliado</th>
+                                                <th data-toggle="true">Nombre Afiliado</th>
+                                                <th data-hide="phone">Fecha Ingreso</th>
+                                                <th data-hide="phone">Tipo</th>
+                                                <th data-hide="phone">Oficina</th>
+                                                <th data-hide="phone">Folio</th>
+                                                @*<th data-hide="phone">Tipo</th>*@
+                                                @*<th data-hide="phone">Ejecutivo Ingreso</th>*@
+                                                <th data-hide="phone">Est. Oficina</th>
+                                                <th data-hide="phone">Est. Auditoría</th>
+                                                <th data-hide="phone">Responsable</th>
+                                                @*<th data-hide="phone">Acción</th>*@
+                                            </tr>
+                                        </thead>
+
+                                        <div class="pad-btm">
+                                            <div class="row">
+                                                <div class="col-sm-2 ">
+                                                    <div class="form-group">
+                                                        <label class="control-label" id="lbl_rut">Rut</label>
+                                                        <input id="txt_buscar_licencia" type="text" placeholder="Ej:13831003-5" class="form-control es-rut" autocomplete="off">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-1 mar-top">
+                                                    <div class="input-group">
+                                                        <button class="btn btn-success" type="button" id="btn-buscar-licencia">Buscar Rut</button>
+                                                        @*<a class="btn btn-primary mar-lft" href="#" id="exportar">Exportar LM Manual</a>
+                                                            <a class="btn btn-primary mar-lft" href="#" id="expLmMixta">Exportar LM Mixta</a>*@
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-sm-1 mar-top">
+                                                    <div class="input-group">
+                                                        <button class="btn btn-primary" type="button" id="btn-nueva-busqueda">Nueva Búsqueda</button>
+                                                    </div>
+
+                                                </div>
+                                                <div class="" style="display:none">
+                                                    <label class="control-label">Día</label>
+                                                    <div id="demo-dp-component">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control" id="flt_dia_buscar" name="flt_dia_buscar" readonly>
+                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-sm-2" style="display:none">
+                                                    <label class="control-label">Validación LM Manuales</label>
+                                                    &nbsp;
+                                                    &nbsp;
+                                                    &nbsp;
+                                                    &nbsp;
+                                                    &nbsp;
+                                                    &nbsp;
+                                                    &nbsp;
+                                                    &nbsp;
+                                                    &nbsp;
+                                                    @*<span class="badge badge-mint control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Total" id="cantLM"></span>*@
+                                                    <span class="badge badge-success control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Folio y rut idénticos AS400–Motor" id="number_one">0</span>
+                                                    <span class="badge badge-yelow control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Inconsistencia:Rut distinto AS400–Motor" id="number_two">0</span>
+                                                    <span class="badge badge-warning control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Inconsistencia:Folios Diferentes" id="number_folios">0</span>
+                                                    <span class="badge badge-danger control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Folio no encontrado en AS400" id="number_three">0</span>
+                                                </div>
+                                            </div>
+
+                                            @*<div class="row">
+                                                    <div class="col-sm-4 mar-top">
+                                                        <div class="input-group">
+
+                                                            <a class="btn btn-primary mar-lft" href="#" id="exportar">Exportar LM Manual</a>
+                                                            <a class="btn btn-mint" href="#" id="expLmMixta">Exportar LM Mixta</a>
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+                                        </div>
+                                        <tbody id="bdy_datos_busqueda"></tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="11">
+                                                    <div class="text-right">
+                                                        <ul class="pagination"></ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="demo-lft-tab-3" class="tab-pane fade" style="display:none">
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Gestión LM No Conformes</h3>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-1" style="margin-left:20px;margin-top:20px;display:none">
+                                        <div class="input-group">
+                                            <button class="btn btn-warning" type="button" id="btn-buscar-exportar-xls">Exportar Excel</button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="panel-body">
+
+
+
+                                    <table id="demo-foo-filtering_busqueda_auditoria" class="table table-bordered table-hover toggle-circle" data-page-size="20">
+                                        <thead>
+                                            <tr>
+                                                <th data-toggle="true">Rut Afiliado</th>
+                                                <th data-toggle="true">Nombre Afiliado</th>
+                                                <th data-hide="phone">Fecha Ingreso</th>
+                                                <th data-hide="phone">Oficina</th>
+                                                <th data-hide="phone">Folio</th>
+                                                <th data-hide="phone">Tipo</th>
+                                                @*<th data-hide="phone">Ejecutivo Ingreso</th>*@
+                                                <th data-hide="phone">Est. Oficina</th>
+                                                <th data-hide="phone">Est. Auditoría</th>
+                                                <th data-hide="phone">Responsable</th>
+
+                                                <th data-hide="phone">Acción</th>
+
+                                            </tr>
+                                        </thead>
+
+                                        <div class="pad-btm">
+                                            <div class="">
+
+
+                                                <div class="col-sm-2 mar-top">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Estado Oficina</label>
+                                                        <select class="form-control" id="ddlestados" name="ddlestados"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2 mar-top">
+                                                    <div class="form-group">
+                                                        <label class="control-label" id="lbl_rut">Folio LM</label>
+                                                        <input id="txt_folio_LM" type="text" placeholder="" class="form-control" autocomplete="off">
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-sm-1 mar-top">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Est. Responsable</label>
+                                                        <select class="form-control" id="ddlresponsable" name="ddlresponsable">
+                                                            <option value="Todos">Todos...</option>
+                                                            <option value="Auditoría">Auditoría</option>
+                                                            <option value="Oficina">Oficina</option>
+
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2 mar-top">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Fecha Desde</label>
+                                                        <div id="auditoria-dp-component">
+                                                            <div class="input-group date">
+                                                                <input type="text" class="form-control" id="flt_dia_auditoria_desde" name="flt_dia_auditoria_desde" readonly>
+                                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2 mar-top">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Fecha Hasta</label>
+                                                        <div id="auditoria-dp-component">
+                                                            <div class="input-group date">
+                                                                <input type="text" class="form-control" id="flt_dia_auditoria_hasta" name="flt_dia_auditoria_hasta" readonly>
+                                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-1" style="margin-top:37px;">
+                                                    <div class="input-group">
+                                                        <button class="btn btn-success" type="button" id="btn-buscar-licencia-auditoria">Buscar</button>
+                                                    </div>
+
+                                                </div>
+
+                                                @*<div class="col-sm-1" style="margin-top:37px;">
+                                                        <div class="input-group">
+                                                            <button class="btn btn-primary" type="button" id="btn-nueva-auditoria">Nueva Búsqueda</button>
+                                                        </div>
+
+                                                    </div>*@
+
+
+                                            </div>
+
+                                        </div>
+                                        <tbody id="bdy_datos_busqueda_auditoria"></tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="10">
+                                                    <div class="text-right">
+                                                        <ul class="pagination"></ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--===================================================-->
+    <!--End page content-->
+
+
+    <script>
+        //var motor_api_server = "motordenegocios";
+        function eliminar(codIngreso) {
+            bootbox.confirm({
+                size: "medium",
+                title: "Esta LM se borrará definitivamente del sistema",
+                message: "¿desea hacerlo?",
+                buttons: {
+                    confirm: {
+                        label: 'Si, eliminar',
+                        className: 'btn-warning'
+                    },
+                    cancel: {
+                        label: 'No, no estoy seguro/a',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+
+                        $.SecGetJSON("http://motordenegocios/motor/api/Licencias/eliminar-licencia-ingresada", { CodIngreso: codIngreso }, function (response) {
+                            cargador.CargaDatosTabla($("#flt_dia").val());
+                            if (response.Estado == "OK") {
+                                $.niftyNoty({
+                                    type: 'success',
+                                    icon: 'pli-like-2 icon-2x',
+                                    message: 'LM Eliminada exitosamente',
+                                    container: 'floating',
+                                    timer: 5000
+                                });
+                            }
+                        })
+                    }
+                }
+            });
+        }
+        var cargador = {
+
+            //-----------tab_ingreso
+            CargaDatosEncabezado: function (enc_dia) {
+                $.SecGetJSON("http://motordenegocios/motor/api/Licencias/datos-encabezado-lic", { codOficina: getCookie("Oficina"), dia: enc_dia }, function (menus) {
+                    $("#number_one").html(menus.Lm_Verde);
+                    $("#number_two").html(menus.Lm_Amarillo);
+                    $("#number_folios").html(menus.Lm_Naranjo);
+                    $("#number_three").html(menus.Lm_Rojo);
+                    $("#fecha_actualizacion").html(menus.Lm_Actualizacion);
+
+                });
+            },
+            CargaDatosTabla: function (el_dia) {
+
+                $("#bdy_datos").html("");
+                $.SecGetJSON("http://motordenegocios/motor/api/Licencias/lista-licencias-dia", { codOficina: getCookie("Oficina"), dia: el_dia }, function (result) {
+
+                    $.each(result, function (i, e) {
+                        console.log()
+
+
+                        var $wrapper = (`
+                                                                            <tr>
+                                                                                <td>${e.IngresoData.RutAfiliado}</td>
+                                                                                <td>${e.IngresoData.NombreAfiliado}</td>
+                                                                                <td>${e.IngresoData.FolioLicencia}</td>
+                                                                                <td>${e.IngresoData.FormatoLM}</td>
+                                                                                <td>${e.NombreEjecutivo.OrdenaNombre()}</td>
+                                                                                <td>${e.IngresoData.EtapaActual}</td>
+                                                                                <td>${e.IngresoData.DescripcionEstadoRevision}</td>
+                                                                                <td>${e.IngresoData.Responsable}</td>
+                                                                                <td>${e.IngresoData.EstadoCarga}</td>
+                                                                            `);
+
+                        $wrapper = $wrapper + (`<td>`);
+                        if (e.IngresoData.DescripcionEstadoRevision != 'No Encontrada' && e.IngresoData.DescripcionEstadoRevision != 'No Conforme' && e.IngresoData.DescripcionEstadoRevision != 'Conforme') {
+                            $wrapper = $wrapper + (`<a class="btn btn-danger" title="Eliminar" href="javascript:eliminar(${e.IngresoData.CodIngreso})"><i class="ion-trash-a"></i></a>`);
+
+                            $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.IngresoData.CodIngreso}"><i class="ion-edit"></i></a>`);
+
+                        }
+
+                        $wrapper = $wrapper + (`</td>`);
+
+                        $("#bdy_datos").append($wrapper);
+
+                        $("#cantLM").html(i + 1)
+                    });
+                });
+                $("#exportar").prop("href", "/motor/api/Licencias/export-pdf?codOficina=" + getCookie("Oficina") + "&dia=" + el_dia);
+                $("#expLmMixta").prop("href", "/motor/api/Licencias/export-pdf-mixta?codOficina=" + getCookie("Oficina") + "&dia=" + el_dia);
+            },
+
+            //-----------tab_busqueda
+            CargaDatosTablaTab2Busequda: function (Rut, el_dia) {
+
+                $("#bdy_datos_busqueda").html("");
+                $.SecGetJSON("http://motordenegocios/motor/api/Licencias/lista-licencias-rut", { rut: Rut, dia: el_dia }, function (result) {
+
+                    console.log(result);
+                    $.each(result, function (i, e) {
+
+
+                        var $wrapper = (`
+                                                                            <tr>
+                                                                                <td>${e.RutAfiliado}</td>
+                                                                                <td>${e.NombreAfiliado}</td>
+                                                                                <td>${e.FechaIngreso.toFecha()}</td>
+                                                                                <td>${e.FormatoLM}</td>
+                                                                                <td>${e.OficinaDescripcion}</td>
+                                                                                <td>${e.FolioLicencia}</td>
+                                                                                <td>${e.EstadoLicencia}</td>
+                                                                                <td>${e.descripcionEstadoRevision}</td>
+                                                                                 <td>${e.Responsable}</td>
+                                                                            `);
+                        //$wrapper = $wrapper + (`<td>`);
+                        //if (e.FormatoLM == "Manual" && e.viaIngresoLicenica == 1) {
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/auditorialicencia?ci=${e.CodIngreso}&tab=secundaria"><i class="ion-edit"></i></a>`);
+
+                        //}
+                        //else {
+
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.CodIngreso}"><i class="ion-edit"></i></a>`);
+
+                        //}
+                        $("#bdy_datos_busqueda").append($wrapper);
+
+                        $("#cantLM").html(i + 1)
+                        $("#btn-buscar-licencia").hide();
+                        $("#txt_buscar_licencia").val("");
+                        $('#lbl_rut').text("Filtro por registo");
+                        $(txt_buscar_licencia).attr("placeholder", "Ingrese campo a filtrar");
+                        $('#txt_buscar_licencia').unmask()
+                    });
+                });
+                //$("#exportar").prop("href", "/motor/api/Licencias/export-pdf?codOficina=" + getCookie("Oficina") + "&dia=" + el_dia);
+                //$("#expLmMixta").prop("href", "/motor/api/Licencias/export-pdf-mixta?codOficina=" + getCookie("Oficina") + "&dia=" + el_dia);
+            },
+
+            CargaDatosTablaTab3Auditoria: function (folioLM, dia_desde, dia_hasta, TipoSeleccion, CodOficina, estadoAuditoria, estadoResponsable) {
+
+                $("#bdy_datos_busqueda_auditoria").html("");
+
+                $.SecGetJSON("http://motordenegocios/motor/api/Licencias/lista-licencias-auditoria-oficina", { folioLic: folioLM, diadesde: dia_desde, diahasta: dia_hasta, codOficina: getCookie("Oficina"), tipoSeleccion: TipoSeleccion, estadoRecepcion: 2, Responsable: estadoResponsable }, function (result) {
+
+                    $.each(result, function (i, e) {
+
+
+                        var $wrapper = (`
+                                                                            <tr>
+                                                                                <td>${e.RutAfiliado}</td>
+                                                                                <td>${e.NombreAfiliado}</td>
+                                                                                <td>${e.FechaIngreso.toFecha()}</td>
+                                                                                <td>${e.OficinaDescripcion}</td>
+                                                                                <td>${e.FolioLicencia}</td>
+                                                                                <td>${e.FormatoLM}</td>
+                                                                                <td>${e.estadoLicencia}</td>
+                                                                                <td>${e.DescripcionEstadoRevision}</td>
+                                                                                <td>${e.Responsable}</td>
+
+                                                                            `);
+                        $wrapper = $wrapper + (`<td>`);
+                        if (e.Responsable != 'Auditoría') {
+
+                            $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/auditorialicencia?ci=${e.CodIngreso}&tab=secundaria"><i class="ion-edit"></i></a>`);
+
+                        }
+                        $("#bdy_datos_busqueda_auditoria").append($wrapper);
+
+                        $("#cantLM").html(i + 1)
+
+                    });
+                });
+                //$("#exportar").prop("href", "/motor/api/Licencias/export-pdf?codOficina=" + getCookie("Oficina") + "&dia=" + el_dia);
+                //$("#expLmMixta").prop("href", "/motor/api/Licencias/export-pdf-mixta?codOficina=" + getCookie("Oficina") + "&dia=" + el_dia);
+            },
+
+
+            CargaDatosTablaTab3AuditoriaOficinaConteo: function () {
+
+                $.SecGetJSON("http://motordenegocios/motor/api/Licencias/licencia-data-auditoria-oficina-conteo", {}, function (response) {
+
+                    $("#conteoPendientes").text(response);
+                });
+            }
+        }
+
+
+
+        $(function () {
+            $("#txt_buscar_licencia").mask('99.999.999-*')
+            var hoy = new Date();
+            var d = hoy.getDate().toString().paddingLeft("00") + "-" + (hoy.getMonth() + 1).toString().paddingLeft("00") + "-" + hoy.getFullYear().toString();
+            $("#flt_dia").val(d)
+            $("#flt_dia_buscar").val(d)
+            $("#flt_dia_auditoria_desde").val(d)
+            $("#flt_dia_auditoria_hasta").val(d)
+
+
+
+            $('#demo-foo-filtering_busqueda_auditoria').footable().on('footable_filtering', function (e) {
+
+                e.clear = !e.filter;
+            });
+
+
+            $('#demo-foo-filtering').footable().on('footable_filtering', function (e) {
+
+                e.clear = !e.filter;
+            });
+
+            $('#demo-foo-filtering_busqueda').footable().on('footable_filtering', function (e) {
+
+                e.clear = !e.filter;
+            });
+
+            // Search input
+            $('#flt_general').on('input', function (e) {
+                e.preventDefault();
+                if ($(this).val().length >= 3 || $(this).val().length == 0) {
+                    $('#demo-foo-filtering').footable().trigger('footable_filter', { filter: $(this).val() });
+                }
+            });
+
+            $("#bt-nueva").on("click", function () {
+                location.href = "http://motordenegocios/motor/App/Licencias/Ingreso";
+            });
+            // Search input
+            $('#txt_buscar_licencia').on('input', function (e) {
+                e.preventDefault();
+                if ($(this).val().length >= 3 || $(this).val().length == 0) {
+                    $('#demo-foo-filtering_busqueda').footable().trigger('footable_filter', { filter: $(this).val() });
+                }
+            });
+
+            // Search input
+            $('#txt_buscar_licencia').on('input', function (e) {
+                e.preventDefault();
+                if ($(this).val().length >= 3 || $(this).val().length == 0) {
+                    $('#demo-foo-filtering_busqueda_auditoria').footable().trigger('footable_filter', { filter: $(this).val() });
+                }
+            });
+
+            txt_buscar_licencia
+
+            $('#demo-dp-component .input-group.date').datepicker({
+                autoclose: true,
+                format: 'dd-mm-yyyy',
+                language: "es",
+                daysOfWeekDisabled: [6, 0],
+                todayHighlight: true,
+                //startDate: '-7d'
+            }
+            ).on('changeDate', function (e) {
+                cargador.CargaDatosTabla($("#flt_dia").val());
+                cargador.CargaDatosEncabezado($("#flt_dia").val());
+            });
+
+            $('#btn-nueva-busqueda').click(function () {
+
+
+
+                $("#btn-buscar-licencia").show();
+                $("#txt_buscar_licencia").val("");
+                $('#lbl_rut').text("Rut");
+                $(txt_buscar_licencia).attr("placeholder", "Ej:13831003-5");
+                $("#txt_buscar_licencia").mask('99.999.999-*');
+                $("#bdy_datos_busqueda").html("");
+            });
+
+
+
+            cargador.CargaDatosTabla(d);
+            cargador.CargaDatosEncabezado(d);
+
+
+        })
+
+
+
+
+        $(function () {
+
+
+
+
+            $('#btn-buscar-licencia').on('click', function () {
+
+
+
+                $('#result_list').html('');
+
+                let buscar = $('#txt_buscar_licencia').val();
+
+                if (buscar.length === 0) {
+                    $.niftyNoty({
+                        type: 'danger',
+                        container: 'floating',
+                        html: '<strong>Error</strong> Debe ingresar Rut',
+                        focus: false,
+                        timer: 5000
+                    });
+                    return false;
+                }
+
+                $('#demo-foo-filtering').footable().on('footable_filtering', function (e) {
+
+                    e.clear = !e.filter;
+                });
+
+
+                cargador.CargaDatosTablaTab2Busequda(buscar);
+
+            })
+
+
+            //-----------------------tab 3 Adutoria LM!!!!
+
+
+            cargador.CargaDatosTablaTab3AuditoriaOficinaConteo();
+
+            $('#auditoria-dp-component .input-group.date').datepicker({
+                autoclose: true,
+                format: 'dd-mm-yyyy',
+                language: "es",
+                daysOfWeekDisabled: [6, 0],
+                todayHighlight: true,
+                //startDate: '-7d'
+
+
+            });
+
+
+
+            $.SecGetJSON("http://motordenegocios/motor/api/Licencias/listar-suc-derivacion", function (datos) {
+
+                $("#ddloficina").html("");
+                $.each(datos, function (i, oficina) {
+                    $("#ddloficina").append($("<option>").val(oficina.codOficina).html(oficina.DescOficina).data("id", oficina.codOficinaCompin).data("nombre", oficina.OficinaCompin));
+                });
+            });
+
+            $.SecGetJSON("http://motordenegocios/motor/api/Licencias/listar-estado-LM", function (datos) {
+
+                $("#ddlestados").html("");
+                $.each(datos, function (i, estado) {
+
+                    $("#ddlestados").append($("<option>").val(estado.Id).html(estado.Estado));
+                });
+            });
+
+
+
+            $("#btn-buscar-licencia-auditoria").trigger("click");
+
+            $("#btn-buscar-licencia-auditoria").on("click", function () {
+
+
+
+
+                var folioLM = $("#txt_folio_LM").val();
+                var dia_desde = $("#flt_dia_auditoria_desde").val();
+                var dia_hasta = $("#flt_dia_auditoria_hasta").val();
+                var TipoSeleccion = $("#ddlestados").val();
+                var codoficina = getCookie("oficina");
+                var estadoAuditoria = $("#ddlestadoAuditoria").val();
+                var estadoResponsable = $("#ddlresponsable").val();
+                cargador.CargaDatosTablaTab3Auditoria(folioLM, dia_desde, dia_hasta, TipoSeleccion, codoficina, estadoAuditoria, estadoResponsable);
+                cargador.CargaDatosTablaTab3AuditoriaOficinaConteo();
+            })
+
+        });
+
+
+    </script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,935 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+}
+
+<!--Masked Input [ OPTIONAL ]-->
+<script src="~/Assets/plugins/masked-input/jquery.maskedinput.min.js"></script>
+<!--Magic Checkbox [ OPTIONAL ]-->
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+
+<link href="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
+<!--Bootstrap Select [ OPTIONAL ]-->
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+<script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
+
+<link href="~/Assets/plugins/dropzone/dropzone.min.css" rel="stylesheet">
+<script src="~/Assets/plugins/dropzone/dropzone.min.js"></script>
+<style>
+
+    #overlay {
+        position: fixed; /* Sit on top of the page content */
+        display: none; /* Hidden by default */
+        width: 100%; /* Full width (cover the whole page) */
+        height: 100%; /* Full height (cover the whole page) */
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+        z-index: 9999; /* Specify a stack order in case you're using a different order for other elements */
+        cursor: pointer; /* Add a pointer on hover */
+    }
+
+
+    #text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 40px;
+        color: white;
+        transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+    }
+
+    .nav-tabs .badge {
+        position: absolute;
+        top: -10px;
+        right: 1px;
+        background: red;
+    }
+</style>
+
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+
+    <div id="myTab" class="tab-base">
+        <!--Nav Tabs-->
+        <ul class="nav nav-tabs">
+            <li class="">
+                <a data-toggle="tab" href="#demo-lft-tab-1" aria-expanded="true" id="tab_envioTATA" class="tab-principal">Envío TATA<span class="badge"><label id="conteoPendienteEnvio"></label></span></a>
+
+
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#demo-lft-tab-2" aria-expanded="true" id="tab_CargaExcel" class="tab-principal">Carga Proceso TATA</a>
+            </li>
+
+            <li class="">
+                <a data-toggle="tab" href="#demo-lft-tab-3" aria-expanded="true" id="tab_envio_compin" class="tab-principal">Envío Compin</a>
+            </li>
+
+        </ul>
+        <div class="tab-content">
+            <div id="demo-lft-tab-1" class="tab-pane fade">
+
+
+                <div class="row">
+
+
+                    <div class="col-lg-12">
+
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Regímenes Legales</h3>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-1" style="margin-left:20px;margin-top:20px;">
+                                    <div class="input-group">
+                                        <button class="btn btn-warning" type="button" id="btn-buscar-exportar-xls">Exportar Excel</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="panel-body">
+
+
+
+                                <table id="demo-foo-filtering_responsable" class="table table-bordered table-hover toggle-circle" data-page-size="20">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:10%;" data-toggle="true">Rut Afiliado</th>
+                                            <th style="width:20%;" data-toggle="true">Nombre Afiliado</th>
+                                            <th data-hide="phone">Folio Licencia</th>
+                                            <th data-hide="phone">Oficina</th>
+                                            <th data-hide="phone">Fecha Licencia</th>
+                                            <th data-hide="phone">Fecha Auditoría</th>
+                                            <th style="width:10%;" data-hide="phone">Est. Oficina</th>
+                                            <th style="width:10%;" data-hide="phone">Est. Auditoría</th>
+                                            <th data-hide="phone">Acción</th>
+
+                                        </tr>
+                                    </thead>
+
+                                    <div class="pad-btm">
+
+                                        <div class="col-sm-2 mar-top">
+                                            <div class="form-group">
+                                                <label class="control-label">Oficina</label>
+                                                <select class="form-control" id="ddloficina" name="ddloficina"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2 mar-top">
+                                            <div class="form-group">
+                                                <label class="control-label" id="lbl_rut">Folio LM</label>
+                                                <input id="txt_folio_LM_responsable" type="text" placeholder="" class="form-control" autocomplete="off">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-sm-2 mar-top">
+                                            <div class="form-group">
+                                                <label class="control-label">Estados </label>
+                                                <select class="form-control" id="ddlresponsable" name="ddlresponsable">
+                                                    <option value="Todos">Todos</option>
+                                                    <option value="Pendiente">Pendiente Envío</option>
+                                                    <option value="Enviado">Envío TATA</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2 mar-top">
+                                            <div class="form-group">
+                                                <label class="control-label">Fecha Auditoría Desde</label>
+                                                <div id="responsable-dp-component">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" id="flt_dia_responsable_desde" name="flt_dia_responsable_desde" readonly>
+                                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2 mar-top">
+                                            <div class="form-group">
+                                                <label class="control-label">Fecha Auditoría Hasta</label>
+                                                <div id="responsable-dp-component">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" id="flt_dia_responsable_hasta" name="flt_dia_responsable_hasta" readonly>
+                                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <div class="row">
+                                            @*<div class="col-sm-2 " style="margin-right:250px;">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Est. Responsable</label>
+                                                        <select class="form-control" id="ddlresponsable" name="ddlresponsable">
+                                                            <option value="Todos">Todos...</option>
+                                                            <option value="Auditoría">Auditoría</option>
+                                                            <option value="Oficina">Oficina</option>
+                                                            <option value="OK Contraloría">OK Contraloría</option>
+                                                            <option value="RRLL">Reg. Legales</option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>*@
+                                            <div class="col-sm-2 " style="margin-right:30px;">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fecha Envío Tata Desde</label>
+                                                    <div id="responsable-dp-component">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control" id="flt_dia_envio_tata_desde" name="flt_dia_envio_tata_desde" readonly>
+                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2" style="margin-right:50px;">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fecha Envío Tata Hasta</label>
+                                                    <div id="responsable-dp-component">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control" id="flt_dia_envio_tata_hasta" name="flt_dia_envio_tata_hasta" readonly>
+                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1" style="margin-top:20px;">
+                                                <div class="input-group">
+                                                    <button class="btn btn-success" type="button" id="btn-buscar-licencia-tabresponsable">Buscar</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <tbody id="bdy_datos_tabresponsable"></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div class="text-left">
+                                                    <label id="cantLMresponsable" class="control-label"></label>
+                                                </div>
+                                                <div class="text-right">
+                                                    <ul class="pagination"></ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="demo-lft-tab-2" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Proceso Carga TATA</h3>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-1" style="margin-left:40%;margin-top:20px;">
+                                    <div class="input-group">
+                                        <button class="btn btn-success" data-target="#demo-lg-modal-CargaExcel" data-toggle="modal" id="btCargarExcel">Carga Planilla TATA</button>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+                            <div class="panel-body">
+                                <hr />
+                                <div class="pad-btm">
+                                    <div class="col-lg-12" style="margin-top:20px;display:none" id="divtablaresumen">
+
+                                        <h4>Resumen de Carga</h4>
+
+                                        <table class="table text-left">
+                                            <tr>
+                                                <td><strong>LM a subir compin centralizado</strong></td>
+                                                <td style="padding-right:700px"><label id="Cargados1"></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>LM devueltas TATA</strong></td>
+                                                <td style=""><label id="Devueltas1"></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Licencias que no se cargarán</strong></td>
+                                                <td><label id="NoCargados1"></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong></strong></td>
+                                                <td></td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+
+                                    <div id="pnl-carga-busqueda" class="col-lg-12" style="display:none">
+
+                                        <div class="col-lg-12" style="margin-top:20px;">
+
+                                            <h4>Resumen de Carga</h4>
+
+                                            <table class="table text-left">
+                                                <tr>
+                                                    <td><strong>LM a subir compin centralizado</strong></td>
+                                                    <td style="padding-right:700px"><label id="Cargados"></label></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>LM devueltas TATA</strong></td>
+                                                    <td style=""><label id="Devueltas"></label></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Licencias que no se cargarán</strong></td>
+                                                    <td><label id="NoCargados"></label></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong></strong></td>
+                                                    <td></td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+
+                                        <table id="demo-foo-filtering_cargaExcelRRLL" class="table table-bordered table-hover toggle-circle" data-page-size="10">
+                                            <thead>
+                                                <tr>
+
+                                                    <th data-hide="phone">Folio Licencia</th>
+                                                    <th data-hide="phone">Estado TATA</th>
+                                                    <th data-hide="phone">Fecha Subida TATA</th>
+                                                    <th data-hide="phone">Fecha Subida Compín</th>
+                                                    <th style="width:10%;" data-hide="phone">SubComisión</th>
+                                                    <th data-hide="phone">Validación de carga</th>
+
+
+                                                </tr>
+                                            </thead>
+
+                                            <div class="pad-btm">
+
+                                                <div class="col-sm-2" style="margin-top:37px;">
+                                                    <div class="input-group">
+                                                        <button class="btn btn-success" type="button" id="btn-buscar-licencia-carga-excel">Exportar Excel</button>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-sm-8" style="margin-top:37px;margin-right:60px">
+                                                    <div class="input-group">
+                                                        @*<button class="btn btn-warning" type="button" id="btn-actualizar-carga-excel" href ="">Realizar Proceso de Carga </button>*@
+                                                        <a class="btn btn-warning float-right" title="Cargar Archivo TARA" href="javascript:CargarArchivo()">Realizar Proceso de Carga</a>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <tbody id="bdy_datos_ExcelRRLL" style="margin-top:37px"></tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="10">
+                                                        <div class="text-left">
+                                                            <label id="cantLMCargaExcel" class="control-label"></label>
+                                                        </div>
+                                                        <div class="text-right">
+                                                            <ul class="pagination"></ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="demo-lft-tab-3" class="tab-pane fade">
+
+
+                <div class="row">
+
+
+                    <div class="col-lg-12">
+
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Licencias Subidas a Compín</h3>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-1" style="margin-left:20px;margin-top:20px;">
+                                    <div class="input-group">
+                                        <button class="btn btn-warning" type="button" id="btn-buscar-exportar-xls">Exportar Excel</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="panel-body">
+
+                                <table id="demo-foo-filtering_cargaCompin" class="table table-bordered table-hover toggle-circle" data-page-size="10">
+                                    <thead>
+                                        <tr>
+                                            <th data-hide="phone">Rut Afiliado</th>
+                                            <th data-hide="phone">Folio Licencia</th>
+                                            <th data-hide="phone">Oficina</th>
+                                            <th data-hide="phone">Fecha Subida Compín </th>
+                                            <th data-hide="phone">Fecha Ingreso </th>
+                                            <th data-hide="phone">Fecha Auditoría </th>
+                                            <th data-hide="phone">Subcomisión</th>
+
+                                        </tr>
+                                    </thead>
+
+                                    <div class="pad-btm">
+                                        <div class="col-sm-2 mar-top">
+                                            <div class="form-group">
+                                                <label class="control-label" id="lbl_rut">Folio LM</label>
+                                                <input id="txt_folio_LM_compin" type="text" placeholder="" class="form-control" autocomplete="off">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-sm-2 mar-top">
+                                            <div class="form-group">
+                                                <label class="control-label">Fecha Compín Desde</label>
+                                                <div id="responsable-dp-component">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" id="flt_dia_compin_desde" name="flt_dia_responsable_desde" readonly>
+                                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2 mar-top">
+                                            <div class="form-group">
+                                                <label class="control-label">Fecha Compin Hasta</label>
+                                                <div id="responsable-dp-component">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" id="flt_dia_compin_hasta" name="flt_dia_responsable_hasta" readonly>
+                                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-sm-1" style="margin-top:37px;">
+                                            <div class="input-group">
+                                                <button class="btn btn-success" type="button" id="btn-buscar-licencia-compin">Buscar</button>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <tbody id="bdy_datos_compin"></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div class="text-left">
+                                                    <label id="cantLMCompin" class="control-label"></label>
+                                                </div>
+                                                <div class="text-right">
+                                                    <ul class="pagination"></ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<div id="demo-lg-modal-CargaExcel" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 6px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title">Cargar Proceso TATA</h4>
+            </div>
+            <form id="form_registro_anexoUp" action="#" method="post">
+                <div class="panel-body">
+                    <div class="panel panel-bordered-primary" id="panel_Carga_Excel" style="border-color: #e6e6e6;">
+                        <div class="panel-body">
+
+                            <div id="dzMain" class="dropzone demo-dropzone">
+                                <div class="dz-default dz-message">
+                                    <div class="dz-icon">
+                                        <i class="demo-pli-upload-to-cloud icon-5x"></i>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<div id="overlay">
+    <div id="text">Cargando Documento, por favor espera...</div>
+</div>
+<!--===================================================-->
+<!--End page content-->
+@section script{
+
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <!--Bootbox Modals [ OPTIONAL ]-->
+    @*<script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>*@
+    <script src="~/Assets/plugins/masked-input/jquery.maskedinput.min.js"></script>
+    <script src="~/Assets/js/jquery.rut.chileno.min.js"></script>
+
+    <script>
+
+        function CargarArchivo() {
+            bootbox.confirm({
+                size: "medium",
+                title: "Desea Cargar Archivo TATA",
+                message: "¿desea hacerlo?",
+                buttons: {
+                    confirm: {
+                        label: 'Si, cargar',
+                        className: 'btn-warning'
+                    },
+                    cancel: {
+                        label: 'No, no estoy seguro/a',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+
+                        cargador.ActulizaProcesoCargaDevueltas();
+                    }
+                }
+            });
+        }
+
+
+        var cargador = {
+
+            //-----------tab_envioTATA
+            CargaDatosTablaTab5responsable: function (folioLM, dia_desde, dia_hasta, codOficina, responsable, fechaEnviodesde, fechaEnviohasta) {
+                debugger;
+                $("#cantLMresponsable").html('');
+                $("#cantLMresponsable").hide();
+                var total = 0;
+                $("#bdy_datos_tabresponsable").html("");
+
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-licencias-responsable-cierre", { folioLM, dia_desde, dia_hasta, codOficina, responsable, fechaEnviodesde, fechaEnviohasta }, function (result) {
+
+                    $("#bdy_datos_tabresponsable").html("");
+                    $.each(result, function (i, e) {
+
+
+                        $("#bdy_datos_tabresponsable").append(
+                            $("<tr>")
+                                .append($("<td>").html(e.RutAfiliado))
+                                .append($("<td>").html(e.NombreAfiliado))
+                                .append($("<td>").html(e.FolioLicencia))
+                                .append($("<td>").html(e.OficinaDescripcion))
+                                .append($("<td>").html(e.FechaIngreso.toFecha()))
+                                .append($("<td>").html(e.FechaGestion.toFecha()))
+                                .append($("<td>").html(e.estadoLicencia))
+                                .append($("<td>").html(e.DescripcionEstadoRevision))
+                                .append(e.EstadoActivo == "Enviado" ? $("<td>").append(
+                                    $("<select>").addClass('form-control').prop('disabled', true).css('width', '100%').css('border-radius', '6px').append(
+                                        $('<option data-icon="fa fa-paint-brush">').val('Envío TATA').text("Envío TATA"))) : $("<td>").append(
+                                            $("<select>").addClass('form-control').css('width', '100%').css('border-radius', '6px').append(
+                                                $('<option data-icon="fa fa-paint-brush">').val('Seleccione...').text("Seleccione..."),
+                                                $('<option>').val("Envío TATA").text("Envío TATA")
+
+                                            ).on('change', function () {
+
+                                                var indiceResponsable = $(this).val();
+                                                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/guardar-responsable", { folioLM: e.FolioLicencia, responsable: indiceResponsable, CodIngreso: e.CodIngreso }, function (respuesta) {
+
+                                                    $.niftyNoty({
+                                                        type: 'success',
+                                                        icon: 'pli-like-2 icon-2x',
+                                                        message: 'Responsable agregado correctamente!!.',
+                                                        container: 'floating',
+                                                        timer: 3000
+                                                    });
+
+                                                    cargador.CargaDatosTablaTab5responsable($("#txt_folio_LM_responsable").val(), $("#flt_dia_responsable_desde").val(), $("#flt_dia_responsable_hasta").val(), $("#ddloficina").val(), $("#ddlresponsable").val());
+                                                    cargador.CargaDatosTablaTab5responsableConteo();
+                                                });
+
+
+                                            })
+                                        ))
+
+                        );
+
+
+
+
+
+                        total++;
+
+                    });
+
+
+                    $("#cantLMresponsable").html("Cantidad de Registros " + total);
+                    $("#cantLMresponsable").show();
+                });
+            },
+
+            CargaDatosTablaTab5responsableConteo: function () {
+
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/licencia-responsable-cierre-conteo", {}, function (response) {
+
+                    $("#conteoPendienteEnvio").text(response);
+                });
+            },
+
+            //-----------tab_CargaExcel
+            CargaDatosTablaTab2ExcelRRLL: function (folioLM, Estado) {
+
+                $("#cantLMCargaExcel").html('');
+                $("#cantLMCargaExcel").hide();
+                var total = 0;
+                $("#bdy_datos_ExcelRRLL").html("");
+                var cargaOK = 0;
+                var NoCarga = 0;
+                var Devueltas = 0;
+
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-Temp-Excel-RRLL", { folioLM, Estado }, function (result) {
+
+                    $("#bdy_datos_ExcelRRLL").html("");
+                    $.each(result, function (i, e) {
+
+
+                        $("#bdy_datos_ExcelRRLL").append(
+                            $("<tr>")
+                                .append($("<td>").html(e.FolioLicencia))
+                                .append($("<td>").html(e.Estado))
+                                .append($("<td>").html(e.FechaSubidaTATA.toFecha()))
+                                .append($("<td>").html(e.FechasubidaCompin.toFecha()))
+                                .append($("<td>").html(e.Subcomision))
+                                .append($("<td>").html(e.CargaExcel))
+
+                        );
+
+                        var strng;
+                        strng = e.Estado.toString();
+                        var incStr = strng.includes("Rechazad");
+
+                        var incOk = strng.includes("OK");
+                        estado = e.Estado;
+                        if (e.CargaExcel == 'OK' && incOk == true)
+                            cargaOK++;
+
+                        if (e.CargaExcel != 'OK')
+                            NoCarga++;
+
+
+                        if (e.CargaExcel == 'OK' && incStr == true)
+                            Devueltas++;
+
+                        total++;
+                    });
+
+                    $("#Cargados").html(cargaOK.toString());
+                    $("#Devueltas").html(Devueltas.toString());
+                    $("#NoCargados").html(NoCarga.toString());
+                    $("#Cargados1").html(cargaOK.toString());
+                    $("#Devueltas1").html(Devueltas.toString());
+                    $("#NoCargados1").html(NoCarga.toString());
+                    $("#cantLMCargaExcel").html("Cantidad a Cargar " + total);
+                    $("#cantLMCargaExcel").show();
+                });
+            },
+
+            ActulizaProcesoCargaDevueltas: function () {
+
+                $.SecPostJSON(BASE_URL + "/motor/api/Licencias/proceso-carga-devueltas-TATA", function (respuesta) {
+
+                    if (respuesta.Estado === "OK") {
+                        debugger;
+                        $("#pnl-carga-busqueda").hide();
+                        $("#panel_Carga_Excel").hide();
+                        $("#divtablaresumen").show();
+                        cargador.CargaDatosTablaCompin("", $("#flt_dia_compin_hasta").val(), $("#flt_dia_compin_hasta").val());
+
+
+                        $.niftyNoty({
+                            type: 'success',
+                            icon: 'pli-like-2 icon-2x',
+                            message: 'Proceso de Carga realizado con correctamente!!.',
+                            container: 'floating',
+                            timer: 10000
+                        });
+
+                    }
+                });
+            },
+
+
+            //----------- CARGA GRILLA COMPIN
+            CargaDatosTablaCompin: function (folioLM, dia_desde, dia_hasta) {
+
+                $("#cantLMCompin").html('');
+                $("#cantLMCompin").hide();
+                var total = 0;
+                $("#bdy_datos_compin").html("");
+                debugger;
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-cargas-compin", { folioLM, dia_desde, dia_hasta }, function (result) {
+
+                    $("#bdy_datos_compin").html("");
+                    $.each(result, function (i, e) {
+
+
+                        $("#bdy_datos_compin").append(
+                            $("<tr>")
+                                .append($("<td>").html(e.RutAfiliado))
+                                .append($("<td>").html(e.FolioLicencia))
+                                .append($("<td>").html(e.Oficina))
+                                .append($("<td>").html(e.FechaCompin.toFecha()))
+                                .append($("<td>").html(e.FechaIngreso.toFecha()))
+                                .append($("<td>").html(e.FechaAuditoria.toFecha()))
+                                .append($("<td>").html(e.Subcomision))
+
+                        );
+
+                        total++;
+                    });
+                    $("#cantLMCompin").html("Cantidad de Registros " + total);
+                    $("#cantLMCompin").show();
+                });
+            }
+
+
+
+
+
+        }
+
+
+
+        Dropzone.autoDiscover = false;
+        var myDropzone = new Dropzone("div#dzMain", {
+            url: "#",
+            maxFiles: 1,
+            uploadMultiple: false,
+            maxFilesize: 15,
+            acceptedFiles: '.csv'
+        });
+        myDropzone.on("addedfile", function (file) {
+            document.getElementById("overlay").style.display = "block";
+        });
+
+        myDropzone.on("complete", function (file) {
+
+            document.getElementById("overlay").style.display = "none";
+            myDropzone.removeFile(file);
+
+
+
+
+            $("#pnl-carga-busqueda").show();
+            $("#panel_Carga_Excel").hide();
+            $('#demo-lg-modal-CargaExcel').modal('hide');
+            cargador.CargaDatosTablaTab2ExcelRRLL("", "Todos");
+
+        });
+        //  myDropzone.options.url = "/motor/api/Licencias/carga-envio-tata";
+
+
+
+
+
+        //$(function () {
+        $(document).ready(function () {
+            var hoy = new Date();
+            var d = hoy.getDate().toString().paddingLeft("00") + "-" + (hoy.getMonth() + 1).toString().paddingLeft("00") + "-" + hoy.getFullYear().toString();
+
+            $("#flt_dia_responsable_desde").val('01-04-2020')
+            $("#flt_dia_responsable_hasta").val(d)
+            $("#flt_dia_compin_desde").val(d)
+            $("#flt_dia_compin_hasta").val(d)
+            $("#flt_dia_envio_tata_desde").val(d)
+            $("#flt_dia_envio_tata_hasta").val(d)
+
+
+
+            $("#bdy_datos_ExcelRRLL").html("");
+            $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-suc-derivacion", function (datos) {
+
+                $("#ddloficina").html("");
+                $.each(datos, function (i, oficina) {
+                    $("#ddloficina").append($("<option>").val(oficina.codOficina).html(oficina.DescOficina).data("id", oficina.codOficinaCompin).data("nombre", oficina.OficinaCompin));
+                });
+            });
+
+            //--------------------Configuracion de TABS
+
+            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+
+                sessionStorage.setItem('activeTab', $(e.target).attr('href'));
+            });
+            var activeTab = sessionStorage.getItem('activeTab');
+            if (activeTab) {
+                $('#myTab a[href="' + activeTab + '"]').tab('show');
+            } else {
+                $('#myTab a[href="#demo-lft-tab-1"]').tab('show');
+
+            }
+
+            //--------------------Tab Envio TATA-------------------------------
+
+            $('#demo-foo-filtering_responsable').footable().on('footable_filtering', function (e) {
+
+                e.clear = !e.filter;
+            });
+
+
+            $('#responsable-dp-component .input-group.date').datepicker({
+                autoclose: true,
+                format: 'dd-mm-yyyy',
+                language: "es",
+                daysOfWeekDisabled: [6, 0],
+                todayHighlight: true,
+                //startDate: '-7d'
+
+
+            });
+
+
+
+            cargador.CargaDatosTablaTab5responsable($("#txt_folio_LM_responsable").val(), $("#flt_dia_responsable_desde").val(), $("#flt_dia_responsable_hasta").val(), 0, "Pendiente", $("#flt_dia_envio_tata_desde").val(), $("#flt_dia_envio_tata_hasta").val());
+            cargador.CargaDatosTablaTab5responsableConteo();
+
+            $("#ddlresponsable").val("Pendiente");
+
+
+            $("#btn-buscar-licencia-tabresponsable").on("click", function () {
+
+                cargador.CargaDatosTablaTab5responsable($("#txt_folio_LM_responsable").val(), $("#flt_dia_responsable_desde").val(), $("#flt_dia_responsable_hasta").val(), $("#ddloficina").val(), $("#ddlresponsable").val(), $("#flt_dia_envio_tata_desde").val(), $("#flt_dia_envio_tata_hasta").val());
+                cargador.CargaDatosTablaTab5responsableConteo();
+            });
+
+
+            $('#btn-buscar-exportar-xls').on('click', function () {
+
+                location.href = BASE_URL + "/motor/api/Licencias/exportar-Visualizacion-RRLL?Folio=" + $("#txt_folio_LM_responsable").val() + "&diadesde=" + $("#flt_dia_responsable_desde").val() + "&diahasta=" + $("#flt_dia_responsable_hasta").val() + "&codOficina=" + $("#ddloficina").val() + "&responsable=" + $("#ddlresponsable").val() + "&fechaenviodesde=" + $("#flt_dia_envio_tata_desde").val() + "&fechaenviohasta=" + $("#flt_dia_envio_tata_hasta").val();
+
+            });
+
+
+
+            //-------------------------------Carga Excel--------------------------
+
+
+            $('#demo-foo-filtering_cargaExcelRRLL').footable().on('', function (e) {
+
+                e.clear = !e.filter;
+            });
+
+            $("#btn-buscar-licencia-carga-excel").on("click", function () {
+                location.href = BASE_URL + "/motor/api/Licencias/exportar-Visualizacion-RRLL-Carga-Tata";
+
+
+            });
+
+
+            $('#demo-lg-modal-CargaExcel').on('show.bs.modal', function (event) {
+
+                myDropzone.options.url = "/motor/api/Licencias/carga-TATA-dropzone";
+
+            });
+
+
+            //-------------------------------Carga COMPIM--------------------------
+
+            $('#demo-foo-filtering_cargaCompin').footable().on('', function (e) {
+
+                e.clear = !e.filter;
+            });
+
+
+            cargador.CargaDatosTablaCompin("", $("#flt_dia_compin_hasta").val(), $("#flt_dia_compin_hasta").val());
+
+            $("#btn-buscar-licencia-compin").on("click", function () {
+                cargador.CargaDatosTablaCompin($("#txt_folio_LM_compin").val(), $("#flt_dia_compin_hasta").val(), $("#flt_dia_compin_hasta").val());
+
+            });
+
+
+
+
+
+        });
+
+        $.fn.datepicker.dates['es'] = {
+            days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+            daysShort: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+            daysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"],
+            months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+            monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+            today: "Hoy",
+            clear: "Borrar",
+            format: "dd/mm/yyyy",
+            titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+            weekStart: 1
+        };
+
+
+
+
+
+
+    </script>
+
+
+}

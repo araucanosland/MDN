@@ -413,7 +413,7 @@ $(function () {
         var rutCont = rut
         rutCont = rutCont.substring(0, rutCont.length - 2)
         await appNormalizacionModal.obtenerLead(rut);
-        cargaDatosDeContacto(rutCont, '#bdy_datos_contactos_normalizacion')
+        cargaDatosDeContacto(rut, '#bdy_datos_contactos_normalizacion')
         appNormalizacionModal.setDefaultsModal();
         $('#fpg_normalizacion').css('display', 'none');
         $('#btGestNormalizacion').attr("disabled", false);
@@ -431,9 +431,6 @@ $(function () {
                 event.stoppropagation();
             });
         }, 1000);
-
-
-
 
     });
 

@@ -7,38 +7,32 @@
             $.each(result, function (i, e) {
 
                 $("#bdy_datos").append(
-            
+
                     $("<tr>")
-                          .append($("<td>").append($('<a class="btn-link" data-target="#modal-cargas" data-toggle="modal" data-cargas="' + e.RutAfiliado + '">').prop({ "href": "#" }).html(e.RutAfiliado)))
-                       
+                        .append($("<td>").append($('<a class="btn-link" data-target="#modal-cargas" data-toggle="modal" data-cargas="' + e.RutAfiliado + '">').prop({ "href": "#" }).html(e.RutAfiliado)))
+
                         .append($("<td>").html(e.NombresAfiliado))
                         .append($("<td>").html(e.ApellidosAfiliado))
                         .append($("<td>").html(e.cantidadCarga))
                         .append($("<td>").html(e.RutEmpresa))
                         .append($("<td>").html(e.NombreEmpresa))
                         .append($("<td>").html(e.Estadogestion))
-
-                   
-
-
-              
-
                 )
 
             });
         });
     },
 
-    CargasFamiliares: function() {
+    CargasFamiliares: function () {
 
         $.SecGetJSON(BASE_URL + "/motor/api/Gestion/v3/lista-cargas-familiares", { rutAfiliado: $("#hdRutEjec").val() }, function (result) {
             console.log(result);
             $.each(result, function (i, e) {
-               
 
-              
 
-                    $("input").prop('disabled', true);
+
+
+                $("input").prop('disabled', true);
                 $("input").prop('disabled', false);
                 $("#lblafiliado").text(e.NombresAfiliado);
                 $("#lblrutAfiliado").text(e.RutAfiliado);
@@ -56,56 +50,56 @@
 
                         .append($("<td>").html(e.CodigoCausante))
                         .append($("<td>").html(e.Estadogestion))
-                       
+
                         //.append('< some html >' +
                         //    item.quality > 0 ? 'a possibility' : 'another possibility' +
                         //    '</some html>');
-                       
+
                         .append(e.IdEstadoGestion == '6' ? $("<td>").append(
                             $("<select>").addClass('dropdown-caret').css('width', '150px').css('border-radius', '6px').append(
                                 $('<option data-icon="fa fa-paint-brush">').val('Seleccione').text("Regularizado"))) : $("<td>").append(
-                            $("<select>").addClass('dropdown-caret').css('width', '150px').css('border-radius', '6px').append(
-                                $('<option data-icon="fa fa-paint-brush">').val('Seleccione').text("Seleccione..."),
-                                $('<option>').val(1).text("Sin Contacto"),
-                                $('<option>').val(2).text("Informado a RRHH Empresa"),
-                                $('<option>').val(3).text("Informado Afiliado directo"),
-                                $('<option>').val(4).text("Carga ya no continua estudios"),
-                                $('<option>').val(5).text("Carga ya acreditada")
+                                    $("<select>").addClass('dropdown-caret').css('width', '150px').css('border-radius', '6px').append(
+                                        $('<option data-icon="fa fa-paint-brush">').val('Seleccione').text("Seleccione..."),
+                                        $('<option>').val(1).text("Sin Contacto"),
+                                        $('<option>').val(2).text("Informado a RRHH Empresa"),
+                                        $('<option>').val(3).text("Informado Afiliado directo"),
+                                        $('<option>').val(4).text("Carga ya no continua estudios"),
+                                        $('<option>').val(5).text("Carga ya acreditada")
 
-                            ).on('change', function () {
+                                    ).on('change', function () {
 
-                                var indice = $(this).val();
-                                var descripcion = $(this).text();
-                                var oficina = getCookie("Oficina");
-                                $.SecGetJSON(BASE_URL + "/motor/api/gestion/v3/actualiza-estados-carga-familiares", { rutAfiliado: $("#hdRutEjec").val(), codOficina: oficina, rutCarga: e.RutCarga, Indice: indice }, function (datos) {
+                                        var indice = $(this).val();
+                                        var descripcion = $(this).text();
+                                        var oficina = getCookie("Oficina");
+                                        $.SecGetJSON(BASE_URL + "/motor/api/gestion/v3/actualiza-estados-carga-familiares", { rutAfiliado: $("#hdRutEjec").val(), codOficina: oficina, rutCarga: e.RutCarga, Indice: indice }, function (datos) {
 
-                                    $.niftyNoty({
-                                        type: 'success',
-                                        icon: 'pli-like-2 icon-2x',
-                                        message: 'Gestión Guardada correctamente.',
-                                        container: '#tab-gestion-1',
-                                        timer: 3000
-                                    });
-                                    //------------
-                                    $("#bdy_datos_busqueda_cargas").html("");
-                                    cargador.CargasFamiliares();
+                                            $.niftyNoty({
+                                                type: 'success',
+                                                icon: 'pli-like-2 icon-2x',
+                                                message: 'Gestión Guardada correctamente.',
+                                                container: '#tab-gestion-1',
+                                                timer: 3000
+                                            });
+                                            //------------
+                                            $("#bdy_datos_busqueda_cargas").html("");
+                                            cargador.CargasFamiliares();
 
-                                    //------
-
-
-
-
-                                });
+                                            //------
 
 
 
-                            })
-                        )))
+
+                                        });
+
+
+
+                                    })
+                                )))
                 debugger;
                 if (e.IdEstadoGestion == '7') {
-                    $("#bdy_datos_busqueda_cargas").find("select").attr("disabled", "disabled"); 
+                    $("#bdy_datos_busqueda_cargas").find("select").attr("disabled", "disabled");
                 }
-       
+
                 else
                     $("select").prop('disabled', false);
 
@@ -119,7 +113,7 @@
 
 
 function cargaDatosDeContacto(rutAf, destino = null) {
-  
+
     if (destino != null) {
         $(`${destino} > tr`).remove();
         $(destino).html("");
@@ -166,13 +160,13 @@ function cargaDatosDeContacto(rutAf, destino = null) {
                                 $('<option>').val(7).text("Equivocado"),
                                 $('<option>').val(8).text("No Existe")
                             ).on('change', function () {
-                         
+
                                 var indice = $(this).val();
                                 var valorD = e.ValorDato;
                                 var ofici = getCookie("Oficina");
                                 $.SecGetJSON(BASE_URL + "/motor/api/Contactos/actualiza-indice-contacto", { Indice: indice, RutAfi: rutAf, ValorDato: valorD, Oficina: ofici }, function (datos) {
-                                  
-                                    
+
+
 
                                     $.niftyNoty({
                                         type: 'success',
@@ -185,7 +179,7 @@ function cargaDatosDeContacto(rutAf, destino = null) {
 
                                 cargaDatosDeContacto(rutAf);
 
-                                })
+                            })
                         ))
                         .append($("<td>").append(e.ValorDato))
                         .append($("<td>").append(e.TipoDato))
@@ -205,7 +199,7 @@ function cargaDatosDeContacto(rutAf, destino = null) {
 $(function () {
     $('#button').click(function () {
 
-     
+
         cargador.CargaDatosTablaTab2Busequda();
         $('#demo-foo-filtering').footable().on('footable_filtering', function (e) {
 
@@ -270,7 +264,7 @@ $(function () {
 
     //COMERCIAL
     var tipoCamp = 1;
-   
+
     if (tipoCamp === 1 || tipoCamp === 5) {
         $('#datos-gestion').show();
 
@@ -288,7 +282,7 @@ $(function () {
 
         //Carga de selects
         $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-estados-gestion", { tipoCampagna: 1, padre: 0 }, function (datos) {
-          
+
             $("#ges_estado").data("TipoAsignacion", tipoCamp);
             $("#ges_estado").html("");
             $("#ges_estado").append($("<option>").attr("value", "").html("Seleccione"));
@@ -351,7 +345,7 @@ $(function () {
             // Prevén que se mande el formulario
             e.preventDefault();
             var $form = $(e.target);
-         
+
             $.SecPostJSON(BASE_URL + "/motor/api/Gestion/guardar-gestion", $form.serialize(), function (respuesta) {
 
                 if (respuesta.Estado === 'OK') {
@@ -732,10 +726,10 @@ $(function () {
                 })
             ));
     });
-   
+
     $('#modal-cargas').on('show.bs.modal', function (event) {
-     
-          var link = $(event.relatedTarget);
+
+        var link = $(event.relatedTarget);
         if (typeof $(link).data("cargas") != 'undefined') {
             $("#hdRutEjec").val($(link).data("cargas"))
             $("#bdy_datos_busqueda_cargas").html("");
@@ -809,18 +803,18 @@ $(function () {
 
 
             //Contactabilidad
-          
+
             var rutAf = $('#hdRutEjec').val().replace(/\./g, '');
             rutAf = rutAf.substring(0, rutAf.indexOf('-'));
             debugger;
-          
+
             cargaDatosDeContacto(rutAf, '#bdy_datos_contactos');
         }
     })
 
 
     $('#btn-add-contac').on('click', function () {
-      
+
         // console.log('Visibiliadad', $('#formulario-contac').is(':visible'));
         if ($('#formulario-contac').is(':visible')) {
             $('#formulario-contac').hide('slow');
@@ -864,7 +858,7 @@ $(function () {
         }
     }).on('success.form.bv', function (e) {
         // Prevén que se mande el formulario
-      
+
         e.preventDefault();
         var $form = $(e.target);
 
