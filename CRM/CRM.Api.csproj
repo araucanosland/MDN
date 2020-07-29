@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
@@ -207,6 +207,7 @@
     <Compile Include="Areas\AppPage\Controllers\MantenedoresController.cs" />
     <Compile Include="Areas\AppPage\Controllers\RecertificaciónController.cs" />
     <Compile Include="Areas\AppPage\Controllers\SegurosController.cs" />
+    <Compile Include="Areas\AppPage\Controllers\TamPensionadoController.cs" />
     <Compile Include="Areas\AppPage\Controllers\UpdateController.cs" />
     <Compile Include="Areas\EmpresasPage\Controllers\CarteraEmpresaEjecutivoController.cs" />
     <Compile Include="Areas\EmpresasPage\Controllers\ComiteParitarioController.cs" />
@@ -415,6 +416,18 @@
     <Content Include="Assets\js.App\src\seguros.js" />
     <Content Include="Assets\js.App\src\seguro_cesantia.js" />
     <Content Include="Assets\js.App\src\venta-remota.js" />
+    <Content Include="Assets\tam\app.vue.js" />
+    <Content Include="Assets\tam\deps\moment.js" />
+    <Content Include="Assets\tam\deps\sweetalert.js" />
+    <Content Include="Assets\tam\deps\vue-select.js" />
+    <Content Include="Assets\tam\deps\vuejs-the-mask.js" />
+    <Content Include="Assets\tam\shared.js" />
+    <Content Include="Assets\tam\components.vue.js" />
+    <Content Include="Assets\tam\deps\lodash.js" />
+    <Content Include="Assets\tam\deps\themify-icons.css" />
+    <Content Include="Assets\tam\deps\vfg.js" />
+    <Content Include="Assets\tam\deps\vue-form-wizard.js" />
+    <Content Include="Assets\tam\deps\vue-form-wizard.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -430,6 +443,7 @@
     <Content Include="Img_Install\scanAfi_3.png" />
     <Content Include="prueba.html" />
     <Content Include="prueba2.html" />
+    <Content Include="respaldo.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -580,6 +594,8 @@
     <Content Include="Areas\AppPage\Views\Copago\Index.cshtml" />
     <Content Include="Areas\AppPage\Views\Licencias\LineaTiempoLM.cshtml" />
     <Content Include="Areas\AppPage\Views\Licencias\ListarRRLL.cshtml" />
+    <Content Include="Areas\AppPage\Views\TamPensionado\Index.cshtml" />
+    <Content Include="Assets\tam\data\tam.json" />
     <None Include="Properties\PublishProfiles\CharlyMOTOR.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\Settings.settings">

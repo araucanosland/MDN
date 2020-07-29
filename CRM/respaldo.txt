@@ -1,0 +1,20 @@
+﻿<input type="text" class="form-control" placeholder="Repite Comuna" v-model="model.direcciones.residencia.validaComuna" tabindex="15">
+
+<div class="input-group mar-btm">
+	<span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+	<input type="text" class="form-control">
+	<span class="input-group-addon">.00</span>
+</div>
+
+Paso 1 Autenticacion
+http://serv-292:9999/motor/Home/Acceso?RE=RUTEJECUTIVO
+Paso 2 Mirar la app de TAM
+http://serv-292:9999/motor/App/TamPensionado
+
+https://github.com/BinarCode/vue-form-wizard
+https://github.com/BinarCode/vue-form-wizard
+https://themeon.net/nifty/v2.9.1/forms-general.html
+https://sweetalert2.github.io/#configuration
+https://vuejs-tips.github.io/vue-the-mask/
+https://vue-select.org/
+https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_skipping-uninteresting-code-node-chrome
