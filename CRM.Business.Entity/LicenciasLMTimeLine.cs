@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CRM.Business.Entity
 {
@@ -36,11 +32,16 @@ namespace CRM.Business.Entity
         public string EtapaActualLicencia { get; set; }
 
         public int EstadoId { get; set; }
-        public string EtapaAuditoria { get; set; }
+        public string Siguienteetapa { get; set; }
 
-        public int IDetapaAuditoria { get; set; }
+        public int EtapaId { get; set; }
 
 
+        public string FormatoLM { get; set; }
+        public string Quienenvia { get; set; }
+        public string Telefono { get; set; }
+        public string Email { get; set; }
+        public string Oficina { get; set; }
 
-       }
+    }
 }

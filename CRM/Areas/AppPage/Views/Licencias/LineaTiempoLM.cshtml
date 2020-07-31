@@ -48,8 +48,24 @@
                                     <td><label id="lblfechaingreso"></label></td>
                                 </tr>
                                 <tr>
-                                    <td><strong></strong></td>
-                                    <td></td>
+                                    <td><strong>Oficina</strong></td>
+                                    <td><label id="lbloficina"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Formato </strong></td>
+                                    <td><label id="lblformato"></label></td>
+                                </tr>
+                                                         <tr>
+                                    <td><strong>Quien Envía </strong></td>
+                                    <td><label id="lblquienenvia"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Teléfono o Celular  </strong></td>
+                                    <td><label id="lbltelefono"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Correo electrónico </strong></td>
+                                    <td><label id="lblcorreo"></label></td>
                                 </tr>
 
                             </table>
@@ -115,49 +131,78 @@
                 $("#lblfolic").text('');
                 $("#lblRutAfiliado").text('');
                 $("#lblfechaingreso").text('');
+                $("#lblformato").text('');
+                $("#lbloficina").text('');
+                $("#lblquienenvia").text('');
+                $("#lbltelefono").text('');
+                $("#lblcorreo").text('');
+
                 $.each(datos, function (i, licencia) {
-                    
+                    debugger;
                     $("#lblfolic").text(licencia.FolioLicencia);
                     $("#lblRutAfiliado").text(licencia.RutAfiliado);
                     $("#lblfechaingreso").text(licencia.FechaIngreso.toFecha());
-                    
+                    $("#lblformato").text(licencia.FormatoLM);
+                    $("#lbloficina").text(licencia.Oficina);
+                    $("#lblquienenvia").text(licencia.Quienenvia);
+                    $("#lbltelefono").text(licencia.Telefono);
+                    $("#lblcorreo").text(licencia.Email);              
 
+
+                    debugger;
                     let html = `<div class="timeline-entry" >
                      <div class="timeline-stat">` ;
-                    if (licencia.Estado == "Activada") {
-                        html = html + `<div class="timeline-icon" ></div>` ;
+                    if (licencia.EtapaId == "50") {
+                        html = html + `<div class="timeline-icon  bg-success"  ></div>` ;
                     }
                     else {
                         html = html + `<div class="timeline-icon" ></div>`;
                     }
                     
                     html = html + `  <div class="timeline-time">${licencia.FechaInicio.toFecha()}</div>
-                     </div>
-                     <div class="timeline-label text-left">
-                    <p class="text-bold text-warning"> Estado : ${licencia.Estado}</p>`;
-                   
-    
-                    debugger;
-                    if (licencia.EstadoId == "1") {
-                        html = html + ` <p class="mar-no pad-btm" > <strong>Ejecuta :  ${ licencia.Ejecutado}</strong></p>`;
-                        html = html + ` <p class="mar-no pad-btm" >Etapa Actual : <strong> ${licencia.Etapa}</strong></p>`;
-                        html = html + ` <p class="mar-no pad-btm">Estado Licencia Médica :<strong> ${licencia.Etapa}</strong></p>`;
-                    } else {
-
-                        if (licencia.Ejecutado == "Oficina") {
-                            //html = html + `    <p class="mar-no pad-btm">Etapa Flujo: ${licencia.Etapa}</p>`;
-                            html = html + ` <p class="mar-no pad-btm">Responsable ${licencia.Asignado}</p>`;
-                            html = html + ` <p class="mar-no pad-btm">Estado  Licencia Médica : <strong>${licencia.Etapa}</strong></p>`;
-                        }
-                        else if (licencia.Ejecutado == "Auditoría") {
-                           
-                            html = html + ` <p class="mar-no pad-btm">Responsable ${licencia.Asignado}</p>`;
-                            html = html + ` <p class="mar-no pad-btm">Estado  Auditoría : <strong>${licencia.EtapaAuditoria}</strong></p>`;
-                            html = html + ` <p class="mar-no pad-btm">Estado  Licencia Médica : <strong>${licencia.Etapa}</strong></p>`;
-
-                        }
+                     </div>`;
+                    if (licencia.EtapaId == "50") {
+                        html = html + `<div class="timeline-label text-left" style="background-color:#398452;border-right-color:#398452">`;
+                  //  <p class="text-bold " style="color:#f5f5f5;"><strong>  Estado:  ${licencia.Estado}</strong> </p>`;
                     }
-             
+                    else {
+                        html = html + `<div class="timeline-label text-left">`;
+                   // <p class="text-bold text-warning"> Estado:  ${licencia.Estado}</p>`;
+
+                    }
+    
+                    //debugger;
+                    //if (licencia.EstadoId == "1") {
+                    if (licencia.EtapaId == "50") {
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5;" > Responsable:  ${licencia.Ejecutado}</p>`;
+                        // html = html + ` <p class="mar-no pad-btm" >Etapa Actual : <strong> ${licencia.Etapa}</strong></p>`;
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Estado LM:  ${licencia.Siguienteetapa}</p>`;
+                    }
+                    else {
+                        html = html + ` <p class="mar-no pad-btm" > Responsable:  ${licencia.Ejecutado}</p>`;
+                        // html = html + ` <p class="mar-no pad-btm" >Etapa Actual : <strong> ${licencia.Etapa}</strong></p>`;
+                        html = html + ` <p class="mar-no pad-btm">Estado LM: ${licencia.Etapa}</p>`;
+
+                    }
+
+
+
+                    //else {
+
+                    //    if (licencia.Ejecutado == "Oficina") {
+                    //        //html = html + `    <p class="mar-no pad-btm">Etapa Flujo: ${licencia.Etapa}</p>`;
+                    //        html = html + ` <p class="mar-no pad-btm">Responsable ${licencia.Asignado}</p>`;
+                    //        html = html + ` <p class="mar-no pad-btm">Estado  Licencia Médica : <strong>${licencia.Etapa}</strong></p>`;
+                    //    }
+                    //    else if (licencia.Ejecutado == "Auditoría") {
+                           
+                    //        html = html + ` <p class="mar-no pad-btm">Responsable ${licencia.Asignado}</p>`;
+                    //        html = html + ` <p class="mar-no pad-btm">Estado  Auditoría : <strong>${licencia.EtapaAuditoria}</strong></p>`;
+                    //        html = html + ` <p class="mar-no pad-btm">Estado  Licencia Médica : <strong>${licencia.Etapa}</strong></p>`;
+
+                    //    }
+                    //}
+    
                     html = html + `  </div>
             </div>` ;
                     

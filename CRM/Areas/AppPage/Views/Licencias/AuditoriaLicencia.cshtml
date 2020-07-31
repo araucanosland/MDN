@@ -1,4 +1,4 @@
-﻿
+﻿<
 @{
     ViewBag.Title = "Ingreso";
     Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
@@ -71,7 +71,7 @@
                                         <input id="radio-formato-manual-lm" class="magic-radio" type="radio" name="radio-formato-licencia" disabled="disabled">
                                         <label for="radio-formato-manual-lm">Manual</label>
                                         <!-- <input id="radio-formato-electronico-lm" class="magic-radio" type="radio" name="radio-formato-licencia">
-                                        <label for="radio-formato-electronico-lm">Electrónica</label> -->
+                    <label for="radio-formato-electronico-lm">Electrónica</label> -->
                                         <input id="radio-formato-mixto-lm" class="magic-radio" type="radio" name="radio-formato-licencia" disabled="disabled" style="display:none">
                                         <label for="radio-formato-mixto-lm" style="display:none">Mixta</label>
                                     </div>
@@ -138,7 +138,7 @@
                             <div class="row">
                                 <div class="col-sm-2">
                                     <div class="form-group">
-                                        <label class="control-label">Envío Compín Centralizado</label>
+                                        <label class="control-label">Envío Compin Centralizado</label>
                                         <input type="text" class="form-control" name="compin" id="compin" disabled>
                                     </div>
                                 </div>
@@ -150,7 +150,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <div class="form-group">
-                                        <label class="control-label">Fecha Subido a Compín</label>
+                                        <label class="control-label">Fecha Subido a Compin</label>
                                         <input type="text" class="form-control" id="subido_a_plataforma_compin" name="subido_a_plataforma_compin" readonly="readonly">
                                     </div>
                                 </div>
@@ -262,6 +262,11 @@
                                         <div class="radio">
                                             <input id="chk_reparo_pendiente" name="chk_reparo_pendiente" class="magic-radio" type="checkbox">
                                             <label for="chk_reparo_pendiente">Reparo Auditoría Subsanado. LM Conforme pero ingresada con documentación pendiente para procesar Pago </label>
+                                        </div>
+
+                                        <div class="radio">
+                                            <input id="chk_reparo_LMPresencial" name="chk_reparo_LMPresencial" class="magic-radio" type="checkbox">
+                                            <label for="chk_reparo_pendiente">LM Tramitada Presencialmente en Oficina </label>
                                         </div>
 
                                     </div>
@@ -462,7 +467,7 @@
 
                 $.SecGetJSON(BASE_URL + "/motor/api/Licencias/licencia-data-auditoria", { codIngreso: CodIng }, function (response) {
                     console.log(response);
-
+               
                     $("#AfiliadoRut").val(response.RutAfiliado);
                     $("#AfiliadoRut").mask('99.999.999-*')
                     $("#AfiliadoRut").trigger("blur");
@@ -536,14 +541,14 @@
 
 
 
-
+            
                     $("#txt_oficina").val(response.DescripcionOficina);
                     $("#FolioLic").prop("disabled", true);
                     $('#radio-formato-mixto-lm').prop("disabled", true);
                     $('#radio-formato-manual-lm').prop("disabled", true);
                     $(`#observaciones`).val(response.Observacion);
                     $(`#comentariosnoconforme`).val(response.Observacion);
-
+                    
 
 
                     //checking opciones
@@ -591,18 +596,18 @@
 
 
                     var tipo = httpGet("tab");
-
+               
                     if (tipo == "secundaria") {
 
 
-
+                        
 
                         //---------- estado Oficina
                         if (response.EstadoOficina == "Reparada") {
 
                             $('#chk_reparo_subsanado').prop("checked", true);
                             $('#chk_reparo_pendiente').prop("checked", false);
-
+                 
 
                         }
 
@@ -617,7 +622,7 @@
                             $('#chk_reparo_pendiente').prop("checked", false);
                             $("#checkList1").show();
                         }
-
+                     
                         //---- Conforme estado Auditoria
                         if (response.EstadoRevision == 0) {
                             $('#div_chk_conforme').show();
@@ -651,11 +656,11 @@
 
                                 $('#div_chk_folio_erroneo').hide();
                                 $(`#chk_otro_motivo`).prop("disabled", true);
-                            }
-                            $(`#observaciones`).prop("disabled", true);
+                           }
+                          $(`#observaciones`).prop("disabled", true);
 
                         }
-                        //----- No Conforme
+                         //----- No Conforme
                         if (response.EstadoRevision == 2) {
                             $('#div_chk_conforme').hide();
                             $('#div_chk_no_encontrada').hide();
@@ -667,11 +672,11 @@
                             $(`#chk_no_conforme`).prop("disabled", true);
                             $(`#comentariosnoconforme`).prop("disabled", true);
 
-
+                           
                         }
 
                         if (response.EstadoRevision == 0 && response.EstadoOficina == "Conforme") {
-
+                          
                             $('#tabsecundaria').hide();
                             $('#chk_reparo_subsanado').prop("disabled", true);
                             $('#chk_reparo_pendiente').prop("disabled", true);
@@ -906,9 +911,9 @@
                         lmnoautirizada = $('#chk_no_autorizacion').is(':checked') ? 1 : 0;
                         folionovalido = 0;
                         otromotivo = 0;
-                        comentarios = $('#comentariosnoconforme').val();
+                        comentarios = $('#comentariosnoconforme').val(); 
                     }
-
+                   
                     var WebIngresoAuditoria = {
 
                         //Los Obligatorios
@@ -1069,11 +1074,11 @@
                     if ($('#chk_reparo_subsanado').prop('checked')) {
 
                         //---validaciones
+               
 
+                      
 
-
-
-                        //if ($('#accr3').prop('checked') == true  && $('#accr2').prop('checked') == true && $('#accr1').prop('checked') == true && $('#certificado_renta').prop('checked') == true && $('#m1').prop('checked') == true && $('#m2').prop('checked') == true && $('#m3').prop('checked') == true && $('#m4').prop('checked') == true && $('#m5').prop('checked') == true && $('#m6').prop('checked') == true)
+                        //if ($('#accr3').prop('checked') == true  && $('#accr2').prop('checked') == true && $('#accr1').prop('checked') == true && $('#certificado_renta').prop('checked') == true && $('#m1').prop('checked') == true && $('#m2').prop('checked') == true && $('#m3').prop('checked') == true && $('#m4').prop('checked') == true && $('#m5').prop('checked') == true && $('#m6').prop('checked') == true) 
                         //    {
                         //    $.niftyNoty({
                         //        type: 'danger',
@@ -1176,7 +1181,7 @@
                         cartaAutorizacion: 0,
 
                     }
-
+               
                     $.SecPostJSON(BASE_URL + "/motor/api/Licencias/guardar-licencia-Auditoria-Reparos", WebIngresoLicenciaReparosAuditoria, function (respuesta) {
 
                         if (respuesta.Estado === "OK") {
@@ -1410,13 +1415,13 @@
 
 
             $("#bt-bolver").on("click", function () {
-
+               
                 if (tipo == "principal") {
 
                     location.href = "javascript:history.back(-1)";
                 }
                 else if (tipo == "secundaria") {
-                    // location.href = BASE_URL + "/motor/App/Licencias"
+                   // location.href = BASE_URL + "/motor/App/Licencias"
                     location.href = "javascript:history.back(-1)";
 
                 }
@@ -1509,10 +1514,10 @@
             $('#chk_reparo_subsanado').on('change', function (event) {
                 $("#chk_reparo_subsanado").prop("checked", true);
                 $("#chk_reparo_pendiente").prop("checked", false);
-
+              
             })
 
-
+           
 
             $('#chk_folio_erroneo').on('change', function (event) {
                 $("#chk_folio_erroneo").prop("checked", true);
@@ -1544,9 +1549,17 @@
 
             })
 
-            //----
+            
 
+            $('#chk_reparo_LMPresencial').on('change', function (event) {
+                $('#chk_reparo_LMPresencial').prop("checked", true);
+                $("#chk_reparo_subsanado").prop("checked", false);
+                $("#chk_reparo_pendiente").prop("checked", false);
 
+                $("#checkList1").hide();
+                $(".docs-faltantes-op1").hide();
+
+            })
 
         })
 

@@ -71,7 +71,15 @@
             <li class="">
                 <a data-toggle="tab" href="#demo-lft-tab-3" aria-expanded="true" id="tab_envio_compin" class="tab-principal">Envío Compin</a>
             </li>
-
+            <li class="">
+                <a data-toggle="tab" href="#demo-lft-tab-4" aria-expanded="true" id="tab_CargaExcel_compin" class="tab-principal">Cargas Devueltas Compin</a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#demo-lft-tab-6" aria-expanded="true" id="tab_devueltas_compin" class="tab-principal">Devueltas Compin<span class="badge"><label id="conteoReenvioCompin"></label></span></a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#demo-lft-tab-7" aria-expanded="true" id="tab_consolidado_devueltas_compin" class="tab-principal">Reproceso Devueltas Compin<span class="badge"><label id="conteoreprocesoCompin"></label></span></a>
+            </li>
         </ul>
         <div class="tab-content">
             <div id="demo-lft-tab-1" class="tab-pane fade">
@@ -321,7 +329,7 @@
                                                     <th data-hide="phone">Folio Licencia</th>
                                                     <th data-hide="phone">Estado TATA</th>
                                                     <th data-hide="phone">Fecha Subida TATA</th>
-                                                    <th data-hide="phone">Fecha Subida Compín</th>
+                                                    <th data-hide="phone">Fecha Subida Compin</th>
                                                     <th style="width:10%;" data-hide="phone">SubComisión</th>
                                                     <th data-hide="phone">Validación de carga</th>
 
@@ -381,7 +389,7 @@
 
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Licencias Subidas a Compín</h3>
+                                <h3 class="panel-title">Licencias Subidas a Compin</h3>
 
                             </div>
                             <div class="row">
@@ -401,7 +409,7 @@
                                             <th data-hide="phone">Rut Afiliado</th>
                                             <th data-hide="phone">Folio Licencia</th>
                                             <th data-hide="phone">Oficina</th>
-                                            <th data-hide="phone">Fecha Subida Compín </th>
+                                            <th data-hide="phone">Fecha Subida Compin </th>
                                             <th data-hide="phone">Fecha Ingreso </th>
                                             <th data-hide="phone">Fecha Auditoría </th>
                                             <th data-hide="phone">Subcomisión</th>
@@ -420,7 +428,7 @@
 
                                         <div class="col-sm-2 mar-top">
                                             <div class="form-group">
-                                                <label class="control-label">Fecha Compín Desde</label>
+                                                <label class="control-label">Fecha Compin Desde</label>
                                                 <div id="responsable-dp-component">
                                                     <div class="input-group date">
                                                         <input type="text" class="form-control" id="flt_dia_compin_desde" name="flt_dia_responsable_desde" readonly>
@@ -474,11 +482,375 @@
                 </div>
             </div>
 
+            <div id="demo-lft-tab-4" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Proceso Carga COMPIN</h3>
 
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-1" style="margin-left:40%;margin-top:20px;">
+                                    <div class="input-group">
+                                        <button class="btn btn-success" data-target="#demo-lg-modal-Compin" data-toggle="modal" id="btCargarExcelCompin">Carga Planilla COMPIN</button>
+
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+                            <div class="panel-body">
+                                <hr />
+                                <div class="pad-btm">
+                                    <div class="col-lg-12" style="margin-top:20px;display:none" id="divtablaresumencompin">
+
+                                        <h4>Resumen de Carga</h4>
+
+                                        <table class="table text-left">
+                                            @*<tr>
+                                                    <td><strong>LM a subir compin centralizado</strong></td>
+                                                    <td style="padding-right:700px"><label id="Cargadoscompin"></label></td>
+                                                </tr>*@
+                                            <tr>
+                                                <td><strong>LM devueltas Compin</strong></td>
+                                                <td style=""><label id="Devueltascompin"></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Licencias que no se cargarán</strong></td>
+                                                <td><label id="NoCargadoscompin"></label></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong></strong></td>
+                                                <td></td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+
+                                    <div id="pnl-carga-busqueda-compin" class="col-lg-12" style="display:none">
+
+                                        <div class="col-lg-12" style="margin-top:20px;">
+
+                                            <h4>Resumen de Carga</h4>
+
+                                            <table class="table text-left">
+                                                @*<tr>
+                                                        <td><strong>LM a subir compin centralizado</strong></td>
+                                                        <td style="padding-right:700px"><label id="Cargadoscompin"></label></td>
+                                                    </tr>*@
+                                                <tr>
+                                                    <td><strong>LM devueltas Compin</strong></td>
+                                                    <td style=""><label id="Devueltascompin1"></label></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Licencias que no se cargarán</strong></td>
+                                                    <td><label id="NoCargadoscompin1"></label></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong></strong></td>
+                                                    <td></td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+
+                                        <table id="demo-foo-filtering_cargaExcelRRLL_compin" class="table table-bordered table-hover toggle-circle" data-page-size="10">
+                                            <thead>
+                                                <tr>
+
+                                                    <th data-hide="phone">Folio Licencia</th>
+                                                    <th data-hide="phone">Fecha Recepción</th>
+                                                    <th data-hide="phone">Subcomisión</th>
+                                                    <th data-hide="phone">Estado Compin</th>
+                                                    <th data-hide="phone">Motivo Devuelta</th>
+                                                    <th data-hide="phone">Validación de carga</th>
+
+
+                                                </tr>
+                                            </thead>
+
+                                            <div class="pad-btm">
+
+                                                <div class="col-sm-2" style="margin-top:37px;">
+                                                    <div class="input-group">
+                                                        <button class="btn btn-success" type="button" id="btn-buscar-licencia-carga-excel-compin">Exportar Excel</button>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-sm-8" style="margin-top:37px;margin-right:60px">
+                                                    <div class="input-group">
+                                                        @*<button class="btn btn-warning" type="button" id="btn-actualizar-carga-excel" href ="">Realizar Proceso de Carga </button>*@
+                                                        <a class="btn btn-warning float-right" title="Cargar Archivo Compin" href="javascript:CargarArchivoCompin()">Realizar Proceso de Carga</a>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <tbody id="bdy_datos_ExcelRRLL_compin" style="margin-top:20px"></tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="10">
+                                                        <div class="text-left">
+                                                            <label id="cantLMCargaExcelcompin" class="control-label"></label>
+                                                        </div>
+                                                        <div class="text-right">
+                                                            <ul class="pagination"></ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--========================DEVUELTAS COMPIN===========================-->
+
+            <div id="demo-lft-tab-6" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Devueltas Compin</h3>
+
+                            </div>
+
+                            <div class="panel-body">
+
+
+
+                                <table id="demo-foo-filtering_Devueltas" class="table table-bordered table-hover toggle-circle" data-page-size="20">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:10%;" data-toggle="true">Rut Afiliado</th>
+                                            <th style="width:20%;" data-toggle="true">Nombre Afiliado</th>
+                                            <th data-hide="phone">Folio</th>
+                                            <th data-hide="phone">Fecha Devolución</th>
+                                            <th data-hide="phone">Motivo Devolución</th>
+                                            <th data-hide="phone">Gestión</th>
+
+                                        </tr>
+                                    </thead>
+
+                                    <div class="pad-btm">
+                                        <div class="">
+
+
+
+                                            <div class="col-sm-2 mar-top">
+                                                <div class="form-group">
+                                                    <label class="control-label" id="">Folio LM</label>
+                                                    <input id="txt_folio_LM_devuelta" type="text" placeholder="" class="form-control" autocomplete="off">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-2 mar-top">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fecha Devolución Desde</label>
+                                                    <div id="devuelta-dp-component">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control" id="flt_dia_devuelta_desde" name="flt_dia_devuelta_desde" readonly>
+                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 mar-top">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fecha Devolución Hasta</label>
+                                                    <div id="devuelta-dp-component">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control" id="flt_dia_devuelta_hasta" name="flt_dia_devuelta_hasta" readonly>
+                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-1" style="margin-top:37px;">
+                                                <div class="input-group">
+                                                    <button class="btn btn-success" type="button" id="btn-buscar-licencia-tabdevuelta">Buscar</button>
+                                                </div>
+
+                                            </div>
+
+                                            @*<div class="col-sm-1" style="margin-top:37px;">
+                                                    <div class="input-group">
+                                                        <button class="btn btn-primary" type="button" id="btn-nueva-responsable">Nueva Búsqueda</button>
+                                                    </div>
+
+                                                </div>*@
+
+
+                                        </div>
+
+                                    </div>
+                                    <tbody id="bdy_datos_tabdevuelta"></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div class="text-left">
+                                                    <label id="cantLMdevuelta" class="control-label"></label>
+                                                </div>
+                                                <div class="text-right">
+                                                    <ul class="pagination"></ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--========================CONSOLIDADO COMPIN DEVUELTAS===========================-->
+            <div id="demo-lft-tab-7" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Reenvíos a Plataforma Compin</h3>
+
+                            </div>
+
+                            <div class="panel-body">
+
+
+
+                                <table id="demo-foo-filtering_consolidado_Devueltas" class="table table-bordered table-hover toggle-circle" data-page-size="20">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:10%;" data-toggle="true">Rut Afiliado</th>
+                                            <th style="width:20%;" data-toggle="true">Nombre Afiliado</th>
+                                            <th data-hide="phone">Folio</th>
+                                            <th data-hide="phone">Fecha Gestión</th>
+                                            <th data-hide="phone">Motivo Devolución</th>
+                                            <th data-hide="phone">Responsable</th>
+                                            <th data-hide="phone">Gestión</th>
+                                            <th data-hide="phone">Reenvío COMPIN</th>
+
+                                        </tr>
+                                    </thead>
+
+                                    <div class="pad-btm">
+                                        <div class="">
+
+
+
+                                            <div class="col-sm-2 mar-top">
+                                                <div class="form-group">
+                                                    <label class="control-label" id="">Folio LM</label>
+                                                    <input id="txt_folio_LM_consolidado_devuelta" type="text" placeholder="" class="form-control" autocomplete="off">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-2 mar-top">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fecha Gestión Desde</label>
+                                                    <div id="devuelta-dp-component">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control" id="flt_dia_consolidado_devuelta_desde" name="flt_dia_consolidado_devuelta_desde" readonly>
+                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 mar-top">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fecha Gestión Hasta</label>
+                                                    <div id="devuelta-dp-component">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control" id="flt_dia_consolidado_devuelta_hasta" name="flt_dia_consolidado_devuelta_hasta" readonly>
+                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 mar-top">
+                                                <div class="form-group">
+                                                    <label class="control-label">Est. Responsable</label>
+                                                    <select class="form-control" style="border-radius:6px" id="ddlresponsableConsolidadoCompin" name="ddlresponsableConsolidadoCompin">
+                                                        <option value="Todos">Todos...</option>
+                                                        <option value="Oficina">Oficina</option>
+                                                        <option value="RRLL">RRLL</option>
+
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1" style="margin-top:37px;">
+                                                <div class="input-group">
+                                                    <button class="btn btn-success" type="button" id="btn-buscar-licencia-tabConsolidadodevuelta">Buscar</button>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="col-sm-3" style="margin-top:37px;display:none" >
+                                                <div class="input-group">
+                                                    <a class="btn btn-warning float-right" title="Procesar Reenvío Plataforma Compin" href="javascript:CargarRepocesoCompin()">Procesar Reenvío Plataforma Compin</a>
+
+                                                </div>
+
+                                            </div>
+
+                                            @*<div class="col-sm-1" style="margin-top:37px;">
+                                                    <div class="input-group">
+                                                        <button class="btn btn-primary" type="button" id="btn-nueva-responsable">Nueva Búsqueda</button>
+                                                    </div>
+
+                                                </div>*@
+
+
+                                        </div>
+
+                                    </div>
+                                    <tbody id="bdy_datos_tabconsolidadodevuelta"></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div class="text-left">
+                                                    <label id="cantLMConsolidadodevuelta" class="control-label"></label>
+                                                </div>
+                                                <div class="text-right">
+                                                    <ul class="pagination"></ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
 </div>
+
 <div id="demo-lg-modal-CargaExcel" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-hidden="true">
 
     <div class="modal-dialog modal-lg">
@@ -493,6 +865,40 @@
                         <div class="panel-body">
 
                             <div id="dzMain" class="dropzone demo-dropzone">
+                                <div class="dz-default dz-message">
+                                    <div class="dz-icon">
+                                        <i class="demo-pli-upload-to-cloud icon-5x"></i>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="demo-lg-modal-Compin" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 6px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title">Cargar Proceso COMPIN</h4>
+            </div>
+            <form id="form_registro_anexoUpCompin" action="#" method="post">
+                <div class="panel-body">
+                    <div class="panel panel-bordered-primary" id="panel_Carga_Excel_Compin" style="border-color: #e6e6e6;">
+                        <div class="panel-body">
+
+                            <div id="dzMainCompin" class="dropzone demo-dropzone">
                                 <div class="dz-default dz-message">
                                     <div class="dz-icon">
                                         <i class="demo-pli-upload-to-cloud icon-5x"></i>
@@ -554,12 +960,58 @@
             });
         }
 
+        function CargarArchivoCompin() {
+            bootbox.confirm({
+                size: "medium",
+                title: "Desea Cargar Archivo Compin",
+                message: "¿desea hacerlo?",
+                buttons: {
+                    confirm: {
+                        label: 'Si, cargar',
+                        className: 'btn-warning'
+                    },
+                    cancel: {
+                        label: 'No, no estoy seguro/a',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+                                 
+                        cargador.ActulizaProcesoCargaDevueltasCompin();
+                    }
+                }
+            });
+        }
 
+        function CargarRepocesoCompin() {
+            bootbox.confirm({
+                size: "medium",
+                title: "Desea Reenviar a Platoforma Compin",
+                message: "¿desea hacerlo?",
+                buttons: {
+                    confirm: {
+                        label: 'Si, cargar',
+                        className: 'btn-warning'
+                    },
+                    cancel: {
+                        label: 'No, no estoy seguro/a',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+
+                        cargador.ProcesoReenvioPlataformaCompin();
+                    }
+                }
+            });
+        }
         var cargador = {
 
             //-----------tab_envioTATA
             CargaDatosTablaTab5responsable: function (folioLM, dia_desde, dia_hasta, codOficina, responsable, fechaEnviodesde, fechaEnviohasta) {
-                debugger;
+
                 $("#cantLMresponsable").html('');
                 $("#cantLMresponsable").hide();
                 var total = 0;
@@ -601,8 +1053,7 @@
                                                         timer: 3000
                                                     });
 
-                                                    cargador.CargaDatosTablaTab5responsable($("#txt_folio_LM_responsable").val(), $("#flt_dia_responsable_desde").val(), $("#flt_dia_responsable_hasta").val(), $("#ddloficina").val(), $("#ddlresponsable").val());
-                                                    cargador.CargaDatosTablaTab5responsableConteo();
+                                                    cargador.CargaDatosTablaTab5responsable($("#txt_folio_LM_responsable").val(), $("#flt_dia_responsable_desde").val(), $("#flt_dia_responsable_hasta").val(), 0, "Pendiente", $("#flt_dia_envio_tata_desde").val(), $("#flt_dia_envio_tata_hasta").val());            cargador.CargaDatosTablaTab5responsableConteo();
                                                 });
 
 
@@ -696,9 +1147,9 @@
                 $.SecPostJSON(BASE_URL + "/motor/api/Licencias/proceso-carga-devueltas-TATA", function (respuesta) {
 
                     if (respuesta.Estado === "OK") {
-                        debugger;
+
                         $("#pnl-carga-busqueda").hide();
-                        $("#panel_Carga_Excel").hide();
+                        $("#panel_Carga_Excel").show();
                         $("#divtablaresumen").show();
                         cargador.CargaDatosTablaCompin("", $("#flt_dia_compin_hasta").val(), $("#flt_dia_compin_hasta").val());
 
@@ -706,7 +1157,7 @@
                         $.niftyNoty({
                             type: 'success',
                             icon: 'pli-like-2 icon-2x',
-                            message: 'Proceso de Carga realizado con correctamente!!.',
+                            message: 'Proceso de Carga realizado correctamente!!.',
                             container: 'floating',
                             timer: 10000
                         });
@@ -715,15 +1166,14 @@
                 });
             },
 
-
-            //----------- CARGA GRILLA COMPIN
+            //-----------  GRILLA COMPIN
             CargaDatosTablaCompin: function (folioLM, dia_desde, dia_hasta) {
 
                 $("#cantLMCompin").html('');
                 $("#cantLMCompin").hide();
                 var total = 0;
                 $("#bdy_datos_compin").html("");
-                debugger;
+
                 $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-cargas-compin", { folioLM, dia_desde, dia_hasta }, function (result) {
 
                     $("#bdy_datos_compin").html("");
@@ -747,16 +1197,325 @@
                     $("#cantLMCompin").html("Cantidad de Registros " + total);
                     $("#cantLMCompin").show();
                 });
+            },
+
+            //---------Carga Proceso Compin
+            CargaDatosTablaExcelRRLLCompin: function (folioLM, Estado) {
+                $("#cantLMCargaExcel").html('');
+                $("#cantLMCargaExcel").hide();
+                var total = 0;
+                $("#bdy_datos_ExcelRRLL_compin").html("");
+                var cargaOK = 0;
+                var NoCarga = 0;
+                var Devueltas = 0;
+
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-Temp-Excel-RRLL-compin", { folioLM, Estado }, function (result) {
+
+                    $("#bdy_datos_ExcelRRLL_compin").html("");
+                    $.each(result, function (i, e) {
+
+
+                        $("#bdy_datos_ExcelRRLL_compin").append(
+                            $("<tr>")
+                                .append($("<td>").html(e.FolioLicencia))
+                                .append($("<td>").html(e.diarecepcion.toFecha()))
+                                .append($("<td>").html(e.Subcomision))
+                                .append($("<td>").html(e.Estado))
+                                .append($("<td>").html(e.observacion))
+                                .append($("<td>").html(e.CargaExcel))
+
+                        );
+
+                        var strng;
+                        strng = e.Estado.toString().toLowerCase();
+                        var incStr = strng.includes("devuelta");
+                        //var incOk = strng.includes("OK");
+                        //estado = e.Estado;
+                        //if (e.CargaExcel == 'OK' && incOk == true)
+                        //    cargaOK++;
+
+                        if (e.CargaExcel != 'OK')
+                            NoCarga++;
+
+
+                        if (e.CargaExcel == 'OK' && incStr == true)
+                            Devueltas++;
+
+                        total++;
+                    });
+
+                    //$("#Cargados").html(cargaOK.toString());
+                    $("#Devueltascompin").html(Devueltas.toString());
+                    $("#NoCargadoscompin1").html(NoCarga.toString());
+                    //$("#Cargados1").html(cargaOK.toString());
+                    $("#Devueltascompin1").html(Devueltas.toString());
+                    $("#NoCargadoscompin").html(NoCarga.toString());
+                    $("#cantLMCargaExcelcompin").html("Cantidad a Cargar " + total);
+                    $("#cantLMCargaExcelcompin").show();
+                });
+            },
+
+            ActulizaProcesoCargaDevueltasCompin: function () {
+
+
+
+
+                $.SecPostJSON(BASE_URL + "/motor/api/Licencias/proceso-carga-devueltas-COMPIN", function (respuesta) {
+
+                    if (respuesta.Estado === "OK") {
+
+                        $("#pnl-carga-busqueda-compin").hide();
+                        $('#demo-lg-modal-Compin').modal('hide');
+
+                        $("#divtablaresumencompin").show();
+                        //cargador.CargaDatosTablaCompin("", $("#flt_dia_compin_hasta").val(), $("#flt_dia_compin_hasta").val());
+
+
+                        $.niftyNoty({
+                            type: 'success',
+                            icon: 'pli-like-2 icon-2x',
+                            message: 'Proceso de Carga realizado  correctamente!!.',
+                            container: 'floating',
+                            timer: 10000
+                        });
+
+                    }
+                });
+            },
+
+            //-----------tab_Devueltas Compin
+
+            CargaDatosTablaTab6DevueltaCompin: function (folioLM, dia_desde, dia_hasta, codOficina, responsable) {
+
+                $("#cantLMdevuelta").html('');
+                $("#cantLMdevuelta").hide();
+                var total = 0;
+                $("#bdy_datos_tabdevuelta").html("");
+                debugger;
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-licencias-devuelta-compin", { folioLM, dia_desde, dia_hasta, codOficina , responsable }, function (result) {
+
+                    $("#bdy_datos_tabdevuelta").html("");
+                    $.each(result, function (i, e) {
+
+
+                        $("#bdy_datos_tabdevuelta").append(
+                            $("<tr>")
+                                .append($("<td>").html(e.RutAfiliado))
+                                .append($("<td>").html(e.NombreAfiliado))
+                                .append($("<td>").html(e.FolioLicencia))
+                                .append($("<td>").html(e.FechaDevolucion.toFecha()))
+                                .append($("<td>").html(e.Motivodevolucion))
+                                .append($("<td>").append(
+                                    $("<select>").addClass('form-control').css('width', '100%').css('border-radius', '6px').append(
+                                        $('<option>').val("Seleccione..").text("Seleccione.."),
+                                        $('<option>').val("No Corresponde Devolución").text("No Corresponde Devolución"),
+                                        $('<option>').val("Corrección Gestionada").text("Corrección Gestionada"),
+                                        $('<option>').val("LM procesada Presencialmente").text("LM procesada Presencialmente"),
+                                        $('<option>').val("Esperando Respuesta").text("Esperando Respuesta").prop("selected", e.Gestion)
+
+                                    ).on('change', function () {
+
+                                        var EstadoDevuelta = $(this).val();
+                                        $.SecGetJSON(BASE_URL + "/motor/api/Licencias/guardar-devolucion-compin", { CodIngreso: e.CodIngreso, estadoDevuelta: EstadoDevuelta, responsable: 'RRLL' }, function (respuesta) {
+
+                                            $.niftyNoty({
+                                                type: 'success',
+                                                icon: 'pli-like-2 icon-2x',
+                                                message: 'Responsable agregado correctamente!!.',
+                                                container: 'floating',
+                                                timer: 3000
+                                            });
+                                           
+                                            debugger;
+                                            cargador.CargaDatosTablaTab6DevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), '-1', 'RRLL');
+                                            cargador.CargaDatosTablaTab6DevueltaCompinConteo('RRLL', '-1');
+
+                                        });
+
+
+                                    })
+                                ))
+
+                        );
+
+
+
+
+
+                        total++;
+
+                    });
+
+
+                    $("#cantLMdevuelta").html("Cantidad de Registros " + total);
+                    $("#cantLMdevuelta").show();
+                });
+            },
+            CargaDatosTablaTab6DevueltaCompinConteo: function (responsable, codOficina) {
+
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/licencia-devueltas-compin-conteo", { responsable, codOficina }, function (response) {
+
+                    $("#conteoReenvioCompin").text(response);
+                });
+            },
+
+            //-----------tab_Devueltas Consolidado Compin
+
+            CargaDatosTablaTab7ConsolidadoDevueltaCompin: function (folioLM, dia_desde, dia_hasta, codOficina, responsable) {
+
+                $("#cantLMConsolidadodevuelta").html('');
+                $("#cantLMConsolidadodevuelta").hide();
+                var total = 0;
+                $("#bdy_datos_tabconsolidadodevuelta").html("");
+
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-licencias-Consolidado-devuelta-compin", { folioLM, dia_desde, dia_hasta, codOficina, responsable }, function (result) {
+
+                    $("#bdy_datos_tabconsolidadodevuelta").html("");
+                    $.each(result, function (i, e) {
+                        debugger;
+
+                        //$("#bdy_datos_tabconsolidadodevuelta").append(
+                        //    $("<tr>")
+                        //        .append($("<td>").html(e.RutAfiliado))
+                        //        .append($("<td>").html(e.NombreAfiliado))
+                        //        .append($("<td>").html(e.FolioLicencia))
+                        //        .append($("<td>").html(e.FechaDevolucion.toFecha()))
+                        //        .append($("<td>").html(e.Motivodevolucion))
+                        //        .append($("<td>").html(e.Responsable))
+                        //        .append($("<td>").html(e.Gestion))
+
+                        //);
+
+                        //total++;
+
+
+                        $("#bdy_datos_tabconsolidadodevuelta").append(
+                            $("<tr>")
+                                .append($("<td>").html(e.RutAfiliado))
+                                .append($("<td>").html(e.NombreAfiliado))
+                                .append($("<td>").html(e.FolioLicencia))
+                                .append($("<td>").html(e.FechaDevolucion.toFecha()))
+                                .append($("<td>").html(e.Motivodevolucion))
+                                .append($("<td>").html(e.Responsable))
+                                .append($("<td>").html(e.Gestion))
+                                .append($("<td>").append(
+                                    $("<select>").addClass('form-control').css('width', '100%').css('border-radius', '6px').append(
+                                        $('<option>').val("Seleccione..").text("Seleccione.."),
+                                        $('<option>').val("No Corresponde Devolución").text("Reenvío Compin"),
+                                     
+
+                                    ).on('change', function () {
+
+                                        var EstadoDevuelta = $(this).val();
+
+
+                                        //var ObjetoCargaVariables = {
+                                        //    folioLM: $("#txt_folio_LM_consolidado_devuelta").val(),
+                                        //    dia_desde: $("#flt_dia_consolidado_devuelta_desde").val(),
+                                        //    dia_hasta: $("#flt_dia_consolidado_devuelta_hasta").val(),
+                                        //    responsable: $("#ddlresponsableConsolidadoCompin").val()
+                                        //}
+
+                                        //$.SecGetJSON(BASE_URL + "/motor/api/Licencias/reproceso-reenvio-devueltas-COMPIN", ObjetoCargaVariables, function (respuesta) {
+
+
+                                            $.SecGetJSON(BASE_URL + "/motor/api/Licencias/reproceso-reenvio-devueltas-COMPIN", { CodIngreso: e.CodIngreso, estadoDevuelta: EstadoDevuelta }, function (respuesta) {
+
+                                            $.niftyNoty({
+                                                type: 'success',
+                                                icon: 'pli-like-2 icon-2x',
+                                                message: 'Responsable agregado correctamente!!.',
+                                                container: 'floating',
+                                                timer: 3000
+                                            });
+                                            cargador.CargaDatosTablaTab7ConsolidadoDevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_consolidado_devuelta_desde").val(), $("#flt_dia_consolidado_devuelta_hasta").val(), getCookie("Oficina"), $("#ddlresponsableConsolidadoCompin").val());
+                                            cargador.CargaDatosTablaTab7ConsolidadoDevueltaCompinConteo();
+                                        });
+
+
+                                    })
+                                ))
+
+                        );
+
+
+
+
+
+                        total++;
+
+
+                    });
+
+
+                    $("#cantLMConsolidadodevuelta").html("Cantidad de Registros " + total);
+                    $("#cantLMConsolidadodevuelta").show();
+                });
+            },
+            CargaDatosTablaTab7ConsolidadoDevueltaCompinConteo: function () {
+
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-licencias-Consolidado-devuelta-compin-conteo", {  }, function (response) {
+
+                    $("#conteoreprocesoCompin").text(response);
+                });
+            },
+            ProcesoReenvioPlataformaCompin: function () {
+                debugger;
+              
+                    var ObjetoCargaVariables = {
+                        folioLM: $("#txt_folio_LM_consolidado_devuelta").val(),
+                        dia_desde: $("#flt_dia_consolidado_devuelta_desde").val(),
+                        dia_hasta: $("#flt_dia_consolidado_devuelta_hasta").val(),
+                        responsable: $("#ddlresponsableConsolidadoCompin").val()
+                    }
+
+                    $.SecGetJSON(BASE_URL + "/motor/api/Licencias/reproceso-reenvio-devueltas-COMPIN", ObjetoCargaVariables , function (respuesta) {
+                    debugger;
+                        cargador.CargaDatosTablaTab7ConsolidadoDevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_consolidado_devuelta_desde").val(), $("#flt_dia_consolidado_devuelta_hasta").val(), getCookie("Oficina"), $("#ddlresponsableConsolidadoCompin").val());
+                        cargador.CargaDatosTablaTab7ConsolidadoDevueltaCompinConteo();
+                        $.niftyNoty({
+                            type: 'success',
+                            icon: 'pli-like-2 icon-2x',
+                            message: 'Proceso de Reenvío Plataforma Compin realizado  correctamente!!.',
+                            container: 'floating',
+                            timer: 10000
+                        });
+
+                  
+                });
             }
-
-
-
-
-
         }
 
+        //----------------DROP ZONE COMPIN
+        Dropzone.autoDiscover = false;
+        var myDropzone2 = new Dropzone("div#dzMainCompin", {
+            url: "#",
+            maxFiles: 1,
+            uploadMultiple: false,
+            maxFilesize: 15,
+            acceptedFiles: '.csv'
+        });
+        myDropzone2.on("addedfile", function (file) {
+            document.getElementById("overlay").style.display = "block";
+        });
+
+        myDropzone2.on("complete", function (file) {
+
+            document.getElementById("overlay").style.display = "none";
+            myDropzone2.removeFile(file);
 
 
+
+            $("#divtablaresumencompin").hide();
+            $("#pnl-carga-busqueda-compin").show();
+            // $("#panel_Carga_Excel_Compin").hide();
+            $('#demo-lg-modal-Compin').modal('hide');
+            cargador.CargaDatosTablaExcelRRLLCompin("", "Todos");
+
+        });
+
+
+        //----------------DROP ZONE TATA
         Dropzone.autoDiscover = false;
         var myDropzone = new Dropzone("div#dzMain", {
             url: "#",
@@ -774,19 +1533,13 @@
             document.getElementById("overlay").style.display = "none";
             myDropzone.removeFile(file);
 
-
-
-
             $("#pnl-carga-busqueda").show();
-            $("#panel_Carga_Excel").hide();
+            //$("#panel_Carga_Excel").hide();
             $('#demo-lg-modal-CargaExcel').modal('hide');
             cargador.CargaDatosTablaTab2ExcelRRLL("", "Todos");
 
         });
         //  myDropzone.options.url = "/motor/api/Licencias/carga-envio-tata";
-
-
-
 
 
         //$(function () {
@@ -800,7 +1553,10 @@
             $("#flt_dia_compin_hasta").val(d)
             $("#flt_dia_envio_tata_desde").val(d)
             $("#flt_dia_envio_tata_hasta").val(d)
-
+            $("#flt_dia_devuelta_desde").val(d)
+            $("#flt_dia_devuelta_hasta").val(d)
+            $("#flt_dia_consolidado_devuelta_desde").val(d)
+            $("#flt_dia_consolidado_devuelta_hasta").val(d)
 
 
             $("#bdy_datos_ExcelRRLL").html("");
@@ -829,6 +1585,12 @@
             //--------------------Tab Envio TATA-------------------------------
 
             $('#demo-foo-filtering_responsable').footable().on('footable_filtering', function (e) {
+
+                e.clear = !e.filter;
+            });
+
+
+            $('#demo-foo-filtering_cargaExcelRRLL_compin').footable().on('footable_filtering', function (e) {
 
                 e.clear = !e.filter;
             });
@@ -898,6 +1660,18 @@
             });
 
 
+
+
+            $('#demo-lg-modal-Compin').on('show.bs.modal', function (event) {
+
+                myDropzone2.options.url = "/motor/api/Licencias/carga-Compin-dropzone";
+
+            });
+
+
+
+
+
             cargador.CargaDatosTablaCompin("", $("#flt_dia_compin_hasta").val(), $("#flt_dia_compin_hasta").val());
 
             $("#btn-buscar-licencia-compin").on("click", function () {
@@ -906,7 +1680,59 @@
             });
 
 
+            $('#demo-foo-filtering_cargaExcelRRLL_compin').footable().on('footable_filtering', function (e) {
 
+                e.clear = !e.filter;
+            });
+
+
+
+            //--------------------Tab 7 Devueltas COMPIN
+            $('#devuelta-dp-component .input-group.date').datepicker({
+                autoclose: true,
+                format: 'dd-mm-yyyy',
+                language: "es",
+                daysOfWeekDisabled: [6, 0],
+                todayHighlight: true,
+                //startDate: '-7d'
+
+
+            });
+            $('#demo-foo-filtering_Devueltas').footable().on('footable_filtering', function (e) {
+
+                e.clear = !e.filter;
+            });
+
+
+            cargador.CargaDatosTablaTab6DevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), '-1', 'RRLL');
+
+            cargador.CargaDatosTablaTab6DevueltaCompinConteo('RRLL','-1');
+
+            $("#btn-buscar-licencia-tabdevuelta").on("click", function () {
+
+                cargador.CargaDatosTablaTab6DevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), '-1', 'RRLL');
+                cargador.CargaDatosTablaTab6DevueltaCompinConteo('RRLL','-1');
+            })
+
+
+
+            //--------------------Tab  CONSOLIDADO Devueltas COMPIN
+
+            $('#demo-foo-filtering_Consolidado_Devueltas').footable().on('footable_filtering', function (e) {
+
+                e.clear = !e.filter;
+            });
+
+
+            cargador.CargaDatosTablaTab7ConsolidadoDevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_consolidado_devuelta_desde").val(), $("#flt_dia_consolidado_devuelta_hasta").val(), getCookie("Oficina"), $("#ddlresponsableConsolidadoCompin").val());
+
+            cargador.CargaDatosTablaTab7ConsolidadoDevueltaCompinConteo();
+
+            $("#btn-buscar-licencia-tabConsolidadodevuelta").on("click", function () {
+
+                cargador.CargaDatosTablaTab7ConsolidadoDevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_consolidado_devuelta_desde").val(), $("#flt_dia_consolidado_devuelta_hasta").val(), getCookie("Oficina"), $("#ddlresponsableConsolidadoCompin").val());
+                cargador.CargaDatosTablaTab7ConsolidadoDevueltaCompinConteo();
+            })
 
 
         });

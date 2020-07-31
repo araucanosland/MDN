@@ -43,12 +43,12 @@
                 <a data-toggle="tab" href="#demo-lft-tab-3" aria-expanded="false" id="tab_auditoria" class="tab-principal">No Conformes Auditoria<span class="badge"><label id="conteoPendientes"></label></span></a>
             </li>
 
-            <li class="" style="display:none">
-                <a data-toggle="tab" href="#demo-lft-tab-6" aria-expanded="false" id="tab_devueltas" class="tab-principal">Devueltas Compín<span class="badge"><label id="conteoDevueltasCompin"></label></span></a>
-            </li>
 
             <li class="">
                 <a data-toggle="tab" href="#demo-lft-tab-7" aria-expanded="false" id="tab_devueltas_TATA" class="tab-principal">Devueltas TATA<span class="badge"><label id="conteoDevueltas"></label></span></a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#demo-lft-tab-6" aria-expanded="false" id="tab_devueltas" class="tab-principal">Devueltas Compin<span class="badge"><label id="conteoDevueltasCompin"></label></span></a>
             </li>
             <li class="">
                 <a data-toggle="tab" href="#demo-lft-tab-8" aria-expanded="false" id="tab_manual_presencial" class="tab-principal">LM Manual Presencial<span class="badge"></span></a>
@@ -99,7 +99,7 @@
                                             <th style="width:20%;" data-toggle="true">Nombre Afiliado</th>
                                             <th data-hide="phone" style="width:10%;">Folio</th>
                                             <th data-hide="phone">Tipo</th>
-                                            <th style="width:10%;" data-hide="phone">Compín Centralizado</th>
+                                            <th style="width:10%;" data-hide="phone">Compin Centralizado</th>
                                             <th data-hide="phone">Est. Oficina</th>
                                             <th data-hide="phone">Est. Auditoría</th>
                                             <th data-hide="phone" style="width:10%;">Responsable</th>
@@ -195,7 +195,7 @@
                                                         <option value="Auditoría">Auditoría</option>
                                                         <option value="Oficina">Oficina</option>
                                                         <option value="Ok Contraloría">Ok Contraloría</option>
-                                                        <option value="Compín Local">Compín Local</option>
+                                                        <option value="Compin Local">Compin Local</option>
                                                         <option value="LM Presencial">LM Presencial</option>
                                                         <option value="RRLL">Reg. Legales</option>
 
@@ -307,7 +307,7 @@
                                             <th style="width:10%;" data-toggle="true">Nombre Afiliado</th>
                                             <th style="width:10%;" data-hide="phone">Fecha Ingreso</th>
                                             <th data-hide="phone">Tipo</th>
-                                            <th style="width:10%;" data-hide="phone">Compín Centralizado</th>
+                                            <th style="width:10%;" data-hide="phone">Compin Centralizado</th>
                                             <th data-hide="phone">Oficina</th>
                                             <th style="width:10%;" data-hide="phone">Folio</th>
                                             @*<th data-hide="phone">Tipo</th>*@
@@ -457,7 +457,7 @@
                                                         <option value="Auditoría">Auditoría</option>
                                                         <option value="Oficina">Oficina</option>
                                                         <option value="Ok Contraloría">Ok Contraloría</option>
-                                                        <option value="Compín Local">Compín Local</option>
+                                                        <option value="Compin Local">Compin Local</option>
                                                         <option value="LM Presencial">LM Presencial</option>
 
                                                     </select>
@@ -655,7 +655,7 @@
 
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Devueltas Compín</h3>
+                                <h3 class="panel-title">Devueltas Compin</h3>
 
                             </div>
 
@@ -1062,17 +1062,17 @@
 
 
                         var $wrapper = (`
-                                                <tr>
-                                                    <td>${e.IngresoData.RutAfiliado}</td>
-                                                    <td>${e.IngresoData.NombreAfiliado}</td>
-                                                    <td>${e.IngresoData.FolioLicencia}</td>
-                                                    <td>${e.IngresoData.FormatoLM}</td>
-                                                    <td align="center">${e.IngresoData.compincentralizado}</td>
-                                                    <td>${e.IngresoData.EtapaActual}</td>
-                                                    <td>${e.IngresoData.DescripcionEstadoRevision}</td>
-                                                    <td>${e.IngresoData.Responsable}</td>
-                                                    <td align="center">${e.IngresoData.Flagas400.toString().toEtiquetaFlagLicenciaGrilla()}</td>
-                                                `);
+                                            <tr>
+                                                <td>${e.IngresoData.RutAfiliado}</td>
+                                                <td>${e.IngresoData.NombreAfiliado}</td>
+                                                <td>${e.IngresoData.FolioLicencia}</td>
+                                                <td>${e.IngresoData.FormatoLM}</td>
+                                                <td align="center">${e.IngresoData.compincentralizado}</td>
+                                                <td>${e.IngresoData.EtapaActual}</td>
+                                                <td>${e.IngresoData.DescripcionEstadoRevision}</td>
+                                                <td>${e.IngresoData.Responsable}</td>
+                                                <td align="center">${e.IngresoData.Flagas400.toString().toEtiquetaFlagLicenciaGrilla()}</td>
+                                            `);
 
                         //<td>${e.IngresoData.EstadoCarga}</td>
 
@@ -1156,18 +1156,18 @@
 
 
                         var $wrapper = (`
-                                                <tr>
-                                                    <td>${e.RutAfiliado}</td>
-                                                    <td>${e.NombreAfiliado}</td>
-                                                    <td>${e.FechaIngreso.toFecha()}</td>
-                                                    <td>${e.FormatoLM}</td>
-                                                     <td align="center">${e.compincentralizado}</td>
-                                                    <td>${e.OficinaDescripcion}</td>
-                                                    <td>${e.FolioLicencia}</td>
-                                                    <td>${e.EstadoLicencia}</td>
-                                                    <td>${e.descripcionEstadoRevision}</td>
-                                                     <td>${e.Responsable}</td>
-                                                `);
+                                            <tr>
+                                                <td>${e.RutAfiliado}</td>
+                                                <td>${e.NombreAfiliado}</td>
+                                                <td>${e.FechaIngreso.toFecha()}</td>
+                                                <td>${e.FormatoLM}</td>
+                                                 <td align="center">${e.compincentralizado}</td>
+                                                <td>${e.OficinaDescripcion}</td>
+                                                <td>${e.FolioLicencia}</td>
+                                                <td>${e.EstadoLicencia}</td>
+                                                <td>${e.descripcionEstadoRevision}</td>
+                                                 <td>${e.Responsable}</td>
+                                            `);
                         $wrapper = $wrapper + (`<td>`);
 
                         //--- habiliar cuando este con Auditoria
@@ -1225,18 +1225,18 @@
 
 
                         var $wrapper = (`
-                                                <tr>
-                                                    <td>${e.RutAfiliado}</td>
-                                                    <td>${e.NombreAfiliado}</td>
-                                                    <td>${e.FechaIngreso.toFecha()}</td>
-                                                    <td>${e.OficinaDescripcion}</td>
-                                                    <td>${e.FolioLicencia}</td>
-                                                    <td>${e.FormatoLM}</td>
-                                                    <td>${e.estadoLicencia}</td>
-                                                    <td>${e.DescripcionEstadoRevision}</td>
-                                                    <td>${e.Responsable}</td>
+                                            <tr>
+                                                <td>${e.RutAfiliado}</td>
+                                                <td>${e.NombreAfiliado}</td>
+                                                <td>${e.FechaIngreso.toFecha()}</td>
+                                                <td>${e.OficinaDescripcion}</td>
+                                                <td>${e.FolioLicencia}</td>
+                                                <td>${e.FormatoLM}</td>
+                                                <td>${e.estadoLicencia}</td>
+                                                <td>${e.DescripcionEstadoRevision}</td>
+                                                <td>${e.Responsable}</td>
 
-                                                `);
+                                            `);
 
 
                         $wrapper = $wrapper + (`<td>`);
@@ -1285,15 +1285,15 @@
 
 
                         var $wrapper = (`
-                                                <tr>
-                                                    <td>${e.RutAfiliado}</td>
-                                                    <td>${e.NombreAfiliado}</td>
-                                                    <td>${e.FechaIngreso.toFecha()}</td>
-                                                    <td>${e.OficinaDescripcion}</td>
-                                                    <td>${e.FolioLicencia}</td>
-                                                    <td>${e.FormatoLM}</td>
+                                            <tr>
+                                                <td>${e.RutAfiliado}</td>
+                                                <td>${e.NombreAfiliado}</td>
+                                                <td>${e.FechaIngreso.toFecha()}</td>
+                                                <td>${e.OficinaDescripcion}</td>
+                                                <td>${e.FolioLicencia}</td>
+                                                <td>${e.FormatoLM}</td>
 
-                                                `);
+                                            `);
                         $wrapper = $wrapper + (`<td>`);
                         $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.CodIngreso}"><i class="ion-edit"></i></a>`);
 
@@ -1321,18 +1321,18 @@
 
             //-----------tab_Devueltas Compin
 
-            CargaDatosTablaTab6DevueltaCompin: function (folioLM, dia_desde, dia_hasta, codOficina) {
-
+            CargaDatosTablaTab6DevueltaCompin: function (folioLM, dia_desde, dia_hasta, codOficina,responsable) {
+                debugger;
                 $("#cantLMdevuelta").html('');
                 $("#cantLMdevuelta").hide();
                 var total = 0;
                 $("#bdy_datos_tabdevuelta").html("");
-
-                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-licencias-devuelta-compin", { folioLM, dia_desde, dia_hasta, codOficina }, function (result) {
+             
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-licencias-devuelta-compin", { folioLM, dia_desde, dia_hasta, codOficina,responsable }, function (result) {
 
                     $("#bdy_datos_tabdevuelta").html("");
                     $.each(result, function (i, e) {
-
+                  
 
                         $("#bdy_datos_tabdevuelta").append(
                             $("<tr>")
@@ -1343,16 +1343,16 @@
                                 .append($("<td>").html(e.Motivodevolucion))
                                 .append($("<td>").append(
                                     $("<select>").addClass('form-control').css('width', '100%').css('border-radius', '6px').append(
-                                        $('<option data-icon="fa fa-paint-brush">').val('0').text("Seleccione..."),
-                                        $('<option>').val("9").text("No Corresponde Devolución"),
-                                        $('<option>').val("10").text("Corrección Gestionada"),
-
+                                        $('<option>').val("Seleccione..").text("Seleccione.."),
+                                        $('<option>').val("No Corresponde Devolución").text("No Corresponde Devolución"),
+                                        $('<option>').val("Corrección Gestionada").text("Corrección Gestionada"),
+                                        $('<option>').val("LM procesada Presencialmente").text("LM procesada Presencialmente"),
+                                        $('<option>').val("Esperando Respuesta").text("Esperando Respuesta").prop("selected", e.Gestion)
+                                    
                                     ).on('change', function () {
 
                                         var EstadoDevuelta = $(this).val();
-                                        $.SecGetJSON(BASE_URL + "/motor/api/Licencias/guardar-devolucion-compin", { CodIngreso: e.CodIngreso, estadoDevuelta: EstadoDevuelta }, function (respuesta) {
-
-
+                                        $.SecGetJSON(BASE_URL + "/motor/api/Licencias/guardar-devolucion-compin", { CodIngreso: e.CodIngreso, estadoDevuelta: EstadoDevuelta ,responsable:'Oficina'}, function (respuesta) {
 
                                             $.niftyNoty({
                                                 type: 'success',
@@ -1362,8 +1362,8 @@
                                                 timer: 3000
                                             });
 
-                                            cargador.CargaDatosTablaTab6DevueltaTATA($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), getCookie("Oficina"));
-                                            cargador.CargaDatosTablaTab6DevueltaTATAConteo();
+                                            cargador.CargaDatosTablaTab6DevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), getCookie("Oficina"), 'Oficina');
+                                            cargador.CargaDatosTablaTab6DevueltaCompinConteo('Oficina', getCookie("Oficina"));
                                         });
 
 
@@ -1381,19 +1381,18 @@
                     });
 
 
-                    $("#cantLMresponsable").html("Cantidad de Registros " + total);
-                    $("#cantLMresponsable").show();
+                    $("#cantLMdevuelta").html("Cantidad de Registros " + total);
+                    $("#cantLMdevuelta").show();
                 });
             },
 
-            //CargaDatosTablaTab6DevueltaCompinConteo: function () {
+            CargaDatosTablaTab6DevueltaCompinConteo: function (responsable, codOficina) {
+                debugger;
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/licencia-devueltas-compin-conteo", { responsable, codOficina}, function (response) {
 
-            //    $.SecGetJSON(BASE_URL + "/motor/api/Licencias/licencia-devueltas-compin", {}, function (response) {
-
-            //        $("#conteoDevueltas").text(response);
-            //    });
-            //},
-
+                    $("#conteoDevueltasCompin").text(response);
+                });
+            },
 
 
             //-----------tab_Devueltas TATA
@@ -1407,7 +1406,7 @@
 
                 $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-licencias-devuelta-TATA", { folioLM, dia_desde, dia_hasta, codOficina }, function (result) {
 
-                    $("#bdy_datos_tabdevuelta").html("");
+                    $("#bdy_datos_tabdevuelta_tata").html("");
                     $.each(result, function (i, e) {
                         debugger
 
@@ -1420,10 +1419,11 @@
                                 .append($("<td>").html(e.Motivodevolucion))
                                 .append($("<td>").append(
                                     $("<select>").addClass('form-control').css('width', '100%').css('border-radius', '6px').append(
-                                        $('<option data-icon="fa fa-paint-brush">').val('0').text("Seleccione..."),
+                                        $('<option data-icon="fa fa-paint-brush">').val('Seleccione...').text("Seleccione..."),
                                         $('<option>').val("No Corresponde Devolución").text("No Corresponde Devolución"),
                                         $('<option>').val("Corrección Gestionada").text("Corrección Gestionada"),
                                         $('<option>').val("LM procesada Presencialmente").text("LM procesada Presencialmente"),
+                                        $('<option>').val("Esperando Respuesta").text("Esperando Respuesta").prop("selected", e.Gestion)
                                     ).on('change', function () {
 
                                         var EstadoDevuelta = $(this).val();
@@ -1439,8 +1439,8 @@
                                                 timer: 3000
                                             });
 
-                                            cargador.CargaDatosTablaTab7DevueltaTATA($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), getCookie("Oficina"));
-                                            /// cargador.CargaDatosTablaTab6DevueltaTATAConteo();
+                                            cargador.CargaDatosTablaTab7DevueltaTATA($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_tata_desde").val(), $("#flt_dia_devuelta_tata_hasta").val(), getCookie("Oficina"));
+                                            cargador.CargaDatosTablaTab6DevueltaTATAConteo();
                                         });
 
 
@@ -1486,16 +1486,16 @@
 
 
                         var $wrapper = (`
-                                                <tr>
-                                                    <td>${e.IngresoData.RutAfiliado}</td>
-                                                    <td>${e.IngresoData.NombreAfiliado}</td>
-                                                    <td>${e.IngresoData.FolioLicencia}</td>
-                                                     <td>${e.IngresoData.OficinaDescripcion}</td>
-                                                     <td>${e.IngresoData.FechaLicenciaDesde.toFecha()}</td>
-                                                    <td>${e.IngresoData.FechaLicenciaHasta.toFecha()}</td>
-                                                    <td>${e.IngresoData.DiasLicencia}</td>
+                                            <tr>
+                                                <td>${e.IngresoData.RutAfiliado}</td>
+                                                <td>${e.IngresoData.NombreAfiliado}</td>
+                                                <td>${e.IngresoData.FolioLicencia}</td>
+                                                <td>${e.IngresoData.OficinaDescripcion}</td>
+                                                <td>${e.IngresoData.FechaLicenciaDesde.toFecha()}</td>
+                                                <td>${e.IngresoData.FechaLicenciaHasta.toFecha()}</td>
+                                                <td>${e.IngresoData.DiasLicencia}</td>
 
-                                                `);
+                                            `);
 
 
                         $wrapper = $wrapper + (`</td>`);
@@ -1608,7 +1608,7 @@
             });
 
 
-
+         
 
 
             // Search input
@@ -1822,29 +1822,34 @@
 
 
             //-----------Tab 6 Devueltas COMPIN
-            // $('#devuelta-dp-component .input-group.date').datepicker({
-            //     autoclose: true,
-            //     format: 'dd-mm-yyyy',
-            //     language: "es",
-            //     daysOfWeekDisabled: [6, 0],
-            //     todayHighlight: true,
-            //     //startDate: '-7d'
+             $('#devuelta-dp-component .input-group.date').datepicker({
+                 autoclose: true,
+                 format: 'dd-mm-yyyy',
+                 language: "es",
+                 daysOfWeekDisabled: [6, 0],
+                 todayHighlight: true,
+                 //startDate: '-7d'
 
 
-            // });
+             });
+
+            
+            $('#demo-foo-filtering_Devueltas').footable().on('footable_filtering', function (e) {
+
+                e.clear = !e.filter;
+            });
 
 
+             cargador.CargaDatosTablaTab6DevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), getCookie("Oficina"),'Oficina');
+
+            cargador.CargaDatosTablaTab6DevueltaCompinConteo('Oficina', getCookie("Oficina"));
 
 
-            // cargador.CargaDatosTablaTab6DevueltaTATA($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), getCookie("Oficina"));
+             $("#btn-buscar-licencia-tabdevuelta").on("click", function () {
 
-            //cargador.CargaDatosTablaTab6DevueltaTATAConteo();
-
-            // $("#btn-buscar-licencia-tabdevuelta").on("click", function () {
-
-            //     cargador.CargaDatosTablaTab6DevueltaTATA($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), getCookie("Oficina"));
-            //     cargador.CargaDatosTablaTab6DevueltaTATAConteo();
-            // })
+                 cargador.CargaDatosTablaTab6DevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), getCookie("Oficina"),'Oficina');
+                 cargador.CargaDatosTablaTab6DevueltaCompinConteo('Oficina', getCookie("Oficina"));
+             })
 
 
             // $('#devuelta-dp-component .input-group.date').datepicker({
@@ -1945,7 +1950,7 @@
             });
 
             $('#btn-buscar-manual-presencial-pdf').click(function () {
-                window.location.href = "/motor/api/Licencias/reporte-pdf-as400?codOficina=" + getCookie("Oficina") + "&diadesde=" + $("#flt_dia_manual_presencial_desde").val();
+                window.location.href = "/motor/api/Licencias/reporte-pdf-as400?codOficina=" + getCookie("Oficina") + "&diadesde=" + $("#flt_dia_manual_presencial_desde").val() ;
 
             });
 

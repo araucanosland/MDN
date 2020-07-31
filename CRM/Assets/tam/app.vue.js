@@ -168,8 +168,20 @@ new Vue({
                         _.set(this, 'score', _.get(afiliadoOnBoard, 'score'));
                         _.set(this, 'scorePonderado', _.get(afiliadoOnBoard, 'score'));
                         
-                        console.log({ afiliadoOnBoard });
                         const estadoResultante = _.get(afiliadoOnBoard, 'resultado')
+
+
+                        if (estadoResultante == 'COMUNA_INVALIDA') {
+                            Swal.fire(
+                                'Comuna Inválida.',
+                                _.get(this, 'config.mensajes.COMUNA_INVALIDA'),
+                                'error'
+                            ).then(s => {
+                                reject(estadoResultante);
+                                location.reload(true);
+                            });
+                        }
+
 
                         if (estadoResultante == 'NO_ENCONTRADO') {
                             Swal.fire(
@@ -189,7 +201,6 @@ new Vue({
                                 _.get(this, 'config.mensajes.SOLICITA_REEMBOLSO'),
                                 'warning'
                             ).then(s => {
-                                console.log('reload', { s });
                                 reject(estadoResultante);
                                 location.reload(true);
                             });
@@ -201,7 +212,6 @@ new Vue({
                                 _.get(this, 'config.mensajes.NO_CUMPLE_CON_EDAD'),
                                 'error'
                             ).then(s => {
-                                console.log('reload', { s });
                                 reject(estadoResultante);
                                 location.reload(true);
                             });
@@ -221,7 +231,7 @@ new Vue({
                         }
 
                         
-                        if (estadoResultante == 'OK_ESPERANDO_OPCION_TOR') {
+                        if (estadoResultante == 'BUSQEUDA_OK') {
                             Swal.fire(
                                 'Afiliado Encontrado.',
                                 _.get(this, 'config.mensajes.ENCONTRADO'),
@@ -363,7 +373,7 @@ new Vue({
                             ).then(s => {
                                 console.log('reload', { s });
                                 reject(estadoResultante);
-                                location.reload(true);
+                                //location.reload(true);
                             });
                         } else {
 
@@ -419,19 +429,19 @@ new Vue({
         validateFourthStep: async function () {
             return await new Promise((resolve, reject) => {
                 const respuestas = _.get(this, 'model.respuestas');
-                const score = _.get(this, 'afiliadoEncontrado.score', 0);
+                const score = _.get(this, 'score', 0);
                 const scoreMinimo = 3;
                 const delta = scoreMinimo - score;
-                if (_.size(respuestas) < delta) {
+
+                if (delta > 0 && _.size(respuestas) < 5) {
                     Swal.fire({
-                        title: `Debes completar al menos ${delta} Preguntas`,
-                        html: `No puedes finalizar si no contestas al menos ${delta} preguntas`,
+                        title: `Debes calificar al menos un score de 3`,
+                        html: `Aún quedan preguntas por contestar y falta score para conseguir el mínimo de aprobación.`,
                         icon: 'error',
                         confirmButtonText: 'Ok'
                     });
-                    reject('INVALID_FORM')
+                    reject('INVALID_FORM');
                 } else {
-
                     this.showLoading('Cargando', 'Estamos guardando la información ingresada.')
                     const sendModel = _.clone(_.get(this, 'model'));
                     const onBoardId = _.get(this, 'afiliadoEncontrado.gestionId', '0');

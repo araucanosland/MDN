@@ -19,7 +19,7 @@ namespace CRM.Business.Entity
         public string RutAfiliado { get; set; }
         public DateTime FechaAuditoria { get; set; }
         public DateTime FechaIngreso { get; set; }
-
-
+        public DateTime diarecepcion { get; set; }
+        public string observacion { get; set; }
     }
 }

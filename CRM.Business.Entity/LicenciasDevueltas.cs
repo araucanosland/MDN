@@ -20,9 +20,11 @@ namespace CRM.Business.Entity
         public string FolioLicencia { get; set; }
 
         public string Motivodevolucion { get; set; }
-        
 
 
+        public string Gestion { get; set; }
+
+        public string Responsable { get; set; }
 
     }
 }

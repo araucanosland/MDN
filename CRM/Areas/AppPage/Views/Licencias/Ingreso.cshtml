@@ -129,7 +129,7 @@
                             <div class="row">
                                 <div class="col-sm-2">
                                     <div class="form-group">
-                                        <label class="control-label">Envío Compín Centralizado</label>
+                                        <label class="control-label">Envío Compin Centralizado</label>
                                         <input type="text" class="form-control" name="compin" id="compin" disabled>
                                     </div>
                                 </div>
@@ -141,7 +141,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <div class="form-group">
-                                        <label class="control-label">Fecha Subido a Compín</label>
+                                        <label class="control-label">Fecha Subido a Comp</label>
                                         <input type="text" class="form-control" id="subido_a_plataforma_compin" name="subido_a_plataforma_compin" readonly="readonly">
                                     </div>
                                 </div>
@@ -561,6 +561,7 @@
                         <button class="btn btn-success" type="submit" id="bt-guarda-otra">Guardar</button>
                         <!--<button class="btn btn-success" type="submit" id="bt-guarda-bolver" tabindex="4">Guardar y Volver</button>-->
                     </div>
+
                 </form>
                 <!--===================================================-->
                 <!--End Block Styled Form -->
@@ -657,8 +658,7 @@
                     $("#DerivarLM").prop("checked", false);
                 }
             });
-
-
+          
             $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-suc-derivacion", function (datos) {
 
                 $("#sslOfiDerivacion").html("");
@@ -684,6 +684,7 @@
                     $("#lblCompin").hide();
                     $("#lblCompin1").hide();
                     $(this).val()
+
                 }
             });
 
@@ -1277,7 +1278,7 @@
                                 return false;
                             }
 
-
+                          
                             if ($('#chk_trabajador').prop('checked') == true) {
                                 quienEnvia = 1;
                             }
@@ -1469,7 +1470,7 @@
                         }
 
                         if ($('#devuelta').prop('checked') == true) {
-
+                            
                             if ($('#radio-formato-mixto-lm').prop('checked')) {
                                 var dato = $('#FolioLic').val();
                                 value = dato.replace(/-/g, '')
@@ -1703,7 +1704,20 @@
 
                         pendienteDocumentacion = -1;
                         Faltadoc = 1;
-
+                        debugger;
+                        if ($("#sslOfiDerivacion").val() == 0) {
+                            debugger;
+                            $.niftyNoty({
+                                type: 'danger',
+                                container: 'floating',
+                                html: '<strong>Error</strong> Debe seleccinar oficia para derivar!! ',
+                                focus: false,
+                                timer: 3000
+                            });
+                            $("#sslOfiDerivacion").focus();
+                            $('#bt-guarda-otra').prop('disabled', false);
+                            return false;
+                        }
                     }
 
                     var WebIngresoLicencia = {
@@ -1769,10 +1783,10 @@
 
                     const fl = $("#FormLM").val();
                     console.log({ fl })
-
+                    
 
                     $.SecPostJSON(BASE_URL + "/motor/api/Licencias/guardar-licencia", WebIngresoLicencia, function (respuesta) {
-
+                        
                         if (respuesta.Estado === "OK") {
 
                             $("#fechaLm1").val("Seleccione...");
@@ -1847,7 +1861,7 @@
                                     onHidden: function () {
                                         if (typeof volver != "undefined" && volver == 1) {
                                             location.href = BASE_URL + "/motor/App/Licencias"
-
+                                          
                                         }
                                     }
 
@@ -2050,7 +2064,7 @@
 
 
             $("#bt-bolver").on("click", function () {
-                // location.href = BASE_URL + "/motor/App/Licencias"
+               // location.href = BASE_URL + "/motor/App/Licencias"
                 location.href = "javascript:history.back()";
             });
 
@@ -2058,6 +2072,7 @@
             $("#AfiliadoRut").on("keyup", function () {
                 $('#frm-data-lc').bootstrapValidator('updateStatus', 'AfiliadoRut', 'NOT_VALIDATED').bootstrapValidator('validateField', 'AfiliadoRut');
             })
+
 
             $("#AfiliadoRut").on("blur", function () {
 
@@ -2102,7 +2117,7 @@
                 $("#divempl").show();
                 $("#divlmnolegible").show();
                 $("#divsinfirma").show();
-                // $("#divcartaAutorizacion").show();
+               // $("#divcartaAutorizacion").show();
                 $("#divfataFirmaemleador").show();
                 $("#DerivarLM").prop("disabled", false);
                 $("#sslOfiDerivacion").prop("disabled", false);
@@ -2263,9 +2278,9 @@
                 $("#notramitada").prop("checked", false);
                 $('#divRN').show();
                 $('#divfataFirmaemleador').show();
-
+                
                 if ($("#chk_banner_si").prop("checked") == true) {
-
+                    
                     $("#divcartaAutorizacion").hide();
                 }
                 if ($("#chk_banner_no").prop("checked") == true) {
@@ -2520,7 +2535,7 @@
 
 
             $('#chk_casilla').on('change', function (event) {
-
+                
                 $("#email").val("");
                 $("#telefono").val("");
                 $("#chk_casilla").prop("checked", true);
