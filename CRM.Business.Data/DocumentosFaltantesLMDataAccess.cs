@@ -52,11 +52,11 @@ namespace CRM.Business.Data
                 new Parametro("@fechaliquidacion6",documentosFaltantesLM.fechaliquidacion6),
                 new Parametro("@rutusuario",documentosFaltantesLM.rutusuario),
                 new Parametro("@cartaAutorizacion",documentosFaltantesLM.cartaAutorizacion),
-                // new Parametro("@FaltaFirmaempleador",documentosFaltantesLM.Faltafirmaempleador)
+                new Parametro("@FaltaFirmaempleador",documentosFaltantesLM.Faltafirmaempleador)
 
     };
 
-            DBHelper.InstanceCRM.EjecutarProcedimiento("licencias.sp_Lic_DocumentosFaltantes_Guardar_Informacion", prm);
+            DBHelper.InstanceCRM.EjecutarProcedimiento("licencias.sp_Lic_DocumentosFaltantes_Guardar", prm);
         }
 
         public static DocumentosFaltantesLM ObtenerByCodIngresoLM(long codIngreso)
@@ -106,7 +106,7 @@ namespace CRM.Business.Data
                 fechaliquidacion5 = row["fechaliquidacion5"] != DBNull.Value ? Convert.ToString(row["fechaliquidacion5"]) : string.Empty,
                 fechaliquidacion6 = row["fechaliquidacion6"] != DBNull.Value ? Convert.ToString(row["fechaliquidacion6"]) : string.Empty,
                 cartaAutorizacion = row["cartaAutorizacion"] != DBNull.Value ? Convert.ToBoolean(row["cartaAutorizacion"]) : false,
-                // Faltafirmaempleador = row["faltaFirma"] != DBNull.Value ? Convert.ToBoolean(row["faltaFirma"]) : false
+                Faltafirmaempleador = row["faltaFirma"] != DBNull.Value ? Convert.ToBoolean(row["faltaFirma"]) : false
             };
         }
 

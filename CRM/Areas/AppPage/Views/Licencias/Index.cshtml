@@ -12,6 +12,10 @@
 <!--Bootstrap Select [ OPTIONAL ]-->
 <link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
 <script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
+
+<!--Js gestion oficina -->
+<script src="~/Assets/js.App/src/GestionOficina.js"></script>
+
 <style>
 
     .nav-tabs .badge {
@@ -36,8 +40,11 @@
                 <a data-toggle="tab" href="#demo-lft-tab-2" aria-expanded="false" id="tab_buscar" class="tab-principal">Licencias Multi Oficina</a>
             </li>
 
-            <li class="">
+            <li class="" >
                 <a data-toggle="tab" href="#demo-lft-tab-4" aria-expanded="false" id="tab_derivada" class="tab-principal">LM Derivadas<span class="badge"><label id="conteoDerivadas"></label></span></a>
+            </li>
+            <li class="" style="display:none">>
+                <a data-toggle="tab" href="#demo-lft-tab-9" aria-expanded="false" id="tab_devueltas_gestion" class="tab-principal">LM Devueltas Sucursal<span class="badge"></span></a>
             </li>
             <li class="">
                 <a data-toggle="tab" href="#demo-lft-tab-3" aria-expanded="false" id="tab_auditoria" class="tab-principal">No Conformes Auditoria<span class="badge"><label id="conteoPendientes"></label></span></a>
@@ -53,6 +60,7 @@
             <li class="">
                 <a data-toggle="tab" href="#demo-lft-tab-8" aria-expanded="false" id="tab_manual_presencial" class="tab-principal">LM Manual Presencial<span class="badge"></span></a>
             </li>
+
 
         </ul>
         <div class="tab-content">
@@ -78,13 +86,13 @@
                                         Actualización AS400: <label id="fecha_actualizacion"></label>Hrs.
                                     </h5>
                                 </div>
-                                <div class="col-sm-12" style="margin-left:800px;">
+                                <div class="col-sm-12" style="margin-left:700px;">
                                     <label class="control-label">Validación LM Manuales Presenciales</label>
 
                                     @*<span class="badge badge-mint control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Total" id="cantLM"></span>*@
                                     <span class="badge badge-success control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Total" id="number_one"></span>
                                     @*<span class="badge badge-yelow control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Inconsistencia:Rut distinto AS400–Motor" id="number_two">0</span>
-                                        <span class="badge badge-warning control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Inconsistencia:Folios Diferentes" id="number_folios">0</span>*@
+                                <span class="badge badge-warning control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Inconsistencia:Folios Diferentes" id="number_folios">0</span>*@
                                     <span class="badge badge-danger control-label add-tooltip" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="Folio no encontrado en AS400" id="number_three"></span>
                                 </div>
                             </div>
@@ -106,7 +114,7 @@
                                             @*<th data-hide="phone">Estado</th>*@
                                             <th data-hide="phone">Validación AS400</th>
                                             @*<th data-hide="phone">Estado Actual</th>*@
-                                            <th style="width:11%;" data-hide="phone">Acción</th>
+                                            <th style="width:25%;" data-hide="phone">Acción</th>
                                         </tr>
                                     </thead>
 
@@ -291,10 +299,10 @@
                                     <h5></h5>
                                 </div>
                                 @*<div class="col-sm-4 text-xs-center">
-                                        <h5>
-                                            Actualización AS400: <label id="fecha_actualizacion"></label>Hrs.
-                                        </h5>
-                                    </div>*@
+                                <h5>
+                                    Actualización AS400: <label id="fecha_actualizacion"></label>Hrs.
+                                </h5>
+                            </div>*@
                             </div>
                             <div class="panel-body">
 
@@ -332,7 +340,7 @@
                                                 <div class="input-group">
                                                     <button class="btn btn-success" type="button" id="btn-buscar-licencia">Buscar Rut</button>
                                                     @*<a class="btn btn-primary mar-lft" href="#" id="exportar">Exportar LM Manual</a>
-                                                        <a class="btn btn-primary mar-lft" href="#" id="expLmMixta">Exportar LM Mixta</a>*@
+                                                <a class="btn btn-primary mar-lft" href="#" id="expLmMixta">Exportar LM Mixta</a>*@
                                                 </div>
 
                                             </div>
@@ -357,14 +365,14 @@
                                         </div>
 
                                         @*<div class="row">
-                                                <div class="col-sm-4 mar-top">
-                                                    <div class="input-group">
+                                        <div class="col-sm-4 mar-top">
+                                            <div class="input-group">
 
-                                                        <a class="btn btn-primary mar-lft" href="#" id="exportar">Exportar LM Manual</a>
-                                                        <a class="btn btn-mint" href="#" id="expLmMixta">Exportar LM Mixta</a>
-                                                    </div>
-                                                </div>
-                                            </div>*@
+                                                <a class="btn btn-primary mar-lft" href="#" id="exportar">Exportar LM Manual</a>
+                                                <a class="btn btn-mint" href="#" id="expLmMixta">Exportar LM Mixta</a>
+                                            </div>
+                                        </div>
+                                    </div>*@
                                     </div>
                                     <tbody id="bdy_datos_busqueda"></tbody>
                                     <tfoot>
@@ -385,7 +393,6 @@
                     </div>
                 </div>
             </div>
-
 
 
             <!--========================AUDITORIA===========================-->
@@ -497,11 +504,11 @@
                                             </div>
 
                                             @*<div class="col-sm-1" style="margin-top:37px;">
-                                                    <div class="input-group">
-                                                        <button class="btn btn-primary" type="button" id="btn-nueva-auditoria">Nueva Búsqueda</button>
-                                                    </div>
+                                            <div class="input-group">
+                                                <button class="btn btn-primary" type="button" id="btn-nueva-auditoria">Nueva Búsqueda</button>
+                                            </div>
 
-                                                </div>*@
+                                        </div>*@
 
 
                                         </div>
@@ -570,11 +577,11 @@
 
 
                                             @*<div class="col-sm-2 mar-top">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Estado Oficina</label>
-                                                        <select class="form-control" id="ddlestadosOficinaDerivada" name="ddlestadosOficinaDerivada"></select>
-                                                    </div>
-                                                </div>*@
+                                            <div class="form-group">
+                                                <label class="control-label">Estado Oficina</label>
+                                                <select class="form-control" id="ddlestadosOficinaDerivada" name="ddlestadosOficinaDerivada"></select>
+                                            </div>
+                                        </div>*@
                                             <div class="col-sm-2 mar-top">
                                                 <div class="form-group">
                                                     <label class="control-label" id="">Folio LM</label>
@@ -616,11 +623,11 @@
                                             </div>
 
                                             @*<div class="col-sm-1" style="margin-top:37px;">
-                                                    <div class="input-group">
-                                                        <button class="btn btn-primary" type="button" id="btn-nueva-auditoria">Nueva Búsqueda</button>
-                                                    </div>
+                                            <div class="input-group">
+                                                <button class="btn btn-primary" type="button" id="btn-nueva-auditoria">Nueva Búsqueda</button>
+                                            </div>
 
-                                                </div>*@
+                                        </div>*@
 
 
                                         </div>
@@ -722,11 +729,11 @@
                                             </div>
 
                                             @*<div class="col-sm-1" style="margin-top:37px;">
-                                                    <div class="input-group">
-                                                        <button class="btn btn-primary" type="button" id="btn-nueva-responsable">Nueva Búsqueda</button>
-                                                    </div>
+                                            <div class="input-group">
+                                                <button class="btn btn-primary" type="button" id="btn-nueva-responsable">Nueva Búsqueda</button>
+                                            </div>
 
-                                                </div>*@
+                                        </div>*@
 
 
                                         </div>
@@ -827,11 +834,11 @@
                                             </div>
 
                                             @*<div class="col-sm-1" style="margin-top:37px;">
-                                                    <div class="input-group">
-                                                        <button class="btn btn-primary" type="button" id="btn-nueva-responsable">Nueva Búsqueda</button>
-                                                    </div>
+                                            <div class="input-group">
+                                                <button class="btn btn-primary" type="button" id="btn-nueva-responsable">Nueva Búsqueda</button>
+                                            </div>
 
-                                                </div>*@
+                                        </div>*@
 
 
                                         </div>
@@ -903,12 +910,12 @@
 
 
                                             @*<div class="col-sm-2 mar-top">
-                                                    <div class="form-group">
-                                                        <label class="control-label" id="">Folio LM</label>
-                                                        <input id="txt_folio_LM_manual_presencial" type="text" placeholder="" class="form-control" autocomplete="off">
-                                                    </div>
+                                            <div class="form-group">
+                                                <label class="control-label" id="">Folio LM</label>
+                                                <input id="txt_folio_LM_manual_presencial" type="text" placeholder="" class="form-control" autocomplete="off">
+                                            </div>
 
-                                                </div>*@
+                                        </div>*@
 
                                             <div class="col-sm-2 mar-top">
                                                 <div class="form-group">
@@ -943,11 +950,11 @@
                                             </div>
 
                                             @*<div class="col-sm-1" style="margin-top:37px;">
-                                                    <div class="input-group">
-                                                        <button class="btn btn-primary" type="button" id="btn-nueva-responsable">Nueva Búsqueda</button>
-                                                    </div>
+                                            <div class="input-group">
+                                                <button class="btn btn-primary" type="button" id="btn-nueva-responsable">Nueva Búsqueda</button>
+                                            </div>
 
-                                                </div>*@
+                                        </div>*@
 
 
                                         </div>
@@ -972,9 +979,334 @@
                     </div>
                 </div>
             </div>
+
+
+            <!--========================DEVUELTAS OFICINAS===========================-->
+
+            <div id="demo-lft-tab-9" class="tab-pane fade">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Devueletas Oficina</h3>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-1" style="margin-left:20px;margin-top:20px">
+                                    <div class="input-group">
+                                        <button class="btn btn-warning" type="button" id="btn-buscar-manual-presencial-pdf">Reporte Pdf</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="panel-body">
+
+
+
+                                <table id="demo-foo-filtering_devueltas_gestion" class="table table-bordered table-hover toggle-circle" data-page-size="20">
+                                    <thead>
+                                        <tr>
+                                            <th data-toggle="true">Rut Afiliado</th>
+                                            <th data-toggle="true">Nombre Afiliado</th>
+                                            <th data-hide="phone">Folio Licencia</th>
+                                            
+
+                                        </tr>
+                                    </thead>
+
+                                    <div class="pad-btm">
+                                        <div class="">
+
+
+
+                                            @*<div class="col-sm-2 mar-top">
+                                        <div class="form-group">
+                                            <label class="control-label" id="">Folio LM</label>
+                                            <input id="txt_folio_LM_manual_presencial" type="text" placeholder="" class="form-control" autocomplete="off">
+                                        </div>
+
+                                    </div>*@
+
+                                            <div class="col-sm-2 mar-top">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fecha Desde</label>
+                                                    <div id="presencial-dp-component">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control" id="flt_dia_manual_presencial_desde" name="flt_dia_manual_presencial_desde" readonly>
+                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 mar-top" style="display:none">
+                                                <div class="form-group">
+                                                    <label class="control-label">Fecha Hasta</label>
+                                                    <div id="devuelta-dp-component">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control" id="flt_dia_manual_presencial_hasta" name="flt_dia_manual_presencial_hasta" readonly>
+                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-1" style="margin-top:37px;">
+                                                <div class="input-group">
+                                                    <button class="btn btn-success" type="button" id="btn-buscar-manual-presencial">Buscar</button>
+                                                </div>
+
+                                            </div>
+
+                                            @*<div class="col-sm-1" style="margin-top:37px;">
+                                        <div class="input-group">
+                                            <button class="btn btn-primary" type="button" id="btn-nueva-responsable">Nueva Búsqueda</button>
+                                        </div>
+
+                                    </div>*@
+
+
+                                        </div>
+
+                                    </div>
+                                    <tbody id="bdy_datos_devueltas_gestion"></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="10">
+                                                <div class="text-left">
+                                                    <label id="cantmanualpresencial" class="control-label"></label>
+                                                </div>
+                                                <div class="text-right">
+                                                    <ul class="pagination"></ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
 </div>
+
+
+
+<!---===================MODAL GESTION OFICINA================================-->
+@*<div id="modal-gestion-oficina" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+        <input type="hidden" id="hdtipo1" value="0" />
+        <input type="hidden" id="hdtipo2" value="0" />
+        <input type="hidden" id="hdtipo3" value="0" />
+        <input type="hidden" id="hddevuelta" value="1" />
+        <input type="hidden" id="hdCodIngreso" />
+        <div class="modal-content" style="border-radius: 6px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title">Gestión Devueltas Oficina</h4>
+            </div>
+            <div class="tab-base">
+               
+                <ul id="myTab2" class="nav nav-pills nav-justified">
+                    <li class="">
+                        <a data-toggle="tab" href="#gestion-1" aria-expanded="true" id="tab_gestion-1" class="tab-principal">Gestión 1</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#gestion-2" aria-expanded="false" id="tab_gestion-2" class="tab-principal">Gestión 2</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#gestion-3" aria-expanded="false" id="tab_gestion-3" class="tab-principal">Gestión 3</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="tabcontent">
+                    <div id="gestion-1" class="tab-pane fade" active>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Gestión 1</h3>
+                                    </div>
+
+                                    <div class="panel-body">
+
+                                        <div class="pad-btm">
+
+
+                                            <div class="col-sm-2 mar-top">
+                                                <div class="form-group">
+                                                    <label class="control-label" id="">Fecha Gestión</label>
+                                                    <input id="fecha_gestion_1" type="text" placeholder="" class="form-control" autocomplete="off">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-6 mar-top">
+                                                <div class="form-group">
+                                                    <label class="control-label">Tipo Gestión</label>
+                                                    <select class="form-control" id="ddlGestion" name="ddlGestion">
+                                                        <option value="-1">Seleccione...</option>
+                                                        <option value="1">Contacto Telefónico</option>
+                                                        <option value="2">Envío Correo Electrónico</option>
+                                                        <option value="3">Visita a Terreno</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-12">
+                                                <label for="comentarios">Comentarios</label>
+                                                <textarea id="comentarios" class="form-control"></textarea>
+                                            </div>
+
+                                            <div class="col-sm-1" style="margin-top:37px;">
+                                                <div class="input-group">
+                                                    <button class="btn btn-success" type="button" id="btn-guardar-gestion-1">Guardar Gestión 1</button>
+                                                </div>
+
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="gestion-2" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Gestión 2</h3>
+                                    </div>
+
+                                    <div class="panel-body">
+
+                                        <div class="pad-btm">
+
+
+                                            <div class="col-sm-2 mar-top">
+                                                <div class="form-group">
+                                                    <label class="control-label" id="">Fecha Gestión</label>
+                                                    <input id="fecha_gestion_2" type="text" placeholder="" class="form-control" autocomplete="off">
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-6 mar-top">
+                                                <div class="form-group">
+                                                    <label class="control-label">Tipo Gestión</label>
+                                                    <select class="form-control" id="ddlGestion2" name="ddlGestion2">
+                                                        <option value="-1">Seleccione...</option>
+                                                        <option value="1">Contacto Telefónico</option>
+                                                        <option value="2">Envío Correo Electrónico</option>
+                                                        <option value="3">Visita a Terreno</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-12">
+                                                <label for="comentarios2">Comentarios</label>
+                                                <textarea id="comentarios2" class="form-control"></textarea>
+                                            </div>
+
+                                            <div class="col-sm-1" style="margin-top:37px;">
+                                                <div class="input-group">
+                                                    <button class="btn btn-success" type="button" id="btn-guardar-gestion-2">Guardar Gestión 2</button>
+                                                </div>
+
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="gestion-3" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Gestión 3</h3>
+                                    </div>
+
+                                    <div class="panel-body">
+
+                                        <div class="pad-btm">
+
+
+                                            <div class="col-sm-2 mar-top">
+                                                <div class="form-group">
+                                                    <label class="control-label" id="">Fecha Gestión</label>
+                                                    <input id="fecha_gestion_3" type="text" placeholder="" class="form-control" autocomplete="off">
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-6 mar-top">
+                                                <div class="form-group">
+                                                    <label class="control-label">Región</label>
+                                                    <select class="form-control" id="ddlregion" name="ddlregion"></select>
+                                                    <input type="text" class="form-control validatore" id="txtregion" style="display:none;">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 mar-top">
+                                                <div class="form-group">
+                                                    <label class="control-label">Comuna</label>
+                                                    <select class="form-control" id="ddlcomuna" name="ddlcomuna"></select>
+                                                    <input type="text" class="form-control validatore" id="txtcomuna" style="display:none;">
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="direcion">Dirección</label>
+                                                <textarea id="direccion" name="direccion" class="form-control"></textarea>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="comentarios3">Comentarios</label>
+                                                <textarea id="comentarios3" class="form-control"></textarea>
+                                            </div>
+
+                                            <div class="col-sm-1" style="margin-top:37px;">
+                                                <div class="input-group">
+                                                    <button class="btn btn-success" type="button" id="btn-guardar-gestion-3">Enviar Notificación Trabajador</button>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>*@
+
 <!--===================================================-->
 <!--End page content-->
 @section script{
@@ -1033,10 +1365,12 @@
 
 
 
+
+
             //-----------tab_ingreso
             CargaDatosEncabezado: function (enc_dia) {
                 $.SecGetJSON(BASE_URL + "/motor/api/Licencias/datos-encabezado-lic", { codOficina: getCookie("Oficina"), dia: enc_dia }, function (menus) {
-                    debugger;
+
                     $("#number_one").html(menus.Lm_Verde);
                     //$("#number_two").html(menus.Lm_Amarillo);
                     //$("#number_folios").html(menus.Lm_Naranjo);
@@ -1062,17 +1396,17 @@
 
 
                         var $wrapper = (`
-                                            <tr>
-                                                <td>${e.IngresoData.RutAfiliado}</td>
-                                                <td>${e.IngresoData.NombreAfiliado}</td>
-                                                <td>${e.IngresoData.FolioLicencia}</td>
-                                                <td>${e.IngresoData.FormatoLM}</td>
-                                                <td align="center">${e.IngresoData.compincentralizado}</td>
-                                                <td>${e.IngresoData.EtapaActual}</td>
-                                                <td>${e.IngresoData.DescripcionEstadoRevision}</td>
-                                                <td>${e.IngresoData.Responsable}</td>
-                                                <td align="center">${e.IngresoData.Flagas400.toString().toEtiquetaFlagLicenciaGrilla()}</td>
-                                            `);
+                                                                        <tr>
+                                                                            <td>${e.IngresoData.RutAfiliado}</td>
+                                                                            <td>${e.IngresoData.NombreAfiliado}</td>
+                                                                            <td>${e.IngresoData.FolioLicencia}</td>
+                                                                            <td>${e.IngresoData.FormatoLM}</td>
+                                                                            <td align="center">${e.IngresoData.compincentralizado}</td>
+                                                                            <td>${e.IngresoData.EtapaActual}</td>
+                                                                            <td>${e.IngresoData.DescripcionEstadoRevision}</td>
+                                                                            <td>${e.IngresoData.Responsable}</td>
+                                                                            <td align="center">${e.IngresoData.Flagas400.toString().toEtiquetaFlagLicenciaGrilla()}</td>
+                                                                        `);
 
                         //<td>${e.IngresoData.EstadoCarga}</td>
 
@@ -1093,6 +1427,17 @@
                             $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/auditorialicencia?ci=${e.IngresoData.CodIngreso}&tab=secundaria"><i class="ion-search"></i></a>`);
 
                         }
+
+
+
+
+                        //if (e.IngresoData.EtapaActual = 'Devuelta') {
+
+                        //    //$wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/gestionoficina?ci=${e.IngresoData.CodIngreso}&Tipog=1"><i class="ion-search"></i></a>`);
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" data-target="#modal-gestion-oficina" data-toggle="modal" data-tipo='1' data-codingreso=${e.IngresoData.CodIngreso}></a>`);
+
+                        //}
+
 
                         //
                         //if (e.IngresoData.DescripcionEstadoRevision == 'No Conforme' && e.IngresoData.EtapaActual == 'Conforme') {
@@ -1121,7 +1466,7 @@
                         //}
 
 
-                        //$wrapper = $wrapper + (`<a class="btn btn-warning float-right" title="Seguimiento" href="/motor/App/Licencias/LineaTiempoLM?ci=${e.IngresoData.CodIngreso}")"><i class="ion-map"></i></a>`);
+                        $wrapper = $wrapper + (`<a class="btn btn-warning mar-lft" title="Seguimiento" href="/motor/App/Licencias/LineaTiempoLM?ci=${e.IngresoData.CodIngreso}")"><i class="ion-search"></i></a>`);
 
                         //if (e.IngresoData.DescripcionEstadoRevision == 'Conforme' && e.IngresoData.EtapaActual == 'Reparada con documentación pendiente') {
 
@@ -1156,18 +1501,18 @@
 
 
                         var $wrapper = (`
-                                            <tr>
-                                                <td>${e.RutAfiliado}</td>
-                                                <td>${e.NombreAfiliado}</td>
-                                                <td>${e.FechaIngreso.toFecha()}</td>
-                                                <td>${e.FormatoLM}</td>
-                                                 <td align="center">${e.compincentralizado}</td>
-                                                <td>${e.OficinaDescripcion}</td>
-                                                <td>${e.FolioLicencia}</td>
-                                                <td>${e.EstadoLicencia}</td>
-                                                <td>${e.descripcionEstadoRevision}</td>
-                                                 <td>${e.Responsable}</td>
-                                            `);
+                                                                        <tr>
+                                                                            <td>${e.RutAfiliado}</td>
+                                                                            <td>${e.NombreAfiliado}</td>
+                                                                            <td>${e.FechaIngreso.toFecha()}</td>
+                                                                            <td>${e.FormatoLM}</td>
+                                                                             <td align="center">${e.compincentralizado}</td>
+                                                                            <td>${e.OficinaDescripcion}</td>
+                                                                            <td>${e.FolioLicencia}</td>
+                                                                            <td>${e.EstadoLicencia}</td>
+                                                                            <td>${e.descripcionEstadoRevision}</td>
+                                                                             <td>${e.Responsable}</td>
+                                                                        `);
                         $wrapper = $wrapper + (`<td>`);
 
                         //--- habiliar cuando este con Auditoria
@@ -1190,8 +1535,9 @@
                         }
 
 
-                        //  $wrapper = $wrapper + (`<a class="btn btn-warning float-right" title="Seguimiento" href="/motor/App/Licencias/LineaTiempoLM?ci=${e.CodIngreso}")"><i class="ion-map"></i></a>`);
+                        $wrapper = $wrapper + (`<a class="btn btn-warning mar-lft" title="Seguimiento" href="/motor/App/Licencias/LineaTiempoLM?ci=${e.CodIngreso}")"><i class="ion-search"></i></a>`);
 
+                        //$wrapper = $wrapper + (`<a class="btn btn-warning mar-lft" title="Seguimiento" href="/motor/App/Licencias/LineaTiempoLM?ci=${e.IngresoData.CodIngreso}")"><i class="ion-search"></i></a>`);
 
 
 
@@ -1225,18 +1571,18 @@
 
 
                         var $wrapper = (`
-                                            <tr>
-                                                <td>${e.RutAfiliado}</td>
-                                                <td>${e.NombreAfiliado}</td>
-                                                <td>${e.FechaIngreso.toFecha()}</td>
-                                                <td>${e.OficinaDescripcion}</td>
-                                                <td>${e.FolioLicencia}</td>
-                                                <td>${e.FormatoLM}</td>
-                                                <td>${e.estadoLicencia}</td>
-                                                <td>${e.DescripcionEstadoRevision}</td>
-                                                <td>${e.Responsable}</td>
+                                                                        <tr>
+                                                                            <td>${e.RutAfiliado}</td>
+                                                                            <td>${e.NombreAfiliado}</td>
+                                                                            <td>${e.FechaIngreso.toFecha()}</td>
+                                                                            <td>${e.OficinaDescripcion}</td>
+                                                                            <td>${e.FolioLicencia}</td>
+                                                                            <td>${e.FormatoLM}</td>
+                                                                            <td>${e.estadoLicencia}</td>
+                                                                            <td>${e.DescripcionEstadoRevision}</td>
+                                                                            <td>${e.Responsable}</td>
 
-                                            `);
+                                                                        `);
 
 
                         $wrapper = $wrapper + (`<td>`);
@@ -1245,11 +1591,14 @@
                         }
 
 
+
                         if (e.Responsable != 'Auditoría') {
 
                             $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/auditorialicencia?ci=${e.CodIngreso}&tab=secundaria"><i class="ion-edit"></i></a>`);
 
                         }
+
+
 
 
                         $("#bdy_datos_busqueda_auditoria").append($wrapper);
@@ -1285,15 +1634,15 @@
 
 
                         var $wrapper = (`
-                                            <tr>
-                                                <td>${e.RutAfiliado}</td>
-                                                <td>${e.NombreAfiliado}</td>
-                                                <td>${e.FechaIngreso.toFecha()}</td>
-                                                <td>${e.OficinaDescripcion}</td>
-                                                <td>${e.FolioLicencia}</td>
-                                                <td>${e.FormatoLM}</td>
+                                                                        <tr>
+                                                                            <td>${e.RutAfiliado}</td>
+                                                                            <td>${e.NombreAfiliado}</td>
+                                                                            <td>${e.FechaIngreso.toFecha()}</td>
+                                                                            <td>${e.OficinaDescripcion}</td>
+                                                                            <td>${e.FolioLicencia}</td>
+                                                                            <td>${e.FormatoLM}</td>
 
-                                            `);
+                                                                        `);
                         $wrapper = $wrapper + (`<td>`);
                         $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.CodIngreso}"><i class="ion-edit"></i></a>`);
 
@@ -1318,21 +1667,20 @@
             },
 
 
-
             //-----------tab_Devueltas Compin
 
-            CargaDatosTablaTab6DevueltaCompin: function (folioLM, dia_desde, dia_hasta, codOficina,responsable) {
-                debugger;
+            CargaDatosTablaTab6DevueltaCompin: function (folioLM, dia_desde, dia_hasta, codOficina, responsable) {
+
                 $("#cantLMdevuelta").html('');
                 $("#cantLMdevuelta").hide();
                 var total = 0;
                 $("#bdy_datos_tabdevuelta").html("");
-             
-                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-licencias-devuelta-compin", { folioLM, dia_desde, dia_hasta, codOficina,responsable }, function (result) {
+
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-licencias-devuelta-compin", { folioLM, dia_desde, dia_hasta, codOficina, responsable }, function (result) {
 
                     $("#bdy_datos_tabdevuelta").html("");
                     $.each(result, function (i, e) {
-                  
+
 
                         $("#bdy_datos_tabdevuelta").append(
                             $("<tr>")
@@ -1348,11 +1696,11 @@
                                         $('<option>').val("Corrección Gestionada").text("Corrección Gestionada"),
                                         $('<option>').val("LM procesada Presencialmente").text("LM procesada Presencialmente"),
                                         $('<option>').val("Esperando Respuesta").text("Esperando Respuesta").prop("selected", e.Gestion)
-                                    
+
                                     ).on('change', function () {
 
                                         var EstadoDevuelta = $(this).val();
-                                        $.SecGetJSON(BASE_URL + "/motor/api/Licencias/guardar-devolucion-compin", { CodIngreso: e.CodIngreso, estadoDevuelta: EstadoDevuelta ,responsable:'Oficina'}, function (respuesta) {
+                                        $.SecGetJSON(BASE_URL + "/motor/api/Licencias/guardar-devolucion-compin", { CodIngreso: e.CodIngreso, estadoDevuelta: EstadoDevuelta, responsable: 'Oficina' }, function (respuesta) {
 
                                             $.niftyNoty({
                                                 type: 'success',
@@ -1387,8 +1735,8 @@
             },
 
             CargaDatosTablaTab6DevueltaCompinConteo: function (responsable, codOficina) {
-                debugger;
-                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/licencia-devueltas-compin-conteo", { responsable, codOficina}, function (response) {
+
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/licencia-devueltas-compin-conteo", { responsable, codOficina }, function (response) {
 
                     $("#conteoDevueltasCompin").text(response);
                 });
@@ -1481,21 +1829,21 @@
 
                     $("#bdy_datos_manual_presencial").html("");
                     $.each(result, function (i, e) {
-                        debugger;
+
                         console.log()
 
 
                         var $wrapper = (`
-                                            <tr>
-                                                <td>${e.IngresoData.RutAfiliado}</td>
-                                                <td>${e.IngresoData.NombreAfiliado}</td>
-                                                <td>${e.IngresoData.FolioLicencia}</td>
-                                                <td>${e.IngresoData.OficinaDescripcion}</td>
-                                                <td>${e.IngresoData.FechaLicenciaDesde.toFecha()}</td>
-                                                <td>${e.IngresoData.FechaLicenciaHasta.toFecha()}</td>
-                                                <td>${e.IngresoData.DiasLicencia}</td>
+                                                                        <tr>
+                                                                            <td>${e.IngresoData.RutAfiliado}</td>
+                                                                            <td>${e.IngresoData.NombreAfiliado}</td>
+                                                                            <td>${e.IngresoData.FolioLicencia}</td>
+                                                                            <td>${e.IngresoData.OficinaDescripcion}</td>
+                                                                            <td>${e.IngresoData.FechaLicenciaDesde.toFecha()}</td>
+                                                                            <td>${e.IngresoData.FechaLicenciaHasta.toFecha()}</td>
+                                                                            <td>${e.IngresoData.DiasLicencia}</td>
 
-                                            `);
+                                                                        `);
 
 
                         $wrapper = $wrapper + (`</td>`);
@@ -1509,9 +1857,48 @@
                     $("#cantmanualpresencial").html("Cantidad de Registros " + total);
                     $("#cantmanualpresencial").show();
                 });
-            }
+            },
+
+            CargaDatosTablaTab9devueltasGestion: function (dia_desde, dia_hasta) {
+
+                $("#cantmanualpresencial").html('');
+                $("#cantmanualpresencial").hide();
+                var total = 0;
+                $("#bdy_datos_manual_presencial").html("");
+
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-licencias-manual-presencial", { diadesde: dia_desde, diahasta: dia_hasta, formatoLM: 'Manual - Presencial', codOficina: getCookie("Oficina") }, function (result) {
+
+                    $("#bdy_datos_manual_presencial").html("");
+                    $.each(result, function (i, e) {
+
+                        console.log()
 
 
+                        var $wrapper = (`
+                                                                        <tr>
+                                                                            <td>${e.IngresoData.RutAfiliado}</td>
+                                                                            <td>${e.IngresoData.NombreAfiliado}</td>
+                                                                            <td>${e.IngresoData.FolioLicencia}</td>
+                                                                            <td>${e.IngresoData.OficinaDescripcion}</td>
+                                                                            <td>${e.IngresoData.FechaLicenciaDesde.toFecha()}</td>
+                                                                            <td>${e.IngresoData.FechaLicenciaHasta.toFecha()}</td>
+                                                                            <td>${e.IngresoData.DiasLicencia}</td>
+
+                                                                        `);
+
+
+                        $wrapper = $wrapper + (`</td>`);
+
+                        $("#bdy_datos_manual_presencial").append($wrapper);
+                        total++;
+
+                    });
+
+
+                    $("#cantmanualpresencial").html("Cantidad de Registros " + total);
+                    $("#cantmanualpresencial").show();
+                });
+            },
 
 
 
@@ -1608,7 +1995,7 @@
             });
 
 
-         
+
 
 
             // Search input
@@ -1822,34 +2209,34 @@
 
 
             //-----------Tab 6 Devueltas COMPIN
-             $('#devuelta-dp-component .input-group.date').datepicker({
-                 autoclose: true,
-                 format: 'dd-mm-yyyy',
-                 language: "es",
-                 daysOfWeekDisabled: [6, 0],
-                 todayHighlight: true,
-                 //startDate: '-7d'
+            $('#devuelta-dp-component .input-group.date').datepicker({
+                autoclose: true,
+                format: 'dd-mm-yyyy',
+                language: "es",
+                daysOfWeekDisabled: [6, 0],
+                todayHighlight: true,
+                //startDate: '-7d'
 
 
-             });
+            });
 
-            
+
             $('#demo-foo-filtering_Devueltas').footable().on('footable_filtering', function (e) {
 
                 e.clear = !e.filter;
             });
 
 
-             cargador.CargaDatosTablaTab6DevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), getCookie("Oficina"),'Oficina');
+            cargador.CargaDatosTablaTab6DevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), getCookie("Oficina"), 'Oficina');
 
             cargador.CargaDatosTablaTab6DevueltaCompinConteo('Oficina', getCookie("Oficina"));
 
 
-             $("#btn-buscar-licencia-tabdevuelta").on("click", function () {
+            $("#btn-buscar-licencia-tabdevuelta").on("click", function () {
 
-                 cargador.CargaDatosTablaTab6DevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), getCookie("Oficina"),'Oficina');
-                 cargador.CargaDatosTablaTab6DevueltaCompinConteo('Oficina', getCookie("Oficina"));
-             })
+                cargador.CargaDatosTablaTab6DevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), getCookie("Oficina"), 'Oficina');
+                cargador.CargaDatosTablaTab6DevueltaCompinConteo('Oficina', getCookie("Oficina"));
+            })
 
 
             // $('#devuelta-dp-component .input-group.date').datepicker({
@@ -1950,7 +2337,7 @@
             });
 
             $('#btn-buscar-manual-presencial-pdf').click(function () {
-                window.location.href = "/motor/api/Licencias/reporte-pdf-as400?codOficina=" + getCookie("Oficina") + "&diadesde=" + $("#flt_dia_manual_presencial_desde").val() ;
+                window.location.href = "/motor/api/Licencias/reporte-pdf-as400?codOficina=" + getCookie("Oficina") + "&diadesde=" + $("#flt_dia_manual_presencial_desde").val();
 
             });
 
