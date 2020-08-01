@@ -52,6 +52,8 @@
                                         <option value="">Selecciona</option>
                                         <option value="R">Reembolso</option>
                                         <option value="T">Tarjeta</option>
+                                        <option value="RP">Reembolso Presencial</option>
+                                        <option value="TP">Tarjeta Presencial</option>
                                     </select>
                                 </div>
                             </div>
@@ -75,9 +77,9 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label class="control-label">Tel.Fijo (No Obligatorio)</label>
+                                    <label class="control-label">Tel. Secundario (No Obligatorio)</label>
                                     <input type="text" class="form-control" v-model="model.telefono" tabindex="6">
-                                    <input type="text" class="form-control" placeholder="Repite Tel. Fijo" v-model="model.validaTelefono" tabindex="7">
+                                    <input type="text" class="form-control" placeholder="Repite Tel. Secundario" v-model="model.validaTelefono" tabindex="7">
                                 </div>
                             </div>
                             <div class="col-sm-4">
