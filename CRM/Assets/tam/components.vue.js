@@ -71,7 +71,7 @@ Vue.component('afiliado-info', {
 					    </div>
                         <div class="col-sm-2">
 					        <div class="form-group">
-					            <label class="control-label"><b>Score:</b> {{ score }} / 3</label>
+					            <label class="control-label"><b>Respuestas válidas:</b> {{ score }} / 3</label>
 					        </div>
 					    </div>
                     </div>
