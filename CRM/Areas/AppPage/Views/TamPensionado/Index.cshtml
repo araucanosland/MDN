@@ -143,7 +143,7 @@
             </tab-content>
             <tab-content :before-change="validateSecondStep" title="Elección de Tarjeta"
                          icon="ion-card">
-                <afiliado-info :value="afiliadoEncontrado" :score="score"></afiliado-info>
+                <afiliado-info :lead="afiliadoEncontrado" :score="score" v-model="model.anotaciones"></afiliado-info>
 
                 <div class="panel">
                     <div class="panel-heading">
@@ -176,7 +176,7 @@
             </tab-content>
             <tab-content title="Despacho" :before-change="validateThrirdStep"
                          icon="ion-home">
-                <afiliado-info :value="afiliadoEncontrado" :score="score"></afiliado-info>
+                <afiliado-info :lead="afiliadoEncontrado" :score="score" v-model="model.anotaciones"></afiliado-info>
 
                 <div class="panel">
                     <div class="panel-heading">
@@ -229,7 +229,7 @@
             </tab-content>
             <tab-content title="Preguntas Autenticación"
                          icon="ion-locked">
-                <afiliado-info :value="afiliadoEncontrado" :score="score"></afiliado-info>
+                <afiliado-info :lead="afiliadoEncontrado" :score="score" v-model="model.anotaciones"></afiliado-info>
 
                 <div class="panel">
                     <div class="panel-heading">

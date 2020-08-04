@@ -50,7 +50,8 @@ new Vue({
                 }
             },
             eleccionTarjeta: '',
-            respuestas: []
+            respuestas: [],
+            anotaciones: ''
         },
         config: {},
         comunas: [],

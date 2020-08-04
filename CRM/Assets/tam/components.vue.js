@@ -51,22 +51,22 @@ Vue.component('afiliado-info', {
                     <div class="panel-body">
                         <div class="col-sm-2">
 					        <div class="form-group">
-					            <label class="control-label"><b>Rut:</b> {{ value.rut }}</label>
+					            <label class="control-label"><b>Rut:</b> {{ lead.rut }}</label>
 					        </div>
 					    </div>
                         <div class="col-sm-4">
 					        <div class="form-group">
-					            <label class="control-label"><b>Nombres:</b> {{ value.nombre }}</label>
+					            <label class="control-label"><b>Nombres:</b> {{ lead.nombre }}</label>
 					        </div>
 					    </div>
                         <div class="col-sm-2">
 					        <div class="form-group">
-					            <label class="control-label"><b>Edad:</b> {{ value.edad }}</label>
+					            <label class="control-label"><b>Edad:</b> {{ lead.edad }}</label>
 					        </div>
 					    </div>
                         <div class="col-sm-2">
 					        <div class="form-group">
-					            <label class="control-label"><b>Posee TAM:</b> {{ value.flagTamMetro | formatoLogico }}</label>
+					            <label class="control-label"><b>Posee TAM:</b> {{ lead.flagTamMetro | formatoLogico }}</label>
 					        </div>
 					    </div>
                         <div class="col-sm-2">
@@ -74,7 +74,16 @@ Vue.component('afiliado-info', {
 					            <label class="control-label"><b>Respuestas válidas:</b> {{ score }} / 3</label>
 					        </div>
 					    </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Anotaciones</label>
+                                <textarea   class="form-control" 
+                                            v-bind:value="value"
+                                            v-on:input="$emit('input', $event.target.value)">
+                                </textarea>
+                            </div>
+                        </div>
                     </div>
                </div>`,
-    props: ['value', 'score']
+    props: ['value', 'score', 'lead']
 });
