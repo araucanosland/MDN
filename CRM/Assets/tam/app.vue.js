@@ -154,8 +154,6 @@ new Vue({
                     const sendRut = rutStringArray.join('');
                     _.set(this, 'model.rut_formateado', sendRut);
                     const sendModel = _.clone(_.get(this, 'model'));
-                    const fNacimiento = moment(_.get(this, 'model.fechaNacimiento'), 'DD-MM-YYYY').toDate();
-                    _.set(sendModel, 'fechaNacimiento', fNacimiento);
                     _.set(sendModel, 'ejecutivo', getCookie('Rut'));
                     _.set(sendModel, 'oficina', getCookie('Oficina'));
                     api(`${motor_api_server_full}/tam/gestion/on-boarding/${sendRut}`, {
