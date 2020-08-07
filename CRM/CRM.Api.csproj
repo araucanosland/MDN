@@ -421,6 +421,7 @@
     <Content Include="Assets\tam\deps\sweetalert.js" />
     <Content Include="Assets\tam\deps\vue-select.js" />
     <Content Include="Assets\tam\deps\vuejs-the-mask.js" />
+    <Content Include="Assets\tam\homologo.js" />
     <Content Include="Assets\tam\shared.js" />
     <Content Include="Assets\tam\components.vue.js" />
     <Content Include="Assets\tam\deps\lodash.js" />

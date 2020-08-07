@@ -17,6 +17,7 @@
         text-align: left;
     }
 </style>
+
 <div id="page-content">
     <div>
         <form-wizard v-on:on-complete="validateFourthStep"
@@ -50,8 +51,8 @@
                                     <label class="control-label">Opción Afiliado</label>
                                     <select class="form-control" v-model="model.opcion" tabindex="3">
                                         <option value="">Selecciona</option>
-                                        <option value="R">Reembolso</option>
-                                        <option value="T">Tarjeta</option>
+                                        <option value="R">Reembolso Telefónico</option>
+                                        <option value="T">Tarjeta Telefónico</option>
                                         <option value="RP">Reembolso Presencial</option>
                                         <option value="TP">Tarjeta Presencial</option>
                                     </select>
@@ -72,7 +73,7 @@
                                         <input type="text" class="form-control" placeholder="Repite Celular" v-model="model.validaCelular" tabindex="5" v-mask="'########'">
                                     </div>
 
-                                    
+
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -150,9 +151,9 @@
                         <h4 class="panel-title">Elección de Tarjeta</h4>
                     </div>
                     <div class="panel-body">
-                        <div class="alert alert-info">{{ scriptEleccionTam }}</div>
+                        <div class="alert alert-danger"><strong>{{ scriptEleccionTam }}</strong></div>
                         <div class="img-responsive mar-btm">
-                            <img src="~/Assets/tam/tam.jpg" alt="tam"  />
+                            <img src="~/img/tam.jpg" alt="tam" />
                         </div>
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Elección del Afiliado</label>
@@ -270,6 +271,7 @@
 
 @section script{
     <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/tam/homologo.js"></script>
     <script src="~/Assets/tam/deps/vue-form-wizard.js"></script>
     <script src="~/Assets/tam/deps/moment.js"></script>
     <script src="~/Assets/tam/deps/lodash.js"></script>

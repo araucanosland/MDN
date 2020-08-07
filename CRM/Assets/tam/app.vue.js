@@ -79,6 +79,17 @@ new Vue({
                 let fatalErrors = [];
                 if (!_.get(this, 'model.rut')) {
                     errors.push('Debes Indicar un Rut');
+                } else {
+                    let rutAfil = _.get(this, 'model.rut');
+                    let rutStringArrayAfil = rutAfil.split('');
+                    if (rutStringArrayAfil[0] == '0') {
+                        rutStringArrayAfil.shift();
+                    }
+                    rutStringArrayAfil.splice(rutStringArrayAfil.length - 1, 0, '-');
+                    const nueviRut = rutStringArrayAfil.join('');
+                    if (!this.checkRut(nueviRut)) {
+                        errors.push('Debes Indicar un Rut Válido');
+                    }
                 }
 
                 if (!_.get(this, 'model.fechaNacimiento')) {
@@ -151,12 +162,15 @@ new Vue({
                     let rut = _.get(this, 'model.rut');
                     let rutStringArray = rut.split('');
                     rutStringArray.splice(rutStringArray.length - 1, 0, '-');
+                    if (rutStringArray[0] == '0') {
+                        rutStringArray.shift();
+                    }
                     const sendRut = rutStringArray.join('');
                     _.set(this, 'model.rut_formateado', sendRut);
                     const sendModel = _.clone(_.get(this, 'model'));
-                    _.set(sendModel, 'ejecutivo', getCookie('Rut'));
-                    _.set(sendModel, 'oficina', getCookie('Oficina'));
-                    api(`${motor_api_server_full}/tam/gestion/on-boarding/${sendRut}`, {
+                    _.set(sendModel, 'ejecutivo', app_variables.ejecutivo.rut);
+                    _.set(sendModel, 'oficina', app_variables.sucursal.codigo);
+                    api(`${app_variables.external.motor_api_server}/tam/gestion/on-boarding/${sendRut}`, {
                         method: 'POST',
                         body: JSON.stringify(sendModel),
                         headers: {
@@ -166,7 +180,7 @@ new Vue({
                         _.set(this, 'afiliadoEncontrado', afiliadoOnBoard);
                         _.set(this, 'score', _.get(afiliadoOnBoard, 'score'));
                         _.set(this, 'scorePonderado', _.get(afiliadoOnBoard, 'score'));
-                        
+
                         const estadoResultante = _.get(afiliadoOnBoard, 'resultado')
 
 
@@ -226,10 +240,10 @@ new Vue({
                                 console.log('reload', { s });
                                 reject(estadoResultante);
                                 location.reload(true);
-                            });   
+                            });
                         }
 
-                        
+
                         if (estadoResultante == 'BUSQEUDA_OK') {
                             Swal.fire(
                                 'Afiliado Encontrado.',
@@ -240,7 +254,7 @@ new Vue({
                                 resolve(estadoResultante);
                             });
                         }
-                        
+
                     }).catch(error => {
                         console.log({ error });
                         reject(error);
@@ -274,7 +288,7 @@ new Vue({
                     this.showLoading('Cargando', 'Estamos guardando la información ingresada.')
                     const sendModel = _.clone(_.get(this, 'model'));
                     const onBoardId = _.get(this, 'afiliadoEncontrado.gestionId', '0');
-                    api(`${motor_api_server_full}/tam/gestion/${onBoardId}/card-choise`, {
+                    api(`${app_variables.external.motor_api_server}/tam/gestion/${onBoardId}/card-choise`, {
                         method: 'POST',
                         body: JSON.stringify(sendModel),
                         headers: {
@@ -353,7 +367,7 @@ new Vue({
                     this.showLoading('Cargando', 'Estamos guardando la información ingresada.')
                     const sendModel = _.clone(_.get(this, 'model'));
                     const onBoardId = _.get(this, 'afiliadoEncontrado.gestionId', '0');
-                    api(`${motor_api_server_full}/tam/gestion/${onBoardId}/delivery`, {
+                    api(`${app_variables.external.motor_api_server}/tam/gestion/${onBoardId}/delivery`, {
                         method: 'POST',
                         body: JSON.stringify(sendModel),
                         headers: {
@@ -398,7 +412,7 @@ new Vue({
                                 });
                             } else {
                                 const rut = _.get(this, 'afiliadoEncontrado.rut');
-                                api(`${motor_api_server_full}/tam/preguntas/${rut}`, {
+                                api(`${app_variables.external.motor_api_server}/tam/preguntas/${rut}`, {
                                     method: 'GET',
                                 }).then(preguntas => {
                                     console.log({ preguntas })
@@ -444,7 +458,7 @@ new Vue({
                     this.showLoading('Cargando', 'Estamos guardando la información ingresada.')
                     const sendModel = _.clone(_.get(this, 'model'));
                     const onBoardId = _.get(this, 'afiliadoEncontrado.gestionId', '0');
-                    api(`${motor_api_server_full}/tam/gestion/${onBoardId}/authentication`, {
+                    api(`${app_variables.external.motor_api_server}/tam/gestion/${onBoardId}/authentication`, {
                         method: 'POST',
                         body: JSON.stringify(sendModel),
                         headers: {
@@ -459,7 +473,7 @@ new Vue({
                                 icon: 'success',
                                 confirmButtonText: 'Aceptar'
                             }).then(df => {
-                                resolve(respuestaGst.resultado);    
+                                resolve(respuestaGst.resultado);
                                 location.reload(true);
                             });
                         } else {
@@ -494,10 +508,10 @@ new Vue({
                 _.set(this, 'model.direcciones.despacho.validaNumero', '')
                 _.set(this, 'model.direcciones.despacho.comuna', '')
             }
-            
+
         },
         buscarAfiliado: async function (rut) {
-            const res = await api(`${motor_api_server_full}/tam/lead/${rut}`, {
+            const res = await api(`${app_variables.external.motor_api_server}/tam/lead/${rut}`, {
                 method: 'GET'
             });
             return res;
@@ -517,19 +531,68 @@ new Vue({
         onAuthenticationItemChange: function () {
             let score = parseInt(_.get(this, 'scorePonderado'), 10) + _.filter(_.get(this, 'model.respuestas'), { respuesta: 'califica' }).length;
             _.set(this, 'score', score);
+        },
+        checkRut: function (rut) {
+            // Despejar Puntos
+            var valor = rut.replace('.', '');
+            // Despejar Guión
+            valor = valor.replace('-', '');
+
+            // Aislar Cuerpo y Dígito Verificador
+            cuerpo = valor.slice(0, -1);
+            dv = valor.slice(-1).toUpperCase();
+
+            // Formatear RUN
+            rut.value = cuerpo + '-' + dv
+
+            // Si no cumple con el mínimo ej. (n.nnn.nnn)
+            // if(cuerpo.length < 7) { rut.setCustomValidity("RUT Incompleto"); return false;}
+
+            // Calcular Dígito Verificador
+            suma = 0;
+            multiplo = 2;
+
+            // Para cada dígito del Cuerpo
+            for (i = 1; i <= cuerpo.length; i++) {
+
+                // Obtener su Producto con el Múltiplo Correspondiente
+                index = multiplo * valor.charAt(cuerpo.length - i);
+
+                // Sumar al Contador General
+                suma = suma + index;
+
+                // Consolidar Múltiplo dentro del rango [2,7]
+                if (multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
+
+            }
+
+            // Calcular Dígito Verificador en base al Módulo 11
+            dvEsperado = 11 - (suma % 11);
+
+            // Casos Especiales (0 y K)
+            dv = (dv == 'K') ? 10 : dv;
+            dv = (dv == 0) ? 11 : dv;
+
+            // Validar que el Cuerpo coincide con su Dígito Verificador
+            if (dvEsperado != dv) {
+                // rut.setCustomValidity("RUT Inválido"); 
+                return false;
+            }
+            return true;
+            // Si todo sale bien, eliminar errores (decretar que es válido)
+            //rut.setCustomValidity('');
         }
     },
     // Vue Lifecycle
     mounted: function () {
-        fetch(`${BASE_URL}/motor/Assets/tam/data/tam.json`, {
+
+        api(`${app_variables.base_url}/static-data/tam.json`, {
             method: 'get'
-        })
-            .then(res => res.json())
-            .then(config => {
-                _.set(this, 'config', config);
-            });
-        
-        api(`${motor_api_server_full}/tam/comunas`, {
+        }).then(config => {
+            _.set(this, 'config', config);
+        });
+
+        api(`${app_variables.external.motor_api_server}/tam/comunas`, {
             method: 'GET'
         }).then(comunas => {
             _.set(this, 'comunas', comunas);
