@@ -34,6 +34,9 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
+                            <div class="alert alert-danger">{{ config.scripts.GRABACION }}</div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label class="control-label">Rut</label>
@@ -73,7 +76,28 @@
                                         <input type="text" class="form-control" placeholder="Repite Celular" v-model="model.validaCelular" tabindex="5" v-mask="'########'">
                                     </div>
 
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <select class="form-control" v-model="model.celularOperador">
+                                                <option value="">Operador</option>
+                                                <option>Entel</option>
+                                                <option>Wom</option>
+                                                <option>Movistar</option>
+                                                <option>Claro</option>
+                                                <option>Virgin</option>
+                                                <option>Vtr</option>
+                                                <option>Colo Colo</option>
+                                            </select>
+                                        </div>
 
+                                        <div class="col-sm-6">
+                                            <select class="form-control" v-model="model.celularTipoContrato">
+                                                <option value="">Tipo Contrato</option>
+                                                <option>Plan</option>
+                                                <option>Prepago</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-4">
@@ -88,6 +112,31 @@
                                     <label class="control-label">Email (No Obligatorio)</label>
                                     <input type="text" class="form-control" v-model="model.email" tabindex="8">
                                     <input type="text" class="form-control" placeholder="Repite Email" v-model="model.validaEmail" tabindex="9">
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <h5>Contacto de Emergencia (No Obligatorio)</h5>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Nombre</label>
+                                    <input type="text" class="form-control" v-model="model.contactoEmergencia.nombre" tabindex="55">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Teléfono</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">+56</span>
+                                        <input type="text" class="form-control" v-model="model.contactoEmergencia.telefono" tabindex="56" v-mask="'#########'">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Relación</label>
+                                    <input type="text" class="form-control" v-model="model.contactoEmergencia.relacion" tabindex="57">
                                 </div>
                             </div>
                         </div>
@@ -153,7 +202,7 @@
                     <div class="panel-body">
                         <div class="alert alert-danger"><strong>{{ scriptEleccionTam }}</strong></div>
                         <div class="img-responsive mar-btm">
-                            <img src="~/img/tam.jpg" alt="tam" />
+                            <img src="~/Assets/tam/tam.jpg" alt="tam" />
                         </div>
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Elección del Afiliado</label>

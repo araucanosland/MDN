@@ -51,7 +51,14 @@ new Vue({
             },
             eleccionTarjeta: '',
             respuestas: [],
-            anotaciones: ''
+            anotaciones: '',
+            celularOperador: '',
+            celularTipoContrato: '',
+            contactoEmergencia: {
+                nombre: '',
+                telefono: '',
+                relacion: ''
+            }
         },
         config: {},
         comunas: [],
@@ -184,25 +191,12 @@ new Vue({
                         const estadoResultante = _.get(afiliadoOnBoard, 'resultado')
 
 
-                        if (estadoResultante == 'COMUNA_INVALIDA') {
-                            Swal.fire(
-                                'Comuna Inválida.',
-                                _.get(this, 'config.mensajes.COMUNA_INVALIDA'),
-                                'error'
-                            ).then(s => {
-                                reject(estadoResultante);
-                                location.reload(true);
-                            });
-                        }
-
-
                         if (estadoResultante == 'NO_ENCONTRADO') {
                             Swal.fire(
                                 'Afiliado No Encontrado',
                                 _.get(this, 'config.mensajes.NO_ENCONTRADO'),
                                 'error'
                             ).then(s => {
-                                console.log('reload', { s });
                                 location.reload(true);
                             });
                             reject(estadoResultante);
@@ -255,6 +249,18 @@ new Vue({
                             });
                         }
 
+                        if (estadoResultante == 'LLAMAR_EN_CUMPLE') {
+                            Swal.fire(
+                                'Llamar en Cumpleaños',
+                                _.get(this, 'config.mensajes.LLAMAR_EN_CUMPLE'),
+                                'warning'
+                            ).then(s => {
+                                console.log('reload', { s });
+                                reject(estadoResultante);
+                                location.reload(true);
+                            });
+                        }
+
                     }).catch(error => {
                         console.log({ error });
                         reject(error);
@@ -295,6 +301,8 @@ new Vue({
                             'Content-Type': 'application/json'
                         }
                     }).then(result => {
+
+
                         if (result.status === 'ACEPTA_BIP') {
                             Swal.fire({
                                 title: 'Afiliado Acepta',
@@ -302,7 +310,9 @@ new Vue({
                                 icon: 'success',
                                 confirmButtonText: 'Ok'
                             }).then(rs => resolve(result));
-                        } else {
+                        }
+
+                        if (result.status === 'MANTIENE_TAM' || result.status === 'PREFIERE_TAM') {
                             Swal.fire({
                                 title: 'Afiliado Prefiere / mantiene TAM',
                                 html: _.get(this, 'config.mensajes.DESISTE_BIP'),
@@ -317,6 +327,18 @@ new Vue({
                                 reject(result.status);
                             });
                         }
+
+                        if (result.status === 'COMUNA_INVALIDA') {
+                            Swal.fire(
+                                'Comuna Inválida.',
+                                _.get(this, 'config.mensajes.COMUNA_INVALIDA'),
+                                'error'
+                            ).then(s => {
+                                reject(result.status);
+                                //location.reload(true);
+                            });
+                        }
+
                     }).catch(reason => {
                         Swal.fire({
                             title: 'Error al Procesar',
@@ -378,10 +400,10 @@ new Vue({
                         const estadoResultante = _.get(afiliadoOnBoard, 'resultado')
                         _.set(this, 'score', _.get(afiliadoOnBoard, 'score'));
 
-                        if (estadoResultante == 'COMUNA_INVALIDA') {
+                        if (estadoResultante == 'COMUNA_INVALIDA_DES') {
                             Swal.fire(
                                 'Comuna Inválida.',
-                                _.get(this, 'config.mensajes.COMUNA_INVALIDA'),
+                                _.get(this, 'config.mensajes.COMUNA_INVALIDA_DES'),
                                 'error'
                             ).then(s => {
                                 console.log('reload', { s });
@@ -390,17 +412,7 @@ new Vue({
                             });
                         } else {
 
-                            if (estadoResultante == 'LLAMAR_EN_CUMPLE') {
-                                Swal.fire(
-                                    'Llamar en Cumpleaños',
-                                    _.get(this, 'config.mensajes.LLAMAR_EN_CUMPLE'),
-                                    'warning'
-                                ).then(s => {
-                                    console.log('reload', { s });
-                                    reject(estadoResultante);
-                                    location.reload(true);
-                                });
-                            } else if (estadoResultante == 'CIERRE_POSITIVO_CUMPLE_SCORE_MINIMO') {
+                            if (estadoResultante == 'CIERRE_POSITIVO_CUMPLE_SCORE_MINIMO') {
                                 Swal.fire({
                                     title: 'Autenticación Exitosa',
                                     html: _.get(this, 'config.mensajes.FIN_EXITO'),
@@ -586,7 +598,7 @@ new Vue({
     // Vue Lifecycle
     mounted: function () {
 
-        api(`${app_variables.base_url}/static-data/tam.json`, {
+        api(`${app_variables.base_url}/Assets/tam/data/tam.json`, {
             method: 'get'
         }).then(config => {
             _.set(this, 'config', config);
@@ -605,7 +617,5 @@ new Vue({
         scriptEleccionTam: function () {
             return _.get(this, 'afiliadoEncontrado.flagTamMetro') == '1' ? _.get(this, 'config.scripts.CON_TAM') : _.get(this, 'config.scripts.SIN_TAM');
         },
-
-
     }
 });
