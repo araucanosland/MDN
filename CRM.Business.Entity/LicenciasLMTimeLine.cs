@@ -42,6 +42,20 @@ namespace CRM.Business.Entity
         public string Telefono { get; set; }
         public string Email { get; set; }
         public string Oficina { get; set; }
+        public int IdEtapaSiguiente { get; set; }
+
+
+        public string EstadoPronunciamiento { get; set; }
+        public string SubComision { get; set; }
+        public int DiasAutorizados { get; set; }
+        public int CantidadDiasLM { get; set; }
+        public DateTime FechaInicioLM { get; set; }
+        public DateTime FechaHastaLM { get; set; }
+
+
+
+
+
 
     }
 }

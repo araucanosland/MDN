@@ -325,6 +325,18 @@
                                         </label>
 
                                     </div>
+                                    <div class="radio" style="display:none" id="divreemplazada">
+                                        <div class="radio">
+                                            <input id="chk_devuelta_reemplazada" name="chk_devuelta_reemplazada" class="magic-radio" type="checkbox">
+                                            <label for="chk_devuelta_reemplazada">LM Reemplazada Por Una Nueva </label>
+                                        </div>
+                                        <div class="col-sm-2" style="display:none" id="Divnuevofolio">
+                                            <div class="form-group">
+                                                <label class="control-label">Nuevo Folio</label>
+                                                <input type="text" class="form-control" id="nuevo_folio" name="nuevo_folio" placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -458,7 +470,7 @@
                                         <label for="otros">Otros</label>
                                     </div>
                                     <!-- Checkboxes -->
-                                    <div id="divfataFirmaemleador" name="lista" class="checkbox">
+                                    <div id="divfataFirmaemleador" style="display:none" class="checkbox">
                                         <input id="chk_fataFirmaemleador" class="magic-checkbox" type="checkbox">
                                         <label for="chk_fataFirmaemleador">Falta Firma y Timbre Empleador</label>
                                     </div>
@@ -482,7 +494,7 @@
                                     </div>
 
                                     <!-- Checkboxes -->
-                                    <div id="divsinfirma" class="checkbox">
+                                    <div id="divsinfirma" class="checkbox" style="display:none">
                                         <input id="chk_sinfirma" class="magic-checkbox" type="checkbox">
                                         <label for="chk_sinfirma">
                                             Licencia sin firma del Trabajador(a)
@@ -600,124 +612,14 @@
             //$("#chk_banner_si").prop("cheked", false);
             //$("#chk_banner_no").prop("cheked", false);
             var CodIng = httpGet("ci");
-            $("#DerivarLM").on("click", function () {
-
-                if (DerivarLM.checked) {
-
-                    $("#sslOfiDerivacion").prop("disabled", false);
-                    $("#falta_doc_no").prop("checked", false);
-                    $("#pendiente").prop("checked", false);
-                    $("#devuelta").prop("checked", false);
-                    $("#notramitada").prop("checked", false);
-                    $("#falta_doc_no").hide();
-                    $("#pendiente").hide();
-                    $("#devuelta").hide();
-                    $("#notramitada").hide();
-                    $("#checkTipoingreso").hide();
-                    $('.docs-faltantes-op1').hide();
-                    $("#divestadorecpecion").hide();
-                    $('#fechaLm1').val('Seleccione...');
-                    $('#fechaLm2').val('Seleccione...');
-                    $('#fechaLm3').val('Seleccione...');
-                    $('#fechaLm4').val('Seleccione...');
-                    $('#fechaLm5').val('Seleccione...');
-                    $('#fechaLm6').val('Seleccione...');
-                    $("#fechaLm1").prop("disabled", true);
-                    $("#fechaLm2").prop("disabled", true);
-                    $("#fechaLm3").prop("disabled", true);
-                    $("#fechaLm4").prop("disabled", true);
-                    $("#fechaLm5").prop("disabled", true);
-                    $("#fechaLm6").prop("disabled", true);
-                    // $("#AfiliadoRut").val("");
-                    //$("#AfiliadoRut").focus();
-                    // $("#FolioLic").val("");
-                    //$("#AfiNombres").val("");
-                    //$("#EmpresaRut").val("");
-                    //$("#EmpresaNombre").val("");
-                    //$("#lblmensajecompin").hide();
-                    //$("#lblmensajecompin1").hide();
-                    //$("#lblCompin").hide();
-                    //$("#DerivarLM").prop("checked", false);
-                    //$("#sslOfiDerivacion").val('');
-                    //$("#sslOfiDerivacion").prop('disabled', true);
-
-                    $("input[type=checkbox]").prop("checked", false);
-                    //$(".falta-doc").prop("checked", false);
-                    //$(".docs-faltantes").hide();
-                    $('#comentarios').val('');
-                    $("#email").val('');
-                    $("#telefono").val('');
-                    $("#DerivarLM").prop("checked", true);
-
-
-
-                } else {
-                    $("#sslOfiDerivacion").prop("disabled", true);
-                    $("#checkTipoingreso").show();
-                    $("#divestadorecpecion").show();
-                    $("#DerivarLM").prop("checked", false);
-                }
-            });
-          
-            $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-suc-derivacion", function (datos) {
-
-                $("#sslOfiDerivacion").html("");
-                $.each(datos, function (i, oficina) {
-                    $("#sslOfiDerivacion").append($("<option>").val(oficina.codOficina).html(oficina.DescOficina).data("id", oficina.codOficinaCompin).data("nombre", oficina.OficinaCompin));
-                });
-            });
-            $("#sslOfiDerivacion").on("change", function (e) {
-
-                if ($(this).find(':selected').data('id') > 0) {
-                    $("#lblmensajecompin").show();
-                    $("#lblmensajecompin1").show();
-                    $("#lblCompin").html($(this).find(':selected').data('nombre'));
-                    $("#lblCompin").show();
-                    $("#lblCompin1").html($(this).find(':selected').data('nombre'));
-                    $("#lblCompin1").show();
-
-
-                }
-                else {
-                    $("#lblmensajecompin").hide();
-                    $("#lblmensajecompin1").hide();
-                    $("#lblCompin").hide();
-                    $("#lblCompin1").hide();
-                    $(this).val()
-
-                }
-            });
-
-
-
-
-            $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-fecha-Lm", function (datos) {
-
-                $("#fechaLm1").html("");
-                $("#fechaLm2").html("");
-                $("#fechaLm3").html("");
-                $("#fechaLm4").html("");
-                $("#fechaLm5").html("");
-                $("#fechaLm6").html("");
-                $.each(datos, function (i, fecha) {
-                    $("#fechaLm1").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
-                    $("#fechaLm2").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
-                    $("#fechaLm3").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
-                    $("#fechaLm4").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
-                    $("#fechaLm5").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
-                    $("#fechaLm6").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
-
-
-                });
-            });
-
+            var Tab = httpGet("tab");
 
             var cargador = {
                 cargaLC: function (CodIng) {
 
                     $.SecGetJSON(BASE_URL + "/motor/api/Licencias/licencia-data", { codIngreso: CodIng }, function (response) {
 
-                        debugger;
+
                         $("#AfiliadoRut").val(response.IngresoData.RutAfiliado);
                         $("#AfiliadoRut").mask('99.999.999-*')
                         $("#AfiliadoRut").trigger("blur");
@@ -729,7 +631,7 @@
 
                         }
 
-
+                        $("#divreemplazada").show();
                         if (response.IngresoData.FormatoLM == "Manual") {
                             $('#radio-formato-mixto-lm').prop("checked", false);
                             $('#radio-formato-manual-lm').prop("checked", true);
@@ -794,6 +696,16 @@
                             }
                         }
 
+                        if (response.DocumentosFaltantes.tipoSeleccion == "42") {
+                            $(`#chk_devuelta_reemplazada`).prop('checked', response.DocumentosFaltantes.tipoSeleccion);
+
+                            if (response.DocumentosFaltantes.tipoSeleccion == "42") {
+                                $(`#chk_devuelta_reemplazada`).trigger('change');
+                                $(`#nuevo_folio`).prop("disabled", true);
+                                $(`#nuevo_folio`).val(response.DocumentosFaltantes.Comentarios);
+
+                            }
+                        }
 
 
 
@@ -1055,7 +967,7 @@
 
                         }
 
-
+                        cargador.EstadoConsulta();
 
                     });
 
@@ -1100,10 +1012,6 @@
                         $('#chk_cartaAutorizacion').prop("checked", false);
 
                     }
-
-
-
-
 
                     if ($('#radio-formato-manual-lm').prop('checked') == false && $('#radio-formato-mixto-lm').prop('checked') == false) {
                         $.niftyNoty({
@@ -1278,7 +1186,7 @@
                                 return false;
                             }
 
-                          
+
                             if ($('#chk_trabajador').prop('checked') == true) {
                                 quienEnvia = 1;
                             }
@@ -1356,6 +1264,9 @@
                             }
 
                         }
+
+
+
 
                         //-------------Presencial----------
 
@@ -1470,7 +1381,7 @@
                         }
 
                         if ($('#devuelta').prop('checked') == true) {
-                            
+
                             if ($('#radio-formato-mixto-lm').prop('checked')) {
                                 var dato = $('#FolioLic').val();
                                 value = dato.replace(/-/g, '')
@@ -1491,7 +1402,7 @@
                                     }
 
                                 }
-                                if ($('#chk_fataFirmaemleador').prop('checked') == false && $('#accr3').prop('checked') == false && $('#accr2').prop('checked') == false && $('#accr1').prop('checked') == false && $('#certificado_renta').prop('checked') == false && $('#m1').prop('checked') == false && $('#m2').prop('checked') == false && $('#m3').prop('checked') == false && $('#chk_cartaAutorizacion').prop('checked') == false && $('#chk_cartaAutorizacion').prop('checked') == false && $('#chk_sinCI').prop('checked') == false && $('#chk_datoincompl').prop('checked') == false && $('#chk_trabajnuevo').prop('checked') == false && $('#chk_sinfirma').prop('checked') == false) {
+                                if ($('#chk_fataFirmaemleador').prop('checked') == false && $('#accr3').prop('checked') == false && $('#accr2').prop('checked') == false && $('#accr1').prop('checked') == false && $('#certificado_renta').prop('checked') == false && $('#m1').prop('checked') == false && $('#m2').prop('checked') == false && $('#m3').prop('checked') == false && $('#chk_cartaAutorizacion').prop('checked') == false && $('#chk_cartaAutorizacion').prop('checked') == false && $('#chk_sinCI').prop('checked') == false && $('#chk_datoincompl').prop('checked') == false && $('#chk_trabajnuevo').prop('checked') == false) {
                                     $.niftyNoty({
                                         type: 'danger',
                                         container: 'floating',
@@ -1534,7 +1445,7 @@
                                     }
                                 }
                                 else {
-                                    if ($('#chk_fataFirmaemleador').prop('checked') == false && $('#accr3').prop('checked') == false && $('#accr2').prop('checked') == false && $('#accr1').prop('checked') == false && $('#certificado_renta').prop('checked') == false && $('#m1').prop('checked') == false && $('#m2').prop('checked') == false && $('#m3').prop('checked') == false && $('#m4').prop('checked') == false && $('#m5').prop('checked') == false && $('#m6').prop('checked') == false && $('#chk_cartaAutorizacion').prop('checked') == false && $('#chk_sinCI').prop('checked') == false && $('#chk_datoincompl').prop('checked') == false && $('#chk_trabajnuevo').prop('checked') == false && $('#chk_ilm').prop('checked') == false && $('#chk_empl').prop('checked') == false && $('#chk_sinfirma').prop('checked') == false) {
+                                    if ($('#chk_fataFirmaemleador').prop('checked') == false && $('#accr3').prop('checked') == false && $('#accr2').prop('checked') == false && $('#accr1').prop('checked') == false && $('#certificado_renta').prop('checked') == false && $('#m1').prop('checked') == false && $('#m2').prop('checked') == false && $('#m3').prop('checked') == false && $('#m4').prop('checked') == false && $('#m5').prop('checked') == false && $('#m6').prop('checked') == false && $('#chk_cartaAutorizacion').prop('checked') == false && $('#chk_sinCI').prop('checked') == false && $('#chk_datoincompl').prop('checked') == false && $('#chk_trabajnuevo').prop('checked') == false && $('#chk_ilm').prop('checked') == false && $('#chk_empl').prop('checked') == false) {
                                         $.niftyNoty({
                                             type: 'danger',
                                             container: 'floating',
@@ -1548,12 +1459,31 @@
 
                                 }
 
+
+
+
+                                if ($('#chk_RN').prop('checked') == false && $('#chk_ilm').prop('checked') == false && $('#chk_empl').prop('checked') == false && $('#chk_trabajnuevo').prop('checked') == false && $('#chk_datoincompl').prop('checked') == false && $('#chk_sinCI').prop('checked') == false) {
+                                    $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                        html: '<strong>Debe Seleccionar al menos un Documento Faltante para Devueltas</strong><li>Certificado de Nacimiento Recién Nacido</li><li>Licencia sin firma del Trabajador(a)</li><li>Trabajador Nuevo, falta Contrato de Trabajo</li><li>Datos incompletos de Empresa (Sección C)</li><li>rabajador Nuevo, falta Cédula de Identidad</li>',
+                                        focus: false,
+                                        timer: 3000
+                                    });
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    return false;
+
+                                }
+
                             }
                         }
 
                         //--vaidacion nuevos casos
                         if ($('#chk_casilla').prop('checked') == true) {
-                            if ($('#falta_doc_no').prop('checked') == false && $('#notramitada').prop('checked') == false && $('#pendiente').prop('checked') == false && $('#devuelta').prop('checked') == false) {
+
+                            if ($('#chk_devuelta_reemplazada').prop('checked') == false && $('#falta_doc_no').prop('checked') == false && $('#notramitada').prop('checked') == false && $('#pendiente').prop('checked') == false && $('#devuelta').prop('checked') == false) {
+                                //cambiado por el nuevoe flujo
+                                //  if ($('#falta_doc_no').prop('checked') == false && $('#notramitada').prop('checked') == false && $('#pendiente').prop('checked') == false && $('#devuelta').prop('checked') == false) {
                                 pendienteDocumentacion = -1;
                                 Faltadoc = 1;
                                 $.niftyNoty({
@@ -1566,6 +1496,8 @@
                                 $('#bt-guarda-otra').prop('disabled', false);
                                 return false;
                             }
+
+
                         }
 
                         if ($('#chk_presencial').prop('checked') == true) {
@@ -1691,22 +1623,93 @@
                             pendienteDocumentacion = 3;
                             Faltadoc = 1;
                         }
+                        if ($('#chk_devuelta_reemplazada').prop('checked')) {
 
+                            pendienteDocumentacion = 42;
+                            Faltadoc = 1;
+
+                            $('#nuevo_folio').trigger("blur");
+                            if ($("#chk_devuelta_reemplazada").prop("checked") == true) {
+                                var dato = $('#nuevo_folio').val();
+                                var rut = $('#AfiliadoRut').val();
+                                if (dato == '') {
+
+                                    $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                        html: '<strong>Error</strong> Debe Ingresar Folio Nuevo!!!',
+                                        focus: false,
+                                        timer: 3000
+                                    });
+
+                                    $('#nuevo_folio').focus();
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    return false;
+                                }
+                                if (dato.length != 8) {
+                                    $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                        html: '<strong>Error</strong> Largo de licencia no válido, favor revisar!!',
+                                        focus: false,
+                                        timer: 3000
+                                    });
+
+                                    $('#nuevo_folio').focus();
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    return false;
+                                }
+
+                                if (isNaN(dato)) {
+                                    $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                        html: '<strong>Error</strong> Formato de licencia no válido, favor revisar!!',
+                                        focus: false,
+                                        timer: 3000
+                                    });
+                                    $('#nuevo_folio').focus();
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    return false;
+                                }
+                                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/Valida-folio-existente", { FolioLicencia: dato, Rut: rut }, function (response) {
+                                    debugger;
+                                    if (response == 0) {
+                                        $.niftyNoty({
+                                            type: 'danger',
+                                            container: 'floating',
+                                            html: '<strong>Error</strong> Folio No Existe o No Está Asociado al Rut Del Afiliado!!',
+                                            focus: false,
+                                            timer: 3000
+                                        });
+                                        $('#nuevo_folio').focus();
+                                        $('#bt-guarda-otra').prop('disabled', false);
+                                        return false;
+
+                                    }
+
+                                });
+
+                            }
+
+                            $('#comentarios').val(dato);
+
+
+
+                        }
 
 
 
                         $("#sslOfiDerivacion").val(0);
-
-
 
                     }
                     if ($("#DerivarLM").prop("checked") == true) {
 
                         pendienteDocumentacion = -1;
                         Faltadoc = 1;
-                        debugger;
+
                         if ($("#sslOfiDerivacion").val() == 0) {
-                            debugger;
+
                             $.niftyNoty({
                                 type: 'danger',
                                 container: 'floating',
@@ -1783,10 +1786,10 @@
 
                     const fl = $("#FormLM").val();
                     console.log({ fl })
-                    
+
 
                     $.SecPostJSON(BASE_URL + "/motor/api/Licencias/guardar-licencia", WebIngresoLicencia, function (respuesta) {
-                        
+
                         if (respuesta.Estado === "OK") {
 
                             $("#fechaLm1").val("Seleccione...");
@@ -1861,7 +1864,7 @@
                                     onHidden: function () {
                                         if (typeof volver != "undefined" && volver == 1) {
                                             location.href = BASE_URL + "/motor/App/Licencias"
-                                          
+
                                         }
                                     }
 
@@ -1932,8 +1935,174 @@
                     });
 
 
+                },
+                EstadoConsulta: function () {
+                    if (Tab == "read") {
+
+                        $("#chk_casilla").prop("disabled", true);
+                        $("#chk_banner_si").prop("disabled", true);
+                        $("#chk_banner_no").prop("disabled", true);
+                        $("#chk_trabajador").prop("disabled", true);
+                        $("#chk_empleador").prop("disabled", true);
+                        $("#chk_presencial").prop("disabled", true);
+                        $("#email").prop("disabled", true);
+                        $("#chk_empl").prop("disabled", true);
+                        $("#chk_datoincompl").prop("disabled", true);
+                        $("#DerivarLM").prop("disabled", true);
+                        $("#telefono").prop("disabled", true);
+                        $("#falta_doc_no").prop("disabled", true);
+                        $("#pendiente").prop("disabled", true);
+                        $("#devuelta").prop("disabled", true);
+                        $("#notramitada").prop("disabled", true);
+                        $("#m1").prop("disabled", true);
+                        $("#m2").prop("disabled", true);
+                        $("#m3").prop("disabled", true);
+                        $("#m4").prop("disabled", true);
+                        $("#m5").prop("disabled", true);
+                        $("#m6").prop("disabled", true);
+                        $("#chk_RN").prop("disabled", true);
+                        $("#accr1").prop("disabled", true);
+                        $("#accr2").prop("disabled", true);
+                        $("#accr3").prop("disabled", true);
+                        $("#otros").prop("disabled", true);
+                        $("#chk_fataFirmaemleador").prop("disabled", true);
+                        $("#chk_ilm").prop("disabled", true);
+                        $("#chk_sinfirma").prop("disabled", true);
+                        $("#chk_trabajnuevo").prop("disabled", true);
+                        $("#chk_sinCI").prop("disabled", true);
+                        $("#chk_cartaAutorizacion").prop("disabled", true);
+                        $("#chk_mutual").prop("disabled", true);
+                        $("#chk_isapre").prop("disabled", true);
+                        $("#comentarios").prop("disabled", true);
+                        $("#certificado_renta").prop("disabled", true);
+                        $("#bt-guarda-otra").prop("disabled", true);
+                        $("#fechaLm1").prop("disabled", true);
+                        $("#fechaLm2").prop("disabled", true);
+                        $("#fechaLm3").prop("disabled", true);
+                        $("#fechaLm4").prop("disabled", true);
+                        $("#fechaLm5").prop("disabled", true);
+                        $("#fechaLm6").prop("disabled", true);
+                        $("#chk_devuelta_reemplazada").prop("disabled", true);
+
+                    }
                 }
+
+
             }
+
+
+
+
+            $("#DerivarLM").on("click", function () {
+
+                if (DerivarLM.checked) {
+
+                    $("#sslOfiDerivacion").prop("disabled", false);
+                    $("#falta_doc_no").prop("checked", false);
+                    $("#pendiente").prop("checked", false);
+                    $("#devuelta").prop("checked", false);
+                    $("#notramitada").prop("checked", false);
+                    $("#falta_doc_no").hide();
+                    $("#pendiente").hide();
+                    $("#devuelta").hide();
+                    $("#notramitada").hide();
+                    $("#checkTipoingreso").hide();
+                    $('.docs-faltantes-op1').hide();
+                    $("#divestadorecpecion").hide();
+                    $('#fechaLm1').val('Seleccione...');
+                    $('#fechaLm2').val('Seleccione...');
+                    $('#fechaLm3').val('Seleccione...');
+                    $('#fechaLm4').val('Seleccione...');
+                    $('#fechaLm5').val('Seleccione...');
+                    $('#fechaLm6').val('Seleccione...');
+                    $("#fechaLm1").prop("disabled", true);
+                    $("#fechaLm2").prop("disabled", true);
+                    $("#fechaLm3").prop("disabled", true);
+                    $("#fechaLm4").prop("disabled", true);
+                    $("#fechaLm5").prop("disabled", true);
+                    $("#fechaLm6").prop("disabled", true);
+                    // $("#AfiliadoRut").val("");
+                    //$("#AfiliadoRut").focus();
+                    // $("#FolioLic").val("");
+                    //$("#AfiNombres").val("");
+                    //$("#EmpresaRut").val("");
+                    //$("#EmpresaNombre").val("");
+                    //$("#lblmensajecompin").hide();
+                    //$("#lblmensajecompin1").hide();
+                    //$("#lblCompin").hide();
+                    //$("#DerivarLM").prop("checked", false);
+                    //$("#sslOfiDerivacion").val('');
+                    //$("#sslOfiDerivacion").prop('disabled', true);
+
+                    $("input[type=checkbox]").prop("checked", false);
+                    //$(".falta-doc").prop("checked", false);
+                    //$(".docs-faltantes").hide();
+                    $('#comentarios').val('');
+                    $("#email").val('');
+                    $("#telefono").val('');
+                    $("#DerivarLM").prop("checked", true);
+
+
+
+                } else {
+                    $("#sslOfiDerivacion").prop("disabled", true);
+                    $("#checkTipoingreso").show();
+                    $("#divestadorecpecion").show();
+                    $("#DerivarLM").prop("checked", false);
+                }
+            });
+
+            $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-suc-derivacion", function (datos) {
+
+                $("#sslOfiDerivacion").html("");
+                $.each(datos, function (i, oficina) {
+                    $("#sslOfiDerivacion").append($("<option>").val(oficina.codOficina).html(oficina.DescOficina).data("id", oficina.codOficinaCompin).data("nombre", oficina.OficinaCompin));
+                });
+            });
+            $("#sslOfiDerivacion").on("change", function (e) {
+
+                if ($(this).find(':selected').data('id') > 0) {
+                    $("#lblmensajecompin").show();
+                    $("#lblmensajecompin1").show();
+                    $("#lblCompin").html($(this).find(':selected').data('nombre'));
+                    $("#lblCompin").show();
+                    $("#lblCompin1").html($(this).find(':selected').data('nombre'));
+                    $("#lblCompin1").show();
+
+
+                }
+                else {
+                    $("#lblmensajecompin").hide();
+                    $("#lblmensajecompin1").hide();
+                    $("#lblCompin").hide();
+                    $("#lblCompin1").hide();
+                    $(this).val()
+
+                }
+            });
+
+            $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-fecha-Lm", function (datos) {
+
+                $("#fechaLm1").html("");
+                $("#fechaLm2").html("");
+                $("#fechaLm3").html("");
+                $("#fechaLm4").html("");
+                $("#fechaLm5").html("");
+                $("#fechaLm6").html("");
+                $.each(datos, function (i, fecha) {
+                    $("#fechaLm1").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
+                    $("#fechaLm2").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
+                    $("#fechaLm3").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
+                    $("#fechaLm4").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
+                    $("#fechaLm5").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
+                    $("#fechaLm6").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
+
+
+                });
+            });
+
+
+
 
 
             // Initialize Masked Inputs
@@ -2064,7 +2233,7 @@
 
 
             $("#bt-bolver").on("click", function () {
-               // location.href = BASE_URL + "/motor/App/Licencias"
+                // location.href = BASE_URL + "/motor/App/Licencias"
                 location.href = "javascript:history.back()";
             });
 
@@ -2116,9 +2285,9 @@
                 $('#FormLM').val('Manual');
                 $("#divempl").show();
                 $("#divlmnolegible").show();
-                $("#divsinfirma").show();
-               // $("#divcartaAutorizacion").show();
-                $("#divfataFirmaemleador").show();
+                $("#divsinfirma").hide();
+                // $("#divcartaAutorizacion").show();
+                $("#divfataFirmaemleador").hide();
                 $("#DerivarLM").prop("disabled", false);
                 $("#sslOfiDerivacion").prop("disabled", false);
 
@@ -2143,7 +2312,7 @@
                 $("#divcartaAutorizacion").hide();
                 $("#DerivarLM").prop("disabled", true);
                 $("#sslOfiDerivacion").prop("disabled", true);
-                $("#divsinfirma").show();
+                $("#divsinfirma").hide();
 
             })
 
@@ -2255,7 +2424,8 @@
 
 
             $('#falta_doc_no').on('change', function (event) {
-
+                $("#Divnuevofolio").hide();
+                $("#chk_devuelta_reemplazada").prop("checked", false);
                 $("#pendiente").prop("checked", false);
                 $("#falta_doc_no").prop("checked", true);
                 $("#devuelta").prop("checked", false);
@@ -2271,16 +2441,16 @@
 
 
             $('#devuelta').on('change', function (event) {
-
+                $("#Divnuevofolio").hide();
                 $("#pendiente").prop("checked", false);
                 $("#falta_doc_no").prop("checked", false);
                 $("#devuelta").prop("checked", true);
                 $("#notramitada").prop("checked", false);
                 $('#divRN').show();
-                $('#divfataFirmaemleador').show();
-                
+                $('#divfataFirmaemleador').hide();
+                $("#chk_devuelta_reemplazada").prop("checked", false);
                 if ($("#chk_banner_si").prop("checked") == true) {
-                    
+
                     $("#divcartaAutorizacion").hide();
                 }
                 if ($("#chk_banner_no").prop("checked") == true) {
@@ -2321,7 +2491,9 @@
                 $('#divnotramitada').hide();
                 $('#divRN').hide();
                 $('#divfataFirmaemleador').hide();
-
+                $("#chk_devuelta_reemplazada").prop("checked", false);
+                $('#divreemplazada').hide();
+                $("#Divnuevofolio").hide();
                 var value = $(this).val();
                 if (value == '1') {
 
@@ -2330,12 +2502,12 @@
                     $('#divcoforme').show();
                     $('#divdevuelta').hide();
                     $('#divdevuelta1').show();
-
+                    $('#divreemplazada').show();
                 } else {
                     $('.docs-faltantes-op1').hide();
                     $('.docs-obervacion').hide();
                     $('#divcoforme').hide();
-
+                    $('#divreemplazada').hide();
                 }
             })
 
@@ -2345,7 +2517,7 @@
                 $("#notramitada").prop("checked", true);
                 $("#pendiente").prop("checked", false);
                 $("#devuelta").prop("checked", false);
-
+                $("#chk_devuelta_reemplazada").prop("checked", false);
 
                 var value = $(this).val();
                 //if (value == '1') {
@@ -2357,12 +2529,47 @@
                 $('#divdevuelta').hide();                //} else {
                 $('#divnotramitada').show();
                 $('#divRN').hide();
+                $('#divreemplazada').show();
+                $("#Divnuevofolio").hide();
+                //    $('.docs-faltantes-op1').hide();
+                //    $('.docs-obervacion').hide();
+                //    $('#divnotramitada').hide();
+                //}
+            })
+
+            //-----------------check click Reemplazada por una nueva -------------------------------
+
+            $('#chk_devuelta_reemplazada').on('change', function (event) {
+                $("#Divnuevofolio").show();
+                $("#falta_doc_no").prop("checked", false);
+                $("#notramitada").prop("checked", false);
+                $("#pendiente").prop("checked", false);
+                $("#devuelta").prop("checked", false);
+                $("#chk_devuelta_reemplazada").prop("checked", true);
+
+                var value = $(this).val();
+                //if (value == '1') {
+                $('.docs-obervacion').hide();
+                $('.docs-faltantes-op1').hide();
+                $('.docs-obervacion').hide();
+                $('#divcoforme').hide();
+                $('#divdevuelta1').hide();
+                $('#divdevuelta').hide();                //} else {
+                $('#divnotramitada').hide();
+                $('#divRN').hide();
+                $('#divreemplazada').show();
 
                 //    $('.docs-faltantes-op1').hide();
                 //    $('.docs-obervacion').hide();
                 //    $('#divnotramitada').hide();
                 //}
             })
+
+
+
+
+
+            //
             //-----------------check click liq licencias -------------------------------
 
 
@@ -2513,8 +2720,6 @@
             })
 
 
-
-
             $('#chk_isapre').on('change', function (event) {
 
                 $("#chk_mutual").prop("checked", false);
@@ -2530,12 +2735,8 @@
 
             })
 
-
-
-
-
             $('#chk_casilla').on('change', function (event) {
-                
+
                 $("#email").val("");
                 $("#telefono").val("");
                 $("#chk_casilla").prop("checked", true);
@@ -2549,16 +2750,88 @@
                 $("#divdevueltacheck").show();
                 $("#divnotramitadacheck").show();
                 $("#divopc-banner").show();
-                $("#chk_banner_si").prop("cheked", false);
-                $("#chk_banner_no").prop("cheked", false);
+                $("#chk_banner_si").prop("checked", false);
+                $("#chk_banner_no").prop("checked", false);
                 $("#chk_trabajador").prop("cheked", false);
-                $("#chk_empleador").prop("cheked", false);
+                $("#chk_empleador").prop("checked", false);
 
 
 
                 $("#divdevuelta1").hide();
             })
 
+
+
+            $('#nuevo_folio').on('blur', function (event) {
+
+                //if ($("#chk_devuelta_reemplazada").prop("checked") == true) {
+                //    var dato = $('#nuevo_folio').val();
+                //    var rut = $('#AfiliadoRut').val();
+                //    if (dato == '') {
+
+                //        $.niftyNoty({
+                //            type: 'danger',
+                //            container: 'floating',
+                //            html: '<strong>Error</strong> Debe Ingresar Folio Nuevo!!!',
+                //            focus: false,
+                //            timer: 3000
+                //        });
+
+                //        $('#nuevo_folio').focus();
+                //        return false;
+                //    }
+                //    if (dato.length != 8) {
+                //        $.niftyNoty({
+                //            type: 'danger',
+                //            container: 'floating',
+                //            html: '<strong>Error</strong> Largo de licencia no válido, favor revisar!!',
+                //            focus: false,
+                //            timer: 3000
+                //        });
+
+                //        $('#nuevo_folio').focus();
+                //        return false;
+                //    }
+
+                //    if (isNaN(dato)) {
+                //        $.niftyNoty({
+                //            type: 'danger',
+                //            container: 'floating',
+                //            html: '<strong>Error</strong> Formato de licencia no válido, favor revisar!!',
+                //            focus: false,
+                //            timer: 3000
+                //        });
+                //        $('#nuevo_folio').focus();
+                //        return false;
+                //    }
+                //    $.SecGetJSON(BASE_URL + "/motor/api/Licencias/Valida-folio-existente", { FolioLicencia: dato, Rut: rut }, function (response) {
+                //
+                //        if (response == 0) {
+                //            $.niftyNoty({
+                //                type: 'danger',
+                //                container: 'floating',
+                //                html: '<strong>Error</strong> Folio No Existe o No Está Asociado al Rut Del Afiliado!!',
+                //                focus: false,
+                //                timer: 3000
+                //            });
+                //            $('#nuevo_folio').focus();
+                //            return false;
+
+                //        }
+                //        else {
+                //            $.niftyNoty({
+                //                type: 'success',
+                //                container: 'floating',
+                //                html: '<strong>Correcto</strong> Nuevo Folio Correcto!!',
+                //                focus: false,
+                //                timer: 3000
+                //            });
+
+                //        }
+                //    });
+
+                //}
+            });
             $('#chk_presencial').on('change', function (event) {
 
                 $("#email").val("");
@@ -2624,6 +2897,38 @@
                 $("#chk_banner_no").prop("checked", true);
                 $("#divcartaAutorizacion").show();
             })
+
+            $('#chk_sinCI').on('change', function (event) {
+                debugger
+                if ($('#chk_sinCI').prop("checked") == true) {
+                    $("#chk_sinCI").prop("checked", true);
+                    $("#chk_trabajnuevo").prop("checked", true);
+                }
+                if ($('#chk_sinCI').prop("checked") == false) {
+                    $("#chk_sinCI").prop("checked", false);
+                    $("#chk_trabajnuevo").prop("checked", false);
+                }
+
+            })
+            $('#chk_trabajnuevo').on('change', function (event) {
+                if ($('#chk_trabajnuevo').prop("checked") == true) {
+                    $("#chk_sinCI").prop("checked", true);
+                    $("#chk_trabajnuevo").prop("checked", true);
+                }
+                if ($('#chk_trabajnuevo').prop("checked") == false) {
+                    $("#chk_sinCI").prop("checked", false);
+                    $("#chk_trabajnuevo").prop("checked", false);
+                }
+            })
+
+
+
+
+
+
+
+
+
 
 
         })

@@ -53,19 +53,34 @@ namespace CRM.Business.Data
                 FechaTermino = row["FechaTermino"] != DBNull.Value ? Convert.ToDateTime(row["FechaTermino"]) : new DateTime(1900, 1, 1),
                 Estado = row["estado"] != DBNull.Value ? row["estado"].ToString() : string.Empty,
                 Etapa = row["NombreEtapa"] != DBNull.Value ? row["NombreEtapa"].ToString() : string.Empty,
-                EtapaId= row["EtapaId"] != DBNull.Value ? Convert.ToInt32(row["EtapaId"]) : 0,
+                EtapaId = row["EtapaId"] != DBNull.Value ? Convert.ToInt32(row["EtapaId"]) : 0,
                 Siguienteetapa = row["Siguienteetapa"] != DBNull.Value ? row["Siguienteetapa"].ToString() : string.Empty,
                 FormatoLM = row["FormatoLM"] != DBNull.Value ? row["FormatoLM"].ToString() : string.Empty,
                 Oficina = row["Oficina"] != DBNull.Value ? row["Oficina"].ToString() : string.Empty,
                 Quienenvia = row["Quienenvia"] != DBNull.Value ? row["Quienenvia"].ToString() : string.Empty,
                 Telefono = row["Telefono"] != DBNull.Value ? row["Telefono"].ToString() : string.Empty,
-                Email = row["Email"] != DBNull.Value ? row["Email"].ToString() : string.Empty
+                Email = row["Email"] != DBNull.Value ? row["Email"].ToString() : string.Empty,
+                IdEtapaSiguiente = row["IdEtapaSiguiente"] != DBNull.Value ? Convert.ToInt32(row["IdEtapaSiguiente"]) : 0,
+                EstadoPronunciamiento = row["EstadoPronunciamiento"] != DBNull.Value ? row["EstadoPronunciamiento"].ToString() : string.Empty,
+                SubComision = row["SubComision"] != DBNull.Value ? row["SubComision"].ToString() : string.Empty,
+                DiasAutorizados = row["DiasAutorizados"] != DBNull.Value ? Convert.ToInt32(row["DiasAutorizados"]) : 0,
+                CantidadDiasLM = row["CantidadDiasLM"] != DBNull.Value ? Convert.ToInt32(row["CantidadDiasLM"]) : 0,
+                FechaInicioLM = row["FechaInicioLM"] != DBNull.Value ? Convert.ToDateTime(row["FechaInicioLM"]) : new DateTime(1900, 1, 1),
+                FechaHastaLM = row["FechaHastaLM"] != DBNull.Value ? Convert.ToDateTime(row["FechaHastaLM"]) : new DateTime(1900, 1, 1)
             };
 
 
 
         }
+        private static CargaExcelRRLLEntity ConstructorSubcomision(DataRow row)
+        {
+            return new CargaExcelRRLLEntity
+            {
 
+                Subcomision = row["Subcomision"] != DBNull.Value ? row["Subcomision"].ToString() : string.Empty,
+            };
+
+        }
 
         private static CargaExcelRRLLEntity ConstructorCargaCompin(DataRow row)
         {
@@ -80,8 +95,11 @@ namespace CRM.Business.Data
                 Oficina = row["OficinaDescripcion"] != DBNull.Value ? row["OficinaDescripcion"].ToString() : string.Empty,
                 FechaIngreso = row["FechaIngreso"] != DBNull.Value ? Convert.ToDateTime(row["FechaIngreso"]) : new DateTime(1900, 1, 1),
                 FechaAuditoria = row["FechaAuditoria"] != DBNull.Value ? Convert.ToDateTime(row["FechaAuditoria"]) : new DateTime(1900, 1, 1),
-
+                FechaIngresoString = row["FechaIngresoString"] != DBNull.Value ? row["FechaIngresoString"].ToString() : string.Empty,
+                FechaAuditoriaString = row["FechaAuditoriaString"] != DBNull.Value ? row["FechaAuditoriaString"].ToString() : string.Empty,
+                FechaSubidaCompinString = row["FechaSubidaCompinString"] != DBNull.Value ? row["FechaSubidaCompinString"].ToString() : string.Empty,
             };
+
         }
         public static List<LicenciasLMTimeLine> ObtenerLicenciaTimeLine(long CodIngreso)
         {
@@ -102,7 +120,100 @@ namespace CRM.Business.Data
 
 
         }
+        public static List<LicenciasLMTimeLine> ObtenerBitacoraLM(long CodIngreso)
+        {
+            Parametro parametro = new Parametro("@CodIngreso", CodIngreso);
+            {
 
+            };
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_ingresoLicencia_Bitacora", parametro, ConstructorTimeLine);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+        }
+
+
+        public static int ValidaFolio(string FolioLicencia, string Rut)
+        {
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@FolioLicencia", FolioLicencia),
+                new Parametro("@Rut", Rut),
+
+            };
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerEscalar<int>("licencias.sp_Lic_Ingresolicencia_Valida_Folio", parametros);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+        }
+
+
+
+        public static long HitoricoBitacora(long CodIngreso, int etapaId, DateTime fechainicio, DateTime fechatermino)
+        {
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@pcodingreso", CodIngreso),
+                new Parametro("@etapaId", etapaId),
+                new Parametro("@responsable", ""),
+                new Parametro("@fechaingreso", fechainicio),
+                new Parametro("@fechatermino", fechatermino)
+
+            };
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerEscalar<long>("licencias.sp_Lic_proceso_bitacora_historico", parametros);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+        }
+
+
+        public static List<CargaExcelRRLLEntity> CargaListaCompinCentralizada(string FolioLicencia, DateTime desde, DateTime hasta, string subcomision)
+        {
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@foliolicencia", FolioLicencia),
+                new Parametro("@fecha_desde", desde),
+                new Parametro("@fecha_hasta", hasta),
+                 new Parametro("@subcomision", subcomision)
+
+            };
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_Compin_Listar", parametros, ConstructorCargaCompin);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+        }
 
         public static List<CargaExcelRRLLEntity> CargaListaCompin(string FolioLicencia, DateTime desde, DateTime hasta)
         {
@@ -231,6 +342,20 @@ namespace CRM.Business.Data
             return DBHelper.InstanceCRM.ObtenerEscalar<long>("licencias.sp_Lic_devolucion_tata_Guardar", parametros);
         }
 
+        public static long GuardarLMReemplazadaPorOtra(string CodIngreso, string token, int tiposeleccion)
+        {
+
+            Parametros parametros = new Parametros
+            {
+
+                new Parametro("@CodigoIngresoLM",CodIngreso),
+                new Parametro("@token",token),
+                new Parametro("@tiposeleccion",tiposeleccion)
+            };
+
+            return DBHelper.InstanceCRM.ObtenerEscalar<long>("licencias.sp_Lic_DocumentosFaltantes_LM_Cambio_TipoSeleccion_Nuevo_Flujo", parametros);
+        }
+
 
 
 
@@ -257,6 +382,43 @@ namespace CRM.Business.Data
         }
 
 
+        public static List<CargaExcelRRLLEntity> ListarSubcomisionRRLL(string token)
+        {
+            Parametros parametros = new Parametros
+            {
+
+               new Parametro("@token",token)
+
+            };
+
+            return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_Subcomision_Listar", parametros, ConstructorSubcomision);
+        }
+
+        public static List<CargaExcelRRLLEntity> ListarSubcomisionRRLLCompin(string token, string fecha_desde, string fecha_hasta)
+        {
+            Parametros parametros = new Parametros
+            {
+
+               new Parametro("@token",token),
+               new Parametro("@fecha_desde",fecha_desde),
+               new Parametro("@fecha_hasta",fecha_hasta)
+
+            };
+
+            return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_Subcomision_Listar_Compin", parametros, ConstructorSubcomision);
+        }
+
+        public static List<CargaExcelRRLLEntity> ListarSubcomisionRRLLDevueltas(string token)
+        {
+            Parametros parametros = new Parametros
+            {
+
+               new Parametro("@token",token)
+
+            };
+
+            return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_Subcomision_Listar_Devueltas", parametros, ConstructorSubcomision);
+        }
 
         public static long ListadevueltasCompinConteo(int CodOficina, string responsable)
         {
@@ -278,6 +440,15 @@ namespace CRM.Business.Data
             };
 
             return DBHelper.InstanceCRM.ObtenerEscalar<long>("licencias.sp_Lic_Ingresolicencia_ListarLMAuditoria_Oficina_Conteo", parametros);
+        }
+        public static long IngresadasGestionOficinaConteo(int CodOficina)
+        {
+            Parametros parametros = new Parametros
+            {
+               new Parametro("@CodOficina",CodOficina),
+            };
+
+            return DBHelper.InstanceCRM.ObtenerEscalar<long>("licencias.sp_Lic_Ingresolicencia_ListarDevueltasOficinas_Conteo", parametros);
         }
 
         public static long ListaDereivadaOficinaConteo(int CodOficina)
@@ -383,8 +554,6 @@ namespace CRM.Business.Data
 
             return DBHelper.InstanceCRM.ObtenerEntidad("licencias.sp_Lic_Ingresolicencia_ObtenerPorID", parametro, ConstructorEntidad);
 
-
-
         }
 
 
@@ -435,13 +604,13 @@ namespace CRM.Business.Data
         {
             Parametros parametros = new Parametros
             {
-              
+
             };
 
             return DBHelper.InstanceCRM.ObtenerEscalar<long>("licencias.sp_Lic_Ingresolicencia_Listar_Reproceso_DevueltasCompin_conteo", parametros);
         }
 
-        public static List<LicenciasDevueltas> ListaLMConsolidadodevueltasCompin(string folio, DateTime diadesde, DateTime diahasta, int codOficina, string responsable)
+        public static List<LicenciasDevueltas> ListaLMConsolidadodevueltasCompin(string folio, DateTime diadesde, DateTime diahasta, string responsable, int codOficina, string subcomision)
         {
             Parametros parametros = new Parametros
             {
@@ -450,12 +619,13 @@ namespace CRM.Business.Data
                 //new Parametro("@CodOficina", codOficina),
                 new Parametro("@DiaDesde", diadesde),
                 new Parametro("@DiaHasta", diahasta),
-                new Parametro("@responsable", responsable)
-
+                new Parametro("@responsable", responsable),
+                new Parametro("@Oficina",codOficina),
+                new Parametro("@subcomision",subcomision)
           };
             try
             {
-                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_Listar_reproceso_DevueltasCompin", parametros, ConstructorLicenciasConsolidadoDevueltasCompin);
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_Listar_reproceso_DevueltasCompin_Filtro", parametros, ConstructorLicenciasConsolidadoDevueltasCompin);
 
             }
             catch (Exception ex)
@@ -499,6 +669,32 @@ namespace CRM.Business.Data
 
         }
 
+        public static List<LicenciasDevueltas> ListaLMdevueltasCompinRRLL(string folio, DateTime diadesde, DateTime diahasta, int codOficina, string responsable, string subcomision)
+        {
+            Parametros parametros = new Parametros
+            {
+
+                new Parametro("@folio_LM", folio),
+                new Parametro("@CodOficina", codOficina),
+                new Parametro("@DiaDesde", diadesde),
+                new Parametro("@DiaHasta", diahasta),
+                new Parametro("@responsable", responsable),
+                new Parametro("@subcomision", subcomision)
+
+          };
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_ListarDevueltasCompin_RRLL", parametros, ConstructorLicenciasDevueltasCompinRRLL);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+        }
 
         public static DataTable ListaLMresponsableExcel(string folio, string diadesde, string diahasta, int codOficina, string responsable, string fechaenviodesde, string fechaenviohasta)
         {
@@ -516,10 +712,37 @@ namespace CRM.Business.Data
 
             };
 
-            return DBHelper.InstanceCRM.ObtenerDataTable("licencias.sp_Lic_Ingresolicencia_ListarCierreResponsable_filtros", parametros);
+            // return DBHelper.InstanceCRM.ObtenerDataTable("licencias.sp_Lic_Ingresolicencia_ListarCierreResponsable_filtros", parametros);
+            return DBHelper.InstanceCRM.ObtenerDataTable("licencias.sp_Lic_Ingresolicencia_ListarCierreResponsable_Nuevo_Flujo", parametros);
+
+        }
+
+
+        public static DataTable ListaLMresponsableExcelCargaCompin()
+        {
+            Parametros parametros = new Parametros
+            {
+
+                new Parametro("@folio_LM", ""),
+                new Parametro("@estado", "")
+
+
+            };
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerDataTable("licencias.sp_Lic_temp_RRLL_Excel_Compin", parametros);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
 
 
         }
+
+
         public static DataTable ListaLMresponsableExcelCarga()
         {
             Parametros parametros = new Parametros
@@ -607,7 +830,7 @@ namespace CRM.Business.Data
             };
             try
             {
-                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_ListarCierreResponsable_filtros", parametros, ConstructorResponsableCierreLM);
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_ListarCierreResponsable_Nuevo_Flujo", parametros, ConstructorResponsableCierreLM);
 
             }
             catch (Exception ex)
@@ -984,12 +1207,12 @@ namespace CRM.Business.Data
             {
                 return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_ListarLMAuditoria", parametros, ConstructorEntidadAuditoriaListar);
             }
-            catch (Exception ex ) 
+            catch (Exception ex)
             {
 
-                throw ex ;
+                throw ex;
             }
-          
+
 
 
 
@@ -1214,6 +1437,27 @@ namespace CRM.Business.Data
 
 
         }
+        private static LicenciasDevueltas ConstructorLicenciasDevueltasCompinRRLL(DataRow row)
+        {
+
+            return new LicenciasDevueltas
+            {
+                CodIngreso = row["CodIngreso"] != DBNull.Value ? Convert.ToInt64(row["CodIngreso"]) : 0,
+                RutAfiliado = row["RutAfiliado"] != DBNull.Value ? row["RutAfiliado"].ToString() : string.Empty,
+                NombreAfiliado = row["NombreAfiliado"] != DBNull.Value ? row["NombreAfiliado"].ToString() : string.Empty,
+                FolioLicencia = row["FolioLicencia"] != DBNull.Value ? row["FolioLicencia"].ToString() : string.Empty,
+                FechaDevolucion = row["FechaDevolucion"] != DBNull.Value ? Convert.ToDateTime(row["FechaDevolucion"]) : new DateTime(1900, 1, 1),
+                Motivodevolucion = row["Motivodevolucion"] != DBNull.Value ? row["Motivodevolucion"].ToString() : string.Empty,
+                Gestion = row["gestion"] != DBNull.Value ? row["gestion"].ToString() : string.Empty,
+                Devueltas = row["devuelta"] != DBNull.Value ? Convert.ToInt32(row["devuelta"]) : 0,
+                FechaDevolucionString = row["FechaDevolucionString"] != DBNull.Value ? row["FechaDevolucionString"].ToString() : string.Empty,
+                Gestion_xls = row["Gestion_xls"] != DBNull.Value ? row["Gestion_xls"].ToString() : string.Empty,
+                subcomision = row["subcomision"] != DBNull.Value ? row["subcomision"].ToString() : string.Empty,
+                descripcionOficina = row["descripcionOficina"] != DBNull.Value ? row["descripcionOficina"].ToString() : string.Empty,
+            };
+
+
+        }
         private static LicenciasDevueltas ConstructorLicenciasDevueltasCompin(DataRow row)
         {
 
@@ -1225,7 +1469,10 @@ namespace CRM.Business.Data
                 FolioLicencia = row["FolioLicencia"] != DBNull.Value ? row["FolioLicencia"].ToString() : string.Empty,
                 FechaDevolucion = row["FechaDevolucion"] != DBNull.Value ? Convert.ToDateTime(row["FechaDevolucion"]) : new DateTime(1900, 1, 1),
                 Motivodevolucion = row["Motivodevolucion"] != DBNull.Value ? row["Motivodevolucion"].ToString() : string.Empty,
-                Gestion = row["gestion"] != DBNull.Value ? row["gestion"].ToString() : string.Empty
+                Gestion = row["gestion"] != DBNull.Value ? row["gestion"].ToString() : string.Empty,
+                Devueltas = row["devuelta"] != DBNull.Value ? Convert.ToInt32(row["devuelta"]) : 0,
+                FechaDevolucionString = row["FechaDevolucionString"] != DBNull.Value ? row["FechaDevolucionString"].ToString() : string.Empty,
+                Gestion_xls = row["Gestion_xls"] != DBNull.Value ? row["Gestion_xls"].ToString() : string.Empty,
             };
 
 
@@ -1244,6 +1491,10 @@ namespace CRM.Business.Data
                 Motivodevolucion = row["Motivodevolucion"] != DBNull.Value ? row["Motivodevolucion"].ToString() : string.Empty,
                 Gestion = row["gestion"] != DBNull.Value ? row["gestion"].ToString() : string.Empty,
                 Responsable = row["Responsable"] != DBNull.Value ? row["Responsable"].ToString() : string.Empty,
+                FechaDevolucionString = row["FechaDevolucionString"] != DBNull.Value ? row["FechaDevolucionString"].ToString() : string.Empty,
+                FechagestionString = row["FechagestionString"] != DBNull.Value ? row["FechagestionString"].ToString() : string.Empty,
+                descripcionOficina = row["descripcionOficina"] != DBNull.Value ? row["descripcionOficina"].ToString() : string.Empty,
+                subcomision = row["subcomision"] != DBNull.Value ? row["subcomision"].ToString() : string.Empty,
             };
 
 
@@ -1418,5 +1669,215 @@ namespace CRM.Business.Data
 
 
 
+        public static List<GestionOficinaEntity> listagestionoficina(long CodIngreso, int tipodevuelta)
+        {
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@CodIngreso", CodIngreso),
+                new Parametro("@tipodevuelta", tipodevuelta)
+
+
+            };
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Gestion_Oficina_Listar", parametros, ConstructorGestionOficina);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+        }
+
+        public static List<ComunaEntity> listarComuna(int regionId)
+        {
+            Parametro parametros = new Parametro("@regionId", regionId)
+            {
+
+            };
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_listar_comuna", parametros, ConstructorComuna);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+
+        }
+
+
+        public static List<RegionEntity> listaregiones()
+        {
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_listar_region", ConstructorRegion);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+
+        }
+
+        private static GestionOficinaEntity ConstructorGestionOficina(DataRow row)
+        {
+            return new GestionOficinaEntity
+            {
+
+                CodIngreso = row["CodIngreso"] != DBNull.Value ? Convert.ToInt64(row["CodIngreso"]) : 0,
+                FolioLicencia = row["FolioLicencia"] != DBNull.Value ? row["FolioLicencia"].ToString() : string.Empty,
+                Fechagestion = row["fechagestion"] != DBNull.Value ? Convert.ToDateTime(row["fechagestion"]) : new DateTime(1900, 1, 1),
+                Comentarios = row["comentarios"] != DBNull.Value ? row["comentarios"].ToString() : string.Empty,
+                NGestion = row["ngestion"] != DBNull.Value ? Convert.ToInt32(row["ngestion"]) : 0,
+                Tipodevuelta = row["tipodevuelta"] != DBNull.Value ? Convert.ToInt32(row["tipodevuelta"]) : 0,
+                direccion = row["direccion"] != DBNull.Value ? row["direccion"].ToString() : string.Empty,
+                region = row["region"] != DBNull.Value ? row["region"].ToString() : string.Empty,
+                comuna = row["comuna"] != DBNull.Value ? row["comuna"].ToString() : string.Empty,
+                idRegion = row["regionid"] != DBNull.Value ? Convert.ToInt32(row["regionid"]) : 0,
+                idcomuna = row["comunaid"] != DBNull.Value ? Convert.ToInt32(row["comunaid"]) : 0,
+                tipoContacto = row["tipoContacto"] != DBNull.Value ? row["tipoContacto"].ToString() : string.Empty,
+                contacto = row["contacto"] != DBNull.Value ? row["contacto"].ToString() : string.Empty,
+                TelefonoContacto = row["TelefonoContacto"] != DBNull.Value ? Convert.ToInt32(row["TelefonoContacto"]) : 0,
+                numero = row["numero"] != DBNull.Value ? row["numero"].ToString() : string.Empty,
+                correo = row["correo"] != DBNull.Value ? row["correo"].ToString() : string.Empty,
+                idGestion = row["idGestion"] != DBNull.Value ? Convert.ToInt32(row["idGestion"]) : 0,
+            };
+        }
+
+        private static RegionEntity ConstructorRegion(DataRow row)
+        {
+            return new RegionEntity
+            {
+
+                Id = row["Id"] != DBNull.Value ? Convert.ToInt32(row["Id"]) : 0,
+                Nombre = row["Nombre"] != DBNull.Value ? row["Nombre"].ToString() : string.Empty,
+                Secuencia = row["Secuencia"] != DBNull.Value ? Convert.ToInt32(row["Secuencia"]) : 0,
+
+            };
+        }
+
+        private static ComunaEntity ConstructorComuna(DataRow row)
+        {
+            return new ComunaEntity
+            {
+
+                Id = row["Id"] != DBNull.Value ? Convert.ToInt32(row["Id"]) : 0,
+                Nombre = row["Nombre"] != DBNull.Value ? row["Nombre"].ToString() : string.Empty,
+
+
+            };
+        }
+
+
+        public static int Guardar_Gestion_Oficina(WebGestionOficinas web, string Token)
+        {
+            Parametros parametros = new Parametros
+            {
+                new Parametro("@CodIngreso", web.codIngreso),
+                new Parametro("@NGestion", web.nGestion),
+                new Parametro("@TipoDevuelta", web.tipoDevuelta),
+                new Parametro("@IdGestion", web.IdGestion),
+                new Parametro("@IdRegion",web.IdRegion),
+                new Parametro("@IdComuna", web.IdComuna),
+                new Parametro("@direccion", web.direccion),
+                new Parametro("@Token", Token),
+                new Parametro("@Comentarios", web.comentarios),
+                new Parametro("@tipo", web.tipo),
+                new Parametro("@nombre_contacto", web.nombre_contacto),
+                new Parametro("@telefono_contacto", web.telefono_contacto),
+                new Parametro("@email", web.email),
+                new Parametro("@numero", web.numero)
+            };
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerEscalar<int>("licencias.sp_Lic_guardar_gestion_oficina", parametros);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+        }
+
+
+
+
+        private static Ingresolicencia ConstructorDevueltaOficina(DataRow row)
+        {
+            return new Ingresolicencia
+            {
+
+                CodIngreso = row["CodIngreso"] != DBNull.Value ? Convert.ToInt64(row["CodIngreso"]) : 0,
+                RutAfiliado = row["RutAfiliado"] != DBNull.Value ? row["RutAfiliado"].ToString() : string.Empty,
+                NombreAfiliado = row["NombreAfiliado"] != DBNull.Value ? row["NombreAfiliado"].ToString() : string.Empty,
+                FolioLicencia = row["FolioLicencia"] != DBNull.Value ? row["FolioLicencia"].ToString() : string.Empty,
+                FechaIngreso = row["FechaIngreso"] != DBNull.Value ? Convert.ToDateTime(row["FechaIngreso"]) : new DateTime(1900, 1, 1),
+
+            };
+        }
+
+
+        public static List<Ingresolicencia> listar_devueltas_oficinas(string folioLM, int codOficina, DateTime diadesde, DateTime diahasta)
+        {
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@folio_LM", folioLM),
+                new Parametro("@CodOficina", codOficina),
+                new Parametro("@DiaDesde", diadesde),
+                new Parametro("@DiaHasta", diahasta)
+
+            };
+
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_ListarDevueltasOficinas", parametros, ConstructorDevueltaOficina);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+
+        }
+
+        public static List<LicenciasDevueltas> ExportLMdevueltasCompinxls(string folioLM, int codOficina, DateTime diadesde, DateTime diahasta)
+        {
+
+            Parametros parametros = new Parametros
+            {
+
+                new Parametro("@folio_LM", folioLM),
+                new Parametro("@CodOficina", codOficina),
+                new Parametro("@DiaDesde", diadesde),
+                new Parametro("@DiaHasta", diahasta),
+
+
+          };
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_ListarDevueltasCompin", parametros, ConstructorLicenciasDevueltasCompin);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

@@ -1,11 +1,7 @@
 ﻿using CDK.Data;
 using CDK.Integration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CRM.Business.Entity;
+using System;
 using System.Data;
 
 namespace CRM.Business.Data
@@ -54,9 +50,18 @@ namespace CRM.Business.Data
                 new Parametro("@cartaAutorizacion",documentosFaltantesLM.cartaAutorizacion),
                 new Parametro("@FaltaFirmaempleador",documentosFaltantesLM.Faltafirmaempleador)
 
-    };
 
-            DBHelper.InstanceCRM.EjecutarProcedimiento("licencias.sp_Lic_DocumentosFaltantes_Guardar", prm);
+    };
+            try
+            {
+                DBHelper.InstanceCRM.EjecutarProcedimiento("licencias.sp_Lic_DocumentosFaltantes_Guardar_Nuevo_Flujo", prm);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
 
         public static DocumentosFaltantesLM ObtenerByCodIngresoLM(long codIngreso)
@@ -136,11 +141,87 @@ namespace CRM.Business.Data
             new Parametro("@fechaliquidacion3",documentosFaltantesLM.fechaliquidacion3),
             new Parametro("@fechaliquidacion4",documentosFaltantesLM.fechaliquidacion4),
             new Parametro("@fechaliquidacion5",documentosFaltantesLM.fechaliquidacion5),
-            new Parametro("@fechaliquidacion6",documentosFaltantesLM.fechaliquidacion6)
+            new Parametro("@fechaliquidacion6",documentosFaltantesLM.fechaliquidacion6),
+            new Parametro("@Imagen",documentosFaltantesLM.Imagen),
+            new Parametro("@diagnostico",documentosFaltantesLM.diagnostico),
+            new Parametro("@sinfirma",documentosFaltantesLM.sinfirma),
+            new Parametro("@contrato",documentosFaltantesLM.contrato),
+            new Parametro("@cedular_identidad",documentosFaltantesLM.cedular_identidad),
+            new Parametro("@seccion_c",documentosFaltantesLM.seccion_c),
+            new Parametro("@certificado_nacimiento",documentosFaltantesLM.certificado_nacimiento)
 
     };
 
-            DBHelper.InstanceCRM.EjecutarProcedimiento("licencias.sp_Lic_DocumentosFaltantes_Guardar_Auditoria", prm);
+            DBHelper.InstanceCRM.EjecutarProcedimiento("licencias.sp_Lic_DocumentosFaltantes_Guardar_Auditoria_nuevo", prm);
+        }
+
+
+
+        public static void GuardarEntradaAudtoriaReparosTATA(DocumentosFaltantesLM documentosFaltantesLM, string token)
+        {
+            Parametros prm = new Parametros()
+            {
+            new Parametro("@CodigoIngresoLM",documentosFaltantesLM.CodigoIngresoLM),
+            new Parametro("@Token",token),
+            new Parametro("@tipoSeleccion",documentosFaltantesLM.tipoSeleccion),
+            new Parametro("@Imagen",documentosFaltantesLM.Imagen),
+            new Parametro("@diagnostico",documentosFaltantesLM.diagnostico),
+            new Parametro("@sinfirma",documentosFaltantesLM.sinfirma),
+            new Parametro("@contrato",documentosFaltantesLM.contrato),
+            new Parametro("@cedular_identidad",documentosFaltantesLM.cedular_identidad),
+            new Parametro("@seccion_c",documentosFaltantesLM.seccion_c),
+            new Parametro("@certificado_nacimiento",documentosFaltantesLM.certificado_nacimiento),
+            new Parametro("@mutual",documentosFaltantesLM.mutual),
+            new Parametro("@isapre",documentosFaltantesLM.isapre),
+            new Parametro("@cartaAutorizacion",documentosFaltantesLM.cartaAutorizacion),
+            new Parametro("@FaltaDocumentacion",documentosFaltantesLM.FaltaDocumentacion),
+
+
+    };
+            try
+            {
+                DBHelper.InstanceCRM.EjecutarProcedimiento("licencias.sp_Lic_DocumentosFaltantes_Guardar_Reparos_TATA_Nuevo_Flujo", prm);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        public static void GuardarEntradaAudtoriaReparosCOMPIN(DocumentosFaltantesLM documentosFaltantesLM, string token)
+        {
+            Parametros prm = new Parametros()
+            {
+            new Parametro("@CodigoIngresoLM",documentosFaltantesLM.CodigoIngresoLM),
+            new Parametro("@Token",token),
+            new Parametro("@tipoSeleccion",documentosFaltantesLM.tipoSeleccion),
+            new Parametro("@Imagen",documentosFaltantesLM.Imagen),
+            new Parametro("@diagnostico",documentosFaltantesLM.diagnostico),
+            new Parametro("@sinfirma",documentosFaltantesLM.sinfirma),
+            new Parametro("@contrato",documentosFaltantesLM.contrato),
+            new Parametro("@cedular_identidad",documentosFaltantesLM.cedular_identidad),
+            new Parametro("@seccion_c",documentosFaltantesLM.seccion_c),
+            new Parametro("@certificado_nacimiento",documentosFaltantesLM.certificado_nacimiento),
+            new Parametro("@mutual",documentosFaltantesLM.mutual),
+            new Parametro("@isapre",documentosFaltantesLM.isapre),
+            new Parametro("@cartaAutorizacion",documentosFaltantesLM.cartaAutorizacion),
+            new Parametro("@FaltaDocumentacion",documentosFaltantesLM.FaltaDocumentacion),
+
+
+    };
+            try
+            {
+                DBHelper.InstanceCRM.EjecutarProcedimiento("licencias.sp_Lic_DocumentosFaltantes_Guardar_Reparos_COMPIN_Nuevo_Flujo", prm);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
     }
 }

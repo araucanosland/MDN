@@ -403,6 +403,7 @@
     <Content Include="Assets\js.App\src\empresas-prospectos.js" />
     <Content Include="Assets\js.App\src\empresas.inicio.directores-laborales.js" />
     <Content Include="Assets\js.App\src\ficha-empresa.js" />
+    <Content Include="Assets\js.App\src\GestionOficina.js" />
     <Content Include="Assets\js.App\src\ign.js" />
     <Content Include="Assets\js.App\src\index.js" />
     <Content Include="Assets\js.App\src\info-empresa.js" />

@@ -103,6 +103,7 @@
     <Compile Include="FiltrosrsgEntity.cs" />
     <Compile Include="GestionEmpresas\GestionEmpresasEntity.cs" />
     <Compile Include="GestionEntity.cs" />
+    <Compile Include="GestionOficinaEntity.cs" />
     <Compile Include="IngresoCarteraEmpresa.cs" />
     <Compile Include="Ingresolicencia.cs" />
     <Compile Include="InstaladorEntity.cs" />

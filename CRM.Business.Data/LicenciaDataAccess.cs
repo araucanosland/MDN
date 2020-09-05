@@ -71,6 +71,11 @@ namespace CRM.Business.Data
             };
             return DBHelper.InstanceCRM.ObtenerEscalar<int>("spMotor_LicenciaEnvioCompin_Guardar", parametros);
         }
+
+
+
+
+
         public static List<OficinaDerivacionEntity> ListaOficinaDerivacion()
         {
             //return DBHelper.InstanceReportes.ObtenerColeccion("negocios.spReporte_ListaPeriodos", ConstructorEntidad);
@@ -82,6 +87,25 @@ namespace CRM.Business.Data
             //return DBHelper.InstanceReportes.ObtenerColeccion("negocios.spReporte_ListaPeriodos", ConstructorEntidad);
             return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_Listar_Estados", ConstructorEstadoLM);
         }
+
+
+        public static List<Ingresolicencia> listahistoricoporestado()
+        {
+            //return DBHelper.InstanceReportes.ObtenerColeccion("negocios.spReporte_ListaPeriodos", ConstructorEntidad);
+
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_listahistoricoporestado", ConstructorHistorico);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+        }
+
 
         #region CONSTRUCTORES
 
@@ -139,6 +163,18 @@ namespace CRM.Business.Data
                 Estado = row["Estado"] != DBNull.Value ? row["Estado"].ToString() : string.Empty,
 
 
+            };
+        }
+
+
+        private static Ingresolicencia ConstructorHistorico(DataRow row)
+        {
+            return new Ingresolicencia
+            {
+                CodIngreso = row["CodIngreso"] != DBNull.Value ? Convert.ToInt32(row["CodIngreso"]) : 0,
+                FechaIngreso = row["FechaIngreso"] != DBNull.Value ? Convert.ToDateTime(row["FechaIngreso"]) : new DateTime(1900, 1, 1),
+                FechaLicenciaDesde = row["FechaTermino"] != DBNull.Value ? Convert.ToDateTime(row["FechaTermino"]) : new DateTime(1900, 1, 1),
+                CodEstado = row["EtapaId"] != DBNull.Value ? Convert.ToInt32(row["EtapaId"]) : 0,
             };
         }
 

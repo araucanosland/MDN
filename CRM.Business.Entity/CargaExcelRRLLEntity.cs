@@ -21,5 +21,9 @@ namespace CRM.Business.Entity
         public DateTime FechaIngreso { get; set; }
         public DateTime diarecepcion { get; set; }
         public string observacion { get; set; }
+        public string FechaIngresoString { get; set; }
+        public string FechaAuditoriaString { get; set; }
+        public string FechaSubidaCompinString { get; set; }
+
     }
 }

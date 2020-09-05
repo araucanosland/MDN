@@ -1267,19 +1267,45 @@ $(function () {
 
 
     $('#mdl_data').on('show.bs.modal', function (e) {
+
         $('#modal_beneficios').modal('hide')
-        var rutPSU = $(e.relatedTarget).data("rutafipsu") // TEMPORAL BORRAR AL TERMINAR CAMPAÑA
-        var trutAfiliado = $(e.relatedTarget).data("rut")
-        var tperiodo = $(e.relatedTarget).data("periodo")
-        var tipoCamp = $(e.relatedTarget).data("tipo")
-        var idEncuesta = $(e.relatedTarget).data("tieneencuesta")
-        $('#afi_rut_busc_b').val(trutAfiliado)
+
+
+        var rut_tam = $('#txtRutComercial').val()
+
+        if (rut_tam != undefined) {
+            var fechaHoy = new Date();
+            var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
+            // var rutPSU = '3982961-4'
+            var rutPSU = rut_tam
+            var trutAfiliado = rut_tam
+            var tperiodo = periodo
+            var tipoCamp = 1
+            var idEncuesta = $(e.relatedTarget).data("tieneencuesta")
+            $('#afi_rut_busc_b').val(trutAfiliado)
+
+        }
+        else {
+
+            var rutPSU = $(e.relatedTarget).data("rutafipsu") // TEMPORAL BORRAR AL TERMINAR CAMPAÑA
+            var trutAfiliado = $(e.relatedTarget).data("rut")
+
+            var tperiodo = $(e.relatedTarget).data("periodo")
+            var tipoCamp = $(e.relatedTarget).data("tipo")
+            var idEncuesta = $(e.relatedTarget).data("tieneencuesta")
+            $('#afi_rut_busc_b').val(trutAfiliado)
+
+        }
+
+
+
+        
 
         //console.log('rut 1 :' + trutAfiliado + 'Rut 2 : ' + rutPSU)
 
-       
-       // appVentaRemota.obtenerBanco()
-        
+
+        // appVentaRemota.obtenerBanco()
+
 
         $('#linkencuesta').prop('href', '/motor/App/DatosAfiliados?RutBuscar=' + trutAfiliado)
         $.SecGetJSON(BASE_URL + "/motor/api/Gestion/obtener-seguimiento", { periodo: tperiodo, afiRut: trutAfiliado, tipoCampagna: tipoCamp }, function (datos) {
@@ -1582,6 +1608,17 @@ $(function () {
                     focus: false,
                     timer: 3000
                 });
+
+                if (rut_tam != undefined) {
+                    $.niftyNoty({
+                        type: 'danger',
+                        container: '#bdy_busqueda_tam',
+                        html: '<strong>!</strong> No se encontro Rut para el periodo actual.',
+                        focus: false,
+                        timer: 5000
+                    });
+                    $("#mdl_data").modal('hide')
+                }
             }
         });
 
@@ -2090,7 +2127,7 @@ $(function () {
                 });
             });
 
-            });
+        });
 
         appVentaRemota.cargaLeadFiltroCall(trutAfiliado)
     });
@@ -4043,3 +4080,55 @@ $(function () {
 function formateaRenta(val) {
     return val.toMoney(0);
 }
+
+
+$(function () {
+
+
+
+    // $('#mdl_data').on('show.bs.modal', function (e) {
+    $('#bTam3').on('click', function (e) {
+
+
+        //var rt = $(e.relatedTarget).data("sergio")
+        //alert(rt)
+        $("#mdl_data").modal("show");
+
+
+        //let fechaHoy = new Date();
+        //let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
+
+        ////  alert(rutM)
+
+        //$.SecGetJSON(BASE_URL + "/motor/api/Gestion/obtener-seguimiento", { periodo: periodo, afiRut: '3982961-4', tipoCampagna: 1 }, function (datos) {
+
+        //    // console.log('datos afi: ' + { sergio: datos })
+        //});
+
+
+
+
+
+
+
+        //$.SecPostJSON(BASE_URL + "/motor/api/Gestion/v3/lista-seguimientos", {
+        //    tipoCampagna: 1,
+        //    periodo: 202009,
+        //    estado: '',
+        //    subestado: '',
+        //    marca: '',
+        //    prioridad: '',
+        //    segmento: '',
+        //    tipo: '',
+        //    busEmpresa: '',
+        //    rut: '3982961-4',
+        //    vencimiento: ''
+        //}, function (datos) {
+        //    console.log('datos afi: ' + datos)
+
+        //});
+    });
+
+})
+
+

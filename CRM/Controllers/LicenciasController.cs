@@ -92,6 +92,19 @@ namespace CRM.Controllers
 
         [AuthorizationRequired]
         [HttpGet]
+        [Route("listar-devueltas-oficina")]
+        public long IngresadasGestionOficinaConteo()
+        {
+            CookieHeaderValue cookie = Request.Headers.GetCookies("Oficina").FirstOrDefault();
+            int codOficina = Convert.ToInt32(cookie.Cookies.FirstOrDefault(s => s.Name == "Oficina").Value);
+            return IngresolicenciaDataAccess.IngresadasGestionOficinaConteo(codOficina);
+        }
+
+
+
+
+        [AuthorizationRequired]
+        [HttpGet]
         [Route("licencia-data-auditoria-oficina-conteo")]
         public long IngresadasAuditoriaOficinaConteo()
         {
@@ -142,13 +155,27 @@ namespace CRM.Controllers
 
         [AuthorizationRequired]
         [HttpGet]
-        [Route("lista-licencias-devuelta-compin")]
-        public IEnumerable<LicenciasDevueltas> ListaLMdevueltasCompin(string folioLM, string dia_desde, string dia_hasta, int codOficina,string responsable)
+        [Route("lista-licencias-devuelta-compin-RRLL")]
+        public IEnumerable<LicenciasDevueltas> ListaLMdevueltasCompinRRLL(string folioLM, string dia_desde, string dia_hasta, int codOficina, string responsable, string subcomision)
         {
             DateTime elDiaDesde = Convert.ToDateTime(dia_desde);
             DateTime elDiahasta = Convert.ToDateTime(dia_hasta);
             string token = ActionContext.Request.Headers.GetValues("Token").First();
-            List<LicenciasDevueltas> ingLc = IngresolicenciaDataAccess.ListaLMdevueltasCompin(folioLM, elDiaDesde, elDiahasta, codOficina,responsable);
+            List<LicenciasDevueltas> ingLc = IngresolicenciaDataAccess.ListaLMdevueltasCompinRRLL(folioLM, elDiaDesde, elDiahasta, codOficina, responsable, subcomision);
+
+            return ingLc;
+
+
+        }
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("lista-licencias-devuelta-compin")]
+        public IEnumerable<LicenciasDevueltas> ListaLMdevueltasCompin(string folioLM, string dia_desde, string dia_hasta, int codOficina, string responsable)
+        {
+            DateTime elDiaDesde = Convert.ToDateTime(dia_desde);
+            DateTime elDiahasta = Convert.ToDateTime(dia_hasta);
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<LicenciasDevueltas> ingLc = IngresolicenciaDataAccess.ListaLMdevueltasCompin(folioLM, elDiaDesde, elDiahasta, codOficina, responsable);
 
             return ingLc;
 
@@ -157,25 +184,108 @@ namespace CRM.Controllers
         [AuthorizationRequired]
         [HttpGet]
         [Route("lista-licencias-Consolidado-devuelta-compin")]
-        public IEnumerable<LicenciasDevueltas> ListaLMConsolidadodevueltasCompin(string folioLM, string dia_desde, string dia_hasta, int codOficina, string responsable)
+        public IEnumerable<LicenciasDevueltas> ListaLMConsolidadodevueltasCompin(string folioLM, string dia_desde, string dia_hasta, string responsable, int codOficina, string subcomision)
         {
             DateTime elDiaDesde = Convert.ToDateTime(dia_desde);
             DateTime elDiahasta = Convert.ToDateTime(dia_hasta);
             string token = ActionContext.Request.Headers.GetValues("Token").First();
-            List<LicenciasDevueltas> ingLc = IngresolicenciaDataAccess.ListaLMConsolidadodevueltasCompin(folioLM, elDiaDesde, elDiahasta, codOficina, responsable);
+            List<LicenciasDevueltas> ingLc = IngresolicenciaDataAccess.ListaLMConsolidadodevueltasCompin(folioLM, elDiaDesde, elDiahasta, responsable, codOficina, subcomision);
 
             return ingLc;
 
 
         }
 
+
+        //[AuthorizationRequired]
+        [HttpGet]
+        [Route("export-Consolidado-devuelta-compin")]
+        public HttpResponseMessage exportConsolidadodevueltasCompin(string folioLM, string dia_desde, string dia_hasta, string responsable, int codOficina, string subcomision)
+        {
+            DateTime elDiaDesde = Convert.ToDateTime(dia_desde);
+            DateTime elDiahasta = Convert.ToDateTime(dia_hasta);
+            //string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<LicenciasDevueltas> ingLc = IngresolicenciaDataAccess.ListaLMConsolidadodevueltasCompin(folioLM, elDiaDesde, elDiahasta, responsable, codOficina, subcomision);
+            Columna[] columns = {
+                                    new Columna("FolioLicencia", "Folio LM"),
+                                    new Columna("RutAfiliado","Rut Afiliado"),
+                                    new Columna("NombreAfiliado","Nombre Afiliado"),
+                                    new Columna("descripcionOficina","Oficina"),
+                                    new Columna("subcomision","SubComisión"),
+                                    new Columna("FechaDevolucionString","Fecha Devolución"),
+                                    new Columna("motivodevolucion", "Motivo Devolución"),
+                                    new Columna("Responsable", "Responsable")
+
+
+            };
+            byte[] filecontent = ExcelExportHelper.ExportExcel(ingLc, "LM COMPIN RRLL desde el " + dia_desde + " hasta el " + dia_hasta, true, columns);
+            HttpResponseMessage response = new HttpResponseMessage();
+
+
+            Stream stri = new MemoryStream(filecontent);
+            response.Content = new StreamContent(stri);
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = "LM_RRLL_REPROCESADAS_COMPIN.xls";
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue(ExcelExportHelper.ExcelContentType);
+            response.Content.Headers.ContentLength = stri.Length;
+
+            return response;
+
+
+        }
+
+        [HttpGet]
+        [Route("exportar-Compin-RRLL")]
+        public HttpResponseMessage ExcelListaCompin(string Folio, string diadesde, string diahasta, string subcomision)
+        {
+
+            DateTime desde = Convert.ToDateTime(diadesde);
+            DateTime hasta = Convert.ToDateTime(diahasta);
+            //string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<CargaExcelRRLLEntity> ingLc = IngresolicenciaDataAccess.CargaListaCompinCentralizada(Folio, desde, hasta, subcomision);
+            Columna[] columns = {
+                                    new Columna("FolioLicencia", "Folio LM"),
+                                    new Columna("RutAfiliado","Rut Afiliado"),
+                                    new Columna("NombreAfiliado","Nombre Afiliado"),
+                                    new Columna("OficinaDescripcion","Oficina"),
+                                    new Columna("Subcomision","Subcomision"),
+                                    new Columna("FechaIngresoString", "Fecha Ingreso"),
+                                    new Columna("FechaSubidaCompinString", "Fecha Subida Compin"),
+                                    new Columna("FechaAuditoriaString", "Fecha Auditoría")
+
+
+            };
+            byte[] filecontent = ExcelExportHelper.ExportExcel(ingLc, "LM COMPIN RRLL desde el " + diadesde + " hasta el" + diahasta, true, columns);
+            HttpResponseMessage response = new HttpResponseMessage();
+
+
+            Stream stri = new MemoryStream(filecontent);
+            response.Content = new StreamContent(stri);
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = "LM_RRLL_COMPIN_" + diahasta.Replace("-", "_").Replace("/", "_") + ".xls";
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue(ExcelExportHelper.ExcelContentType);
+            response.Content.Headers.ContentLength = stri.Length;
+
+            return response;
+
+
+        }
+
+
+
+
+
         [AuthorizationRequired]
         [HttpGet]
         [Route("lista-licencias-Consolidado-devuelta-compin-conteo")]
-        public  long ListaLMConsolidadodevueltasCompinConteo()
+        public long ListaLMConsolidadodevueltasCompinConteo()
         {
             return IngresolicenciaDataAccess.ListaLMConsolidadodevueltasCompinConteo();
         }
+
+
+
+
 
         //[AuthorizationRequired]
         [HttpGet]
@@ -243,7 +353,7 @@ namespace CRM.Controllers
             Stream stri = new MemoryStream(filecontent);
             response.Content = new StreamContent(stri);
             response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-            response.Content.Headers.ContentDisposition.FileName = "LM_proceso_carga_Tata.xls";
+            response.Content.Headers.ContentDisposition.FileName = "LM_Proceso_Carga_Tata.xls";
             response.Content.Headers.ContentType = new MediaTypeHeaderValue(ExcelExportHelper.ExcelContentType);
             response.Content.Headers.ContentLength = stri.Length;
 
@@ -271,8 +381,47 @@ namespace CRM.Controllers
 
         [AuthorizationRequired]
         [HttpGet]
+        [Route("listar-repoceso-RRLL-subcomision")]
+        public List<CargaExcelRRLLEntity> ListarSubcomisionRRLL()
+        {
+            CookieHeaderValue cookie = Request.Headers.GetCookies("Oficina").FirstOrDefault();
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            //int codOficina = Convert.ToInt32(cookie.Cookies.FirstOrDefault(s => s.Name == "Oficina").Value);
+            List<CargaExcelRRLLEntity> ing = IngresolicenciaDataAccess.ListarSubcomisionRRLL(token);
+
+            return ing;
+        }
+
+        [HttpGet]
+        [Route("listar-repoceso-RRLL-subcomision-Devueltas")]
+        public List<CargaExcelRRLLEntity> ListarSubcomisionRRLLDevueltas()
+        {
+            CookieHeaderValue cookie = Request.Headers.GetCookies("Oficina").FirstOrDefault();
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            //int codOficina = Convert.ToInt32(cookie.Cookies.FirstOrDefault(s => s.Name == "Oficina").Value);
+            List<CargaExcelRRLLEntity> ing = IngresolicenciaDataAccess.ListarSubcomisionRRLLDevueltas(token);
+
+            return ing;
+        }
+
+
+        [HttpGet]
+        [Route("listar-repoceso-RRLL-subcomision-Compin")]
+        public List<CargaExcelRRLLEntity> ListarSubcomisionRRLLCompin(string dia_desde, string dia_hasta)
+        {
+            CookieHeaderValue cookie = Request.Headers.GetCookies("Oficina").FirstOrDefault();
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            //int codOficina = Convert.ToInt32(cookie.Cookies.FirstOrDefault(s => s.Name == "Oficina").Value);
+            List<CargaExcelRRLLEntity> ing = IngresolicenciaDataAccess.ListarSubcomisionRRLLCompin(token, dia_desde, dia_hasta);
+
+            return ing;
+        }
+
+
+        [AuthorizationRequired]
+        [HttpGet]
         [Route("licencia-devueltas-compin-conteo")]
-        public long IngresadasdevueltasCompinConteo(string responsable,int codOficina)
+        public long IngresadasdevueltasCompinConteo(string responsable, int codOficina)
         {
             CookieHeaderValue cookie = Request.Headers.GetCookies("Oficina").FirstOrDefault();
             //int codOficina = Convert.ToInt32(cookie.Cookies.FirstOrDefault(s => s.Name == "Oficina").Value);
@@ -416,9 +565,9 @@ namespace CRM.Controllers
                 Retorno.Add(new BaseLicencia
                 {
                     IngresoData = lc,
-                        //EstadoData = EstadolicenciaDataAccess.ObtenerPorID(lc.CodEstado),
-                        //NombreEjecutivo = DotacionDataAccess.ObtenerByRut(lc.RutEjecutivo).Nombres
-                    });
+                    //EstadoData = EstadolicenciaDataAccess.ObtenerPorID(lc.CodEstado),
+                    //NombreEjecutivo = DotacionDataAccess.ObtenerByRut(lc.RutEjecutivo).Nombres
+                });
             });
             return Retorno;
 
@@ -475,6 +624,16 @@ namespace CRM.Controllers
             };
         }
 
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("Valida-folio-existente")]
+        public int ValidaFolio(string FolioLicencia, string Rut)
+        {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            int ingLc = IngresolicenciaDataAccess.ValidaFolio(FolioLicencia, Rut);
+            return ingLc;
+        }
+
 
 
         [AuthorizationRequired]
@@ -504,12 +663,35 @@ namespace CRM.Controllers
         [AuthorizationRequired]
         [HttpGet]
         [Route("guardar-devolucion-compin")]
-        public ResultadoBase GuardardevolucionCompin(string CodIngreso, string estadoDevuelta,string responsable)
+        public ResultadoBase GuardardevolucionCompin(string CodIngreso, string estadoDevuelta, string responsable)
         {
             try
             {
                 string token = ActionContext.Request.Headers.GetValues("Token").First();
-                var codIngreso = IngresolicenciaDataAccess.GuardarDevolucionCompin(CodIngreso, estadoDevuelta,token, responsable);
+                var codIngreso = IngresolicenciaDataAccess.GuardarDevolucionCompin(CodIngreso, estadoDevuelta, token, responsable);
+                WebIngresoLicencia entrada = new WebIngresoLicencia();
+                entrada.CodIngreso = codIngreso;
+
+                return new ResultadoBase() { Estado = "OK", Mensaje = "Responsable agregado con éxito", Objeto = entrada };
+
+            }
+            catch (Exception ex)
+            {
+
+                var x = ex.Message.Split(';');
+                return new ResultadoBase() { Estado = "ERR", Mensaje = x[1], Objeto = x[0] };
+            }
+        }
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("guardar-devolucion-tata")]
+        public ResultadoBase GuardardevolucionTATA(string CodIngreso, string estadoDevuelta)
+        {
+            try
+            {
+                string token = ActionContext.Request.Headers.GetValues("Token").First();
+                var codIngreso = IngresolicenciaDataAccess.GuardarDevoluciontata(CodIngreso, estadoDevuelta, token);
                 WebIngresoLicencia entrada = new WebIngresoLicencia();
                 entrada.CodIngreso = codIngreso;
 
@@ -525,13 +707,13 @@ namespace CRM.Controllers
         }
         [AuthorizationRequired]
         [HttpGet]
-        [Route("guardar-devolucion-tata")]
-        public ResultadoBase GuardardevolucionTATA(string CodIngreso, string estadoDevuelta)
+        [Route("guardar-LM-Cambio-TipoSeleccion")]
+        public ResultadoBase GuardarLMCambioTipoSeleccion(string CodIngreso, int tiposeleccion)
         {
             try
             {
                 string token = ActionContext.Request.Headers.GetValues("Token").First();
-                var codIngreso = IngresolicenciaDataAccess.GuardarDevoluciontata(CodIngreso, estadoDevuelta, token);
+                var codIngreso = IngresolicenciaDataAccess.GuardarLMReemplazadaPorOtra(CodIngreso, token, tiposeleccion);
                 WebIngresoLicencia entrada = new WebIngresoLicencia();
                 entrada.CodIngreso = codIngreso;
 
@@ -1103,6 +1285,47 @@ namespace CRM.Controllers
 
         }
 
+        // [AuthorizationRequired]
+        [HttpGet]
+        [Route("export-devuelta-compin-rrll-xls")]
+        public HttpResponseMessage exportDevueltaCompinRRLL(string folioLM, string dia_desde, string dia_hasta, int codOficina, string responsable, string subcomision)
+        {
+            DateTime elDiaDesde = Convert.ToDateTime(dia_desde);
+            DateTime elDiahasta = Convert.ToDateTime(dia_hasta);
+            //string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<LicenciasDevueltas> ingLc = IngresolicenciaDataAccess.ListaLMdevueltasCompinRRLL(folioLM, elDiaDesde, elDiahasta, codOficina, responsable, subcomision);
+
+            Columna[] columns = {
+                                    new Columna("FolioLicencia", "Folio LM"),
+                                    new Columna("RutAfiliado", "Rut Afiliado"),
+                                    new Columna("NombreAfiliado", "Nombre Afiliado"),
+                                    new Columna("FechaDevolucionString","Fecha Devolución"),
+                                    new Columna("Oficina,", "Oficina"),
+                                    new Columna("motivodevolucion,", "Motivo Devolución"),
+                                    new Columna("Gestion_xls", "Gestión")
+
+
+            };
+
+            byte[] filecontent = ExcelExportHelper.ExportExcel(ingLc, "Excel Devueltas Compin RRLL", true, columns);
+            HttpResponseMessage response = new HttpResponseMessage();
+
+
+            Stream stri = new MemoryStream(filecontent);
+            response.Content = new StreamContent(stri);
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = "LM_Devueltas_Compin.xls";
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue(ExcelExportHelper.ExcelContentType);
+            response.Content.Headers.ContentLength = stri.Length;
+
+            return response;
+
+
+
+        }
+
+
+
 
         [HttpGet]
         [Route("export-pdf-mixta")]
@@ -1316,6 +1539,40 @@ namespace CRM.Controllers
         }
 
 
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("listar-Bitacora-LM")]
+        public IEnumerable<LicenciasLMTimeLine> listaBitacoraLM(long codIngreso)
+        {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<LicenciasLMTimeLine> ingLc = IngresolicenciaDataAccess.ObtenerBitacoraLM(codIngreso);
+
+            return ingLc;
+        }
+
+
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("listar-historico-por-estado")]
+        public long listahistoricoporestado()
+        {
+            List<Ingresolicencia> ing = LicenciaDataAccess.listahistoricoporestado();
+            int i = 1;
+            foreach (var item in ing)
+            {
+                long ingLc = IngresolicenciaDataAccess.HitoricoBitacora(item.CodIngreso, item.CodEstado, item.FechaIngreso, item.FechaLicenciaDesde);
+                i++;
+            }
+
+
+
+            return 1;
+
+        }
+
+
         [AuthorizationRequired]
         [HttpGet]
         [Route("listar-estado-LM")]
@@ -1467,6 +1724,19 @@ namespace CRM.Controllers
             return ingLc;
         }
 
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("listar-compin-subidas-centralizadas")]
+        public IEnumerable<CargaExcelRRLLEntity> ListarCargasCompinCentralizada(string folioLM, string dia_desde, string dia_hasta, string subcomision)
+        {
+            DateTime desde = Convert.ToDateTime(dia_desde);
+            DateTime hasta = Convert.ToDateTime(dia_hasta);
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<CargaExcelRRLLEntity> ingLc = IngresolicenciaDataAccess.CargaListaCompinCentralizada(folioLM, desde, hasta, subcomision);
+
+            return ingLc;
+        }
 
 
 
@@ -1703,6 +1973,32 @@ namespace CRM.Controllers
 
             }
         }
+        [AuthorizationRequired]
+        [HttpPost]
+        [Route("guardar-gestion-oficina")]
+        public ResultadoBase Guardargestionoficina(WebGestionOficinas web)
+        {
+            try
+            {
+                string token = ActionContext.Request.Headers.GetValues("Token").First();
+                WebGestionOficinas entrada = new WebGestionOficinas();
+
+                entrada.nGestion = web.nGestion;
+                entrada.IdGestion = web.IdGestion;
+                int Ngestion = IngresolicenciaDataAccess.Guardar_Gestion_Oficina(web, token);
+
+                //entrada.nGestion = Ngestion;
+                return new ResultadoBase() { Estado = "OK", Mensaje = "Proceso realizado con éxito", Objeto = entrada };
+
+            }
+            catch (Exception ex)
+            {
+
+                var x = ex.Message.Split(';');
+                return new ResultadoBase() { Estado = "ERR", Mensaje = x[1], Objeto = x[0] };
+            }
+        }
+
 
 
         [AuthorizationRequired]
@@ -1738,7 +2034,7 @@ namespace CRM.Controllers
         {
             try
             {
-      
+
                 string token = ActionContext.Request.Headers.GetValues("Token").First();
                 WebIngresoLicencia entrada = new WebIngresoLicencia();
 
@@ -1757,6 +2053,212 @@ namespace CRM.Controllers
         }
 
 
+
+
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("lista-gestion-oficina")]
+        public IEnumerable<GestionOficinaEntity> listagestionoficina(long codingreso, int tipog)
+        {
+
+            List<BaseLicencia> Retorno = new List<BaseLicencia>();
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<GestionOficinaEntity> ingLc = IngresolicenciaDataAccess.listagestionoficina(codingreso, tipog);
+
+            return ingLc;
+
+        }
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("lista-regiones")]
+        public IEnumerable<RegionEntity> listaregiones()
+        {
+
+            List<BaseLicencia> Retorno = new List<BaseLicencia>();
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<RegionEntity> ingLc = IngresolicenciaDataAccess.listaregiones();
+
+            return ingLc;
+
+
+        }
+
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("lista-comunas")]
+        public IEnumerable<ComunaEntity> listacomunas(int regionid)
+        {
+
+            List<BaseLicencia> Retorno = new List<BaseLicencia>();
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<ComunaEntity> ingLc = IngresolicenciaDataAccess.listarComuna(regionid);
+
+            return ingLc;
+
+
+        }
+
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("listar-devueltas-oficina")]
+        public IEnumerable<Ingresolicencia> listaTimeLine(string folioLM, int codOficina, string dia_desde, string dia_hasta)
+        {
+            DateTime desde = Convert.ToDateTime(dia_desde);
+            DateTime hasta = Convert.ToDateTime(dia_hasta);
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<Ingresolicencia> ingLc = IngresolicenciaDataAccess.listar_devueltas_oficinas(folioLM, codOficina, desde, hasta);
+
+            return ingLc;
+        }
+
+
+
+        [AuthorizationRequired]
+        [HttpPost]
+        [Route("guardar-licencia-Auditoria-Reparos-TATA")]
+        public ResultadoBase GuardarLicenciaReparosTATA(WebIngresoLicenciaReparosAuditoria entrada)
+        {
+            try
+            {
+                string token = ActionContext.Request.Headers.GetValues("Token").First();
+                Ingresolicencia ing = new Ingresolicencia();
+
+                var tipo = entrada.tipoSeleccion;
+                var codFinal = entrada.CodIngreso;
+
+                DocumentosFaltantesLM dcm = new DocumentosFaltantesLM(
+                         "",
+                         "",
+                         codFinal,
+                         entrada.LiqMes1 == 1,
+                         entrada.LiqMes2 == 1,
+                         entrada.LiqMes3 == 1,
+                         entrada.LiqMes4 == 1,
+                         entrada.LiqMes5 == 1,
+                         entrada.LiqMes6 == 1,
+                         entrada.CertificadoRenta == 1,
+                         entrada.Acredita90 == 1,
+                         false,
+                         entrada.Otros == 1,
+                         entrada.Comentarios,
+                         entrada.FaltaDocumentacion == 1,
+                         entrada.CertificadoAfiliacionAFP == 1,
+                         entrada.CertPagPensiones == 1,
+                         tipo,
+                         entrada.Imagen == 1,
+                         entrada.diagnostico == 1,
+                         entrada.sinfirma == 1,
+                         entrada.contrato == 1,
+                         entrada.cedular_identidad == 1,
+                         entrada.seccion_c == 1,
+                         entrada.certificado_nacimiento == 1,
+                         entrada.mutual == 1,
+                         entrada.isapre == 1,
+                         entrada.fechaliquidacion1,
+                         entrada.fechaliquidacion2,
+                         entrada.fechaliquidacion3,
+                         entrada.fechaliquidacion4,
+                         entrada.fechaliquidacion5,
+                         entrada.fechaliquidacion6,
+                         "",
+                         entrada.cartaAutorizacion == 1,
+                         entrada.FaltaFirmaempleador == 0
+
+                     );
+                DocumentosFaltantesLMDataAccess.GuardarEntradaAudtoriaReparosTATA(dcm, token);
+
+
+
+
+
+                return new ResultadoBase() { Estado = "OK", Mensaje = "Licencia ingresada con éxito", Objeto = entrada };
+
+
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message.Split(';');
+                return new ResultadoBase() { Estado = "ERR", Mensaje = x[1], Objeto = x[0] };
+
+
+            }
+        }
+
+
+        [AuthorizationRequired]
+        [HttpPost]
+        [Route("guardar-licencia-Auditoria-Reparos-COMPIN")]
+        public ResultadoBase GuardarLicenciaReparosCOMPIN(WebIngresoLicenciaReparosAuditoria entrada)
+        {
+            try
+            {
+                string token = ActionContext.Request.Headers.GetValues("Token").First();
+                Ingresolicencia ing = new Ingresolicencia();
+
+                var tipo = entrada.tipoSeleccion;
+                var codFinal = entrada.CodIngreso;
+
+                DocumentosFaltantesLM dcm = new DocumentosFaltantesLM(
+                         "",
+                         "",
+                         codFinal,
+                         entrada.LiqMes1 == 1,
+                         entrada.LiqMes2 == 1,
+                         entrada.LiqMes3 == 1,
+                         entrada.LiqMes4 == 1,
+                         entrada.LiqMes5 == 1,
+                         entrada.LiqMes6 == 1,
+                         entrada.CertificadoRenta == 1,
+                         entrada.Acredita90 == 1,
+                         false,
+                         entrada.Otros == 1,
+                         entrada.Comentarios,
+                         entrada.FaltaDocumentacion == 1,
+                         entrada.CertificadoAfiliacionAFP == 1,
+                         entrada.CertPagPensiones == 1,
+                         tipo,
+                         entrada.Imagen == 1,
+                         entrada.diagnostico == 1,
+                         entrada.sinfirma == 1,
+                         entrada.contrato == 1,
+                         entrada.cedular_identidad == 1,
+                         entrada.seccion_c == 1,
+                         entrada.certificado_nacimiento == 1,
+                         entrada.mutual == 1,
+                         entrada.isapre == 1,
+                         entrada.fechaliquidacion1,
+                         entrada.fechaliquidacion2,
+                         entrada.fechaliquidacion3,
+                         entrada.fechaliquidacion4,
+                         entrada.fechaliquidacion5,
+                         entrada.fechaliquidacion6,
+                         "",
+                         entrada.cartaAutorizacion == 1,
+                         entrada.FaltaFirmaempleador == 0
+
+                     );
+                DocumentosFaltantesLMDataAccess.GuardarEntradaAudtoriaReparosCOMPIN(dcm, token);
+
+
+
+
+
+                return new ResultadoBase() { Estado = "OK", Mensaje = "Licencia ingresada con éxito", Objeto = entrada };
+
+
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message.Split(';');
+                return new ResultadoBase() { Estado = "ERR", Mensaje = x[1], Objeto = x[0] };
+
+
+            }
+        }
 
     }
 }

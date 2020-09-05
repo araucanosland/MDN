@@ -313,7 +313,7 @@ $('#modal_beneficios').on('show.bs.modal', async (event) => {
         //consolo.log('paso comercial')
     }
     appBnfModal.obtenerHistorialBnf(rut_);
-    cargaDatosDeContacto(rut_)
+    cargaDatosDeContactoBnf(rut_)
 });
 
 $('#modal_beneficios').on('hidden.bs.modal', function (e) {
@@ -529,7 +529,7 @@ $('#form-registro-contacto_beneficio').bootstrapValidator({
     }
     $.SecGetJSON(BASE_URL + "/motor/api/Contactos/ingresa-nuevo-contacto", objeto_envio_contacto, function (datos) {
         $("#form-registro-bnf").bootstrapValidator('resetForm', true);
-        cargaDatosDeContacto(rutCont, 'bdy_datos_contactos_beneficio');
+        cargaDatosDeContactoBnf(rutCont, 'bdy_datos_contactos_beneficio');
         $("#btn-add-contac_beneficio").trigger("click");
         $.niftyNoty({
             type: 'success',
@@ -542,7 +542,7 @@ $('#form-registro-contacto_beneficio').bootstrapValidator({
 
 });
 
-function cargaDatosDeContacto(rutAf, destino = null) {
+function cargaDatosDeContactoBnf(rutAf, destino = null) {
 
     var rutCont = rutAf;
     rutCont = rutCont.substring(0, rutCont.length - 2)
@@ -596,7 +596,7 @@ function cargaDatosDeContacto(rutAf, destino = null) {
                                 var ofici = getCookie("Oficina");
                                 $.SecGetJSON(BASE_URL + "/motor/api/Contactos/actualiza-indice-contacto", { Indice: indice, RutAfi: rutAf, ValorDato: valorD, Oficina: ofici }, function (datos) {
 
-                                    cargaDatosDeContacto(rutAf);
+                                    cargaDatosDeContactoBnf(rutAf);
 
                                     $.niftyNoty({
                                         type: 'success',
