@@ -209,6 +209,7 @@
     <Compile Include="Areas\AppPage\Controllers\SegurosController.cs" />
     <Compile Include="Areas\AppPage\Controllers\TamPensionadoController.cs" />
     <Compile Include="Areas\AppPage\Controllers\UpdateController.cs" />
+    <Compile Include="Areas\AppPage\Models\DetalleTamViewModel.cs" />
     <Compile Include="Areas\EmpresasPage\Controllers\CarteraEmpresaEjecutivoController.cs" />
     <Compile Include="Areas\EmpresasPage\Controllers\ComiteParitarioController.cs" />
     <Compile Include="Areas\EmpresasPage\Controllers\CarteraEmpresasController.cs" />
@@ -417,6 +418,8 @@
     <Content Include="Assets\js.App\src\seguros.js" />
     <Content Include="Assets\js.App\src\seguro_cesantia.js" />
     <Content Include="Assets\js.App\src\venta-remota.js" />
+    <Content Include="Assets\tam\detail.app.vue.js" />
+    <Content Include="Assets\tam\queries.app.vue.js" />
     <Content Include="Assets\tam\app.vue.js" />
     <Content Include="Assets\tam\deps\moment.js" />
     <Content Include="Assets\tam\deps\sweetalert.js" />
@@ -599,6 +602,8 @@
     <Content Include="Areas\AppPage\Views\Licencias\ListarRRLL.cshtml" />
     <Content Include="Areas\AppPage\Views\TamPensionado\Index.cshtml" />
     <Content Include="Assets\tam\data\tam.json" />
+    <Content Include="Areas\AppPage\Views\TamPensionado\Query.cshtml" />
+    <Content Include="Areas\AppPage\Views\TamPensionado\Detail.cshtml" />
     <None Include="Properties\PublishProfiles\CharlyMOTOR.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\Settings.settings">

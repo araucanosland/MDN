@@ -63,7 +63,7 @@
 
                     <div class="panel-body">
                         <div class="row">
-                            <div class="alert alert-danger">{{ config.scripts.GRABACION }}</div>
+                            <div class="alert alert-danger">{{ config.scripts ? config.scripts.GRABACION : '' }}</div>
                         </div>
                         <div class="row">
                             <div class="col-sm-4">
@@ -189,7 +189,15 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label class="control-label">Comuna</label>
-                                    <v-select label="nombre" :options="comunas" v-model="model.direcciones.residencia.comuna" :tabindex="12"></v-select>
+                                    <v-select label="nombre" :options="comunas" :reduce="residencia => residencia.id" v-model="model.direcciones.residencia.comuna" :tabindex="12"></v-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label class="control-label">Casa Interior / Departamento</label>
+                                    <input type="text" class="form-control" v-model="model.direcciones.residencia.numeracionInterior">
                                 </div>
                             </div>
                         </div>
@@ -213,7 +221,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label class="control-label">Comuna</label>
-                                    <v-select label="nombre" :options="comunas" v-model="model.direcciones.laboral.comuna" :tabindex="18"></v-select>
+                                    <v-select label="nombre" :options="comunas" :reduce="laboral => laboral.id" v-model="model.direcciones.laboral.comuna" :tabindex="18"></v-select>
                                 </div>
                             </div>
                         </div>
@@ -290,7 +298,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label class="control-label">Comuna</label>
-                                    <v-select label="nombre" :options="comunas" v-model="model.direcciones.despacho.comuna" v-if="!model.direcciones.residenciaIgualDespacho"></v-select>
+                                    <v-select label="nombre" :options="comunas" :reduce="despacho => despacho.id" v-model="model.direcciones.despacho.comuna" v-if="!model.direcciones.residenciaIgualDespacho"></v-select>
                                     <input type="text" class="form-control" v-model="model.direcciones.despacho.comuna.nombre" v-if="model.direcciones.residenciaIgualDespacho" readonly>
                                 </div>
                             </div>
@@ -299,7 +307,7 @@
                             <div class="col-sm-5">
                                 <div class="form-group">
                                     <label class="control-label">Casa Interior / Departamento</label>
-                                    <input type="text" class="form-control" v-model="model.direcciones.despacho.numeracionInterior">
+                                    <input type="text" class="form-control" v-model="model.direcciones.despacho.numeracionInterior" :readonly="model.direcciones.residenciaIgualDespacho == true">
                                 </div>
                             </div>
                         </div>
@@ -809,10 +817,10 @@
 
 @section script{
 
-
-
-
-
+    <script>
+        var id = '@ViewBag.id';
+        var rut = '@ViewBag.rut';
+    </script>
     <script src="~/Assets/js/vue.js"></script>
     <script src="~/Assets/tam/homologo.js"></script>
     <script src="~/Assets/tam/deps/vue-form-wizard.js"></script>

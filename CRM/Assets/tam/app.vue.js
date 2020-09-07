@@ -4,6 +4,7 @@ Vue.component('v-select', VueSelect.VueSelect);
 new Vue({
     el: '#page-content',
     data: {
+        startIndex: 0,
         afiliado: {
             rut: '',
             nombres: '',
@@ -65,7 +66,7 @@ new Vue({
         preguntas: [],
         score: 0,
         scorePonderado: 0,
-        respuestas: []
+        respuestas: [],
     },
     // App Methods & Events
     methods: {
@@ -513,12 +514,14 @@ new Vue({
                 _.set(this, 'model.direcciones.despacho.numero', _.get(this, 'model.direcciones.residencia.numero'))
                 _.set(this, 'model.direcciones.despacho.validaNumero', _.get(this, 'model.direcciones.residencia.numero'))
                 _.set(this, 'model.direcciones.despacho.comuna', _.get(this, 'model.direcciones.residencia.comuna'))
+                _.set(this, 'model.direcciones.despacho.numeracionInterior', _.get(this, 'model.direcciones.residencia.numeracionInterior'))
             } else {
                 _.set(this, 'model.direcciones.despacho.calle', '')
                 _.set(this, 'model.direcciones.despacho.validaCalle', '')
                 _.set(this, 'model.direcciones.despacho.numero', '')
                 _.set(this, 'model.direcciones.despacho.validaNumero', '')
                 _.set(this, 'model.direcciones.despacho.comuna', '')
+                _.set(this, 'model.direcciones.despacho.numeracionInterior', '')
             }
 
         },
@@ -593,10 +596,91 @@ new Vue({
             return true;
             // Si todo sale bien, eliminar errores (decretar que es válido)
             //rut.setCustomValidity('');
+        },
+        onResume: function (gestionId, rut) {
+            this.showLoading();
+            api(`${app_variables.external.motor_api_server}/tam/gestion/${rut}/detalle/${gestionId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Tracking-Id': '--charlie--'
+                }
+            }).then(response => {
+
+                _.set(this, 'afiliadoEncontrado.rut', _.get(response, 'rut'));
+                _.set(this, 'afiliadoEncontrado.nombre', _.get(response, 'nombre'));
+                _.set(this, 'afiliadoEncontrado.edad', _.get(response, 'edad'));
+                _.set(this, 'afiliadoEncontrado.flagTamMetro', _.get(response, 'flag_TamMetro'));
+                _.set(this, 'afiliadoEncontrado.score', _.get(response, 'score_autenticacion'));
+
+                _.set(this, 'model.rut', _.replace(_.get(response, 'rut'), '-', ''));
+                _.set(this, 'model.rut_formateado', _.get(response, 'rut'));
+                _.set(this, 'model.id', _.get(response, 'id'));
+                _.set(this, 'model.idLead', _.get(response, 'id_lead'));
+                _.set(this, 'model.anotaciones', _.get(response, 'anotaciones'));
+
+                _.set(this, 'model.direcciones.despacho.comuna', _.get(response, 'comuna_despacho'));
+                _.set(this, 'model.direcciones.despacho.calle', _.get(response, 'direccion_despacho'));
+                _.set(this, 'model.direcciones.despacho.validaCalle', _.get(response, 'direccion_despacho'));
+                _.set(this, 'model.direcciones.despacho.numero', _.get(response, 'num_despacho'));
+                _.set(this, 'model.direcciones.despacho.validaNumero', _.get(response, 'num_despacho'));
+                _.set(this, 'model.direcciones.despacho.numeracionInterior', _.get(response, 'numeracion_interior_despacho'));
+
+                _.set(this, 'model.direcciones.laboral.comuna', _.get(response, 'comuna_laboral'));
+                _.set(this, 'model.direcciones.laboral.calle', _.get(response, 'direccion_laboral'));
+                _.set(this, 'model.direcciones.laboral.validaCalle', _.get(response, 'direccion_laboral'));
+                _.set(this, 'model.direcciones.laboral.numero', _.get(response, 'numero_laboral'));
+                _.set(this, 'model.direcciones.laboral.validaNumero', _.get(response, 'numero_laboral'));
+
+                _.set(this, 'model.direcciones.residencia.comuna', _.get(response, 'comuna_residencia'));
+                _.set(this, 'model.direcciones.residencia.calle', _.get(response, 'direccion_residencia'));
+                _.set(this, 'model.direcciones.residencia.validaCalle', _.get(response, 'direccion_residencia'));
+                _.set(this, 'model.direcciones.residencia.numero', _.get(response, 'num_residencia'));
+                _.set(this, 'model.direcciones.residencia.validaNumero', _.get(response, 'num_residencia'));
+                _.set(this, 'model.direcciones.residencia.numeracionInterior', _.get(response, 'numeracion_interior_residencia'));
+
+                _.set(this, 'model.opcion', _.get(response, 'opcion_bip'));
+                _.set(this, 'model.eleccionTarjeta', _.get(response, 'seleccion_tarjeta'));
+                _.set(this, 'model.fechaNacimiento', moment(_.get(response, 'fecha_nacimiento')).format('DD-MM-YYYY'));
+
+                _.set(this, 'model.email', _.get(response, 'correo'));
+                _.set(this, 'model.validaEmail', _.get(response, 'correo'));
+                _.set(this, 'model.celular', _.get(response, 'celular'));
+                _.set(this, 'model.validaCelular', _.get(response, 'celular'));
+                _.set(this, 'model.celularOperador', _.get(response, 'celular_operador', ''));
+                _.set(this, 'model.celularTipoContrato', _.get(response, 'celular_tipo_contrato', ''));
+                _.set(this, 'model.telefono', _.get(response, 'telefono'));
+                _.set(this, 'model.validaTelefono', _.get(response, 'telefono'));
+
+                _.set(this, 'model.contactoEmergencia.nombre', _.get(response, 'contacto_emergencia_nombre'));
+                _.set(this, 'model.contactoEmergencia.relacion', _.get(response, 'contacto_emergencia_relacion'));
+                _.set(this, 'model.contactoEmergencia.telefono', _.get(response, 'contacto_emergencia_telefono'));
+
+                const entrada = _.get(response, 'estado_resultante')
+                if (entrada == 'BUSQEUDA_OK') {
+                    _.set(this, 'startIndex', 1);
+                }
+
+                if (entrada == 'ACEPTA_BIP' || entrada == 'PREFIERE_TAM' || entrada == 'MANTIENE_TAM') {
+                    _.set(this, 'startIndex', 2);
+                }
+
+                if (entrada == 'OK_ESPERANDO_PREGUNTAS') {
+                    _.set(this, 'startIndex', 3);
+                }
+
+                Swal.close();
+            }).catch(reason => {
+                Swal.fire(
+                    'Error.',
+                    'Ha ocurrido un error al cargar la información',
+                    'danger'
+                );
+            });
         }
     },
     // Vue Lifecycle
-    mounted: function () {
+    beforeCreate: function () {
 
         api(`${app_variables.base_url}/Assets/tam/data/tam.json`, {
             method: 'get'
@@ -608,6 +692,10 @@ new Vue({
             method: 'GET'
         }).then(comunas => {
             _.set(this, 'comunas', comunas);
+
+            if (rut && id) {
+                this.onResume(id, rut);
+            }
         })
     },
     computed: {
