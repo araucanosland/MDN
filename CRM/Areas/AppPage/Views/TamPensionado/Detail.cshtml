@@ -1,5 +1,4 @@
-﻿@model DetalleTamViewModel
-@{
+﻿@{
     ViewBag.Title = "Flujo Captura Tarjeta TAM";
 }
 <link href="~/Assets/tam/deps/vue-form-wizard.min.css" rel="stylesheet">
@@ -267,8 +266,8 @@
 
 @section script{
     <script>
-        var rutAfiliado = '@Model.Rut';
-        var idGestion = @Model.IdGestion;
+        var rutAfiliado = '@ViewBag.rut';
+        var idGestion = @ViewBag.id;
     </script>
     <script src="~/Assets/js/vue.js"></script>
     <script src="~/Assets/tam/homologo.js"></script>

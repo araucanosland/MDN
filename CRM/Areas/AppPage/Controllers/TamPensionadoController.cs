@@ -15,7 +15,7 @@ namespace CRM.Areas.AppPage.Controllers
             return View();
         }
 
-        [Route("{rut}/resume/{id}")]
+        //[Route("{rut}/resume/{id}")]
         public ActionResult Resume(string rut, string id)
         {
             ViewBag.rut = rut;
@@ -23,22 +23,12 @@ namespace CRM.Areas.AppPage.Controllers
             return View("Index");
         }
 
-        [Route("query")]
-        public ActionResult Query()
+        //[Route("query/{rut}/detail/{gestion}")]
+        public ActionResult Detail(string rut, int id)
         {
+            ViewBag.id = id;
+            ViewBag.rut = rut;
             return View();
-        }
-
-        [Route("query/{rut}/detail/{gestion}")]
-        public ActionResult Detail(string rut, int gestion)
-        {
-            var model = new DetalleTamViewModel
-            {
-                IdGestion = gestion,
-                Rut = rut
-            };
-
-            return View(model);
         }
     }
 }
