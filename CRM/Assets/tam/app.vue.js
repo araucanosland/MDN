@@ -2,7 +2,7 @@
 Vue.component('v-select', VueSelect.VueSelect);
 
 new Vue({
-    el: '#page-content',
+    el: '#app-tam',
     data: {
         startIndex: 0,
         afiliado: {
@@ -196,6 +196,17 @@ new Vue({
                             Swal.fire(
                                 'Afiliado No Encontrado',
                                 _.get(this, 'config.mensajes.NO_ENCONTRADO'),
+                                'error'
+                            ).then(s => {
+                                location.reload(true);
+                            });
+                            reject(estadoResultante);
+                        }
+
+                        if (estadoResultante == 'ENV_SUCURSAL') {
+                            Swal.fire(
+                                'Enviar a Sucursal',
+                                _.get(this, 'config.mensajes.ENV_SUCURSAL'),
                                 'error'
                             ).then(s => {
                                 location.reload(true);

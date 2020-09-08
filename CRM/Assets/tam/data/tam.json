@@ -11,7 +11,8 @@
     "FIN_RECHAZO": "Autenticacion no ha logrado realizarse, debe ir a Sucursal La Araucana cuando se levante la cuarentena.",
     "LLAMAR_EN_CUMPLE": "Lo contactaremos cerca de su cumpleaños para recordarle este beneficio.",
     "ENCONTRADO": "Afiliado consultado encontrado la base de datos, acepta para continuar con el proceso.",
-    "COMUNA_INVALIDA_DESP": "El Ministerio no considera su Comuna Válida para envío a domicilio por lo tanto deberá ir a una Sucursal de La Araucana cuando la cuarentena se levante."
+    "COMUNA_INVALIDA_DESP": "El Ministerio no considera su Comuna Válida para envío a domicilio por lo tanto deberá ir a una Sucursal de La Araucana cuando la cuarentena se levante.",
+    "ENV_SUCURSAL": "El Afiliado debe ser enviado a una sucursal."
   },
   "scripts": {
     "GRABACION": "Recuerda que debes obtener consentimiento de la grabación de la llamada.",
