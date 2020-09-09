@@ -5,10 +5,12 @@ var appSeguroCesantiaFiltros = new Vue({
         filtros: {
             estados: [],
             subEstados: [],
+            listatrabajo: [],
         },
         modelos: {
             estado: '',
             subEstado: '',
+            listatrabajo: '',
             prioridad: '',
 
         }
@@ -16,13 +18,24 @@ var appSeguroCesantiaFiltros = new Vue({
     mounted() {
         this.obtenerEstados();
         this.loadTablaSeguroCesantia();
-
+        this.obtenerListaTrabajo();
     },
     updated() {
         //console.log('cambió')
     },
     methods: {
 
+        obtenerListaTrabajo() {
+            fetch(`http://${motor_api_server}:4002/segurocesantia/listaTrabajo`, {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'default'
+            })
+                .then(response => response.json())
+                .then(listatrabajoJSON => {
+                    this.filtros.listatrabajo = listatrabajoJSON;
+                });
+        },
         obtenerEstados() {
             fetch(`http://${motor_api_server}:4002/segurocesantia/estados`, {
                 method: 'GET',
@@ -35,6 +48,7 @@ var appSeguroCesantiaFiltros = new Vue({
                 });
         },
         obtenerSubEstados(padre) {
+
             fetch(`http://${motor_api_server}:4002/segurocesantia/estados?padre=${padre}`, {
                 method: 'GET',
                 mode: 'cors',
@@ -44,6 +58,7 @@ var appSeguroCesantiaFiltros = new Vue({
                 .then(estadosSubJSON => {
                     this.filtros.subEstados = estadosSubJSON;
                 });
+
         },
         eventoCambiaEstado() {
 
@@ -64,6 +79,7 @@ var appSeguroCesantiaFiltros = new Vue({
                     asignado: getCookie('Rut'),
                     estado: this.modelos.estado,
                     subEstado: this.modelos.subEstado,
+                    listaTrabajo: this.modelos.listatrabajo,
                     oficina: getCookie('Oficina'),
                 }
             });
@@ -265,7 +281,7 @@ $(function () {
         const rut = event.relatedTarget != undefined ? $(event.relatedTarget).data('rut') : $('#afi_rut_busc').val();
         console.log({ rut })
         var rutCont = rut
-       // rutCont = rutCont.substring(0, rutCont.length - 2)
+        rutCont = rutCont.substring(0, rutCont.length - 2)
         await appSeguroCesantiaModal.obtenerLead(rut);
         cargaDatosDeContacto(rutCont, '#bdy_datos_contactos_seguro_cesantia')
         appSeguroCesantiaModal.setDefaultsModal();
@@ -288,3 +304,84 @@ $(function () {
     });
 
 });
+
+
+
+
+
+
+function cargaDatosDeContactoSeguro(rutAf, destino = null) {
+
+    if (destino != null) {
+        $(`${destino} > tr`).remove();
+        $(destino).html("");
+    }
+    else {
+        $("#bdy_datos_contactos_seguro_cesantia > tr").remove();
+        $("#bdy_datos_contactos_seguro_cesantia").html("");
+    }
+
+
+    $.SecGetJSON(BASE_URL + "/motor/api/Contactos/lista-contactos-afi", { RutAfiliado: rutAf }, function (contac) {
+        $.each(contac, function (i, e) {
+            var colorPorc = '';
+            var alertFecha = '';
+
+            if (e.PorcIndice > 70) {
+                var colorPorc = 'pull-left badge badge-success'
+            }
+            if (e.PorcIndice > 40 && e.PorcIndice < 69) {
+                var colorPorc = 'pull-left badge badge-warning'
+            }
+            if (e.PorcIndice < 39) {
+                var colorPorc = 'pull-left badge badge-danger'
+            }
+            if (e.FechaContacto.toFecha() === "01-01-1900") {
+                alertFecha = e.FechaContacto.toFecha() + '<i class="badge badge-danger badge-stat badge-icon pull-right add-tooltip" style="position: static; data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Se debe Actualizar Contacto">!</i>'
+                $("#afiContac").css({ 'display': 'block' })
+            }
+            else { alertFecha = e.FechaContacto.toFecha() }
+
+            var destinoDefault = destino == null ? "#bdy_datos_contactos_seguro_cesantia" : destino;
+            $(destinoDefault)
+                .append(
+                    $("<tr>")
+                        .append($("<td>").append(
+                            $("<select>").addClass('dropdown-caret').css('width', '88px').css('border-radius', '6px').append(
+                                $('<option data-icon="fa fa-paint-brush">').val('Seleccione').text("Seleccione..."),
+                                $('<option>').val(1).text("Valido Presencial"),
+                                $('<option>').val(2).text("Contacto Valido"),
+                                $('<option>').val(3).text("Tercero Valido"),
+                                $('<option>').val(4).text("No Contesta"),
+                                $('<option>').val(5).text("Buzon de voz"),
+                                $('<option>').val(6).text("Apagado"),
+                                $('<option>').val(7).text("Equivocado"),
+                                $('<option>').val(8).text("No Existe")
+                            ).on('change', function () {
+
+                                var indice = $(this).val();
+                                var valorD = e.ValorDato;
+                                var ofici = getCookie("Oficina");
+                                $.SecGetJSON(BASE_URL + "/motor/api/Contactos/actualiza-indice-contacto", { Indice: indice, RutAfi: rutAf, ValorDato: valorD, Oficina: ofici }, function (datos) {
+
+                                    cargaDatosDeContactoSeguro(rutAf);
+
+                                    $.niftyNoty({
+                                        type: 'success',
+                                        icon: 'pli-like-2 icon-2x',
+                                        message: 'Gestión Guardada correctamente.',
+                                        container: '#tab-gestion-3',
+                                        timer: 5000
+                                    });
+                                });
+                            })
+                        ))
+                        .append($("<td>").append(e.ValorDato))
+                        .append($("<td>").append(e.TipoDato))
+                        .append($("<td>").append(e.PorcIndice))
+                        .append($("<td>").append(alertFecha))
+                );
+        });
+    });
+
+}

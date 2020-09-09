@@ -1,6 +1,6 @@
 ﻿const app_variables = {
     env: 'production',
-    base_url: 'http://serv-292/Motor/',
+    base_url: 'http://serv-292/Motor',
     sucursal: {
         codigo: getCookie('Oficina'),
         nombre: '',

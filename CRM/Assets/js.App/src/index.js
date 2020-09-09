@@ -988,8 +988,8 @@ $(function () {
                 sortable: true,
                 formatter: function (value, row, index) {
                     //sergio
-                    return '<a href="#" class="btn-link" data-target="#mdl_data" data-toggle="modal" data-tieneEncuesta="' + row.TieneEncuesta + '" data-periodo="' + row.Seguimiento.Periodo + '" data-rutafipsu="' + value + '" data-rut="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-tipo="' + row.Seguimiento.TipoAsignacion + '">' + value.toMoney(0).toString() + '-' + row.Seguimiento.Afiliado_Dv + '</a>';
-                    //return '<a href="#" class="btn-link" data-target="#modal_beneficios" data-toggle="modal" data-rutBnf="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-nombreBnf="' + row.Seguimiento.Nombre + ' ' + row.Seguimiento.Apellido + '"data-origen="' + 'Comercial' + '" data-tieneEncuesta="' + row.TieneEncuesta + '" data-ofertabnf="' + row.Seguimiento.OFERTA_FINAL_TOTAL + '" data-periodo="' + row.Seguimiento.Periodo + '" data-rutafipsu="' + value + '" data-rut="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-tipo="' + row.Seguimiento.TipoAsignacion + '">' + value.toMoney(0).toString() + '-' + row.Seguimiento.Afiliado_Dv + '</a>'; 
+                    //return '<a href="#" class="btn-link" data-target="#mdl_data" data-toggle="modal" data-tieneEncuesta="' + row.TieneEncuesta + '" data-periodo="' + row.Seguimiento.Periodo + '" data-rutafipsu="' + value + '" data-rut="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-tipo="' + row.Seguimiento.TipoAsignacion + '">' + value.toMoney(0).toString() + '-' + row.Seguimiento.Afiliado_Dv + '</a>';
+                    return '<a href="#" class="btn-link" data-target="#modal_beneficios" data-toggle="modal" data-rutBnf="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-nombreBnf="' + row.Seguimiento.Nombre + ' ' + row.Seguimiento.Apellido + '"data-origen="' + 'Comercial' + '" data-tieneEncuesta="' + row.TieneEncuesta + '" data-ofertabnf="' + row.Seguimiento.OFERTA_FINAL_TOTAL + '" data-periodo="' + row.Seguimiento.Periodo + '" data-rutafipsu="' + value + '" data-rut="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-tipo="' + row.Seguimiento.TipoAsignacion + '">' + value.toMoney(0).toString() + '-' + row.Seguimiento.Afiliado_Dv + '</a>'; 
                 }
             },
             {
@@ -2259,7 +2259,6 @@ $(function () {
 
     });
 
-
     $('#form-registro-contacto_seguro-cesantia').bootstrapValidator({
         excluded: [':disabled', ':not(:visible)'],
         feedbackIcons: [],
@@ -2309,7 +2308,7 @@ $(function () {
         $.SecGetJSON(BASE_URL + "/motor/api/Contactos/ingresa-nuevo-contacto", objeto_envio_contacto, function (datos) {
             $("#form-registro-contacto_seguro-cesantia").bootstrapValidator('resetForm', true);
             // $('#demo-lg-modal-new').modal('hide');
-            cargaDatosDeContacto(rutCont, 'bdy_datos_contactos_seguro_cesantia');
+            cargaDatosDeContactoSeguro(rutCont, '#bdy_datos_contactos_seguro_cesantia');
             $("#btn-add-contac-seguro_cesantia").trigger("click");
             $.niftyNoty({
                 type: 'success',
@@ -2321,6 +2320,7 @@ $(function () {
         });
 
     });
+  
 
 
 

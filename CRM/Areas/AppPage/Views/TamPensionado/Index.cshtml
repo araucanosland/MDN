@@ -48,6 +48,11 @@
                     <li class="">
                         <a data-toggle="tab" href="#tab-busqueda-tam" aria-expanded="false" id="tab_busqueda_tam" class="tab-principal">Búsqueda</a>
                     </li>
+
+                    <li class="">
+                        <a data-toggle="tab" href="#tab-estado-tam" aria-expanded="false" id="tab_estado_tam" class="tab-principal">Estado Solicitud</a>
+                    </li>
+
                 </ul>
 
                 <div class="tab-content">
@@ -369,16 +374,14 @@
                                             </div>
                                         </tab-content>
                                     </form-wizard>
+
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                     <div id="tab-busqueda-tam" class="tab-pane fade">
                         <div class="panel-body">
                             <div id="query-app">
-
                                 <div class="panel">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">Búsqueda Tam</h4>
@@ -420,6 +423,59 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-estado-tam" class="tab-pane fade">
+                        <div class="panel-body">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">Búsqueda Estado</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row mar-btm">
+                                        <form class="form-inline">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="inputRutEstado" placeholder="Rut Afiliado">
+                                                </div>
+                                                <button type="button" class="btn btn-primary" v-on:click="buscaEstadoTam">Buscar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div id="divStateCard" style="display:none;">
+                                        <br />
+                                        <hr />
+                                        <div id="bdy_busqueda_tam"></div>
+                                        <div class="timeline-entry">
+                                            <div class="timeline-stat">
+                                                <div class="timeline-icon bg-success">
+                                                    <img src="../Assets/img/tam_card.PNG" style="width: 60px; height: 44px; border-radius: 0%;" alt="Profile picture">
+                                                </div>
+
+                                            </div><div class="timeline-label" style="border-radius: 5px; background-color: rgb(227, 229, 230);">
+                                                <p class="mar-no pad-btm">
+                                                    <a class="btn-link text-main text-bold">
+                                                        Nombre:<a>{{dataSearch.nombre}}</a>
+                                                        <br>
+                                                    </a>
+                                                    <a class="text-main text-bold">
+                                                        Rut:<a>{{dataSearch.rut}}</a>
+                                                        <br>
+                                                    </a>
+                                                    <a class="text-main text-bold">
+                                                        Fecha Estado:<a>{{dataSearch.fecha_estado}}</a>
+                                                        <br>
+                                                    </a>
+                                                    <a class="text-main text-bold">
+                                                        Estado:<a>{{dataSearch.estado}}</a>
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -473,6 +529,7 @@
                                             <label class="control-label">Rut</label>
                                             <input class="form-control" id="afi_rut" type="text" value="17.024.783-1" readonly="readonly">
                                         </div>
+
                                     </div>
                                     <div class="col-sm-5">
                                         <div class="form-group">
@@ -480,6 +537,7 @@
                                             <input class="form-control" id="afi_nombres" type="text" value="Carlos Antonio Pradenas Pérez" readonly="readonly">
                                         </div>
                                     </div>
+
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <label class="control-label segmento_texto">Segmento</label>
@@ -506,6 +564,7 @@
                                         <div class="form-group">
                                             <label class="control-label" id="labelempresa">Empresa</label>
                                             <input class="form-control" type="text" id="afi_empresa_nombre" value="La Araucana C.C.A.F." readonly="readonly">
+
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
@@ -517,6 +576,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
 
                                 <div class="row" style="display:none;">
@@ -646,6 +706,7 @@
                                     <div class="col-sm-12 sergioNTFContainer">
 
                                     </div>
+
                                 </div>
 
                                 <div class="row contingenciaNTF" style="display:none;">
@@ -666,6 +727,7 @@
                                         <br />
                                     </div>
                                 </div>
+
 
 
 
@@ -914,6 +976,9 @@
     <script src="~/Assets/tam/components.vue.js?g=@Guid.NewGuid().ToString()"></script>
     <script src="~/Assets/tam/app.vue.js?g=@Guid.NewGuid().ToString()"></script>
     <script src="~/Assets/tam/queries.app.vue.js?g=@Guid.NewGuid().ToString()"></script>
+
+    <script src="~/Assets/tam/state_card.js?g=@Guid.NewGuid().ToString()"></script>
+
 
     <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
     <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js "></script>
