@@ -1160,6 +1160,8 @@
                                                 </div>
                                             </div>
 
+
+
                                             <div class="col-sm-4  mar-top" id="div_ddltipo" style="display:none">
                                                 <div class="form-group">
                                                     <label class="control-label">A quién contacta</label>
@@ -1171,6 +1173,12 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-sm-6 mar-top" id="divcomuna" style="display:none">
+                                                <div class="form-group">
+                                                    <label id="lblcomuna" class="control-label">Comuna</label>
+                                                    <select class="form-control" id="ddlcomuna_g1" name="ddlcomuna_g1"></select>
+                                                    <input type="text" class="form-control validatore" id="txtcomuna_g1" style="display:none;">
+
 
                                             <div class="col-sm-6 mar-top" id="divregion" style="display:none">
                                                 <div class="form-group">
@@ -1179,14 +1187,18 @@
                                                     <input type="text" class="form-control" id="txtregion_g1" style="display:none;">
 
                                                 </div>
+
                                             </div>
+                                            <div class="col-md-2" id="divnumero" style="display:none">
+                                                <label id="lblnumero" for="direcion">Número</label>
+                                                <input type="text" class="form-control" id="numero_g1">
+
 
                                             <div class="col-sm-6 mar-top" id="divcomuna" style="display:none">
                                                 <div class="form-group">
                                                     <label id="lblcomuna" class="control-label">Comuna</label>
                                                     <select class="form-control" id="ddlcomuna_g1" name="ddlcomuna_g1"></select>
                                                     <input type="text" class="form-control validatore" id="txtcomuna_g1" style="display:none;">
-
 
 
                                                 </div>
@@ -1200,12 +1212,21 @@
                                                 <input type="text" class="form-control" id="numero_g1">
 
 
+
                                                 </div>
                                             </div>
-                                            <div class="col-md-5 mar-top" id="div_correo_g1" style="display:none">
+                                            <div class="col-md-12 mar-top">
                                                 <div class="form-group">
-                                                    <label for="comentarios">Correo Electrónico</label>
-                                                    <input type="email" class="form-control" id="correo_g1">
+                                                    <label for="comentarios">Comentarios</label>
+                                                    <textarea id="comentarios" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1" style="margin-top:37px;">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <button class="btn btn-success" type="button" id="btn-guardar-gestion-1">Guardar Gestión 1</button>
+                                                    </div>
+
 
                                             <div class="col-md-4 mar-top" id="div_nombre_contacto_g1" style="display:none">
                                                 <div class="form-group">
@@ -1225,7 +1246,6 @@
                                                     <label for="comentarios">Correo Electrónico</label>
                                                     <input type="email" class="form-control" id="correo_g1">
 
-
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mar-top">
@@ -1239,6 +1259,7 @@
                                                     <div class="input-group">
                                                         <button class="btn btn-success" type="button" id="btn-guardar-gestion-1">Guardar Gestión 1</button>
                                                     </div>
+
 
                                                 </div>
                                             </div>
@@ -1330,8 +1351,6 @@
                                                     <select class="form-control" id="ddlcomuna_g2" name="ddlcomuna_g2"></select>
                                                     <input type="text" class="form-control validatore" id="txtcomuna_g2" style="display:none;">
 
-                                                </div>
-                                            </div>
 
                                             <div class="col-sm-6 mar-top" id="divcomuna_g2" style="display:none">
                                                 <div class="form-group">
@@ -1349,6 +1368,18 @@
                                             <div class="col-md-2" id="divnumero_g2" style="display:none">
                                                 <label id="lblnumero_g2" for="direcion">Número</label>
                                                 <input type="text" class="form-control" id="numero_g2">
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10" id="divdireccion_g2" style="display:none">
+                                                <label id="lbldireccion_g2" for="direcion">Dirección</label>
+                                                <textarea id="direccion_g2" name="direccion_g2" class="form-control"></textarea>
+                                            </div>
+                                            <div class="col-md-2" id="divnumero_g2" style="display:none">
+                                                <label id="lblnumero_g2" for="direcion">Número</label>
+                                                <input type="text" class="form-control" id="numero_g2">
+
 
                                             </div>
                                             <div class="col-md-12">
@@ -1722,6 +1753,8 @@
                             $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Revisar" href="/motor/App/Licencias/ingreso?ci=${e.IngresoData.CodIngreso}&tab=read"><i class="ion-search"></i></a>`);
 
 
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.IngresoData.CodIngreso}"><i class="ion-edit"></i></a>`);
+
                         //}
 
 
@@ -1740,6 +1773,27 @@
                         //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/auditorialicencia?ci=${e.IngresoData.CodIngreso}&tab=read"><i class="ion-search"></i></a>`);
 
 
+                        //}
+
+                        if (e.IngresoData.viaIngresoLicenica == 1 && e.IngresoData.Responsable == 'RRLL') {
+                            $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Revisar" href="/motor/App/Licencias/ingreso?ci=${e.IngresoData.CodIngreso}&tab=read"><i class="ion-search"></i></a>`);
+
+
+                        //}
+
+
+                        if (e.IngresoData.viaIngresoLicenica == 1 && e.IngresoData.Responsable == 'Finalizado') {
+                            $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/ingreso?ci=${e.IngresoData.CodIngreso}&tab=read"><i class="ion-search"></i></a>`);
+
+
+                        //}
+
+                        //if (e.IngresoData.FormatoLM == "Manual" && e.IngresoData.viaIngresoLicenica == 1 && e.IngresoData.DescripcionEstadoRevision == 'Conforme' && e.IngresoData.EstadoLicencia == 'Reparada') {
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/auditorialicencia?ci=${e.IngresoData.CodIngreso}&tab=secundaria"><i class="ion-search"></i></a>`);
+
+                        //}
+
+
                         if (e.IngresoData.viaIngresoLicenica == 1 && e.IngresoData.Responsable == 'LM Presencial') {
                             $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/ingreso?ci=${e.IngresoData.CodIngreso}&tab=read"><i class="ion-search"></i></a>`);
 
@@ -1750,6 +1804,7 @@
 
                             $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/ingreso?ci=${e.IngresoData.CodIngreso}"><i class="ion-edit"></i></a>`);
 
+                        }
 
                         }
 
@@ -1849,14 +1904,15 @@
 
                         }
 
-
                         if (e.viaIngresoLicenica == 1 && e.Responsable == 'Oficina' && e.EstadoLicencia == 'Conforme') {
                             $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/ingreso?ci=${e.CodIngreso}"><i class="ion-edit"></i></a>`);
+
 
                         }
 
 
                         if (e.viaIngresoLicenica == 2 && e.Responsable == 'Oficina' && e.EstadoLicencia == 'Conforme') {
+
                             $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/ingreso?ci=${e.CodIngreso}"><i class="ion-edit"></i></a>`);
 
                         }
@@ -1874,15 +1930,6 @@
 
                         if (e.viaIngresoLicenica == 1 && e.Responsable == 'RRLL') {
                             $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Revisar" href="/motor/App/Licencias/ingreso?ci=${e.CodIngreso}&tab=read"><i class="ion-search"></i></a>`);
-
-
-                        if (e.EstadoLicencia == 'Devuelta' && e.Responsable == 'Oficina') {
-                            $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.CodIngreso}"><i class="ion-edit"></i></a>`);
-                        }
-                        ////--- habiliar cuando este con Auditoria
-
-
-
 
                         //if (e.viaIngresoLicenica == 1 && e.Responsable == 'Auditoría' && e.descripcionEstadoRevision == "Pendiente") {
                         //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.CodIngreso}&tab=read"><i class="ion-search"></i></a>`);
@@ -1951,6 +1998,66 @@
 
                         //}
 
+
+
+                        //if (e.FormatoLM == "Manual" && e.viaIngresoLicenica == 1 && e.descripcionEstadoRevision != 'Pendiente' && e.EstadoLicencia != 'Reparada') {
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/auditorialicencia?ci=${e.CodIngreso}&tab=secundaria"><i class="ion-edit"></i></a>`);
+
+                        //}
+
+
+                        //if (e.FormatoLM == "Manual" && e.viaIngresoLicenica == 1 && e.descripcionEstadoRevision == 'Pendiente' && e.EstadoLicencia == 'Devuelta') {
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.CodIngreso}"><i class="ion-edit"></i></a>`);
+
+                        //}
+
+                        //if (e.EstadoLicencia == 'No Tramitada')
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.CodIngreso}&tab=read"><i class="ion-search"></i></a>`);
+
+
+                        if (e.EstadoLicencia == 'Devuelta' && e.Responsable == 'Oficina') {
+                            $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.CodIngreso}"><i class="ion-edit"></i></a>`);
+                        }
+                        ////--- habiliar cuando este con Auditoria
+
+
+
+                        // $wrapper = $wrapper + (`<a class="btn btn-danger float-right" title="Eliminar" href="javascript:eliminar(${e.CodIngreso})"><i class="ion-trash-a"></i></a>`);
+
+                        //if (e.viaIngresoLicenica == 1 && e.Responsable == 'Auditoría' && e.descripcionEstadoRevision == "Pendiente") {
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.CodIngreso}&tab=read"><i class="ion-search"></i></a>`);
+
+                        //}
+
+                        //if (e.viaIngresoLicenica == 1 && e.Responsable == 'Auditoría' && e.descripcionEstadoRevision == "No Conforme" || e.descripcionEstadoRevision == "No Tramitada") {
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/auditorialicencia?ci=${e.CodIngreso}&tab=secundaria&read=read"><i class="ion-search"></i></a>`);
+
+                        //}
+
+                        //if (e.viaIngresoLicenica == 1 && e.Responsable == 'Compín Local') {
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/auditorialicencia?ci=${e.CodIngreso}&tab=secundaria&read=read"><i class="ion-search"></i></a>`);
+
+                        //}
+
+                        //if (e.viaIngresoLicenica == 1 && e.Responsable == 'Oficina' && e.EstadoLicencia =='No Corresponde Reparo Auditoria. LM Pendiente Doc. Requerida') {
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/auditorialicencia?ci=${e.CodIngreso}&tab=secundaria"><i class="ion-edit"></i></a>`);
+
+                        //}
+
+
+                        //20212455 - 0
+                        //if (e.viaIngresoLicenica == 1 && e.Responsable == 'Oficina' && e.descripcionEstadoRevision != "Conforme") {
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/auditorialicencia?ci=${e.CodIngreso}&tab=secundaria"><i class="ion-edit"></i></a>`);
+
+                        //}
+
+                        //if (e.viaIngresoLicenica == 1 && e.EstadoLicencia != 'Conforme' && e.Responsable == 'Oficina' && e.descripcionEstadoRevision == "Conforme")
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/auditorialicencia?ci=${e.CodIngreso}&tab=secundaria&read=read"><i class="ion-search"></i></a>`);
+
+                        //if (e.FormatoLM == "Manual" && e.viaIngresoLicenica == 1 && e.EstadoLicencia == 'Conforme' || e.EstadoLicencia == 'Devuelta') {
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.CodIngreso}&tab=read"><i class="ion-search"></i></a>`);
+
+                        //}
 
 
                         //if (e.FormatoLM == "Manual" && e.viaIngresoLicenica == 1 && e.descripcionEstadoRevision != 'Pendiente' && e.EstadoLicencia != 'Reparada') {
@@ -2172,11 +2279,13 @@
                                                 cargador.CargaDatosTablaTab6DevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), getCookie("Oficina"), 'Oficina');
                                                 cargador.CargaDatosTablaTab6DevueltaCompinConteo('Oficina', getCookie("Oficina"));
 
+
                                             });
                                         }
                                         else {
 
                                             $.SecGetJSON(BASE_URL + "/motor/api/Licencias/guardar-devolucion-compin", { CodIngreso: e.CodIngreso, estadoDevuelta: EstadoDevuelta }, function (respuesta) {
+
 
 
 
@@ -2194,6 +2303,7 @@
                                             });
 
 
+
                                         }
 
 
@@ -2208,7 +2318,7 @@
                                             $('<option>').val("Esperando Respuesta").text("Esperando Respuesta").prop("selected", e.Gestion)
 
                                         ).on('change', function () {
-r
+
                                             var EstadoDevuelta = $(this).val();
                                             if (EstadoDevuelta == "Seleccione...") {
 
@@ -2320,7 +2430,6 @@ r
                                         //  var a=$("#fechaLm1 option:selected").data('Fecha'),
                                         //  var EstadoDevuelta= $(this).text();
                                         var EstadoDevuelta = $(this).val();
-
 
                                         if (EstadoDevuelta == "Seleccione...") {
 

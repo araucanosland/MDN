@@ -498,7 +498,9 @@
                                         <th data-field="ultimaGestion.fechaCompromiso" data-sortable="true">Prox. Gestion</th>
                                         <th data-field="gestiones" data-formatter="subEstadoAfiliadoFormatter" data-sortable="true">Estado</th>
                                         <th data-field="gestiones.estado" data-formatter="estadoAfiliadoFormatter" data-sortable="true">Sub-Estado</th>
-                                        <th data-field="listaTrabajo" data-sortable="true">Lista Trabajo</th>
+
+                                        <th data-field="listaTrabajo.nombre" data-sortable="true">Lista Trabajo</th>
+
                                     </tr>
                                 </thead>
                             </table>
@@ -1830,7 +1832,6 @@
                                                     <input class="form-control" id="txtRutBnf" type="text" readonly="readonly">
                                                 </div>
                                             </div>
-
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label class="control-label">NOMBRE</label>
@@ -1854,26 +1855,21 @@
                                                     <input class="form-control" id="txtCampBenf" type="text" readonly="readonly">
                                                 </div>
                                             </div>
-
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label class="control-label">FECHA NACIMIENTO</label>
-                                                    <input class="form-control" type="text" id="txtFechaNac" readonly="readonly">
+                                                    <input class="form-control" type="text" id="txtFechaNacBenf" readonly="readonly">
                                                 </div>
                                             </div>
                                             <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <label class="control-label">CARGAS</label>
-                                                    <input class="form-control" type="text" id="txtNombreBnf" readonly="readonly">
+                                                    <input class="form-control" type="text" id="txtCargasBnf" readonly="readonly">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0;">
@@ -1881,28 +1877,25 @@
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <div class="form-group">
-                                                                <label class="control-label"><strong>SEGMENTO</strong></label>
-                                                                <select id="dllSegmentoBenf" class="form-control">
-                                                                    <option value="">Todos</option>
-                                                                    <option value="Pensionados">Pensionados</option>
-                                                                    <option value="Privados">Privados</option>
-                                                                    <option value="Publicos">Públicos</option>
-                                                                </select>
-                                                            </div>
+                                                            <label class="control-label"><strong>SEGMENTO</strong></label>
+                                                            <select id="dllSegmentoBenf" class="form-control">
+                                                                <option value="">Todos</option>
+                                                                <option value="PENSIONADOS">PENSIONADOS</option>
+                                                                <option value="PRIVADOS">PRIVADOS</option>
+                                                                <option value="PUBLICOS">PÚBLICOS</option>
+                                                            </select>
                                                         </div>
                                                     </div>
-
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
                                                             <label class="control-label"><strong>USO REEMB. MEDICO</strong></label>
-                                                            <input class="form-control" type="text" id="txtNombreBnf">
+                                                            <input class="form-control" type="text" id="txtRemMedicoBnf">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
                                                             <label class="control-label"><strong>USOS FARMACIA</strong></label>
-                                                            <input class="form-control" type="text" id="txtNombreBnf">
+                                                            <input class="form-control" type="text" id="txtUsoFarmBnf">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1910,84 +1903,140 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
-
-
                                 <div class="row">
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-6">
                                         <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; height: 200px;">
                                             <div class="form-group pad-ver">
                                                 <label class="col-md-4 control-label"> <strong>Estado</strong> </label>
-                                                <div class="col-md-10" id="dvRbEstadoBnf"></div>
+                                                <div class="panel-body">
+                                                    <div class="col-md-10" id="dvRbEstadoBnf"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-6">
                                         <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; height: 200px;">
                                             <div class="form-group pad-ver">
                                                 <label class="col-md-5 control-label"> <strong>Sub-Estado</strong> </label>
-                                                <div class="col-md-10" id="dvRbSubEstadoBnf"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; height: 200px;">
-                                            <div class="form-group pad-ver">
-                                                <label class="col-md-7 control-label"><strong>Área de Beneficio</strong> </label>
-                                                <div class="checkbox col-md-12">
-                                                    <input id="checkbox_salud" class="magic-checkbox" type="checkbox" disabled>
-                                                    <label for="checkbox_salud">Salud</label>
-                                                </div>
-
-                                                <div class="checkbox col-md-12">
-                                                    <input id="checkbox_educacion" class="magic-checkbox" type="checkbox" disabled>
-                                                    <label for="checkbox_educacion">Educación</label>
-                                                </div>
-
-                                                <div class="checkbox col-md-12">
-                                                    <input id="checkbox_turismo" class="magic-checkbox" type="checkbox" disabled>
-                                                    <label for="checkbox_turismo">Turismo y recreación</label>
-                                                </div>
-
-                                                <div class="checkbox col-md-12">
-                                                    <input id="checkbox_hogar" class="magic-checkbox" type="checkbox" disabled>
-                                                    <label for="checkbox_hogar">Hogar y Servicio</label>
-                                                </div>
-
-                                                <div class="checkbox col-md-12">
-                                                    <input id="checkbox_telefonia" class="magic-checkbox" type="checkbox" disabled>
-                                                    <label for="checkbox_telefonia">Telefonía</label>
+                                                <div class="panel-body">
+                                                    <div class="col-md-10" id="dvRbSubEstadoBnf"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-
-
-
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0;">
                                             <div class="form-group pad-ver">
+                                                <label class="col-md-7 control-label"><strong>Preguntas</strong> </label>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <label class="control-label">Casado (Fecha de aniversario)</label>
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                        <div id="dp-component-fecha-ani" style="width: 200px;">
+                                                            <div class="input-group date">
+                                                                <input type="text" class="form-control" id="dpFechaAniversario" name="dpFechaAniversario">
+                                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group pad-ver">
+                                                    <label class="col-md-3 control-label" style="margin-top: 9px;">Postuló a becas</label>
+                                                    <div class="col-md-9">
+                                                        <div class="radio">
+                                                            <input id="ckbox_beca_si" class="magic-radio" type="radio" name="rbBecas" value="SI">
+                                                            <label for="ckbox_beca_si" class="titulo_beca">SI</label>
+
+                                                            <input id="ckbox_beca_no" class="magic-radio" type="radio" name="rbBecas" value="NO" checked>
+                                                            <label for="ckbox_beca_no" class="titulo_beca">NO</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group pad-ver">
+                                                    <label class="col-md-3 control-label" style="margin-top: 9px;">Uso Gas</label>
+                                                    <div class="col-md-9">
+                                                        <div class="radio">
+                                                            <input id="ckbox_beca_caneria" class="magic-radio" type="radio" name="rbGas" value="CAÑERIA">
+                                                            <label for="ckbox_beca_caneria" class="titulo_gas">CAÑERIA</label>
+
+                                                            <input id="ckbox_beca_cilindro" class="magic-radio" type="radio" name="rbGas" value="CILINDRO">
+                                                            <label for="ckbox_beca_cilindro" class="titulo_gas">CILINDRO</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group pad-ver">
+                                                    <label class="col-md-3 control-label" style="margin-top: 9px;">Cía. Celular</label>
+                                                    <div class="col-md-9">
+                                                        <div class="radio">
+                                                            <input id="ckbox_entel" class="magic-radio" type="radio" name="rbentel" value="ENTEL">
+                                                            <label for="ckbox_entel" class="titulo_gas">ENTEL</label>
+                                                            <input id="ckbox_celular_otro" class="magic-radio" type="radio" name="rbentel" value="OTRO">
+                                                            <label for="ckbox_celular_otro" class="titulo_gas">OTRO</label>
+                                                        </div>
+                                                    </div>
+                                                    <div id="tipo_plan_entel" style="display:none;">
+                                                        <label class="col-md-3 control-label" style="margin-top: 9px;">Tipo Plan</label>
+                                                        <div class="col-md-9">
+                                                            <div class="radio">
+                                                                <input id="ckbox_entel_contrato" class="magic-radio" type="radio" name="rbentelTipo" value="CONTRATO">
+                                                                <label for="ckbox_entel_contrato" class="titulo_gas">Contrato</label>
+                                                                <input id="ckbox_entel_prepago" class="magic-radio" type="radio" name="rbentelTipo" value="PRE-PAGO">
+                                                                <label for="ckbox_entel_prepago" class="titulo_gas">Pre-pago</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; height: 88px;">
+                                            <div class="form-group pad-ver">
                                                 <label class="col-md-3 control-label"><strong>Beneficios Comodin</strong></label>
                                                 <div class="col-md-9">
-                                                    <div class="checkbox" style="margin-top: 0px;" id="dvComodin">
+                                                    <div id="dvComodin" class="checkbox" style="margin-top: 0px;">
+                                                        <input class="magic-checkbox" type="checkbox" id="comodin_Telemedicina">
+                                                        <label class="titulo_r" for="comodin_Telemedicina">Telemedicina</label>
 
 
+                                                        <input class="magic-checkbox" type="checkbox" id="comodin_Farmacias">
+                                                        <label class="titulo_r" for="comodin_Farmacias">Uso Farmacias</label>
 
+
+                                                        <input class="magic-checkbox" type="checkbox" id="despacho_m">
+                                                        <label class="titulo_r" for="despacho_m">Despacho medicamentos (RM)</label>
+
+                                                        <input class="magic-checkbox" type="checkbox" id="comodin_Alimentos">
+                                                        <label class="titulo_r" for="comodin_Alimentos">Caja Alimentos</label>
+
+                                                        <input class="magic-checkbox" type="checkbox" id="uno_salud">
+                                                        <label class="titulo_r" for="uno_salud">Campaña Uno Salud</label>
+
+                                                        <input class="magic-checkbox" type="checkbox" id="reembolso_m">
+                                                        <label class="titulo_r" for="reembolso_m">Uso reembolso médico</label>
+
+                                                        <input class="magic-checkbox" type="checkbox" id="convenios_c">
+                                                        <label class="titulo_r" for="convenios_c">Convenios (Pullman, Bionet, Ópticas Schilling, Gaes, Auditrón, Ortopedia Más Vida.)</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
-
                                 <hr />
                                 <div class="row">
                                     <div class="form-group pad-ver">

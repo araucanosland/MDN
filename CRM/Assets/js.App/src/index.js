@@ -1095,13 +1095,11 @@ $(function () {
                         });
                     });
 
-
-
                     //return value.toString().toEtiquetaPrioridad() + (prioPens >= 0 ? '    <span class="badge badge-warning">!</span>' : (row.Notificaciones.length > 0 ? '    <span class="badge badge-info">!</span>' : '')) //+ (row.TieneEncuesta === 0 ? '    <span class="badge badge-purple">E</span>' : '') 
                     //eturn value.toString().toEtiquetaPrioridad() + (row.Notificaciones.length > 0 ? '    <span class="badge badge-info">!</span>' : '') + (row.Seguimiento.MARCA_CC === 1 ? '    <span class="badge badge-purple">C.C</span>' : '') + (row.Seguimiento.MarcaPsu === 1 ? '    <span class="badge badge-primary">PSU</span>' : '') //+ (row.TieneEncuesta === 0 ? '    <span class="badge badge-purple">E</span>' : '') 
                     jQuery.ajaxSetup({ async: true });
                     //turn value.toString().toEtiquetaPrioridad() + ' ' + descripcion;
-                    return value.toString().toEtiquetaPrioridad() + (row.Notificaciones.length > 0 ? '    <span class="badge badge-info">!</span>' : '') + (row.Seguimiento.MARCA_CC === 1 ? '    <span class="badge badge-purple">C.C</span>' : '') + (row.Seguimiento.MarcaPsu === 1 ? '    <span class="badge badge-primary">PSU</span>' : '') + ' ' + descripcion + ' ' + contingencia; //+ (row.TieneEncuesta === 0 ? '    <span class="badge badge-purple">E</span>' : '') 
+                    return value.toString().toEtiquetaPrioridad() + (row.Notificaciones.length > 0 ? '    <span class="badge badge-info">!</span>' : '') + (row.Seguimiento.MARCA_CC === 1 ? '    <span class="badge badge-purple">CC_ESI</span>' : '') + (row.Seguimiento.MARCA_CC === 2 ? '    <span class="badge badge-purple">CC_ENO</span>' : '') + (row.Seguimiento.MARCA_CC === 3 ? '    <span class="badge badge-purple">CC_NE</span>' : '') + (row.Seguimiento.MarcaPsu === 1 ? '    <span class="badge badge-primary">PSU</span>' : '') + ' ' + descripcion + ' ' + contingencia; //+ (row.TieneEncuesta === 0 ? '    <span class="badge badge-purple">E</span>' : '') 
                 }
             },
 
@@ -1271,6 +1269,7 @@ $(function () {
         $('#modal_beneficios').modal('hide')
 
 
+
         var rut_tam = $('#txtRutComercial').val()
 
         if (rut_tam != undefined) {
@@ -1299,7 +1298,15 @@ $(function () {
 
 
 
-        
+
+
+
+
+
+
+        // appVentaRemota.obtenerBanco()
+
+
 
         //console.log('rut 1 :' + trutAfiliado + 'Rut 2 : ' + rutPSU)
 
@@ -1502,7 +1509,31 @@ $(function () {
                         $.niftyNoty({
                             type: "purple",
                             container: '.sergioNTFContainer',
-                            html: "<strong>Afiliado con Oferta Compra Cartera.....</strong>",
+                            html: "<strong>Oferta Compra de Cartera - Emplanillado donde SI estamos Recuperando la Nómina (estamos enviando la nómina y la Empresa está pagando.)</strong>",
+                            focus: false,
+                            closeBtn: false
+                        });
+                    }
+                    else if (afiData.MARCA_CC === 2) {
+                        $(".sergioNTF").show();
+                        $(".sergioNTFContainer").html("");
+
+                        $.niftyNoty({
+                            type: "purple",
+                            container: '.sergioNTFContainer',
+                            html: "<strong>Oferta Compra de Cartera - Emplanillado donde NO estamos Recuperando la Nómina (estamos enviando la nómina y la Empresa no está pagando.</strong>",
+                            focus: false,
+                            closeBtn: false
+                        });
+                    }
+                    else if (afiData.MARCA_CC === 3) {
+                        $(".sergioNTF").show();
+                        $(".sergioNTFContainer").html("");
+
+                        $.niftyNoty({
+                            type: "purple",
+                            container: '.sergioNTFContainer',
+                            html: "<strong>Oferta Compra de Cartera - No está siendo Emplanillada (no estamos enviando nómina a una Empresa)</strong>",
                             focus: false,
                             closeBtn: false
                         });
@@ -2321,6 +2352,7 @@ $(function () {
 
     });
   
+
 
 
 

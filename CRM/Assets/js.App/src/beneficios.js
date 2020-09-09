@@ -99,7 +99,7 @@ function formatoMoney(value, row, index) {
 }
 
 function rutFormatter(value, row, index) {
-    return `<a href="${row.rut_completo}" class="btn-link" data-rutBnf="${row.rut_completo}"  data-nombreBnf="${row.nombre}" data-ofertabnf="${row.oferta}" data-toggle="modal" data-target="#modal_beneficios" data-backdrop="static" data-keyboard="false" data-origen="Beneficios"  ">${row.rut_completo}</a>`;
+    return `<a href="${row.rut_completo}" class="btn-link" data-campana="${row.campana}" data-fecha_nac="${row.fecha_nacimiento}" data-cargas="${row.cargas}" data-rutBnf="${row.rut_completo}"  data-nombreBnf="${row.nombre}" data-ofertabnf="${row.oferta}" data-toggle="modal" data-target="#modal_beneficios" data-backdrop="static" data-keyboard="false" data-origen="Beneficios"  ">${row.rut_completo}</a>`;
     // return '<a href="#" class="btn-link" data-target="#modal_beneficios" data-toggle="modal" data-rutBnf="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-nombreBnf="' + row.Seguimiento.Nombre + ' ' + row.Seguimiento.Apellido + '"data-origen="' + 'Comercial' + '">' + value.toMoney(0).toString() + '-' + row.Seguimiento.Afiliado_Dv + '</a>';
 }
 
@@ -120,12 +120,6 @@ var appBnfModal = new Vue({
     },
     mounted() {
         this.ModalCargaEstadoBnf();
-        this.ModalCargaComodinBnf();
-    },
-    updated() {
-        //console.log('cambió', {
-        //    form: this.modelosModal
-        //})
     },
     methods: {
         ModalCargaEstadoBnf() {
@@ -146,7 +140,6 @@ var appBnfModal = new Vue({
                 });
 
         },
-
         ModalCargaComodinBnf() {
             $("#dvComodin").html("");
             fetch(`http://${motor_api_server}:4002/beneficios/lista-comodin`, {
@@ -156,52 +149,65 @@ var appBnfModal = new Vue({
             })
                 .then(response => response.json())
                 .then(datos => {
-
-                    //<label for="demo-form-inline-checkbox">Option 1 (pre-checked)</label>
                     $.each(datos, function (i, e) {
                         var lb = $('<label>').addClass('titulo_r').prop('for', `comodin-bn-${e.id}`).text(e.nombre_comodin);
                         var inp = $('<input>').addClass('magic-checkbox').prop({ type: 'checkbox', id: `comodin-bn-${e.id}` }).val(e.id)
-                        //var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
                         $("#dvComodin").append(inp).append(lb)
                     });
                 });
 
         },
-
         handleSubmitGestionBnf() {
 
-            let salud = '';
-            let educacion = '';
-            let turismo = '';
-            let hogar = '';
-            let telefono = '';
+            let telemedicina_ = '';
+            let alimentos_ = '';
+            let farmacias_ = '';
+            let convenios_ = '';//otros
+
+            let uno_salud_ = '';
+            let despacho_m_ = '';
+            let reembolso_m_ = '';
+
+
             let fechaHoy = new Date();
             let periodo_ = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
 
-            if ($('#checkbox_salud:checked').val() == 'on') {
-                salud = 'SI'
+            if ($('#comodin_Telemedicina:checked').val() == 'on') {
+                telemedicina_ = 'SI'
             }
-            else { salud = 'NO' }
+            else { telemedicina_ = 'NO' }
 
-            if ($('#checkbox_educacion:checked').val() == 'on') {
-                educacion = 'SI'
+            if ($('#comodin_Alimentos:checked').val() == 'on') {
+                alimentos_ = 'SI'
             }
-            else { educacion = 'NO' }
+            else { alimentos_ = 'NO' }
 
-            if ($('#checkbox_turismo:checked').val() == 'on') {
-                turismo = 'SI'
+            if ($('#comodin_Farmacias:checked').val() == 'on') {
+                farmacias_ = 'SI'
             }
-            else { turismo = 'NO' }
+            else { farmacias_ = 'NO' }
 
-            if ($('#checkbox_hogar:checked').val() == 'on') {
-                hogar = 'SI'
+            if ($('#convenios_c:checked').val() == 'on') {
+                convenios_ = 'SI'
             }
-            else { hogar = 'NO' }
+            else { convenios_ = 'NO' }
 
-            if ($('#checkbox_telefonia:checked').val() == 'on') {
-                telefono = 'SI'
+
+            if ($('#uno_salud:checked').val() == 'on') {
+                uno_salud_ = 'SI'
             }
-            else { telefono = 'NO' }
+            else { uno_salud_ = 'NO' }
+
+            if ($('#despacho_m:checked').val() == 'on') {
+                despacho_m_ = 'SI'
+            }
+            else { despacho_m_ = 'NO' }
+
+            if ($('#reembolso_m:checked').val() == 'on') {
+                reembolso_m_ = 'SI'
+            }
+            else { reembolso_m_ = 'NO' }
+
 
             if ($('input:radio[name=rbestadoBnf]:checked').val() == undefined) {
                 $.niftyNoty({
@@ -227,11 +233,25 @@ var appBnfModal = new Vue({
                 nombre: nombre_,
                 estado: $('input:radio[name=rbestadoBnf]:checked').parent().find(".titulo_r").text(),
                 sub_estado: $('input:radio[name=rbSubestadoBnf]:checked').parent().find(".titulo_sub").text(),
-                area_salud: salud,
-                area_educacion: educacion,
-                area_turismo: turismo,
-                area_hogar: hogar,
-                area_telefonia: telefono,
+
+                segmento: $('#dllSegmentoBenf').val(),
+                uso_rem_medico: $('#txtRemMedicoBnf').val(),
+                uso_farmacia: $('#txtUsoFarmBnf').val(),
+                fecha_casado: $('#dpFechaAniversario').val(),
+                postulacion_beca: $("input[name='rbBecas']:checked").val(),
+                uso_gas: $("input[name='rbGas']:checked").val(),
+                compania_telef: $("input[name='rbentel']:checked").val(),
+                tipo_plan: $("input[name='rbentelTipo']:checked").val(),
+
+                telemedicina: telemedicina_,
+                alimentos: alimentos_,
+                farmacias: farmacias_,
+                uno_salud: uno_salud_,
+                despacho_m: despacho_m_,
+                reembolso_m: reembolso_m_,
+                convenios: convenios_,
+
+
                 observacion: $('#txtObservacionBnf').val(),
                 sugerencia: $('#txtSugenrenciaBnf').val(),
                 rut_ejecutivo: getCookie("Rut"),
@@ -284,6 +304,85 @@ var appBnfModal = new Vue({
                     return datos
                 })
         },
+        obtenerUltimaGest(rut) {
+
+            let fechaHoy = new Date();
+            let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
+            fetch(`http://${motor_api_server}:4002/beneficios/lista-ultima-gestion/${rut}/${periodo}`, {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'default'
+            })
+                .then(response => response.json())
+                .then(datos => {
+
+                    $('#dllSegmentoBenf').val(datos[0].segmento);
+                    $('#txtRemMedicoBnf').val(datos[0].uso_rem_medico);
+                    $('#txtUsoFarmBnf').val(datos[0].uso_farmacia);
+
+                    $('#dpFechaAniversario').val(datos[0].fecha_casado)
+                    $('#btn_comercial_bnf').attr('disabled', false);
+                    if (datos[0].postulacion_beca == 'SI') {
+                        $("#ckbox_beca_si").prop("checked", true);
+                    }
+                    else if (datos[0].postulacion_beca == 'NO') {
+                        $("#ckbox_beca_no").prop("checked", true);
+                    }
+
+                    if (datos[0].uso_gas == 'CAÑERIA') {
+                        $("#ckbox_beca_caneria").prop("checked", true);
+                    }
+                    else if (datos[0].uso_gas == 'CILINDRO') {
+                        $("#ckbox_beca_cilindro").prop("checked", true);
+                    }
+
+
+
+                    if (datos[0].telemedicina == 'SI') {
+                        $("#comodin_Telemedicina").prop("checked", true);
+                    }
+                    if (datos[0].caja_alimentos == 'SI') {
+                        $("#comodin_Alimentos").prop("checked", true);
+                    }
+                    if (datos[0].c_uso_farmacias == 'SI') {
+                        $("#comodin_Farmacias").prop("checked", true);
+                    }
+                    if (datos[0].convenios == 'SI') {
+                        $("#convenios_c").prop("checked", true);
+                    }
+
+
+
+                    if (datos[0].uno_salud == 'SI') {
+                        $("#uno_salud").prop("checked", true);
+                    }
+                    if (datos[0].despacho_m == 'SI') {
+                        $("#despacho_m").prop("checked", true);
+                    }
+                    if (datos[0].reembolso_m == 'SI') {
+                        $("#reembolso_m").prop("checked", true);
+                    }
+                    if (datos[0].compania_telef == 'ENTEL') {
+                        $("#ckbox_entel").prop("checked", true);
+                    }
+                    if (datos[0].compania_telef == 'OTRO') {
+                        $("#ckbox_celular_otro").prop("checked", true);
+                    }
+
+                    if (datos[0].tipo_plan == 'CONTRATO') {
+                        $("#rbentelTipo").prop("checked", true);
+                    }
+
+                    if (datos[0].tipo_plan == 'PRE-PAGO') {
+                        $("#ckbox_entel_prepago").prop("checked", true);
+                    }
+
+                    $('#txtObservacionBnf').val(datos[0].observacion);
+                    $('#txtSugenrenciaBnf').val(datos[0].sugerencia);
+
+
+                });
+        },
     },
 });
 
@@ -294,11 +393,16 @@ $('#modal_beneficios').on('show.bs.modal', async (event) => {
     origen_ = $(event.relatedTarget).data('origen')
     oferta_ = $(event.relatedTarget).data('ofertabnf')
 
-    // console.log('Nombre : ' + nombre_ + '  -----  ' + 'Rut : ' + rut_ + ' -------  ' + origen_)
+    campana_ = $(event.relatedTarget).data('campana')
+    cargas_ = $(event.relatedTarget).data('cargas')
+    fecha_nacimiento_ = $(event.relatedTarget).data('fecha_nacimiento')
+
     $('#txtRutBnf').val(rut_)
     $('#txtNombreBnf').val(nombre_)
     $('#txtOfertaBnf').val(oferta_.toMoney(0))
-
+    $('#txtCampBenf').val(campana_)
+    $('#txtFechaNacBenf').val(fecha_nacimiento_)
+    $('#txtCargasBnf').val(cargas_)
     $('#btn_comercial_bnf').attr('disabled', true);
 
     if (origen_ == 'Comercial') {
@@ -310,20 +414,42 @@ $('#modal_beneficios').on('show.bs.modal', async (event) => {
         let tieneEncuesta = $(event.relatedTarget).data('tieneEncuesta')
         var button = '<button class="btn btn-success" style="border-radius: 8px;" id="btn_comercial_bnf" disabled data-target="#mdl_data" data-toggle="modal" data-tieneEncuesta="' + tieneEncuesta + '" data-periodo="' + periodo + '" data-rutafipsu="' + rutafipsu + '" data-rut="' + rutc + '" data-tipo="' + tipo + '">Ir a gestión comercial</button>';
         $('#btComercialBnf').append(button);
-        //consolo.log('paso comercial')
     }
+
+    $('#dp-component-fecha-ani .input-group.date').datepicker(
+        { autoclose: true, format: 'dd-mm-yyyy', language: "es", daysOfWeekDisabled: [6, 0], todayHighlight: true }
+    ).on('changeDate', function (event) {
+        event.stopPropagation();
+    }).on('show.bs.modal hide.bs.modal', function (event) {
+        event.stopPropagation();
+    });
+
+    appBnfModal.obtenerUltimaGest(rut_);
     appBnfModal.obtenerHistorialBnf(rut_);
-    cargaDatosDeContactoBnf(rut_)
+
+
+
+    var rutCont = rut_;
+    rutCont = rutCont.substring(0, rutCont.length - 2)
+
+    cargaDatosDeContactoBnf(rutCont)
+
 });
 
 $('#modal_beneficios').on('hidden.bs.modal', function (e) {
+    $('#btn_comercial_bnf').attr('disabled', true);
     $('input[name="rbestadoBnf"]').prop('checked', false);
     $('input[name="rbSubestadoBnf"]').prop('checked', false);
     $("#dvRbSubEstadoBnf").html("");
     $('input[type="checkbox"]').prop('checked', false);
+    $('input[type="radio"]').prop('checked', false);
     $("#txtObservacionBnf").val('');
     $("#txtSugenrenciaBnf").val('');
-
+    $("#txtRemMedicoBnf").val('');
+    $("#txtUsoFarmBnf").val('');
+    $("#dllSegmentoBenf").val();
+    $('#dpFechaAniversario').val('');
+    $('#tipo_plan_entel').css('display', 'none')
 })
 
 
@@ -482,7 +608,7 @@ $('#btn-add-contac_beneficio').on('click', function () {
     }
 });
 
-$('#form-registro-contacto_beneficio').bootstrapValidator({
+$('#form-registro-bnf').bootstrapValidator({
     excluded: [':disabled', ':not(:visible)'],
     feedbackIcons: [],
     fields: {
@@ -529,7 +655,9 @@ $('#form-registro-contacto_beneficio').bootstrapValidator({
     }
     $.SecGetJSON(BASE_URL + "/motor/api/Contactos/ingresa-nuevo-contacto", objeto_envio_contacto, function (datos) {
         $("#form-registro-bnf").bootstrapValidator('resetForm', true);
-        cargaDatosDeContactoBnf(rutCont, 'bdy_datos_contactos_beneficio');
+
+        cargaDatosDeContactoBnf(rutCont, '#bdy_datos_contactos_beneficio');
+
         $("#btn-add-contac_beneficio").trigger("click");
         $.niftyNoty({
             type: 'success',
@@ -545,10 +673,12 @@ $('#form-registro-contacto_beneficio').bootstrapValidator({
 function cargaDatosDeContactoBnf(rutAf, destino = null) {
 
     var rutCont = rutAf;
-    rutCont = rutCont.substring(0, rutCont.length - 2)
+    //rutCont = rutCont.substring(0, rutCont.length - 2)
     if (destino != null) {
-        $(`${destino} > tr`).remove();
-        $(destino).html("");
+        $("#bdy_datos_contactos_beneficio > tr").remove();
+        $("#bdy_datos_contactos_beneficio").html("");
+        //$(`${destino} > tr`).remove();
+        //$(destino).html("");
     }
     else {
         $("#bdy_datos_contactos_beneficio > tr").remove();
@@ -594,9 +724,10 @@ function cargaDatosDeContactoBnf(rutAf, destino = null) {
                                 var indice = $(this).val();
                                 var valorD = e.ValorDato;
                                 var ofici = getCookie("Oficina");
-                                $.SecGetJSON(BASE_URL + "/motor/api/Contactos/actualiza-indice-contacto", { Indice: indice, RutAfi: rutAf, ValorDato: valorD, Oficina: ofici }, function (datos) {
+                                $.SecGetJSON(BASE_URL + "/motor/api/Contactos/actualiza-indice-contacto", { Indice: indice, RutAfi: rutCont, ValorDato: valorD, Oficina: ofici }, function (datos) {
 
-                                    cargaDatosDeContactoBnf(rutAf);
+                                    cargaDatosDeContactoBnf(rutCont);
+
 
                                     $.niftyNoty({
                                         type: 'success',
@@ -617,4 +748,17 @@ function cargaDatosDeContactoBnf(rutAf, destino = null) {
     });
 
 }
+
+
+$(document).on('click', 'input:radio[name=rbentel]', function () {
+    switch (this.value) {
+        case "ENTEL":
+            $('#tipo_plan_entel').css('display', 'block')
+            break;
+
+        case "OTRO":
+            $('#tipo_plan_entel').css('display', 'none')
+            break;
+    }
+});
 
