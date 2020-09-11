@@ -98,6 +98,7 @@ var dApp = new Vue({
                 _.set(this, 'model.direcciones.residencia.comuna', _.get(response, 'comuna_residencia'));
                 _.set(this, 'model.direcciones.residencia.calle', _.get(response, 'direccion_residencia'));
                 _.set(this, 'model.direcciones.residencia.numero', _.get(response, 'num_residencia'));
+                _.set(this, 'model.direcciones.residencia.numeracionInterior', _.get(response, 'numeracion_interior_residencia'));
 
                 _.set(this, 'model.opcion', _.get(response, 'opcion_bip'));
                 _.set(this, 'model.eleccionTarjeta', _.get(response, 'seleccion_tarjeta'));
