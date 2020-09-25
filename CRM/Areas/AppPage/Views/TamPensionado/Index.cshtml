@@ -56,12 +56,11 @@
                 </ul>
 
                 <div class="tab-content">
-
                     <div id="tab-index-tam" class="tab-pane fade active in">
                         <div class="panel-body">
                             <div id="app-tam">
                                 <div>
-                                    <form-wizard v-on:on-complete="validateFourthStep"
+                                    <form-wizard v-on:on-complete="onComplete"
                                                  shape="circle"
                                                  color="#3498db"
                                                  back-button-text="Atrás"
@@ -337,7 +336,7 @@
                                             </div>
                                         </tab-content>
                                         <tab-content title="Preguntas Autenticación"
-                                                     icon="ion-locked">
+                                                     icon="ion-locked" :before-change="validateFourthStep">
                                             <afiliado-info :lead="afiliadoEncontrado" :score="score" v-model="model.anotaciones"></afiliado-info>
 
                                             <div class="panel">
@@ -370,6 +369,47 @@
                                                             </tr>
                                                         </tbody>
                                                     </table>
+                                                </div>
+                                            </div>
+                                        </tab-content>
+                                        <tab-content title="Resumen Final" icon="ion-document-text">
+                                            <div v-if="model.opcion === 'T' || model.opcion === 'TP'" class="panel">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">Resumen</h4>
+                                                </div>
+                                                <div class="panel-body" style="text-align: justify">
+                                                    <p>Muchas gracias Sr./Sra. <b>{{ afiliadoEncontrado.nombre }}</b> voy a hacer un resumen de lo conversado para su aprobación final:</p>
+
+                                                    <p>Su rut es <b>{{ model.rut_formateado }}</b></p>
+                                                    <p>Su fecha de nacimiento <b>{{ fechaNacimiento }}</b>.</p>
+                                                    <p>Su número telefónico es <b>{{ model.celular }}</b>.</p>
+
+                                                    <p>Con fecha de hoy <b>{{ hoy }}</b>, Usted aceptó la grabación de esta llamada telefónica.</p>
+                                                    <p>Recibió explicación de las diferencias entre las dos tarjetas con beneficios en transporte para adulto mayor, TAM Metro y BIP Adulto Mayor, con lo cual Usted ha preferido optar por y recibir la tarjeta BIP Adulto Mayor, la cual será despachada a la dirección <b>{{ model.direcciones.despacho.calle }}  N° {{ model.direcciones.despacho.numero }} de la comuna {{ comunaDespacho }}, de la Región Metropolitana</b>.</p>
+
+                                                    <p>Para terminar, su domicilio particular es <b>{{ model.direcciones.residencia.calle }} N° {{ model.direcciones.residencia.numero }}, de la comuna {{ comunaResidencia }}, de la Región Metropolitana</b>.</p>
+
+                                                    <p>¿Está de acuerdo con lo anterior?</p>
+                                                </div>
+                                            </div>
+
+                                            <div v-if="model.opcion === 'R' || model.opcion === 'RP'" class="panel">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">Resumen</h4>
+                                                </div>
+                                                <div class="panel-body" style="text-align: justify">
+                                                    <p>Muchas gracias Sr./Sra. <b>{{ afiliadoEncontrado.nombre }}</b> voy a hacer un resumen de lo conversado para su aprobación final:</p>
+
+                                                    <p>Su rut es <b>{{ model.rut_formateado }}</b></p>
+                                                    <p>Su fecha de nacimiento es <b>{{ model.rut_formateado }}</b>.</p>
+                                                    <p>Su número telefónico es <b>{{ model.telefono }}</b>.</p>
+
+                                                    <p>Domiciliado en <b>{{ model.direcciones.residencia.calle }}  N° {{ model.direcciones.residencia.numero }}, de la comuna {{ comunaResidencia }}</b>, de la Región Metropolitana.</p>
+                                                    <p>Con fecha de hoy <b>{{ hoy }}</b>, Usted aceptó la grabación de esta llamada telefónica.</p>
+
+                                                    <p>Usted cuenta actualmente con la tarjeta BIP! Adulto Mayor y solicita reembolso por un valor de $1.550 el que será realizado vía transferencia electrónica.</p>
+
+                                                    <p>¿Está de acuerdo con lo anterior?</p>
                                                 </div>
                                             </div>
                                         </tab-content>

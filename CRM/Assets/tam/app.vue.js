@@ -67,13 +67,17 @@ new Vue({
         score: 0,
         scorePonderado: 0,
         respuestas: [],
+        hoy: moment().format('DD-MM-YYYY'),
+        fechaNacimiento: '',
+        comunaResidencia: '',
+        comunaDespacho: ''
     },
     // App Methods & Events
     methods: {
         onComplete: function () {
             Swal.fire({
-                title: 'Autenticación OK!',
-                text: 'Se le enviará TAM a domicilio.',
+                title: 'Proceso Finalizado!',
+                text: 'Pulsa cerrar para recargar.',
                 icon: 'success',
                 onClose: () => {
                     location.reload(true);
@@ -418,9 +422,7 @@ new Vue({
                                 _.get(this, 'config.mensajes.COMUNA_INVALIDA_DES'),
                                 'error'
                             ).then(s => {
-                                console.log('reload', { s });
                                 reject(estadoResultante);
-                                //location.reload(true);
                             });
                         } else {
 
@@ -432,7 +434,6 @@ new Vue({
                                     confirmButtonText: 'Aceptar'
                                 }).then(df => {
                                     resolve(estadoResultante);
-                                    location.reload(true);
                                 });
                             } else {
                                 const rut = _.get(this, 'afiliadoEncontrado.rut');
@@ -498,7 +499,6 @@ new Vue({
                                 confirmButtonText: 'Aceptar'
                             }).then(df => {
                                 resolve(respuestaGst.resultado);
-                                location.reload(true);
                             });
                         } else {
                             Swal.fire({
@@ -514,7 +514,12 @@ new Vue({
                     });
                 }
 
-            }).then(x => true).catch(r => false);
+            }).then(x => {
+                _.set(this, 'fechaNacimiento', this.obtFechaNacimiento());
+                _.set(this, 'comunaDespacho', this.obtComuna('despacho'));
+                _.set(this, 'comunaResidencia', this.obtComuna('residencia'));
+                return true;
+            }).catch(r => false);
         },
         setSameAddress: function () {
             const isChecked = _.get(this, 'model.direcciones.residenciaIgualDespacho');
@@ -688,6 +693,28 @@ new Vue({
                     'danger'
                 );
             });
+        },
+        obtComuna: function (mode = 'residencia') {
+
+            let comid = _.get(this, 'model.direcciones.residencia.comuna');
+            if (mode === 'despacho') {
+               comid = _.get(this, 'model.direcciones.despacho.comuna');
+            }
+            const comunass = _.get(this, 'comunas');
+            const comuna = _.find(comunass, function (com) {
+                return com.id == comid;
+            });
+            console.log({ comunass, comid, comuna })
+
+            return comuna ? comuna.nombre : 'Sin Info';
+        },
+        obtFechaNacimiento: function () {
+            const propFecha = _.get(this, 'model.fechaNacimiento');
+            if (propFecha) {
+                const fnc = moment(propFecha, 'DDMMYYYYY');
+                return fnc.format('DD-MM-YYYY');
+            }
+            return '';
         }
     },
     // Vue Lifecycle
@@ -716,5 +743,6 @@ new Vue({
         scriptEleccionTam: function () {
             return _.get(this, 'afiliadoEncontrado.flagTamMetro') == '1' ? _.get(this, 'config.scripts.CON_TAM') : _.get(this, 'config.scripts.SIN_TAM');
         },
+      
     }
 });
