@@ -13,12 +13,23 @@ namespace CRM.Business.Entity
 
         public DateTime FechaIngreso { get; set; }
 
+        public string GestionOficina { get; set; }
+
+        public string GestionOficina2 { get; set; }
+
+        public string GestionOficina3 { get; set; }
+
         public DateTime FechaInicio { get; set; }
 
         public DateTime FechaTermino { get; set; }
 
+        public DateTime FechaPronunciamiento { get; set; }
+
+        public string TipoLM { get; set; }
 
         public string FolioLicencia { get; set; }
+
+        public string MotivoDevolucionCompin { get; set; }
 
         public string Estado { get; set; }
 
@@ -37,6 +48,8 @@ namespace CRM.Business.Entity
         public int EtapaId { get; set; }
 
 
+        public string PagoPronunciamiento { get; set; }
+
         public string FormatoLM { get; set; }
         public string Quienenvia { get; set; }
         public string Telefono { get; set; }
@@ -44,7 +57,7 @@ namespace CRM.Business.Entity
         public string Oficina { get; set; }
         public int IdEtapaSiguiente { get; set; }
 
-
+        public string Responsable { get; set; }
         public string EstadoPronunciamiento { get; set; }
         public string SubComision { get; set; }
         public int DiasAutorizados { get; set; }
@@ -52,10 +65,19 @@ namespace CRM.Business.Entity
         public DateTime FechaInicioLM { get; set; }
         public DateTime FechaHastaLM { get; set; }
 
+        public DateTime FechaEtapa { get; set; }
+        public string EntidadPago { get; set; }
 
+        public string TipoPago { get; set; }
 
+        public string MontoPago { get; set; }
 
+        public string EstadoPago { get; set; }
 
+        public string SubComisionTarea { get; set; }
 
+        public string MotivoDevolucion { get; set; }
+
+        public string MotivoDevueltaOficina { get; set; }
     }
 }

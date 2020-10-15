@@ -152,7 +152,7 @@ namespace CRM.Business.Data
 
     };
 
-            DBHelper.InstanceCRM.EjecutarProcedimiento("licencias.sp_Lic_DocumentosFaltantes_Guardar_Auditoria_nuevo", prm);
+            DBHelper.InstanceCRM.EjecutarProcedimiento("licencias.sp_Lic_DocumentosFaltantes_Guardar_Auditoria_RRLL", prm);
         }
 
 
@@ -209,12 +209,12 @@ namespace CRM.Business.Data
             new Parametro("@isapre",documentosFaltantesLM.isapre),
             new Parametro("@cartaAutorizacion",documentosFaltantesLM.cartaAutorizacion),
             new Parametro("@FaltaDocumentacion",documentosFaltantesLM.FaltaDocumentacion),
-
+            new Parametro("@mediconiexiste",documentosFaltantesLM.Mediconoexiste),
 
     };
             try
             {
-                DBHelper.InstanceCRM.EjecutarProcedimiento("licencias.sp_Lic_DocumentosFaltantes_Guardar_Reparos_COMPIN_Nuevo_Flujo", prm);
+                DBHelper.InstanceCRM.EjecutarProcedimiento("licencias.sp_Lic_DocumentosFaltantes_Guardar_Reparos_COMPIN_Nuevo_Flujo_v2o", prm);
 
             }
             catch (Exception ex)

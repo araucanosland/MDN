@@ -135,6 +135,7 @@
                                                 <select class="form-control" id="ddloficina" name="ddloficina"></select>
                                             </div>
                                         </div>
+
                                         <div class="col-sm-2 mar-top">
                                             <div class="form-group">
                                                 <label class="control-label" id="lbl_rut">Folio LM</label>
@@ -154,7 +155,8 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-2 mar-top" style="display:none">
+
+                                        <div class="col-sm-1 mar-top" style="display:none">
                                             <div class="form-group">
                                                 <label class="control-label">Fecha Auditoría Desde</label>
                                                 <div id="responsable-dp-component">
@@ -166,7 +168,8 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-sm-2 mar-top" style="display:none">
+
+                                        <div class="col-sm-1 mar-top" style="display:none">
                                             <div class="form-group">
                                                 <label class="control-label">Fecha Auditoría Hasta</label>
                                                 <div id="responsable-dp-component">
@@ -180,53 +183,50 @@
                                         </div>
 
 
-
-
-                                        <div class="row">
-                                            @*<div class="col-sm-2 " style="margin-right:250px;">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Est. Responsable</label>
-                                                        <select class="form-control" id="ddlresponsable" name="ddlresponsable">
-                                                            <option value="Todos">Todos...</option>
-                                                            <option value="Auditoría">Auditoría</option>
-                                                            <option value="Oficina">Oficina</option>
-                                                            <option value="OK Contraloría">OK Contraloría</option>
-                                                            <option value="RRLL">Reg. Legales</option>
-                                                        </select>
-
-                                                    </div>
-                                                </div>*@
-                                            <div class="col-sm-2 " style="margin-right:30px;">
+                                        @*<div class="col-sm-2 " style="margin-right:250px;">
                                                 <div class="form-group">
-                                                    <label class="control-label">Fecha Envío Tata Desde</label>
-                                                    <div id="responsable-dp-component">
-                                                        <div class="input-group date">
-                                                            <input type="text" class="form-control" id="flt_dia_envio_tata_desde" name="flt_dia_envio_tata_desde" readonly>
-                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
-                                                        </div>
-                                                    </div>
+                                                    <label class="control-label">Est. Responsable</label>
+                                                    <select class="form-control" id="ddlresponsable" name="ddlresponsable">
+                                                        <option value="Todos">Todos...</option>
+                                                        <option value="Auditoría">Auditoría</option>
+                                                        <option value="Oficina">Oficina</option>
+                                                        <option value="OK Contraloría">OK Contraloría</option>
+                                                        <option value="RRLL">Reg. Legales</option>
+                                                    </select>
 
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-2" style="margin-right:50px;">
-                                                <div class="form-group">
-                                                    <label class="control-label">Fecha Envío Tata Hasta</label>
-                                                    <div id="responsable-dp-component">
-                                                        <div class="input-group date">
-                                                            <input type="text" class="form-control" id="flt_dia_envio_tata_hasta" name="flt_dia_envio_tata_hasta" readonly>
-                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
-                                                        </div>
+                                            </div>*@
+                                        <div class="col-sm-2" style="margin-right:30px;margin-top:19px;">
+                                            <div class="form-group">
+                                                <label class="control-label">Fecha Envío Tata Desde</label>
+                                                <div id="responsable-dp-component">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" id="flt_dia_envio_tata_desde" name="flt_dia_envio_tata_desde" readonly>
+                                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
                                                     </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-1" style="margin-top:20px;">
-                                                <div class="input-group">
-                                                    <button class="btn btn-success" type="button" id="btn-buscar-licencia-tabresponsable">Buscar</button>
                                                 </div>
 
                                             </div>
                                         </div>
+                                        <div class="col-sm-2" style="margin-right:50px;margin-top:19px;">
+                                            <div class="form-group">
+                                                <label class="control-label">Fecha Envío Tata Hasta</label>
+                                                <div id="responsable-dp-component">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" id="flt_dia_envio_tata_hasta" name="flt_dia_envio_tata_hasta" readonly>
+                                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1" style="margin-top:40px;">
+                                            <div class="input-group">
+                                                <button class="btn btn-success" type="button" id="btn-buscar-licencia-tabresponsable">Buscar</button>
+                                            </div>
+
+                                        </div>
+
 
 
                                     </div>
@@ -774,6 +774,7 @@
                                             <th data-hide="phone">Oficina</th>
                                             <th data-hide="phone">Subcomisión</th>
                                             <th data-hide="phone">Motivo Devolución</th>
+                                            <th data-hide="phone">Bitácora</th>
                                             <th data-hide="phone">Gestión</th>
 
                                         </tr>
@@ -902,6 +903,7 @@
                                             <th data-hide="phone">Motivo Devolución</th>
                                             <th data-hide="phone">Responsable</th>
                                             <th data-hide="phone">Gestión</th>
+                                            <th data-hide="phone">Bitácora</th>
                                             <th style="width:20%;" data-hide="phone">Reenvío COMPIN</th>
 
                                         </tr>
@@ -1188,27 +1190,34 @@
                                         $('<option data-icon="fa fa-paint-brush">').val('Envío TATA').text("Envío TATA"))) : $("<td>").append(
                                             $("<select>").addClass('form-control').css('width', '100%').css('border-radius', '6px').append(
                                                 $('<option data-icon="fa fa-paint-brush">').val('Seleccione...').text("Seleccione..."),
-                                                $('<option>').val("Envío TATA").text("Envío TATA")
-
+                                                $('<option>').val("Envío TATA").text("Envío TATA"),
+                                                $('<option>').val("Devuelta").text("Devuelta Oficina")
                                             ).on('change', function () {
-
+                                                debugger;
                                                 var indiceResponsable = $(this).val();
-                                                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/guardar-responsable", { folioLM: e.FolioLicencia, responsable: indiceResponsable, CodIngreso: e.CodIngreso }, function (respuesta) {
+                                                if (indiceResponsable == "Envío TATA") {
+                                                    $.SecGetJSON(BASE_URL + "/motor/api/Licencias/guardar-responsable", { folioLM: e.FolioLicencia, responsable: indiceResponsable, CodIngreso: e.CodIngreso }, function (respuesta) {
 
-                                                    $.niftyNoty({
-                                                        type: 'success',
-                                                        icon: 'pli-like-2 icon-2x',
-                                                        message: 'Envío TATA realizado correctamente!!.',
-                                                        container: 'floating',
-                                                        timer: 3000
+                                                        $.niftyNoty({
+                                                            type: 'success',
+                                                            icon: 'pli-like-2 icon-2x',
+                                                            message: 'Envío TATA realizado correctamente!!.',
+                                                            container: 'floating',
+                                                            timer: 3000
+                                                        });
+
+                                                        cargador.CargaDatosTablaTab5responsable($("#txt_folio_LM_responsable").val(), $("#flt_dia_responsable_desde").val(), $("#flt_dia_responsable_hasta").val(), 0, "Pendiente", $("#flt_dia_envio_tata_desde").val(), $("#flt_dia_envio_tata_hasta").val()); cargador.CargaDatosTablaTab5responsableConteo();
                                                     });
+                                                }
+                                                if (indiceResponsable == "Devuelta") {
+                                                    location.href = "/motor/App/Licencias/gestionRRLL?ci=" + e.CodIngreso + "&tab=principal";
 
-                                                    cargador.CargaDatosTablaTab5responsable($("#txt_folio_LM_responsable").val(), $("#flt_dia_responsable_desde").val(), $("#flt_dia_responsable_hasta").val(), 0, "Pendiente", $("#flt_dia_envio_tata_desde").val(), $("#flt_dia_envio_tata_hasta").val()); cargador.CargaDatosTablaTab5responsableConteo();
-                                                });
+                                                }
 
+                                            }),
 
-                                            })
-                                        ))
+                                        )
+                                )
 
                         );
 
@@ -1496,6 +1505,8 @@
                                 .append($("<td>").html(e.descripcionOficina))
                                 .append($("<td>").html(e.subcomision))
                                 .append($("<td>").html(e.Motivodevolucion))
+                                .append($("<td>").html(`<a class="btn btn-primary mar-lft" title="Seguimiento" href="/motor/App/Licencias/bitacora?ci=${e.CodIngreso}"><i class="ion-search"></i></a>`))
+
                                 .append($("<td>").append(
                                     $("<select>").addClass('form-control').css('width', '100%').css('border-radius', '6px').append(
                                         $('<option>').val("Seleccione..").text("Seleccione.."),
@@ -1613,6 +1624,8 @@
                                 .append($("<td>").html(e.Motivodevolucion))
                                 .append($("<td>").html(e.Responsable))
                                 .append($("<td>").html(e.Gestion))
+                                .append($("<td>").html(`<a class="btn btn-primary mar-lft" title="Seguimiento" href="/motor/App/Licencias/bitacora?ci=${e.CodIngreso}"><i class="ion-search"></i></a>`))
+
                                 .append($("<td>").append(
                                     $("<select>").addClass('form-control').css('width', '100%').css('border-radius', '6px').append(
                                         $('<option>').val("Seleccione..").text("Seleccione.."),
@@ -1743,6 +1756,7 @@
 
                         }
 
+                        $wrapper = $wrapper + (`<a class="btn btn-warning mar-lft" title="Seguimiento" href="/motor/App/Licencias/bitacora?ci=${e.CodIngreso}"><i class="ion-search"></i></a>`);
 
                         //if (e.viaIngresoLicenica != 1) {
                         //   $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.CodIngreso}"><i class="ion-edit"></i></a>`);
@@ -2009,7 +2023,7 @@
             cargador.CargaDatosTablaTab6DevueltaCompinConteo('RRLL', '-1');
 
             $("#btn-buscar-licencia-tabdevuelta").on("click", function () {
-
+                demo - foo - filtering_consolidado_Devueltas
                 cargador.CargaDatosTablaTab6DevueltaCompin($("#txt_folio_LM_devuelta").val(), $("#flt_dia_devuelta_desde").val(), $("#flt_dia_devuelta_hasta").val(), $("#ddloficinaDevuelta").val(), 'RRLL', $("#ddlsubcomisionDevuelta").val());
                 cargador.CargaDatosTablaTab6DevueltaCompinConteo('RRLL', '-1');
             })

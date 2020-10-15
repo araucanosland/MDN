@@ -371,7 +371,9 @@ namespace CRM.Controllers
         {
 
             string token = ActionContext.Request.Headers.GetValues("Token").First();
-            List<Ingresolicencia> ingLc = IngresolicenciaDataAccess.ListaLMresponsableCierre(folioLM, dia_desde, dia_hasta, codOficina, responsable, fechaEnviodesde, fechaEnviohasta);
+            DateTime elDiaHasta = Convert.ToDateTime(dia_hasta);
+            DateTime elDiaDesde = Convert.ToDateTime(dia_desde);
+            List<Ingresolicencia> ingLc = IngresolicenciaDataAccess.ListaLMresponsableCierre(folioLM, elDiaDesde, elDiaHasta, codOficina, responsable, fechaEnviodesde, fechaEnviohasta);
 
             return ingLc;
 
@@ -840,8 +842,8 @@ namespace CRM.Controllers
                     entrada.FechaLiquidacion6,
                     entrada.rutusuario,
                     entrada.cartaAutorizacion == 1,
-                    entrada.firmaEmpleador == 1
-
+                    entrada.firmaEmpleador == 1,
+                    entrada.mediconoexiste == 1
 
                 );
 
@@ -926,8 +928,8 @@ namespace CRM.Controllers
                          entrada.fechaliquidacion6,
                          "",
                          entrada.cartaAutorizacion == 1,
-                         entrada.FaltaFirmaempleador == 0
-
+                         entrada.FaltaFirmaempleador == 0,
+                         entrada.mediconoexiste == 0
                      );
                 DocumentosFaltantesLMDataAccess.GuardarEntradaAudtoriaReparos(dcm, token);
 
@@ -1551,6 +1553,17 @@ namespace CRM.Controllers
             return ingLc;
         }
 
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("listar-Bitacora")]
+        public IEnumerable<LicenciasLMTimeLine> listaBitacora(long codIngreso)
+        {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<LicenciasLMTimeLine> ingLc = IngresolicenciaDataAccess.ObtenerBitacora(codIngreso);
+
+            return ingLc;
+        }
+
 
 
         [AuthorizationRequired]
@@ -2166,8 +2179,8 @@ namespace CRM.Controllers
                          entrada.fechaliquidacion6,
                          "",
                          entrada.cartaAutorizacion == 1,
-                         entrada.FaltaFirmaempleador == 0
-
+                         entrada.FaltaFirmaempleador == 0,
+                         entrada.mediconoexiste == 1
                      );
                 DocumentosFaltantesLMDataAccess.GuardarEntradaAudtoriaReparosTATA(dcm, token);
 
@@ -2238,8 +2251,8 @@ namespace CRM.Controllers
                          entrada.fechaliquidacion6,
                          "",
                          entrada.cartaAutorizacion == 1,
-                         entrada.FaltaFirmaempleador == 0
-
+                         entrada.FaltaFirmaempleador == 1,
+                         entrada.mediconoexiste == 0
                      );
                 DocumentosFaltantesLMDataAccess.GuardarEntradaAudtoriaReparosCOMPIN(dcm, token);
 

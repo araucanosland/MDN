@@ -337,6 +337,8 @@ var appNormalizacionModal = new Vue({
         },
         handleSubmitNormalizacion() {
 
+            let valContact = $('#slEstadoModNormalizacion').val();
+
             const formData = {
                 lead: this.dataModal.id,
                 ...this.modelosModal,
@@ -375,6 +377,11 @@ var appNormalizacionModal = new Vue({
                 appNormalizacionModal.setDefaultsModal();
                 appNormalizacionFiltros.handleEventoClickFiltrar();
 
+                if (valContact == 1 || valContact == 2) {
+                    $("#tabNormContact").tab('show');
+                    $("#msjContactNormalizacion").css('display', 'block')
+                }
+
 
             });
             //.catch(reasons => {
@@ -409,7 +416,7 @@ $(function () {
         var rutCont = rut
         rutCont = rutCont.substring(0, rutCont.length - 2)
         await appNormalizacionModal.obtenerLead(rut);
-        cargaDatosDeContactoNorm(rutCont, '#bdy_datos_contactos_normalizacion')
+        cargaDatosDeContactoNorm(rutCont)
         appNormalizacionModal.setDefaultsModal();
         $('#fpg_normalizacion').css('display', 'none');
         $('#btGestNormalizacion').attr("disabled", false);
@@ -427,6 +434,7 @@ $(function () {
                 event.stoppropagation();
             });
         }, 1000);
+        $("#msjContactNormalizacion").css('display', 'none')
 
     });
 
@@ -465,43 +473,105 @@ $(function () {
             });*/
     });
 
-
-
-
-    function cargaDatosDeContactoNorm(rutAf, destino = null) {
-
-        if (destino != null) {
-            $(`${destino} > tr`).remove();
-            $(destino).html("");
+    $('#form-registro-contacto_norm').bootstrapValidator({
+        excluded: [':disabled', ':not(:visible)'],
+        feedbackIcons: [],
+        fields: {
+            cbtippContac_norm: {
+                validators: {
+                    notEmpty: {
+                        message: 'Debe seleccionar un tipo de Contacto'
+                    }
+                }
+            },
+            cbClasificacionConctac_norm: {
+                validators: {
+                    notEmpty: {
+                        message: 'Debe seleccionar una clasificación de contacto'
+                    }
+                }
+            },
+            afi_NewContacto_norm: {
+                validators: {
+                    notEmpty: {
+                        message: 'Debe ingresar un contacto'
+                    },
+                    stringLength: {
+                        message: 'No pueden ser mas de 100 caracteres',
+                        max: function (value, validator, $field) {
+                            return 150 - (value.match(/\r/g) || []).length;
+                        }
+                    }
+                }
+            }
         }
-        else {
-            $("#bdy_datos_contactos_normalizacion > tr").remove();
-            $("#bdy_datos_contactos_normalizacion").html("");
-        }
+    }).on('success.form.bv', function (e) {
+        // Prevén que se mande el formulario
+        e.preventDefault();
+        var $form = $(e.target);
 
+        var rutClie = $('#txtRutAfiNorm').val()
+        rutClie = rutClie.substring(0, rutClie.length - 2)
+
+        var objeto_envio_contacto = {
+            RutAfiliado: rutClie,
+            IdTipoContac: $('#cbtippContac_norm').val(),
+            GlosaTipoContac: $('select[name="cbtippContac_norm"] option:selected').text(),
+            IdClasifContac: $('#cbClasificacionConctac_norm').val(),
+            GlosaClasifContac: $('select[name="cbClasificacionConctac_norm"] option:selected').text(),
+            DatosContac: $('#afi_NewContacto_norm').val()
+        }
+        $.SecGetJSON(BASE_URL + "/motor/api/Contactos/ingresa-nuevo-contacto", objeto_envio_contacto, function (datos) {
+            $("#form-registro-contacto_norm").bootstrapValidator('resetForm', true);
+            // $('#demo-lg-modal-new').modal('hide');
+            cargaDatosDeContactoNorm(rutClie);
+            $("#btn-add-contac-normalizacion").trigger("click");
+            $.niftyNoty({
+                type: 'success',
+                icon: 'pli-like-2 icon-2x',
+                message: 'Contacto Guardado correctamente.',
+                container: '#tab-gestion-3',
+                timer: 5000
+            });
+        });
+        return false;
+
+    });
+
+
+
+
+    function cargaDatosDeContactoNorm(rutAf) {
+
+        $("#bdy_datos_contactos_normalizacion > tr").remove();
+        $("#bdy_datos_contactos_normalizacion").html("");
 
         $.SecGetJSON(BASE_URL + "/motor/api/Contactos/lista-contactos-afi", { RutAfiliado: rutAf }, function (contac) {
             $.each(contac, function (i, e) {
                 var colorPorc = '';
                 var alertFecha = '';
+                var icon = '--';
 
                 if (e.PorcIndice > 70) {
-                    var colorPorc = 'pull-left badge badge-success'
+                    var colorPorc = 'badge-success'
+                    icon = '<i class="ion-checkmark">';
                 }
                 if (e.PorcIndice > 40 && e.PorcIndice < 69) {
-                    var colorPorc = 'pull-left badge badge-warning'
+                    var colorPorc = 'badge-warning'
                 }
                 if (e.PorcIndice < 39) {
-                    var colorPorc = 'pull-left badge badge-danger'
+                    var colorPorc = 'badge-danger'
+                    icon = '!';
                 }
                 if (e.FechaContacto.toFecha() === "01-01-1900") {
                     alertFecha = e.FechaContacto.toFecha() + '<i class="badge badge-danger badge-stat badge-icon pull-right add-tooltip" style="position: static; data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Se debe Actualizar Contacto">!</i>'
                     $("#afiContac").css({ 'display': 'block' })
                 }
-                else { alertFecha = e.FechaContacto.toFecha() }
+                else {
+                    alertFecha = e.FechaContacto.toFecha() + '<i class="badge ' + colorPorc + ' badge-stat badge-icon pull-right add-tooltip" style="position: static; data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Se debe Actualizar Contacto">' + icon + '</i></i>'
+                }
 
-                var destinoDefault = destino == null ? "#bdy_datos_contactos_normalizacion" : destino;
-                $(destinoDefault)
+                $("#bdy_datos_contactos_normalizacion")
                     .append(
                         $("<tr>")
                             .append($("<td>").append(

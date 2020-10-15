@@ -159,6 +159,7 @@ var appBnfModal = new Vue({
         },
         handleSubmitGestionBnf() {
 
+            let valContact = $('input:radio[name=rbestadoBnf]:checked').val();
             let telemedicina_ = '';
             let alimentos_ = '';
             let farmacias_ = '';
@@ -285,11 +286,16 @@ var appBnfModal = new Vue({
                     timer: 4000
                 });
 
-                if (origen_ == 'Comercial') {
-                    $('#btn_comercial_bnf').attr('disabled', false);
-                }
+                //if (origen_ == 'Comercial') {
+                //    $('#btn_comercial_bnf').attr('disabled', false);
+                //}
                 appBnfModal.obtenerHistorialBnf(rut_);
                 appBeneficiosFiltros.handleEventoClickFiltrar();
+                if (valContact == 3) {
+                    $("#tabContacBeneficio").tab('show');
+                    $("#msjContactBeneficio").css('display', 'block')
+
+                }
             });
         },
         obtenerHistorialBnf(rut) {
@@ -321,7 +327,7 @@ var appBnfModal = new Vue({
                     $('#txtUsoFarmBnf').val(datos[0].uso_farmacia);
 
                     $('#dpFechaAniversario').val(datos[0].fecha_casado)
-                    $('#btn_comercial_bnf').attr('disabled', false);
+                   // $('#btn_comercial_bnf').attr('disabled', false);
                     if (datos[0].postulacion_beca == 'SI') {
                         $("#ckbox_beca_si").prop("checked", true);
                     }
@@ -403,7 +409,7 @@ $('#modal_beneficios').on('show.bs.modal', async (event) => {
     $('#txtCampBenf').val(campana_)
     $('#txtFechaNacBenf').val(fecha_nacimiento_)
     $('#txtCargasBnf').val(cargas_)
-    $('#btn_comercial_bnf').attr('disabled', true);
+   // $('#btn_comercial_bnf').attr('disabled', true);
 
     if (origen_ == 'Comercial') {
         $('#btComercialBnf').html('');
@@ -412,7 +418,7 @@ $('#modal_beneficios').on('show.bs.modal', async (event) => {
         let rutafipsu = $(event.relatedTarget).data('rutafipsu')
         let periodo = $(event.relatedTarget).data('periodo')
         let tieneEncuesta = $(event.relatedTarget).data('tieneEncuesta')
-        var button = '<button class="btn btn-success" style="border-radius: 8px;" id="btn_comercial_bnf" disabled data-target="#mdl_data" data-toggle="modal" data-tieneEncuesta="' + tieneEncuesta + '" data-periodo="' + periodo + '" data-rutafipsu="' + rutafipsu + '" data-rut="' + rutc + '" data-tipo="' + tipo + '">Ir a gestión comercial</button>';
+        var button = '<button class="btn btn-success" style="border-radius: 8px;" id="btn_comercial_bnf"  data-target="#mdl_data" data-toggle="modal" data-tieneEncuesta="' + tieneEncuesta + '" data-periodo="' + periodo + '" data-rutafipsu="' + rutafipsu + '" data-rut="' + rutc + '" data-tipo="' + tipo + '">Ir a gestión comercial</button>';
         $('#btComercialBnf').append(button);
     }
 
@@ -428,16 +434,15 @@ $('#modal_beneficios').on('show.bs.modal', async (event) => {
     appBnfModal.obtenerHistorialBnf(rut_);
 
 
-
     var rutCont = rut_;
     rutCont = rutCont.substring(0, rutCont.length - 2)
 
     cargaDatosDeContactoBnf(rutCont)
-
+    $("#msjContactBeneficio").css('display', 'none')
 });
 
 $('#modal_beneficios').on('hidden.bs.modal', function (e) {
-    $('#btn_comercial_bnf').attr('disabled', true);
+   // $('#btn_comercial_bnf').attr('disabled', true);
     $('input[name="rbestadoBnf"]').prop('checked', false);
     $('input[name="rbSubestadoBnf"]').prop('checked', false);
     $("#dvRbSubEstadoBnf").html("");
@@ -655,9 +660,7 @@ $('#form-registro-bnf').bootstrapValidator({
     }
     $.SecGetJSON(BASE_URL + "/motor/api/Contactos/ingresa-nuevo-contacto", objeto_envio_contacto, function (datos) {
         $("#form-registro-bnf").bootstrapValidator('resetForm', true);
-
         cargaDatosDeContactoBnf(rutCont, '#bdy_datos_contactos_beneficio');
-
         $("#btn-add-contac_beneficio").trigger("click");
         $.niftyNoty({
             type: 'success',
@@ -688,21 +691,26 @@ function cargaDatosDeContactoBnf(rutAf, destino = null) {
         $.each(contac, function (i, e) {
             var colorPorc = '';
             var alertFecha = '';
+            var icon = '--';
 
             if (e.PorcIndice > 70) {
-                var colorPorc = 'pull-left badge badge-success'
+                colorPorc = 'badge-success'
+                icon = '<i class="ion-checkmark">';
             }
             if (e.PorcIndice > 40 && e.PorcIndice < 69) {
-                var colorPorc = 'pull-left badge badge-warning'
+                colorPorc = 'badge-warning'
             }
             if (e.PorcIndice < 39) {
-                var colorPorc = 'pull-left badge badge-danger'
+                colorPorc = 'badge-danger'
+                icon = '!';
             }
             if (e.FechaContacto.toFecha() === "01-01-1900") {
-                alertFecha = e.FechaContacto.toFecha() + '<i class="badge badge-danger badge-stat badge-icon pull-right add-tooltip" style="position: static; data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Se debe Actualizar Contacto">!</i>'
+                alertFecha = e.FechaContacto.toFecha() + '<i class="badge badge-danger badge-stat badge-icon pull-right add-tooltip" style="position: static; data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Se debe Actualizar Contacto"><i class="ion-close"></i></i>'
                 $("#afiContac").css({ 'display': 'block' })
             }
-            else { alertFecha = e.FechaContacto.toFecha() }
+            else {
+                alertFecha = e.FechaContacto.toFecha() + '<i class="badge ' + colorPorc + ' badge-stat badge-icon pull-right add-tooltip" style="position: static; data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Se debe Actualizar Contacto">' + icon + '</i></i>'
+            }
 
             var destinoDefault = destino == null ? "#bdy_datos_contactos_beneficio" : destino;
             $(destinoDefault)

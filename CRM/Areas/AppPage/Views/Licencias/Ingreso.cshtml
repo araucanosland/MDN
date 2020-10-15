@@ -115,7 +115,26 @@
                                     <label class="control-label">Derivar LM a:</label>
                                     <select class="form-control" id="sslOfiDerivacion" name="OfiDerivacion " disabled="disabled"></select>
                                 </div>
+
                             </div>
+                            <div id="div_Viaingreso_derivacion" style="display:none">
+                                <div class="col-md-2">
+                                    <!-- Checkboxes -->
+                                    <div class="radio" style="margin-top:24px">
+                                        <input id="chk_casilla_derivada" name="chk_casilla_derivada" class="magic-radio" type="checkbox">
+                                        <label for="chk_casilla_derivada">Casilla</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="radio" style="margin-top:24px">
+                                        <input id="chk_presencial_derivada" name="chk_presencial_derivada" class="magic-radio" type="checkbox">
+                                        <label for="chk_presencial_derivada">Presencial</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label class="form-control alert-danger" id="lblmensajecompin" style="display:none;">Sucursal no cuenta con COMPIN directa para tramitación, LM será enviada a sucursal: <b><u><span id="lblCompin" style="display:none;"></span></u></b></label>
@@ -663,6 +682,8 @@
 
 
                         //check conforme pendiente
+                        debugger;
+
 
                         if (response.DocumentosFaltantes.tipoSeleccion == "1") {
                             $(`#pendiente`).prop('checked', response.DocumentosFaltantes.tipoSeleccion);
@@ -964,6 +985,17 @@
                             $("#email").val('');
                             $("#telefono").val('');
                             $("#DerivarLM").prop("checked", false);
+
+                            if (response.IngresoData.viaIngresoLicenica == 1) {
+                                $(`#chk_casilla`).prop('checked', true);
+                                $(`#chk_presencial`).prop('checked', false);
+                            }
+                            else {
+
+                                $(`#chk_casilla`).prop('checked', false);
+                                $(`#chk_presencial`).prop('checked', true);
+                            }
+
 
                         }
 
@@ -1673,7 +1705,7 @@
                                     return false;
                                 }
                                 $.SecGetJSON(BASE_URL + "/motor/api/Licencias/Valida-folio-existente", { FolioLicencia: dato, Rut: rut }, function (response) {
-                                    debugger;
+
                                     if (response == 0) {
                                         $.niftyNoty({
                                             type: 'danger',
@@ -1708,6 +1740,8 @@
                         pendienteDocumentacion = -1;
                         Faltadoc = 1;
 
+
+
                         if ($("#sslOfiDerivacion").val() == 0) {
 
                             $.niftyNoty({
@@ -1722,6 +1756,16 @@
                             return false;
                         }
                     }
+
+
+                    if ($("#chk_casilla_derivada").prop("checked") == true) {
+                        viaIngresoLicenica = 1
+                    }
+                    if ($("#chk_presencial_derivada").prop("checked") == true) {
+                        viaIngresoLicenica = 2
+                    }
+
+
 
                     var WebIngresoLicencia = {
 
@@ -2042,13 +2086,16 @@
                     $("#telefono").val('');
                     $("#DerivarLM").prop("checked", true);
 
-
-
+                    $("#div_Viaingreso_derivacion").show();
+                    $("#chk_casilla_derivada").prop("checked", true);
                 } else {
                     $("#sslOfiDerivacion").prop("disabled", true);
                     $("#checkTipoingreso").show();
                     $("#divestadorecpecion").show();
                     $("#DerivarLM").prop("checked", false);
+                    $("#div_Viaingreso_derivacion").hide();
+                    $("#chk_casilla_derivada").prop("checked", false);
+                    $("#chk_presencial_derivada").prop("checked", false);
                 }
             });
 
@@ -2923,7 +2970,30 @@
 
 
 
+            $('#chk_casilla_derivada').on('change', function (event) {
+                if ($('#chk_casilla_derivada').prop("checked") == true) {
+                    $("#chk_casilla_derivada").prop("checked", true);
+                    $("#chk_presencial_derivada").prop("checked", false);
 
+
+                }
+                if ($('#chk_casilla_derivada').prop("checked") == false) {
+                    $("#chk_casilla_derivada").prop("checked", true);
+                }
+            })
+
+            $('#chk_presencial_derivada').on('change', function (event) {
+                if ($('#chk_presencial_derivada').prop("checked") == true) {
+                    $("#chk_casilla_derivada").prop("checked", false);
+                    $("#chk_presencial_derivada").prop("checked", true);
+
+
+                }
+                if ($('#chk_presencial_derivada').prop("checked") == false) {
+                    $("#chk_presencial_derivada").prop("checked", true);
+                }
+
+            })
 
 
 

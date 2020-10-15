@@ -67,6 +67,29 @@ namespace CRM.Areas.AppPage.Controllers
         }
 
 
+        public ActionResult GestionRRLL()
+        {
+            return View();
+        }
+
+
+        public ActionResult BitacoraLicencia()
+        {
+            return View();
+        }
+
+        public ActionResult Bitacora()
+        {
+            return View();
+        }
+
+
+        // GET: AppPage/Inicio
+        public ActionResult GestionOficina()
+        {
+            return View();
+        }
+
 
         [HttpPost]
         public ActionResult Upload()

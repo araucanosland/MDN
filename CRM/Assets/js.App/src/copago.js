@@ -760,21 +760,26 @@ function cargaDatosDeContacto(rutAf, destino = null) {
         $.each(contac, function (i, e) {
             var colorPorc = '';
             var alertFecha = '';
+            var icon = '--';
 
             if (e.PorcIndice > 70) {
-                var colorPorc = 'pull-left badge badge-success'
+                var colorPorc = 'badge-success'
+                icon = '<i class="ion-checkmark">';
             }
             if (e.PorcIndice > 40 && e.PorcIndice < 69) {
-                var colorPorc = 'pull-left badge badge-warning'
+                var colorPorc = 'badge-warning'
             }
             if (e.PorcIndice < 39) {
-                var colorPorc = 'pull-left badge badge-danger'
+                var colorPorc = 'badge-danger'
+                icon = '!';
             }
             if (e.FechaContacto.toFecha() === "01-01-1900") {
                 alertFecha = e.FechaContacto.toFecha() + '<i class="badge badge-danger badge-stat badge-icon pull-right add-tooltip" style="position: static; data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Se debe Actualizar Contacto">!</i>'
                 $("#afiContac").css({ 'display': 'block' })
             }
-            else { alertFecha = e.FechaContacto.toFecha() }
+            else {
+                alertFecha = e.FechaContacto.toFecha() + '<i class="badge ' + colorPorc + ' badge-stat badge-icon pull-right add-tooltip" style="position: static; data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Se debe Actualizar Contacto">' + icon + '</i></i>'
+            }
 
             var destinoDefault = destino == null ? "#bdy_datos_contactos_copago" : destino;
             $(destinoDefault)
@@ -796,7 +801,7 @@ function cargaDatosDeContacto(rutAf, destino = null) {
                                 var indice = $(this).val();
                                 var valorD = e.ValorDato;
                                 var ofici = getCookie("Oficina");
-                                $.SecGetJSON(BASE_URL + "/motor/api/Contactos/actualiza-indice-contacto", { Indice: indice, RutAfi: rutAf, ValorDato: valorD, Oficina: ofici }, function (datos) {
+                                $.SecGetJSON(BASE_URL + "/motor/api/Contactos/actualiza-indice-contacto", { Indice: indice, RutAfi: rutCont, ValorDato: valorD, Oficina: ofici }, function (datos) {
 
                                     cargaDatosDeContacto(rutAf);
 

@@ -47,7 +47,8 @@ namespace CRM.Business.Entity
         public string rutusuario { get; set; }
         public bool cartaAutorizacion { get; set; }
         public bool Faltafirmaempleador { get; set; }
-
+        public int EtapaId { get; set; }
+        public bool Mediconoexiste { get; set; }
 
         public DocumentosFaltantesLM()
         {
@@ -90,10 +91,10 @@ namespace CRM.Business.Entity
             rutusuario = string.Empty;
             cartaAutorizacion = false;
             Faltafirmaempleador = false;
-
+            Mediconoexiste = false;
         }
 
-        public DocumentosFaltantesLM(string folioLicencia, string rutAfiliado, long codigoIngresoLM, bool liquidacion1, bool liquidacion2, bool liquidacion3, bool liquidacion4, bool liquidacion5, bool liquidacion6, bool certificadoRenta, bool acredita90, bool acredita180, bool otros, string comentarios, bool faltaDocumentacion, bool certificadoAfiliacionAFP, bool certPagPensiones, string TipoSeleccion, bool imagen, bool Diagnostico, bool sinFirma, bool Contrato, bool cedular_Identidad, bool seccion_C, bool certificado_Nacimiento, bool Mutual, bool Isapre, string Fechaliquidacion1, string Fechaliquidacion2, string Fechaliquidacion3, string Fechaliquidacion4, string Fechaliquidacion5, string Fechaliquidacion6, string rutUsuario, bool CartaAutorizacion, bool faltaFirmaempleador)
+        public DocumentosFaltantesLM(string folioLicencia, string rutAfiliado, long codigoIngresoLM, bool liquidacion1, bool liquidacion2, bool liquidacion3, bool liquidacion4, bool liquidacion5, bool liquidacion6, bool certificadoRenta, bool acredita90, bool acredita180, bool otros, string comentarios, bool faltaDocumentacion, bool certificadoAfiliacionAFP, bool certPagPensiones, string TipoSeleccion, bool imagen, bool Diagnostico, bool sinFirma, bool Contrato, bool cedular_Identidad, bool seccion_C, bool certificado_Nacimiento, bool Mutual, bool Isapre, string Fechaliquidacion1, string Fechaliquidacion2, string Fechaliquidacion3, string Fechaliquidacion4, string Fechaliquidacion5, string Fechaliquidacion6, string rutUsuario, bool CartaAutorizacion, bool faltaFirmaempleador, bool mediconoexiste)
         {
             FolioLicencia = folioLicencia;
             RutAfiliado = rutAfiliado;
@@ -131,6 +132,9 @@ namespace CRM.Business.Entity
             rutusuario = rutUsuario;
             cartaAutorizacion = CartaAutorizacion;
             Faltafirmaempleador = faltaFirmaempleador;
+            mediconoexiste = Mediconoexiste;
+
+
         }
     }
 }

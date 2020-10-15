@@ -196,8 +196,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\AppPage\Controllers\AcuentaController.cs" />
     <Compile Include="Areas\AppPage\Controllers\AtencionClienteController.cs" />
     <Compile Include="Areas\AppPage\Controllers\CallBackController.cs" />
+    <Compile Include="Areas\AppPage\Controllers\CallBackTAMController.cs" />
     <Compile Include="Areas\AppPage\Controllers\CallCenterController.cs" />
     <Compile Include="Areas\AppPage\Controllers\CampanaPexController.cs" />
     <Compile Include="Areas\AppPage\Controllers\CarteraFFVVController.cs" />
@@ -205,6 +207,7 @@
     <Compile Include="Areas\AppPage\Controllers\CosalController.cs" />
     <Compile Include="Areas\AppPage\Controllers\DistribucionWappController.cs" />
     <Compile Include="Areas\AppPage\Controllers\MantenedoresController.cs" />
+    <Compile Include="Areas\AppPage\Controllers\PortabilidadController.cs" />
     <Compile Include="Areas\AppPage\Controllers\RecertificaciónController.cs" />
     <Compile Include="Areas\AppPage\Controllers\SegurosController.cs" />
     <Compile Include="Areas\AppPage\Controllers\TamPensionadoController.cs" />
@@ -388,11 +391,13 @@
     <Content Include="Assets\js.App\jspdf.plugin.split_text_to_size.js" />
     <Content Include="Assets\js.App\jspdf.plugin.standard_fonts_metrics.js" />
     <Content Include="Assets\js.App\printThis.js" />
+    <Content Include="Assets\js.App\src\Acuenta.js" />
     <Content Include="Assets\js.App\src\acuerdo_pagos.js" />
     <Content Include="Assets\js.App\src\atencion-cliente.js" />
     <Content Include="Assets\js.App\src\beneficios.js" />
     <Content Include="Assets\js.App\src\BuscadorGrilla.js" />
     <Content Include="Assets\js.App\src\call-back.js" />
+    <Content Include="Assets\js.App\src\callbackTAM.js" />
     <Content Include="Assets\js.App\src\CargasFamiliares.js" />
     <Content Include="Assets\js.App\src\contactabilidad-empresa.js" />
     <Content Include="Assets\js.App\src\copago.js" />
@@ -415,6 +420,7 @@
     <Content Include="Assets\js.App\src\oferta.js" />
     <Content Include="Assets\js.App\src\pensionados.js" />
     <Content Include="Assets\js.App\src\pex.js" />
+    <Content Include="Assets\js.App\src\portabilidad.js" />
     <Content Include="Assets\js.App\src\recertificación.js" />
     <Content Include="Assets\js.App\src\seguros.js" />
     <Content Include="Assets\js.App\src\seguro_cesantia.js" />
@@ -604,10 +610,13 @@
     <Content Include="Areas\AppPage\Views\Licencias\ListarRRLL.cshtml" />
     <Content Include="Areas\AppPage\Views\TamPensionado\Index.cshtml" />
     <Content Include="Assets\tam\data\tam.json" />
-
     <Content Include="Areas\AppPage\Views\TamPensionado\Detail.cshtml" />
     <Content Include="Areas\AppPage\Views\TamPensionado\Query.cshtml" />
-
+    <Content Include="Areas\AppPage\Views\Licencias\GestionRRLL.cshtml" />
+    <Content Include="Areas\AppPage\Views\Acuenta\Index.cshtml" />
+    <Content Include="Areas\AppPage\Views\CallBackTAM\Index.cshtml" />
+    <Content Include="Areas\AppPage\Views\Licencias\Bitacora.cshtml" />
+    <Content Include="Areas\AppPage\Views\Portabilidad\Index.cshtml" />
     <None Include="Properties\PublishProfiles\CharlyMOTOR.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\Settings.settings">

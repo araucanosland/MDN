@@ -80,6 +80,7 @@ namespace CRM.Business.Entity.Clases
         public int rutusuario { get; set; }
         public int cartaAutorizacion { get; set; }
         public int FaltaFirmaempleador { get; set; }
+        public int mediconoexiste { get; set; }
     }
 
 
@@ -141,7 +142,7 @@ namespace CRM.Business.Entity.Clases
         public string Telefono { get; set; }
         public int EsBanner { get; set; }
         public int firmaEmpleador { get; set; }
-
+        public int mediconoexiste { get; set; }
         public List<WebDocumentacion> DocumentacionLM { get; set; }
         // 
 

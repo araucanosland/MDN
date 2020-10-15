@@ -1943,6 +1943,31 @@ $(function () {
 
 
     $(document).on('click', 'input:radio[name=inline-form-radioInteres]', function () {
+        let cargo;
+        let rut = getCookie('Rut')
+
+        if (this.value == 1) {
+            fetch(`http://${motor_api_server}:4002/pensionados/perfil-gestion/${rut}`, {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'default'
+            })
+                .then(response => response.json())
+                .then(datos => {
+                    if (datos[0].rut != undefined) {
+                        if (datos[0].perfil == 1) {
+                            cargo = 'Jefe Servicio al Cliente'
+                        }
+                        else if (datos[0].perfil == 2) {
+                            cargo = 'Agente'
+                        }
+                    }
+                    else {
+                        cargo = getCookie('Cargo')
+                    }
+                })
+        }
+
         switch (this.value) {
             case "1":
                 $("#Interes_NO").css('display', 'none')
@@ -1962,15 +1987,38 @@ $(function () {
                 })
                     .then(response => response.json())
                     .then(datos => {
-                        $.each(datos, function (i, e) {
-                            var lb = $('<label>').prop('for', `contacto-rdInteresSi-${e.id}`).text(e.nombre);
-                            var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'gRbInteresSI', id: `contacto-rdInteresSi-${e.id}` }).val(e.id)
-                            var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
-                            $("#divInteresSI").append(dv)
-                        });
+                        if (cargo == 'Agente') {
+                            $.each(datos, function (i, e) {
+                                if (e.id != 105 & e.id != 106 & e.id != 107 & e.id != 108) {
+                                    var lb = $('<label>').prop('for', `contacto-rdInteresSi-${e.id}`).text(e.nombre);
+                                    var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'gRbInteresSI', id: `contacto-rdInteresSi-${e.id}` }).val(e.id)
+                                    var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
+                                    $("#divInteresSI").append(dv)
+                                }
+                            });
+                        }
+                        else if (cargo == 'Jefe Servicio al Cliente' || cargo == 'Jefe Plataforma') {
+                            $.each(datos, function (i, e) {
+                                if (e.id != 105 & e.id != 106 & e.id != 109 & e.id != 110) {
+                                    var lb = $('<label>').prop('for', `contacto-rdInteresSi-${e.id}`).text(e.nombre);
+                                    var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'gRbInteresSI', id: `contacto-rdInteresSi-${e.id}` }).val(e.id)
+                                    var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
+                                    $("#divInteresSI").append(dv)
+                                }
+                            });
+                        }
+                        else {
+                            $.each(datos, function (i, e) {
+                                if (e.id != 107 & e.id != 108 & e.id != 109 & e.id != 110) {
+                                    var lb = $('<label>').prop('for', `contacto-rdInteresSi-${e.id}`).text(e.nombre);
+                                    var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'gRbInteresSI', id: `contacto-rdInteresSi-${e.id}` }).val(e.id)
+                                    var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
+                                    $("#divInteresSI").append(dv)
+                                }
+                            });
+                        }
                     });
                 break;
-
 
             case "2":
                 $("#Interes_Si").css('display', 'none')

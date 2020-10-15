@@ -24,21 +24,26 @@ function cargaDatosDeContacto(rutAf, destino = null) {
         $.each(contac, function (i, e) {
             var colorPorc = '';
             var alertFecha = '';
+            var icon = '--';
 
             if (e.PorcIndice > 70) {
-                var colorPorc = 'pull-left badge badge-success'
+                var colorPorc = 'badge-success'
+                icon = '<i class="ion-checkmark">';
             }
             if (e.PorcIndice > 40 && e.PorcIndice < 69) {
-                var colorPorc = 'pull-left badge badge-warning'
+                var colorPorc = 'badge-warning'
             }
             if (e.PorcIndice < 39) {
-                var colorPorc = 'pull-left badge badge-danger'
+                var colorPorc = 'badge-danger'
+                icon = '!';
             }
             if (e.FechaContacto.toFecha() === "01-01-1900") {
                 alertFecha = e.FechaContacto.toFecha() + '<i class="badge badge-danger badge-stat badge-icon pull-right add-tooltip" style="position: static; data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Se debe Actualizar Contacto">!</i>'
                 $("#afiContac").css({ 'display': 'block' })
             }
-            else { alertFecha = e.FechaContacto.toFecha() }
+            else {
+                alertFecha = e.FechaContacto.toFecha() + '<i class="badge ' + colorPorc + ' badge-stat badge-icon pull-right add-tooltip" style="position: static; data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Se debe Actualizar Contacto">' + icon + '</i></i>'
+            }
 
             var destinoDefault = destino == null ? "#bdy_datos_contactos" : destino;
             $(destinoDefault)
@@ -989,7 +994,7 @@ $(function () {
                 formatter: function (value, row, index) {
                     //sergio
                     //return '<a href="#" class="btn-link" data-target="#mdl_data" data-toggle="modal" data-tieneEncuesta="' + row.TieneEncuesta + '" data-periodo="' + row.Seguimiento.Periodo + '" data-rutafipsu="' + value + '" data-rut="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-tipo="' + row.Seguimiento.TipoAsignacion + '">' + value.toMoney(0).toString() + '-' + row.Seguimiento.Afiliado_Dv + '</a>';
-                    return '<a href="#" class="btn-link" data-target="#modal_beneficios" data-toggle="modal" data-rutBnf="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-nombreBnf="' + row.Seguimiento.Nombre + ' ' + row.Seguimiento.Apellido + '"data-origen="' + 'Comercial' + '" data-tieneEncuesta="' + row.TieneEncuesta + '" data-ofertabnf="' + row.Seguimiento.OFERTA_FINAL_TOTAL + '" data-periodo="' + row.Seguimiento.Periodo + '" data-rutafipsu="' + value + '" data-rut="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-tipo="' + row.Seguimiento.TipoAsignacion + '">' + value.toMoney(0).toString() + '-' + row.Seguimiento.Afiliado_Dv + '</a>'; 
+                    return '<a href="#" class="btn-link" data-target="#modal_beneficios" data-toggle="modal" data-rutBnf="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-nombreBnf="' + row.Seguimiento.Nombre + ' ' + row.Seguimiento.Apellido + '"data-origen="' + 'Comercial' + '" data-tieneEncuesta="' + row.TieneEncuesta + '" data-ofertabnf="' + row.Seguimiento.OFERTA_FINAL_TOTAL + '" data-periodo="' + row.Seguimiento.Periodo + '" data-rutafipsu="' + value + '" data-rut="' + value + '-' + row.Seguimiento.Afiliado_Dv + '" data-tipo="' + row.Seguimiento.TipoAsignacion + '">' + value.toMoney(0).toString() + '-' + row.Seguimiento.Afiliado_Dv + '</a>';
                 }
             },
             {
@@ -1269,7 +1274,6 @@ $(function () {
         $('#modal_beneficios').modal('hide')
 
 
-
         var rut_tam = $('#txtRutComercial').val()
 
         if (rut_tam != undefined) {
@@ -1297,14 +1301,6 @@ $(function () {
         }
 
 
-
-
-
-
-
-
-
-        // appVentaRemota.obtenerBanco()
 
 
 
@@ -1846,6 +1842,9 @@ $(function () {
                 e.preventDefault();
                 var $form = $(e.target);
 
+                var valContacto = $('#ges_estado').val();
+                var valSubContacto = $('#ges_subestado').val();
+
                 $.SecPostJSON(BASE_URL + "/motor/api/Gestion/guardar-gestion", $form.serialize(), function (respuesta) {
 
                     if (respuesta.Estado === 'OK') {
@@ -1870,6 +1869,19 @@ $(function () {
                         }
 
                         $("#datos-gestion").bootstrapValidator('resetForm', true);
+
+                        if (valContacto == 3) {
+                            $("#tabContacComercial").tab('show');
+                            $("#msjContactComercial").css('display', 'block');
+                        }
+                        else if (valContacto == 2) {
+                            if (valSubContacto == 201 || valSubContacto == 202 || valSubContacto == 203 || valSubContacto == 204 || valSubContacto == 205) {
+
+                                $("#tabContacComercial").tab('show');
+                                $("#msjContactComercial").css('display', 'block');
+                            }
+                        }
+
                     } else {
                         $.niftyNoty({
                             type: 'danger',
@@ -2161,72 +2173,11 @@ $(function () {
         });
 
         appVentaRemota.cargaLeadFiltroCall(trutAfiliado)
+        $("#msjContactComercial").css('display', 'none');
     });
 
-    $('#form-registro-contacto_norm').bootstrapValidator({
-        excluded: [':disabled', ':not(:visible)'],
-        feedbackIcons: [],
-        fields: {
-            cbtippContac_norm: {
-                validators: {
-                    notEmpty: {
-                        message: 'Debe seleccionar un tipo de Contacto'
-                    }
-                }
-            },
-            cbClasificacionConctac_norm: {
-                validators: {
-                    notEmpty: {
-                        message: 'Debe seleccionar una clasificación de contacto'
-                    }
-                }
-            },
-            afi_NewContacto_norm: {
-                validators: {
-                    notEmpty: {
-                        message: 'Debe ingresar un contacto'
-                    },
-                    stringLength: {
-                        message: 'No pueden ser mas de 100 caracteres',
-                        max: function (value, validator, $field) {
-                            return 150 - (value.match(/\r/g) || []).length;
-                        }
-                    }
-                }
-            }
-        }
-    }).on('success.form.bv', function (e) {
-        // Prevén que se mande el formulario
-        e.preventDefault();
-        var $form = $(e.target);
 
-        var rutClie = $('#txtRutAfiNorm').val()
-        rutClie = rutClie.substring(0, rutClie.length - 2)
 
-        var objeto_envio_contacto = {
-            RutAfiliado: rutClie,
-            IdTipoContac: $('#cbtippContac_norm').val(),
-            GlosaTipoContac: $('select[name="cbtippContac_norm"] option:selected').text(),
-            IdClasifContac: $('#cbClasificacionConctac_norm').val(),
-            GlosaClasifContac: $('select[name="cbClasificacionConctac_norm"] option:selected').text(),
-            DatosContac: $('#afi_NewContacto_norm').val()
-        }
-        $.SecGetJSON(BASE_URL + "/motor/api/Contactos/ingresa-nuevo-contacto", objeto_envio_contacto, function (datos) {
-            $("#form-registro-contacto_norm").bootstrapValidator('resetForm', true);
-            // $('#demo-lg-modal-new').modal('hide');
-            cargaDatosDeContacto(rutCont, '#bdy_datos_contactos_normalizacion');
-            $("#btn-add-contac-normalizacion").trigger("click");
-            $.niftyNoty({
-                type: 'success',
-                icon: 'pli-like-2 icon-2x',
-                message: 'Contacto Guardado correctamente.',
-                container: '#tab-gestion-3',
-                timer: 5000
-            });
-        });
-        return false;
-
-    });
 
     $('#form-registro-contacto_acuerdo_pago').bootstrapValidator({
         excluded: [':disabled', ':not(:visible)'],
@@ -2351,7 +2302,6 @@ $(function () {
         });
 
     });
-  
 
 
 

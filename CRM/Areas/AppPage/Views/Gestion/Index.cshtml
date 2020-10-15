@@ -498,9 +498,7 @@
                                         <th data-field="ultimaGestion.fechaCompromiso" data-sortable="true">Prox. Gestion</th>
                                         <th data-field="gestiones" data-formatter="subEstadoAfiliadoFormatter" data-sortable="true">Estado</th>
                                         <th data-field="gestiones.estado" data-formatter="estadoAfiliadoFormatter" data-sortable="true">Sub-Estado</th>
-
                                         <th data-field="listaTrabajo.nombre" data-sortable="true">Lista Trabajo</th>
-
                                     </tr>
                                 </thead>
                             </table>
@@ -663,7 +661,7 @@
                                     <a data-toggle="tab" href="#tab-gestion-2" aria-expanded="false">Historial de Gestión</a>
                                 </li>
                                 <li class="">
-                                    <a data-toggle="tab" href="#tab-gestion-3" aria-expanded="false">Contactabilidad</a>
+                                    <a data-toggle="tab"  id="tabContacComercial" href="#tab-gestion-3" aria-expanded="false">Contactabilidad</a>
                                 </li>
                                 <li class="">
                                     <a data-toggle="tab" href="#tab-gestion-4" aria-expanded="false">Filtros</a>
@@ -883,6 +881,9 @@
                                     </div>
                                 </div>
                                 <div id="tab-gestion-3" class="tab-pane fade">
+                                    <div class="alert alert-warning" id="msjContactComercial" style="display:none;">
+                                        <strong>Contacto!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                                    </div>
                                     <div class="row">
                                         <button type="button" id="btn-add-contac" class="btn btn-primary btn-xs">+</button>
                                     </div>
@@ -1124,7 +1125,7 @@
                             <a data-toggle="tab" href="#tab-seguro_cesantia-2" aria-expanded="false">Historial de Gestión</a>
                         </li>
                         <li class="">
-                            <a data-toggle="tab" href="#tab-seguro_cesantia-3" aria-expanded="false">Contactabilidad</a>
+                            <a data-toggle="tab" id="tabContacSeguro" href="#tab-seguro_cesantia-3" aria-expanded="false">Contactabilidad</a>
                         </li>
                         <li class="" style="display:none;">
                             <a data-toggle="tab" href="#tab-seguro_cesantia-4" aria-expanded="false">Filtros</a>
@@ -1212,6 +1213,11 @@
                             </div>
                         </div>
                         <div id="tab-seguro_cesantia-3" class="tab-pane fade">
+
+                            <div class="alert alert-warning" id="msjContactSeguro" style="display:none;">
+                                <strong>Warning!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                            </div>
+
                             <div class="row">
                                 <button type="button" id="btn-add-contac-seguro_cesantia" class="btn btn-primary btn-xs">+</button>
                             </div>
@@ -1357,7 +1363,7 @@
                             <a data-toggle="tab" href="#tab-normalizacion-2" aria-expanded="false">Historial de Gestión</a>
                         </li>
                         <li class="">
-                            <a data-toggle="tab" href="#tab-normalizacion-3" aria-expanded="false">Contactabilidad</a>
+                            <a data-toggle="tab" id="tabNormContact" href="#tab-normalizacion-3" aria-expanded="false">Contactabilidad</a>
                         </li>
                         <li class="" style="display:none;">
                             <a data-toggle="tab" href="#tab-normalizacion-4" aria-expanded="false">Filtros</a>
@@ -1432,6 +1438,11 @@
                             </div>
                         </div>
                         <div id="tab-normalizacion-3" class="tab-pane fade">
+
+                            <div class="alert alert-warning" id="msjContactNormalizacion" style="display:none;">
+                                <strong>Warning!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                            </div>
+
                             <div class="row">
                                 <button type="button" id="btn-add-contac-normalizacion" class="btn btn-primary btn-xs">+</button>
                             </div>
@@ -1586,7 +1597,7 @@
                             <a data-toggle="tab" href="#tab-acuerdo_pago-2" aria-expanded="false">Historial de Gestión</a>
                         </li>
                         <li class="">
-                            <a data-toggle="tab" href="#tab-acuerdo_pago-3" aria-expanded="false">Contactabilidad</a>
+                            <a data-toggle="tab" id="tabContacAcuerdo" href="#tab-acuerdo_pago-3" aria-expanded="false">Contactabilidad</a>
                         </li>
                     </ul>
 
@@ -1673,6 +1684,9 @@
                             </div>
                         </div>
                         <div id="tab-acuerdo_pago-3" class="tab-pane fade">
+                            <div class="alert alert-warning" id="msjContactAcuerdoP" style="display:none;">
+                                <strong>Contacto!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                            </div>
                             <div class="row">
                                 <button type="button" id="btn-add-contac_acuerdo_pago" class="btn btn-primary btn-xs">+</button>
                             </div>
@@ -1816,7 +1830,7 @@
                             <a data-toggle="tab" href="#tab-historial-bnf" aria-expanded="false">HISTORIAL</a>
                         </li>
                         <li class="">
-                            <a data-toggle="tab" href="#tab-contabilidad-bnf" aria-expanded="false">CONTACTABILIDAD</a>
+                            <a data-toggle="tab" id="tabContacBeneficio" href="#tab-contabilidad-bnf" aria-expanded="false">CONTACTABILIDAD</a>
                         </li>
                     </ul>
                     <div class="tab-content" style="box-shadow: 0 0 0 !important;">
@@ -2012,10 +2026,8 @@
                                                         <input class="magic-checkbox" type="checkbox" id="comodin_Telemedicina">
                                                         <label class="titulo_r" for="comodin_Telemedicina">Telemedicina</label>
 
-
                                                         <input class="magic-checkbox" type="checkbox" id="comodin_Farmacias">
                                                         <label class="titulo_r" for="comodin_Farmacias">Uso Farmacias</label>
-
 
                                                         <input class="magic-checkbox" type="checkbox" id="despacho_m">
                                                         <label class="titulo_r" for="despacho_m">Despacho medicamentos (RM)</label>
@@ -2098,6 +2110,9 @@
                         </div>
 
                         <div id="tab-contabilidad-bnf" class="tab-pane fade">
+                            <div class="alert alert-warning" id="msjContactBeneficio" style="display:none;">
+                                <strong>Contacto!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                            </div>
                             <div class="row">
                                 <button type="button" id="btn-add-contac_beneficio" class="btn btn-primary btn-xs">+</button>
                             </div>
