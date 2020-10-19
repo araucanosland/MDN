@@ -20,6 +20,8 @@
                 <div class="row">
                     <div class="col-sm-4 text-xs-center">
                         <div class="form-group">
+                            <label class="control-label">CAMPAÑA</label>
+
                             <select class="form-control" id="dllCampana" name="dllCampana" v-model="modelos.campana">
                                 <option value="">Seleccione...</option>
                                 <option v-for="campRetencion in filtros.campana" :value="campRetencion.nombre">{{campRetencion.nombre}}</option>
@@ -171,7 +173,7 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label class="control-label">OFERTA CREDITO</label>
-                                                <input class="form-control" type="text" id="txtOfertaModalAcuenta" :value="dataModal.oferta_monto" disabled>
+                                                <input class="form-control money" type="text" id="txtOfertaModalAcuenta" :value="dataModal.oferta_monto" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -196,6 +198,21 @@
                                                     <option value="">Seleccione...</option>
                                                     <option v-for="subEstadoAcuentaM in filtros.subEstadosModal" :value="subEstadoAcuentaM.id">{{subEstadoAcuentaM.nombre}}</option>
                                                 </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="checkBeneficios" style="display:none;">
+                                        <div class="col-sm-12">
+                                            <div class="panel" style="border-radius: 7px; border: 1px solid #8bc34a;">
+                                                <div class="panel-body">
+
+                                                    <div class="form-group pad-ver">
+                                                        <label class="col-md-3 control-label"><strong>Beneficios:</strong></label>
+                                                        <div class="col-md-9">
+                                                            <div id="dvBeneficiosG" class="checkbox" style="margin-top: 0px;"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

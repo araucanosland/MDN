@@ -185,6 +185,78 @@ var appModalAcuenta = new Vue({
         },
 
         handleSubmitGuadarGestion() {
+
+            let contador = 0;
+            let beneficio_1 = "";
+            let beneficio_2 = "";
+            let beneficio_3 = "";
+            let beneficio_4 = "";
+            let beneficio_5 = "";
+            let beneficio_6 = "";
+            let beneficio_7 = "";
+            let beneficio_8 = "";
+            let bnf = [];
+
+            if ($('#dllSubEstadoModal').val() == 102) {
+
+                if ($('#beneficio_1:checked').val() == 'on') {
+                    beneficio_1 = $('#lbBeneficio_1').html();
+                    contador = contador + 1;
+                    bnf.push(beneficio_1)
+                }
+
+                if ($('#beneficio_2:checked').val() == 'on') {
+                    beneficio_2 = $('#lbBeneficio_2').html();
+                    contador = contador + 1;
+                    bnf.push(beneficio_2)
+                }
+
+                if ($('#beneficio_3:checked').val() == 'on') {
+                    beneficio_3 = $('#lbBeneficio_3').html();
+                    contador = contador + 1;
+                    bnf.push(beneficio_3)
+                }
+
+                if ($('#beneficio_4:checked').val() == 'on') {
+                    beneficio_4 = $('#lbBeneficio_4').html();
+                    contador = contador + 1;
+                    bnf.push(beneficio_4)
+                }
+
+                if ($('#beneficio_5:checked').val() == 'on') {
+                    beneficio_5 = $('#lbBeneficio_5').html();
+                    contador = contador + 1;
+                    bnf.push(beneficio_5)
+                }
+
+                if ($('#beneficio_6:checked').val() == 'on') {
+                    beneficio_6 = $('#lbBeneficio_6').html();
+                    contador = contador + 1;
+                    bnf.push(beneficio_6)
+                }
+
+                if ($('#beneficio_7:checked').val() == 'on') {
+                    beneficio_7 = $('#lbBeneficio_7').html();
+                    contador = contador + 1;
+                    bnf.push(beneficio_7)
+                }
+
+                if ($('#beneficio_8:checked').val() == 'on') {
+                    beneficio_8 = $('#lbBeneficio_8').html();
+                    contador = contador + 1;
+                    bnf.push(beneficio_8)
+                }
+                if (contador == 0) {
+                    $(Swal.fire({
+                        title: 'Beneficios',
+                        html: `<ul><li class="msg-part">Debe seleccionar uno o mas beneficios</li></ul>`,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    }));
+                    return false;
+                }
+            }
+
             if ($('#dllEstadoModal').val() == '') {
                 $.niftyNoty({
                     type: 'danger',
@@ -223,6 +295,14 @@ var appModalAcuenta = new Vue({
                 observacion: $('#txtobservacion').val(),
                 rut_ejecutivo: getCookie('Rut'),
                 oficina: parseInt(getCookie('Oficina')),
+                beneficio_1: beneficio_1,
+                beneficio_2: beneficio_2,
+                beneficio_3: beneficio_3,
+                beneficio_4: beneficio_4,
+                beneficio_5: beneficio_5,
+                beneficio_6: beneficio_6,
+                beneficio_7: beneficio_7,
+                beneficio_8: beneficio_8,
             };
 
             fetch(`http://${motor_api_server}:4002/acuenta/guarda-gestion-acuenta`, {
@@ -252,6 +332,30 @@ var appModalAcuenta = new Vue({
 
             });
 
+            if (bnf.length > 0) {
+                var rut = $('#txtRutModalAcuenta').val();
+                rut = rut.substring(0, rut.length - 2)
+                $.each(bnf, function (i, e) {
+                    const formDataBnf = {
+                        rut: rut,
+                        beneficio: bnf[i],
+                    }
+                    fetch(`http://${motor_api_server}:4002/acuenta/guarda-beneficio`, {
+                        method: 'POST',
+                        body: JSON.stringify(formDataBnf),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Token': getCookie('Token')
+                        }
+                    }).then(async (response) => {
+                        if (!response.ok) {
+                            return false;
+                        }
+                        appModalAcuenta.obtenerBeneficiosUsados(rut);
+                    });
+                });
+            }
+
             setTimeout(function () {
                 appModalAcuenta.obtenerHistorialAcuenta($('#txtRutModalAcuenta').val())
             }, 300);
@@ -268,7 +372,35 @@ var appModalAcuenta = new Vue({
                 subEstadosModal: '',
             }
             $('#txtobservacion').val("");
+            $("#dvBeneficiosG").html("");
+            $("#checkBeneficios").css('display', 'none');
         }
+    }
+});
+
+$('#dllSubEstadoModal').change(function (e) {
+    e.preventDefault();
+    $("#dvBeneficiosG").html("");
+    if ($(this).val() == 102) {
+        fetch(`http://${motor_api_server}:4002/acuenta/lista-beneficios-vigentes`, {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'default'
+        })
+            .then(response => response.json())
+            .then(datos => {
+                $.each(datos, function (i, e) {
+                    var inp = $('<input>').addClass('magic-checkbox').prop({ type: 'checkbox', id: `beneficio_${i + 1}` })//.val(e.beneficio)
+                    var lb = $('<label>').addClass('titulo_r').prop('for', `beneficio_${i + 1}`).prop({ id: `lbBeneficio_${i + 1}` }).css('font-weight', 'bold').text(e.beneficio);
+                    var dv = $('<div>').addClass('checkbox').append(inp).append(lb)
+                    $("#dvBeneficiosG").append(dv)
+                });
+            });
+        $("#checkBeneficios").css('display', 'block');
+    }
+    else {
+        $("#dvBeneficiosG").html("");
+        $("#checkBeneficios").css('display', 'none');
     }
 });
 
@@ -295,8 +427,7 @@ $('#modal_acuenta').on('show.bs.modal', async (event) => {
     appModalAcuenta.obtenerBeneficiosUsados(rutNum);
     appModalAcuenta.obtenerBeneficiosVigentes();
     cargaDatosDeContacto(rutNum);
-
-
+    formatMoneyPort();
 });
 
 $('#modal_acuenta').on('hidden.bs.modal', function (e) {
@@ -361,7 +492,7 @@ $('#form-registro-contacto_acuenta').bootstrapValidator({
     }
     $.SecGetJSON(BASE_URL + "/motor/api/Contactos/ingresa-nuevo-contacto", objeto_envio_contacto, function (datos) {
         $("#form-registro-contacto_acuenta").bootstrapValidator('resetForm', true);
-        cargaDatosDeContacto(rutCont, 'bdy_datos_contactos_acuenta');
+        cargaDatosDeContacto(rutCont);
         $("#btn-add-contac_acuenta").trigger("click");
         $.niftyNoty({
             type: 'success',
@@ -372,18 +503,15 @@ $('#form-registro-contacto_acuenta').bootstrapValidator({
         });
     });
 
+    });
+
+function cargaDatosDeContacto(rutAf) {
+
+    $("#bdy_datos_contactos_acuenta > tr").remove();
+    $("#bdy_datos_contactos_acuenta").html("");
+
 });
 
-function cargaDatosDeContacto(rutAf, destino = null) {
-
-    if (destino != null) {
-        $(`${destino} > tr`).remove();
-        $(destino).html("");
-    }
-    else {
-        $("#bdy_datos_contactos_acuenta > tr").remove();
-        $("#bdy_datos_contactos_acuenta").html("");
-    }
     $.SecGetJSON(BASE_URL + "/motor/api/Contactos/lista-contactos-afi", { RutAfiliado: rutAf }, function (contac) {
         $.each(contac, function (i, e) {
             var colorPorc = '';
@@ -410,8 +538,7 @@ function cargaDatosDeContacto(rutAf, destino = null) {
                 alertFecha = e.FechaContacto.toFecha() + '<i class="badge ' + colorPorc + ' badge-stat badge-icon pull-right add-tooltip" style="position: static; data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Se debe Actualizar Contacto">' + icon + '</i></i>'
             }
 
-            var destinoDefault = destino == null ? "#bdy_datos_contactos_acuenta" : destino;
-            $(destinoDefault)
+            $("#bdy_datos_contactos_acuenta")
                 .append(
                     $("<tr>")
                         .append($("<td>").append(
@@ -464,4 +591,13 @@ $('.numero').keyup(function () {
     }
     $(this).val(val);
 });
+
+function formatMoneyPort() {
+    setTimeout(function () {
+        $('.money').each(function () {
+            num = $(this).val()
+            $(this).val(num.toMoney2());
+        });
+    }, 1000);
+}
 
