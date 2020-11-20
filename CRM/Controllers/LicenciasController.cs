@@ -596,19 +596,79 @@ namespace CRM.Controllers
                 Retorno.Add(new BaseLicencia
                 {
                     IngresoData = lc,
-                    //EstadoData = EstadolicenciaDataAccess.ObtenerPorID(lc.CodEstado),
-                    //NombreEjecutivo = DotacionDataAccess.ObtenerByRut(lc.RutEjecutivo).Nombres
                 });
             });
 
             return Retorno;
 
-
-
         }
 
 
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("lista-Lm-Documentos-pendientes")]
+        public IEnumerable<BaseLicencia> ListaLmDocPendientes(string Folio, int codOficina, string Tipo_LM, string Tipo_Convenio)
+        {
 
+            //DateTime eldiadesde = Convert.ToDateTime(diadesde);
+            //DateTime eldiahasta = Convert.ToDateTime(diahasta);
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<Ingresolicencia> ingLc = IngresolicenciaDataAccess.ListaLmDocumentoPendiente(Folio, codOficina, Tipo_LM, Tipo_Convenio, "XLS");
+            List<BaseLicencia> Retorno = new List<BaseLicencia>();
+
+            ingLc.ForEach(lc =>
+            {
+                Retorno.Add(new BaseLicencia
+                {
+                    IngresoData = lc,
+                });
+            });
+
+            return Retorno;
+
+        }
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("lista-LM-pronunciada-no-as400")]
+        public IEnumerable<BaseLicencia> ListaLMPronunciadaNoAs400(string Folio, int codOficina, string Tipo_LM, string Tipo_Convenio)
+        {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<Ingresolicencia> ingLc = IngresolicenciaDataAccess.ListaLMPronunciadaNoAs400(Folio, codOficina, Tipo_LM, Tipo_Convenio, "XLS");
+            List<BaseLicencia> Retorno = new List<BaseLicencia>();
+
+            ingLc.ForEach(lc =>
+            {
+                Retorno.Add(new BaseLicencia
+                {
+                    IngresoData = lc,
+                });
+            });
+
+            return Retorno;
+
+        }
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("lista-LM-Pendiente-Cobro")]
+        public IEnumerable<BaseLicencia> ListaLMPendienteCobro(string Folio, int codOficina, string Tipo_LM, string Tipo_Convenio)
+        {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<Ingresolicencia> ingLc = IngresolicenciaDataAccess.ListaLMPendienteCobro(Folio, codOficina, Tipo_LM, Tipo_Convenio, "XLS");
+            List<BaseLicencia> Retorno = new List<BaseLicencia>();
+
+            ingLc.ForEach(lc =>
+            {
+                Retorno.Add(new BaseLicencia
+                {
+                    IngresoData = lc,
+                });
+            });
+
+            return Retorno;
+
+        }
 
         [AuthorizationRequired]
         [HttpGet]
@@ -1247,6 +1307,209 @@ namespace CRM.Controllers
         }
 
 
+
+        public byte[] CreatePDFDocumentosPendientes(string formatoPdf, DataTable dataTable, string heading = "", bool showSrNo = false, params Columna[] columnsToTake)
+        {
+            string titulo;
+            if (formatoPdf == "Todos")
+                titulo = "";
+            else
+                titulo = formatoPdf;
+            Document doc = new Document(PageSize.LETTER, 50, 50, 50, 50);
+            string cantiadad = dataTable.Rows.Count.ToString();
+            using (MemoryStream output = new MemoryStream())
+            {
+                PdfWriter wri = PdfWriter.GetInstance(doc, output);
+                doc.Open();
+                PdfPTable tblPrueba = new PdfPTable(dataTable.Columns.Count);
+                PdfPRow row = null;
+                float[] widths = new float[] { 4f, 4f, 4f, 4f, 4f, 4f, 4f };
+                iTextSharp.text.Font font5 = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+                iTextSharp.text.Font font6 = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
+                Paragraph header = new Paragraph("Informe Licencia Documentación Pendiente " + titulo.ToString()) { Alignment = Element.ALIGN_CENTER };
+
+
+                tblPrueba.SetWidths(widths);
+
+                tblPrueba.WidthPercentage = 100;
+                int iCol = 0;
+                string colname = "";
+                PdfPCell cell = new PdfPCell(new Phrase("Products"));
+                cell.BorderWidthBottom = 0.75f;
+                cell.Colspan = dataTable.Columns.Count;
+
+                foreach (DataColumn c in dataTable.Columns)
+                {
+
+                    tblPrueba.AddCell(new Phrase(c.ColumnName, font5));
+                }
+
+                foreach (DataRow r in dataTable.Rows)
+                {
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        tblPrueba.AddCell(new Phrase(r[0].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[1].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[2].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[3].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[4].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[5].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[6].ToString(), font5));
+                    }
+                }
+
+
+
+                iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+
+
+                // agregamos titulo y adjuntamos tabla desde base
+                // agregamos titulo y adjuntamos tabla desde base
+                doc.Add(header);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(tblPrueba);
+                doc.Close();
+                return output.ToArray();
+            }
+
+        }
+
+        public byte[] CreatePDFPronunciadasNoAs400(string formatoPdf, DataTable dataTable, string heading = "", bool showSrNo = false, params Columna[] columnsToTake)
+        {
+            string titulo;
+            if (formatoPdf == "Todos")
+                titulo = "";
+            else
+                titulo = formatoPdf;
+            Document doc = new Document(PageSize.LETTER, 50, 50, 50, 50);
+            string cantiadad = dataTable.Rows.Count.ToString();
+            using (MemoryStream output = new MemoryStream())
+            {
+                PdfWriter wri = PdfWriter.GetInstance(doc, output);
+                doc.Open();
+                PdfPTable tblPrueba = new PdfPTable(dataTable.Columns.Count);
+                PdfPRow row = null;
+                float[] widths = new float[] { 4f, 4f, 4f, 4f, 4f };
+                iTextSharp.text.Font font5 = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+                iTextSharp.text.Font font6 = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
+                Paragraph header = new Paragraph("Informe Licencia Pronunciadas No Procesadas AS400" + titulo.ToString()) { Alignment = Element.ALIGN_CENTER };
+
+
+                tblPrueba.SetWidths(widths);
+
+                tblPrueba.WidthPercentage = 100;
+                int iCol = 0;
+                string colname = "";
+                PdfPCell cell = new PdfPCell(new Phrase("Products"));
+                cell.BorderWidthBottom = 0.75f;
+                cell.Colspan = dataTable.Columns.Count;
+
+                foreach (DataColumn c in dataTable.Columns)
+                {
+
+                    tblPrueba.AddCell(new Phrase(c.ColumnName, font5));
+                }
+
+                foreach (DataRow r in dataTable.Rows)
+                {
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        tblPrueba.AddCell(new Phrase(r[0].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[1].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[2].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[3].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[4].ToString(), font5));
+
+                    }
+                }
+
+
+
+                iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+
+
+                // agregamos titulo y adjuntamos tabla desde base
+                // agregamos titulo y adjuntamos tabla desde base
+                doc.Add(header);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(tblPrueba);
+                doc.Close();
+                return output.ToArray();
+            }
+
+        }
+
+
+        public byte[] CreatePDFPendientedeCobro(string formatoPdf, DataTable dataTable, string heading = "", bool showSrNo = false, params Columna[] columnsToTake)
+        {
+            string titulo;
+            if (formatoPdf == "Todos")
+                titulo = "";
+            else
+                titulo = formatoPdf;
+            Document doc = new Document(PageSize.LETTER, 50, 50, 50, 50);
+            string cantiadad = dataTable.Rows.Count.ToString();
+            using (MemoryStream output = new MemoryStream())
+            {
+                PdfWriter wri = PdfWriter.GetInstance(doc, output);
+                doc.Open();
+                PdfPTable tblPrueba = new PdfPTable(dataTable.Columns.Count);
+                PdfPRow row = null;
+                float[] widths = new float[] { 4f, 4f, 4f, 4f, 4f, 4f, 4f };
+                iTextSharp.text.Font font5 = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+                iTextSharp.text.Font font6 = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
+                Paragraph header = new Paragraph("Informe Licencia Pendiente de Cobro " + titulo.ToString()) { Alignment = Element.ALIGN_CENTER };
+
+
+                tblPrueba.SetWidths(widths);
+
+                tblPrueba.WidthPercentage = 100;
+                int iCol = 0;
+                string colname = "";
+                PdfPCell cell = new PdfPCell(new Phrase("Products"));
+                cell.BorderWidthBottom = 0.75f;
+                cell.Colspan = dataTable.Columns.Count;
+
+                foreach (DataColumn c in dataTable.Columns)
+                {
+
+                    tblPrueba.AddCell(new Phrase(c.ColumnName, font5));
+                }
+
+                foreach (DataRow r in dataTable.Rows)
+                {
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        tblPrueba.AddCell(new Phrase(r[0].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[1].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[2].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[3].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[4].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[5].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[6].ToString(), font5));
+                    }
+                }
+
+
+
+                iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+
+
+                // agregamos titulo y adjuntamos tabla desde base
+                // agregamos titulo y adjuntamos tabla desde base
+                doc.Add(header);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(tblPrueba);
+                doc.Close();
+                return output.ToArray();
+            }
+
+        }
+
+
         [HttpGet]
         [Route("export-pdf-mixta-filtros")]
         public HttpResponseMessage ExportarPDFMixtaFiltros(string responsable, string estado, string folio, string diadesde, string diahasta, string formatoLM, int codOficina)
@@ -1565,6 +1828,17 @@ namespace CRM.Controllers
         }
 
 
+        [HttpGet]
+        [Route("listar-Bitacora-CallCenter")]
+        public IEnumerable<LicenciasLMTimeLine> listaBitacoraCallCenter(long codIngreso)
+        {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<LicenciasLMTimeLine> ingLc = IngresolicenciaDataAccess.ObtenerBitacora(codIngreso);
+
+            return ingLc;
+        }
+
+
 
         [AuthorizationRequired]
         [HttpGet]
@@ -1575,7 +1849,7 @@ namespace CRM.Controllers
             int i = 1;
             foreach (var item in ing)
             {
-                long ingLc = IngresolicenciaDataAccess.HitoricoBitacora(item.CodIngreso, item.CodEstado, item.FechaIngreso, item.FechaLicenciaDesde);
+                long ingLc = IngresolicenciaDataAccess.HitoricoBitacora(item.CodIngreso);
                 i++;
             }
 
@@ -1753,7 +2027,6 @@ namespace CRM.Controllers
 
 
 
-
         [HttpGet]
         [Route("reporte-pdf-as400")]
         public HttpResponseMessage ExportarPDFAs400(int codOficina, string diadesde)
@@ -1801,7 +2074,52 @@ namespace CRM.Controllers
 
         }
 
+        [HttpGet]
+        [Route("export-LM-Pendente-Cobro-pdf")]
+        public HttpResponseMessage ExportLMPendenteCobropdf(int codOficina, string diadesde)
+        {
 
+            DateTime elDiadesde = Convert.ToDateTime(diadesde);
+
+            DataTable dt = new DataTable();
+            dt = IngresolicenciaDataAccess.DatosPdf(codOficina, elDiadesde);
+
+            var oficina = dt.Rows[0]["Oficina"].ToString();
+            var fechaCompin = dt.Rows[0]["fechaEntrega"].ToString();
+            var ingLc = IngresolicenciaDataAccess.ExportarPDFAs400(codOficina, elDiadesde);
+
+            Columna[] columns = {
+                                    new Columna("FolioLicencia", "NUMERO LICENCIA MEDICA"),
+                                    new Columna("NombreAfiliado","NOMBRE AFILIADO"),
+                                    new Columna("RutAfiliado","RUT AFILIADO"),
+                                    //new Columna("FechaIngreso", "Fecha Ingreso"),
+                                    //new Columna("RutEjecutivo", "Rut Ejecutivo"),
+                                    //new Columna("NombreEjecutivo", "Nombre Ejecutivo"),
+                                    //new Columna("SinDatosEnSistema", "Sin datos en sistema"),
+                                    //new Columna("FormatoLM","Formato LM"),
+                                    //new Columna("LmFueradeArea","LM fuera de area"),
+                                    //new Columna("FormatoLM","Formato LM"),
+                                    //new Columna("SinDatosEnSistema", "Sin datos en sistema"),
+                                    //new Columna("SucursalDestino","Sucursal Destino"),
+                                    //new Columna("EstadoRecepcion","EstadoRecepcion"),
+                                    //new Columna("Responsable","Responsable")
+            };
+
+            byte[] filecontent = CreatePDFManualPresencial(elDiadesde, oficina, fechaCompin, ingLc, "LM Manual Presencial", true, columns);
+            HttpResponseMessage response = new HttpResponseMessage();
+
+
+            Stream stri = new MemoryStream(filecontent);
+            response.Content = new StreamContent(stri);
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = "LM Manual Presencial.pdf";
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+            response.Content.Headers.ContentLength = stri.Length;
+
+            return response;
+
+
+        }
         public byte[] CreatePDFManualPresencial(DateTime diadesde, string oficina, string fechaCompin, DataTable dataTable, string heading = "", bool showSrNo = false, params Columna[] columnsToTake)
         {
             Document doc = new Document(PageSize.LETTER, 50, 50, 50, 50);
@@ -2252,7 +2570,7 @@ namespace CRM.Controllers
                          "",
                          entrada.cartaAutorizacion == 1,
                          entrada.FaltaFirmaempleador == 1,
-                         entrada.mediconoexiste == 0
+                         entrada.mediconoexiste == 1
                      );
                 DocumentosFaltantesLMDataAccess.GuardarEntradaAudtoriaReparosCOMPIN(dcm, token);
 
@@ -2272,6 +2590,215 @@ namespace CRM.Controllers
 
             }
         }
+
+
+
+        [HttpGet]
+        [Route("reporte-documentos-pendientes-xls")]
+        public HttpResponseMessage ReporteDocumentosPendientesXls(int codOficina, string FolioLM, string TipoLM, string TipoConvenio)
+        {
+
+            List<Ingresolicencia> ingLc = IngresolicenciaDataAccess.ListaLmDocumentoPendiente(FolioLM, codOficina, TipoLM, TipoConvenio, "XLS");
+
+            Columna[] columns = {
+
+                                    new Columna("RutAfiliado", "Rut Afiliado"),
+                                    new Columna("NombreAfiliado", "Nombre Afiliado"),
+                                    new Columna("FolioLicencia", "Folio Licencia"),
+                                     new Columna("Tiposublicencia","Tipo Subsidio"),
+                                    new Columna("TipoLicencia","Tipo LM"),
+                                    new Columna("TipoConvenio", "Tipo Convenio"),
+                                    new Columna("FechaPrescribeString", "Mes Prescribe")
+
+
+            };
+
+            byte[] filecontent = ExcelExportHelper.ExportExcel(ingLc, "Excel LM Documentación Pendiente", true, columns);
+            HttpResponseMessage response = new HttpResponseMessage();
+
+
+            Stream stri = new MemoryStream(filecontent);
+            response.Content = new StreamContent(stri);
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = "LM_Documentación_Pendiente.xls";
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue(ExcelExportHelper.ExcelContentType);
+            response.Content.Headers.ContentLength = stri.Length;
+
+            return response;
+
+
+
+        }
+        [HttpGet]
+        [Route("reporte-documentos-pendientes-pdf")]
+        public HttpResponseMessage ReporteDocumentosPendientesPdf(int codOficina, string FolioLM, string TipoLM, string TipoConvenio)
+        {
+
+
+            var ingLc = IngresolicenciaDataAccess.ListaLmDocumentoPendientePf(FolioLM, codOficina, TipoLM, TipoConvenio, "PDF");
+
+            Columna[] columns = {
+                                    new Columna("RutAfiliado", "Rut Afiliado"),
+                                    new Columna("NombreAfiliado", "Nombre Afiliado"),
+                                    new Columna("FolioLicencia", "Folio Licencia"),
+                                     new Columna("Tiposublicencia","Tipo Subsidio"),
+                                    new Columna("TipoLicencia","Tipo LM"),
+                                    new Columna("TipoConvenio", "Tipo Convenio"),
+                                    new Columna("mespreescribe", "Mes Prescribe")
+            };
+
+            byte[] filecontent = CreatePDFDocumentosPendientes("", ingLc, "LM Documentación Pendiente", true, columns);
+            HttpResponseMessage response = new HttpResponseMessage();
+
+
+            Stream stri = new MemoryStream(filecontent);
+            response.Content = new StreamContent(stri);
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = "LM Documentación Pendiente.pdf";
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+            response.Content.Headers.ContentLength = stri.Length;
+
+            return response;
+
+
+        }
+
+        [HttpGet]
+        [Route("reporte-no-pronunciadas-as400-xls")]
+        public HttpResponseMessage ReporteNoPronunciadaAs400Xls(int codOficina, string FolioLM, string TipoLM, string TipoConvenio)
+        {
+
+            List<Ingresolicencia> ingLc = IngresolicenciaDataAccess.ListaLMPronunciadaNoAs400(FolioLM, codOficina, TipoLM, TipoConvenio, "XLS");
+
+            Columna[] columns = {
+
+                                    new Columna("RutAfiliado", "Rut Afiliado"),
+                                    new Columna("NombreAfiliado", "Nombre Afiliado"),
+                                    new Columna("FolioLicencia", "Folio Licencia"),
+                                    new Columna("TipoSublicencia","Tipo Subsidio"),
+                                    new Columna("fecresol","Fecha Resolución"),
+
+            };
+
+            byte[] filecontent = ExcelExportHelper.ExportExcel(ingLc, "Excel LM Pronunciadas No Procesadas AS400", true, columns);
+            HttpResponseMessage response = new HttpResponseMessage();
+
+
+            Stream stri = new MemoryStream(filecontent);
+            response.Content = new StreamContent(stri);
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = "LM_Pronunciadas_No_AS400.xls";
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue(ExcelExportHelper.ExcelContentType);
+            response.Content.Headers.ContentLength = stri.Length;
+
+            return response;
+
+
+
+        }
+
+        [HttpGet]
+        [Route("reporte-no-pronunciadas-as400-pdf")]
+        public HttpResponseMessage ReporteNoPronunciadaAs400Pdf(int codOficina, string FolioLM, string TipoLM, string TipoConvenio)
+        {
+
+
+            var ingLc = IngresolicenciaDataAccess.ListaLMPronunciadaNoAs400Pdf(FolioLM, codOficina, TipoLM, TipoConvenio, "PDF");
+
+            Columna[] columns = {
+                                    new Columna("RutAfiliado", "Rut Afiliado"),
+                                    new Columna("NombreAfiliado", "Nombre Afiliado"),
+                                    new Columna("FolioLicencia", "Folio Licencia"),
+                                     new Columna("Tiposublicencia","Tipo Subsidio"),
+                                    new Columna("TipoLicencia","Tipo LM"),
+
+            };
+
+            byte[] filecontent = CreatePDFPronunciadasNoAs400("", ingLc, "LM Pronunciadas No Procesada As400", true, columns);
+            HttpResponseMessage response = new HttpResponseMessage();
+
+
+            Stream stri = new MemoryStream(filecontent);
+            response.Content = new StreamContent(stri);
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = "LM Pronunciadas NO_Proceasadas_AS400.pdf";
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+            response.Content.Headers.ContentLength = stri.Length;
+
+            return response;
+
+
+        }
+
+        [HttpGet]
+        [Route("reporte-pendiente-cobro-xls")]
+        public HttpResponseMessage ReportePendienteCobroXls(int codOficina, string FolioLM, string TipoLM, string TipoConvenio)
+        {
+
+            List<Ingresolicencia> ingLc = IngresolicenciaDataAccess.ListaLMPendienteCobro(FolioLM, codOficina, TipoLM, TipoConvenio, "XLS");
+
+            Columna[] columns = {
+
+                                    new Columna("RutAfiliado", "Rut Afiliado"),
+                                    new Columna("NombreAfiliado", "Nombre Afiliado"),
+                                    new Columna("FolioLicencia", "Folio Licencia"),
+                                    new Columna("TipoSublicencia","Tipo Subsidio"),
+                                    new Columna("TipoConvenio","Tipo Convenio"),
+                                    new Columna("TipoLicencia","Tipo Licencia"),
+                                    new Columna("FechaPrescribeString","Fecha Pago Desde"),
+
+            };
+
+            byte[] filecontent = ExcelExportHelper.ExportExcel(ingLc, "Excel LM Pendiente de Cobro", true, columns);
+            HttpResponseMessage response = new HttpResponseMessage();
+
+
+            Stream stri = new MemoryStream(filecontent);
+            response.Content = new StreamContent(stri);
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = "LM_Pendiente_Cobro.xls";
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue(ExcelExportHelper.ExcelContentType);
+            response.Content.Headers.ContentLength = stri.Length;
+
+            return response;
+
+
+
+        }
+
+        [HttpGet]
+        [Route("reporte-pendiente-cobro-pdf")]
+        public HttpResponseMessage ReportependientecobroPdf(int codOficina, string FolioLM, string TipoLM, string TipoConvenio)
+        {
+
+
+            var ingLc = IngresolicenciaDataAccess.ReportependientecobroPdf(FolioLM, codOficina, TipoLM, TipoConvenio, "PDF");
+
+            Columna[] columns = {
+                                    new Columna("RutAfiliado", "Rut Afiliado"),
+                                    new Columna("NombreAfiliado", "Nombre Afiliado"),
+                                    new Columna("FolioLicencia", "Folio Licencia"),
+                                    new Columna("Tiposublicencia","Tipo Subsidio"),
+                                    new Columna("TipoLicencia","Tipo LM"),
+
+            };
+
+            byte[] filecontent = CreatePDFPendientedeCobro("", ingLc, "LM Pendiente de Cobro", true, columns);
+            HttpResponseMessage response = new HttpResponseMessage();
+
+
+            Stream stri = new MemoryStream(filecontent);
+            response.Content = new StreamContent(stri);
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = "LM Pendiente de Cobro.pdf";
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+            response.Content.Headers.ContentLength = stri.Length;
+
+            return response;
+
+
+        }
+
 
     }
 }

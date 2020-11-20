@@ -264,7 +264,7 @@ var appSeguroCesantiaModal = new Vue({
                 appSeguroCesantiaModal.setDefaultsModal();
                 appSeguroCesantiaFiltros.handleEventoClickFiltrar();
 
-                if (valContact == 1) {
+                if ($('#slSubEstadoScesantia').val() == 114) {
                     $("#tabContacSeguro").tab('show');
                     $("#msjContactSeguro").css('display', 'block')
                 }

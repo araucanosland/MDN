@@ -78,8 +78,8 @@
                                         <label for="radio-formato-manual-lm">Manual</label>
                                         <!-- <input id="radio-formato-electronico-lm" class="magic-radio" type="radio" name="radio-formato-licencia">
                                         <label for="radio-formato-electronico-lm">Electrónica</label> -->
-                                        <input id="radio-formato-mixto-lm" class="magic-radio" type="radio" name="radio-formato-licencia">
-                                        <label for="radio-formato-mixto-lm">Mixta</label>
+                                        <input id="radio-formato-mixto-lm" class="magic-radio" type="radio" name="radio-formato-licencia" style="display:none">
+                                        <label for="radio-formato-mixto-lm" style="display:none">Mixta</label>
                                     </div>
                                 </div>
                             </div>
@@ -682,7 +682,7 @@
 
 
                         //check conforme pendiente
-                        debugger;
+
 
 
                         if (response.DocumentosFaltantes.tipoSeleccion == "1") {
@@ -1755,15 +1755,29 @@
                             $('#bt-guarda-otra').prop('disabled', false);
                             return false;
                         }
+                        if ($("#chk_casilla_derivada").prop("checked") == false && $("#chk_presencial_derivada").prop("checked") == false) {
+                            $.niftyNoty({
+                                type: 'danger',
+                                container: 'floating',
+                                html: '<strong>Error</strong> Debe Seleccionar Tipo de Ingreso!! ',
+                                focus: false,
+                                timer: 3000
+                            });
+
+                            $('#bt-guarda-otra').prop('disabled', false);
+                            return false;
+                        }
+
+                        if ($("#chk_casilla_derivada").prop("checked") == true) {
+                            viaIngresoLicenica = 1
+                        }
+                        if ($("#chk_presencial_derivada").prop("checked") == true) {
+                            viaIngresoLicenica = 2
+                        }
                     }
 
 
-                    if ($("#chk_casilla_derivada").prop("checked") == true) {
-                        viaIngresoLicenica = 1
-                    }
-                    if ($("#chk_presencial_derivada").prop("checked") == true) {
-                        viaIngresoLicenica = 2
-                    }
+
 
 
 
@@ -2065,6 +2079,11 @@
                     $("#fechaLm4").prop("disabled", true);
                     $("#fechaLm5").prop("disabled", true);
                     $("#fechaLm6").prop("disabled", true);
+
+
+
+
+
                     // $("#AfiliadoRut").val("");
                     //$("#AfiliadoRut").focus();
                     // $("#FolioLic").val("");
@@ -2087,7 +2106,8 @@
                     $("#DerivarLM").prop("checked", true);
 
                     $("#div_Viaingreso_derivacion").show();
-                    $("#chk_casilla_derivada").prop("checked", true);
+                    $("#chk_casilla_derivada").prop("checked", false);
+                    $("#chk_presencial_derivada").prop("checked", false);
                 } else {
                     $("#sslOfiDerivacion").prop("disabled", true);
                     $("#checkTipoingreso").show();
@@ -2360,7 +2380,10 @@
                 $("#DerivarLM").prop("disabled", true);
                 $("#sslOfiDerivacion").prop("disabled", true);
                 $("#divsinfirma").hide();
-
+                $("#chk_casilla_derivada").prop("checked", false);
+                $("#chk_presencial_derivada").prop("checked", false);
+                $("#div_Viaingreso_derivacion").hide();
+                $("#div_Viaingreso_derivacion").hide();
             })
 
 

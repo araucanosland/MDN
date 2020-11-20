@@ -20,7 +20,10 @@
                         @* <a href="#fakelink" class="add-tooltip demo-pli-question-circle icon-lg unselectable" data-html="true" data-title="<h4>Información</h4><p style='width:150px'>Debe presionar el boton Filtrar para visualizar datos de pensionados.</p>" data-original-title="" title=""></a>*@
                         <div class="col-sm-12 table-toolbar-right">
                             <div class="form-group">
-                                <button data-target="#demo-lg-modal-pensionado" style="margin-top: 9px;" data-toggle="modal" class="btn btn-primary btn-rounded btn-labeled pli-search-on-cloud">Buscar_Pensionado</button>
+                                <button data-target="#demo-lg-modal-prospecto" style="margin-top: 9px; border-radius: 9px;" data-toggle="modal" class="btn btn-primary">Ingreso Prospecto</button>
+                            </div>
+                            <div class="form-group">
+                                <button data-target="#demo-lg-modal-pensionado" style="margin-top: 9px; border-radius: 9px;" data-toggle="modal" class="btn btn-primary btn-labeled pli-search-on-cloud">Buscar_Pensionado</button>
                             </div>
                         </div>
                     </div>
@@ -918,7 +921,6 @@
             </div>
         </div>
     </div>
-
     <div id="demo-lg-modal-pensionado" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content" style="border-radius: 13px;">
@@ -1044,6 +1046,72 @@
         <div class="modal-dialog modal-md" style="width: 65%;">
         </div>
     </div>
+
+
+    <div id="demo-lg-modal-prospecto" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="border-radius: 13px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                    <h4 class="modal-title">INGRESO PROSPECTO</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel" style="border-radius: 6px; border: 1px solid #dad3d3;">
+                        <div class="panel-body">
+                            <div id="msjProspecto"></div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">RUT</label>
+                                        <input class="form-control" id="txtRutPorsp" name="txtRutPorsp" type="text" maxlength="10">
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label class="control-label">NOMBRE</label>
+                                        <input class="form-control" id="txtNombrePorsp" name="txtNombrePorsp" type="text" maxlength="200">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="control-label">CELULAR</label>
+                                        <input class="form-control" id="txtCelularPorsp" name="txtCelularPorsp" type="text" maxlength="15">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="control-label">COMUNA</label>
+                                        <select class="form-control" id="slComunaPorsp" tabindex="2" name="slComunaPorsp" v-model="modelos.comuna">
+                                            <option value="">Seleccione...</option>
+                                            <option v-for="comuna in filtros.comuna" :value="comuna.comuna">{{comuna.comuna}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">EJECUTIVO</label>
+                                        <select class="form-control" id="slEjePorsp" tabindex="2" name="slEjePorsp" v-model="modelos.ejecutivos">
+                                            <option value="">Seleccione...</option>
+                                            <option v-for="eje in filtros.ejecutivos" :value="eje.Rut">{{eje.Nombre}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Modal footer-->
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" v-on:click="ingresaProspecto">GUARDAR</button>
+                    <button data-dismiss="modal" class="btn btn-default" type="button">CERRAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 

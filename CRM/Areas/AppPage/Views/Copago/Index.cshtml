@@ -202,7 +202,7 @@
                             <a data-toggle="tab" href="#tab-historial-call" aria-expanded="false">Historial</a>
                         </li>
                         <li class="">
-                            <a data-toggle="tab" href="#tab-contactabiliadad" aria-expanded="false">Contactabilidad</a>
+                            <a data-toggle="tab" href="#tab-contactabiliadad" id="tabContactCopago" aria-expanded="false">Contactabilidad</a>
                         </li>
                     </ul>
                     <div class="tab-content" style="box-shadow: 0 0 0 !important;">
@@ -501,6 +501,9 @@
                             </div>
                         </div>
                         <div id="tab-contactabiliadad" class="tab-pane fade">
+                            <div class="alert alert-warning" id="msjContactCopago" style="display:none;">
+                                <strong>Contacto!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                            </div>
                             <div class="row">
                                 <button type="button" id="btn-add-contac_copago" class="btn btn-primary btn-xs">+</button>
                             </div>

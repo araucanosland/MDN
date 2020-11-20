@@ -377,9 +377,14 @@ var appNormalizacionModal = new Vue({
                 appNormalizacionModal.setDefaultsModal();
                 appNormalizacionFiltros.handleEventoClickFiltrar();
 
-                if (valContact == 1 || valContact == 2) {
+                //if (valContact == 1 || valContact == 2) {
+                //    $("#tabNormContact").tab('show');
+                //    $("#msjContactNormalizacion").css('display', 'block')
+                //}
+
+                if ($('.subEstado').val() == 21 || $('.subEstado').val() == 23) {
                     $("#tabNormContact").tab('show');
-                    $("#msjContactNormalizacion").css('display', 'block')
+                    $("#msjContactNormalizacion").css('display', 'block');
                 }
 
 

@@ -420,10 +420,12 @@
     <Content Include="Assets\js.App\src\oferta.js" />
     <Content Include="Assets\js.App\src\pensionados.js" />
     <Content Include="Assets\js.App\src\pex.js" />
+    <Content Include="Assets\js.App\src\portabilidad-ingreso.js" />
     <Content Include="Assets\js.App\src\portabilidad.js" />
     <Content Include="Assets\js.App\src\recertificación.js" />
     <Content Include="Assets\js.App\src\seguros.js" />
     <Content Include="Assets\js.App\src\seguro_cesantia.js" />
+    <Content Include="Assets\js.App\src\validacion-portabilidad.js" />
     <Content Include="Assets\js.App\src\venta-remota.js" />
     <Content Include="Assets\tam\detail.app.vue.js" />
     <Content Include="Assets\tam\queries.app.vue.js" />
@@ -617,6 +619,8 @@
     <Content Include="Areas\AppPage\Views\CallBackTAM\Index.cshtml" />
     <Content Include="Areas\AppPage\Views\Licencias\Bitacora.cshtml" />
     <Content Include="Areas\AppPage\Views\Portabilidad\Index.cshtml" />
+    <Content Include="Areas\AppPage\Views\Portabilidad\Ingreso.cshtml" />
+    <Content Include="Areas\AppPage\Views\Portabilidad\Validacion.cshtml" />
     <None Include="Properties\PublishProfiles\CharlyMOTOR.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\Settings.settings">

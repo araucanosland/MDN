@@ -291,7 +291,7 @@ var appBnfModal = new Vue({
                 //}
                 appBnfModal.obtenerHistorialBnf(rut_);
                 appBeneficiosFiltros.handleEventoClickFiltrar();
-                if (valContact == 3) {
+                if ($('input:radio[name=rbSubestadoBnf]:checked').val() == 202 || $('input:radio[name=rbSubestadoBnf]:checked').val() == 203) {
                     $("#tabContacBeneficio").tab('show');
                     $("#msjContactBeneficio").css('display', 'block')
 

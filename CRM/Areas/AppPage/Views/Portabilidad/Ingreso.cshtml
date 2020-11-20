@@ -1,0 +1,501 @@
+﻿
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/select2/css/select2.min.css" rel="stylesheet">
+
+<div id="page-title">
+    <h1 class="page-header text-overflow">Portabilidad Ingreso</h1>
+    <br />
+    <ol class="breadcrumb">
+        <li><a href="" id="nombre_clie"></a></li>
+        <li><a href="" id="rut_clie"></a></li>
+    </ol>
+    <div class="col-md-5 text-left mar-btm">
+        <button class="btn btn-sm btn-primary pull-left" type="submit" style="border-radius: 6px;"><i class="demo-psi-right-4 icon-fw"></i> Volver a Gestión Comercial</button>
+    </div>
+</div>
+<div id="dvContenedor">
+    <div id="page-content">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel" style="border-radius: 10px;">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">N° OFERTA</label>
+                                    <input type="text" class="form-control numero" id="txtNumOferta" maxlength="9">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">SUCURSAL</label>
+                                    <select class="form-control" id="slSucursal">
+                                        <option value="">SELECCIONE...</option>
+                                        <option value="1">MERCED</option>
+                                        <option value="3">SAN BERNARDO</option>
+                                        <option value="4">TALAGANTE</option>
+                                        <option value="5">MELIPILLA</option>
+                                        <option value="6">METROPOLITANA</option>
+                                        <option value="8">GRAN AVENIDA</option>
+                                        <option value="11">ARICA</option>
+                                        <option value="13">IQUIQUE</option>
+                                        <option value="21">TOCOPILLA</option>
+                                        <option value="22">ANTOFAGASTA</option>
+                                        <option value="23">CALAMA</option>
+                                        <option value="24">MARÍA ELENA</option>
+                                        <option value="31">COPIAPÓ</option>
+                                        <option value="32">VALLENAR</option>
+                                        <option value="41">OVALLE</option>
+                                        <option value="42">LA SERENA</option>
+                                        <option value="43">COQUIMBO</option>
+                                        <option value="44">ILLAPEL</option>
+                                        <option value="45">VICUÑA</option>
+                                        <option value="51">VIÑA DEL MAR</option>
+                                        <option value="52">SAN ANTONIO</option>
+                                        <option value="53">QUILLOTA</option>
+                                        <option value="54">VALPARAÍSO</option>
+                                        <option value="56">LOS ANDES</option>
+                                        <option value="57">LA CALERA</option>
+                                        <option value="58">QUILPUÉ</option>
+                                        <option value="59">CASABLANCA</option>
+                                        <option value="61">RANCAGUA</option>
+                                        <option value="62">SAN FERNANDO</option>
+                                        <option value="71">CURICÓ</option>
+                                        <option value="72">TALCA</option>
+                                        <option value="73">LINARES</option>
+                                        <option value="74">CONSTITUCIÓN</option>
+                                        <option value="81">CHILLÁN</option>
+                                        <option value="82">CONCEPCIÓN</option>
+                                        <option value="84">LOS ÁNGELES</option>
+                                        <option value="85">TALCAHUANO</option>
+                                        <option value="86">SAN CARLOS</option>
+                                        <option value="87">CAÑETE</option>
+                                        <option value="88">CORONEL</option>
+                                        <option value="89">MULCHEN</option>
+                                        <option value="92">TEMUCO</option>
+                                        <option value="93">ANGOL</option>
+                                        <option value="97">VICTORIA</option>
+                                        <option value="101">VALDIVIA</option>
+                                        <option value="102">OSORNO</option>
+                                        <option value="103">PUERTO MONTT</option>
+                                        <option value="104">CASTRO</option>
+                                        <option value="105">PUERTO VARAS</option>
+                                        <option value="106">LA UNIÓN</option>
+                                        <option value="107">ANCUD</option>
+                                        <option value="108">QUELLÓN</option>
+                                        <option value="109">CALBUCO</option>
+                                        <option value="110">PUERTO AYSÉN</option>
+                                        <option value="111">COYHAIQUE</option>
+                                        <option value="121">PUERTO NATALES</option>
+                                        <option value="122">PUNTA ARENAS</option>
+                                        <option value="130">LA FLORIDA</option>
+                                        <option value="133">PUENTE ALTO</option>
+                                        <option value="134">INDEPENDENCIA</option>
+                                        <option value="135">MAIPÚ</option>
+                                        <option value="136">QUILICURA</option>
+                                        <option value="137">CENTRO CÍVICO</option>
+                                        <option value="138">PROVIDENCIA</option>
+                                        <option value="170">LAS CONDES</option>
+                                        <option value="171">ÑUÑOA</option>
+                                        <option value="172">HUECHURABA</option>
+                                        <option value="174">ESTACIÓN CENTRAL</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">RENTA</label>
+                                    <input type="text" class="form-control numero" id="txtRenta" maxlength="10">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">LIMITE DE ENDEUDAMIENTO</label>
+                                    <input type="text" class="form-control" id="txtLiminteEndeudamiento" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel" style="border-radius: 10px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">CREDITOS VIGENTES</h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table data-toggle="table"
+                           data-sort-name="id"
+                           id="tblPortabilidadCredVigActual" style="font-size: 12px; font-weight: bolder;">
+                        <thead>
+                            <tr>
+                                <th data-field="montoCredito" data-formatter="formatoMoneyFormatter" data-sortable="true">SALDO</th>
+                                <th data-field="valorCuota" data-sortable="true" data-formatter="formatoMoneyFormatter">CUOTA</th>
+                                <th data-field="" data-formatter="accionCredVig" data-sortable="true">ACCIÓN</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel" style="border-radius: 10px;">
+            <div class="panel-heading">
+                <div class="panel-control">
+                    <button class="btn btn-default" data-toggle="modal" data-target="#modal_add_credito" style="border-radius: 6px; background-color: #e8e8e8;"><i class="demo-pli-add icon-fw"></i>AGREGAR CREDITO...</button>
+                </div>
+                <h3 class="panel-title">CREDITOS VIGENTES</h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table data-toggle="table"
+                           data-sort-name="id"
+                           id="tblPortabilidadCredVigente" style="font-size: 12px; font-weight: bolder;">
+                        <thead>
+                            <tr>
+                                <th data-field="institucion" data-sortable="true">INSTITUCIÓN</th>
+                                <th data-field="valor_cuota" data-formatter="formatoMoneyFormatter2" data-sortable="true">VALOR CUOTA</th>
+                                <th data-field="plazo_original" data-sortable="true">PLAZO ORIGINAL</th>
+                                <th data-field="cuotas_canceladas" data-sortable="true">CUOTAS CANCELADAS</th>
+                                <th data-field="tasa_app" data-sortable="true">TASA (APP)</th>
+                                <th data-field="saldo_capital" data-formatter="formatoMoneyFormatter2" data-sortable="true">SALDO CAPITAL</th>
+                                <th data-field="portabilidad" data-formatter="accionCredVigActual" data-sortable="true">PORTABILIDAD</th>
+                                <th data-field="" data-formatter="formatoDeleteCred" data-sortable="true">ELIMINAR</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel" style="border-radius: 10px;">
+            <div class="panel-heading">
+                <div class="panel-control">
+                    <button class="btn btn-default" data-toggle="modal" data-target="#modal_add_tarjeta" style="border-radius: 6px; background-color: #e8e8e8;"><i class="demo-pli-add icon-fw"></i>AGREGAR TARJETAS O LINEAS DE CREDITO...</button>
+                </div>
+                <h3 class="panel-title">TARJETAS O LINEAS DE CREDITO</h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table data-toggle="table"
+                           data-sort-name="id"
+                           id="tblPorTarjLiniaCred" style="font-size: 12px; font-weight: bolder;">
+                        <thead>
+                            <tr>
+                                <th data-field="institucion" data-sortable="true">INSTITUCIÓN</th>
+                                <th data-field="cupo_utilizado" data-formatter="formatoMoneyFormatter2" data-sortable="true">CUPO UTILIZADO</th>
+                                <th data-field="portabilidad" data-formatter="accionCredTarjeta" data-sortable="true">PORTABILIDAD</th>
+                                <th data-field="" data-formatter="formatoDeleteTarj" data-sortable="true">ELIMINAR</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel" style="border-radius: 10px;">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">DEUDA A PORTAR</label>
+                                    <input type="text" class="form-control numero" id="txtDeudaPortar" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">RENEGOCIACIONES</label>
+                                    <input type="text" class="form-control numero" id="txtRenegociaciones" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">EFECTIVO</label>
+                                    <input type="text" class="form-control numero" id="txtEfectivo" maxlength="8">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Total Riesgo Cliente</label>
+                                    <input type="text" class="form-control" id="txtTotalRiegoClie" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel" style="border-radius: 10px;">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">MONTO CRÉDITO</label>
+                                    <input type="text" class="form-control" id="txtMontoCredito" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">PLAZO</label>
+                                    <input type="text" class="form-control numero" id="txtPlazo" maxlength="2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">VALOR CUOTA</label>
+                                    <input type="text" class="form-control" id="txtValorCuota" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel" style="border-radius: 10px;">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">CARGA INTERNA</label>
+                                    <input type="text" class="form-control" id="txtCargaInterna" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">VECES RENTA INTERNA</label>
+                                    <input type="text" class="form-control" id="txtVecesRentaInt" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel" style="border-radius: 10px;">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">CARGA INICIAL</label>
+                                    <input type="text" class="form-control" id="txtCargaInicial" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">CARGA FINAL</label>
+                                    <input type="text" class="form-control" id="txtCargaFinal" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="panel" style="border-radius: 10px;">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">ESTADO</label>
+                                    <select class="form-control" id="slEstado" name="slEstado" v-model="modelos.estado" v-on:change="eventoCambiaEstadoPort">
+                                        <option value="">SELECCIONE...</option>
+                                        <option v-for="estadoPort in filtros.estado" :value="estadoPort.id">{{estadoPort.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">SUB-ESTADO</label>
+                                    <select class="form-control" id="slSubEstado" name="slSubEstado" v-model="modelos.subEstado">
+                                        <option value="">Seleccione...</option>
+                                        <option v-for="subEstadoPortM in filtros.subEstado" :value="subEstadoPortM.nombre">{{subEstadoPortM.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">OBSERVACION</label>
+                            <textarea rows="3" id="txtobservacionPort" name="txtobservacionPort" class="form-control" style="border-radius: 6px;"></textarea>
+                        </div>
+                        <button class="btn btn-sm btn-primary pull-left" type="submit" v-on:click="ingresoGestionPortabilidad" style="border-radius: 6px;"><i class="demo-psi-pen-5"></i> INGRESAR GESTION</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_add_credito" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius: 10px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                    <h4 class="modal-title">AGREGAR CREDITO </h4>
+                </div>
+                <div class="modal-body">
+                    <div id="msjCredVig"></div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">INSTITUCIÓN</label>
+                                <select id="slIntitucionModalCredVig" class="form-control limpia">
+                                    <option value="">SELECCIONE...</option>
+                                    <option value="BCI">BCI</option>
+                                    <option value="BANCO BICE">BANCO BICE</option>
+                                    <option value="BANCO CONSORCIO">BANCO CONSORCIO</option>
+                                    <option value="BANCO CORP BANCA">BANCO CORP BANCA</option>
+                                    <option value="BANCO DE CHILE-EDWARDS-CREDICHILE">BANCO DE CHILE-EDWARDS-CREDICHILE</option>
+                                    <option value="BANCO DEL DESARROLLO">BANCO DEL DESARROLLO</option>
+                                    <option value="BANCO ESTADO">BANCO ESTADO</option>
+                                    <option value="BANCO FALABELLA">BANCO FALABELLA</option>
+                                    <option value="BANCO INTERNACIONAL">BANCO INTERNACIONAL</option>
+                                    <option value="BANCO ITAU">BANCO ITAU</option>
+                                    <option value="BANCO PARIS">BANCO PARIS</option>
+                                    <option value="BANCO RIPLEY">BANCO RIPLEY</option>
+                                    <option value="BANCO SANTANDER-SANTIAGO-BANEFE">BANCO SANTANDER-SANTIAGO-BANEFE</option>
+                                    <option value="BANCO SECURITY">BANCO SECURITY</option>
+                                    <option value="COOPEUCH">COOPEUCH</option>
+                                    <option value="HSBC BANK (CHILE)">HSBC BANK (CHILE)</option>
+                                    <option value="SCOTIABANK">SCOTIABANK</option>
+                                    <option value="SCOTIABANK AZUL (EX BBVA)">SCOTIABANK AZUL (EX BBVA)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">VALOR CUOTA</label>
+                                <input type="text" class="form-control numero limpia" id="txtModalValorCuotaCredVig" maxlength="8">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">PLAZO ORIGINAL</label>
+                                <input type="email" class="form-control numero limpia" id="txtModalPlazoOriginalCredVig" maxlength="3">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">CUOTAS CANCELADAS</label>
+                                <input type="url" class="form-control numero limpia" id="txtModalCuotasCanceladasCredVig" maxlength="3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">TASA (APP)</label>
+                                <input type="email" class="form-control numero limpia" id="txtModalTasaAppCredVig" maxlength="3">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label">POTABILIDAD</label>
+                                <select class="form-control limpia" id="slModalPortabilidadCredVig">
+                                    <option value="">SELECCIONE...</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default" type="button">CERRAR</button>
+                    <button class="btn btn-primary" v-on:click="ingresaCredVigente">AGREGAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal_add_tarjeta" role="dialog" tabindex="-1" aria-labelledby="demo-default-modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius: 10px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                    <h4 class="modal-title">AGREGAR TARJETAS O LINEAS DE CREDITO </h4>
+                </div>
+                <div class="modal-body">
+                    <div id="msjCredTarj"></div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label">INSTITUCIÓN</label>
+                                <select class="form-control limpia" id="slModalInstitucionTarjLinea">
+                                    <option value="">SELECCIONE...</option>
+                                    <option value="BCI">BCI</option>
+                                    <option value="BANCO BICE">BANCO BICE</option>
+                                    <option value="BANCO CONSORCIO">BANCO CONSORCIO</option>
+                                    <option value="BANCO CORP BANCA">BANCO CORP BANCA</option>
+                                    <option value="BANCO DE CHILE-EDWARDS-CREDICHILE">BANCO DE CHILE-EDWARDS-CREDICHILE</option>
+                                    <option value="BANCO DEL DESARROLLO">BANCO DEL DESARROLLO</option>
+                                    <option value="BANCO ESTADO">BANCO ESTADO</option>
+                                    <option value="BANCO FALABELLA">BANCO FALABELLA</option>
+                                    <option value="BANCO INTERNACIONAL">BANCO INTERNACIONAL</option>
+                                    <option value="BANCO ITAU">BANCO ITAU</option>
+                                    <option value="BANCO PARIS">BANCO PARIS</option>
+                                    <option value="BANCO RIPLEY">BANCO RIPLEY</option>
+                                    <option value="BANCO SANTANDER-SANTIAGO-BANEFE">BANCO SANTANDER-SANTIAGO-BANEFE</option>
+                                    <option value="BANCO SECURITY">BANCO SECURITY</option>
+                                    <option value="COOPEUCH">COOPEUCH</option>
+                                    <option value="HSBC BANK (CHILE)">HSBC BANK (CHILE)</option>
+                                    <option value="SCOTIABANK">SCOTIABANK</option>
+                                    <option value="SCOTIABANK AZUL (EX BBVA)">SCOTIABANK AZUL (EX BBVA)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label">CUPO UTILIZADO</label>
+                                <input type="text" class="form-control numero limpia" id="txtModalCupoUtilizadoTarjLinea" maxlength="8">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label">POTABILIDAD</label>
+                                <select class="form-control limpia" id="txtModalPortabilidadTarjLinea">
+                                    <option value="">SELECCIONE...</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" class="btn btn-default" type="button">CERRAR</button>
+                    <button class="btn btn-primary" v-on:click="ingresaTarjetaLinea">AGREGAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section script{
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/select2/js/select2.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+    <script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
+    <script src="~/Assets/js.App/src/portabilidad-ingreso.js?g=@Guid.NewGuid().ToString()"></script>
+}
+

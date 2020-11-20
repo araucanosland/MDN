@@ -30,20 +30,22 @@ function cargaDatosDeContacto(rutAf, destino = null) {
                 var colorPorc = 'badge-success'
                 icon = '<i class="ion-checkmark">';
             }
-            if (e.PorcIndice > 40 && e.PorcIndice < 69) {
+            //if (e.PorcIndice > 40 && e.PorcIndice < 69) {
+            if (e.PorcIndice == 10 || e.PorcIndice == 0) {
                 var colorPorc = 'badge-warning'
+                icon = '<i class="ion-close-round">';
             }
-            if (e.PorcIndice < 39) {
+            if (e.PorcIndice == 50) {
                 var colorPorc = 'badge-danger'
-                icon = '!';
+                icon = '<i class="ion-alert">';
             }
-            if (e.FechaContacto.toFecha() === "01-01-1900") {
-                alertFecha = e.FechaContacto.toFecha() + '<i class="badge badge-danger badge-stat badge-icon pull-right add-tooltip" style="position: static; data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Se debe Actualizar Contacto">!</i>'
-                $("#afiContac").css({ 'display': 'block' })
-            }
-            else {
-                alertFecha = e.FechaContacto.toFecha() + '<i class="badge ' + colorPorc + ' badge-stat badge-icon pull-right add-tooltip" style="position: static; data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Se debe Actualizar Contacto">' + icon + '</i></i>'
-            }
+            //if (e.FechaContacto.toFecha() === "01-01-1900") {
+            //    alertFecha = e.FechaContacto.toFecha() + '<i class="badge badge-danger badge-stat badge-icon pull-right add-tooltip" style="position: static; data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Se debe Actualizar Contacto">!</i>'
+            //    $("#afiContac").css({ 'display': 'block' })
+            //}
+
+            alertFecha = e.FechaContacto.toFecha() + '<i class="badge ' + colorPorc + ' badge-stat badge-icon pull-right add-tooltip" style="position: static; data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Se debe Actualizar Contacto">' + icon + '</i></i>'
+
 
             var destinoDefault = destino == null ? "#bdy_datos_contactos" : destino;
             $(destinoDefault)
@@ -1876,6 +1878,16 @@ $(function () {
                         }
                         else if (valContacto == 2) {
                             if (valSubContacto == 201 || valSubContacto == 202 || valSubContacto == 203 || valSubContacto == 204 || valSubContacto == 205) {
+
+                                $("#tabContacComercial").tab('show');
+                                $("#msjContactComercial").css('display', 'block');
+                            }
+                        }
+
+                        //else if (valContacto == 1 || valContacto == 4) {
+                        //if (valSubContacto == 101 || valSubContacto == 102 || valSubContacto == 402) {
+                        else if (valContacto == 1) {
+                            if (valSubContacto == 101) {
 
                                 $("#tabContacComercial").tab('show');
                                 $("#msjContactComercial").css('display', 'block');

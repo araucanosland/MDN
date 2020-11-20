@@ -526,7 +526,6 @@ $(function () {
     });
 });
 
-
 /////////////////////////////////////BASE POTENCIADA DOMICILIO//////////////////////////////////////////////////////////////////////
 
 var appPensionadoBasePotenciadaDomicilio = new Vue({
@@ -661,7 +660,6 @@ $(function () {
     });
 });
 ////////////////////////////////////////////////////////////////////////////////////////
-
 var appPensionadosModal = new Vue({
     el: '#mdl_data_gestion_pensionado',
     data: {
@@ -1415,7 +1413,7 @@ var appPensionadosModal = new Vue({
 
     },
 });
-
+////////////////////////////////////////////////////////////////////////////////////////
 $(function () {
 
 
@@ -2453,5 +2451,165 @@ $(function () {
     //        $('#btCerrarModal').css('display', 'block');
     //    }
     //});
+});
+////////////////////////////////////////////////////////////////////////////////////////
+var appPensionadosProspectos = new Vue({
+    el: '#demo-lg-modal-prospecto',
+    data: {
+        filtros: {
+            comuna: [],
+            ejecutivos: [],
+        },
+        modelos: {
+            comuna: '',
+            ejecutivos: '',
+        },
+    },
+    mounted() {
+        this.cargaComunaProspecto();
+        this.cargaEjecutivoProspecto()
+    },
+    updated() {
+
+    },
+    methods: {
+        cargaEjecutivoProspecto() {
+            let sucursal = getCookie("Oficina");
+            let fechaHoy = new Date();
+            let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
+
+            fetch(`http://${motor_api_server}:4002/pensionados/lista-ejecutivo-prospecto/${sucursal}/${periodo}`, {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'default'
+            })
+                .then(response => response.json())
+                .then(ejecutivosJSON => {
+                    this.filtros.ejecutivos = ejecutivosJSON;
+                });
+
+        },
+        cargaComunaProspecto() {
+            fetch(`http://${motor_api_server}:4002/pensionados/lista-comuna-pensionados`, {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'default'
+            })
+                .then(response => response.json())
+                .then(comunasJSON => {
+                    this.filtros.comuna = comunasJSON;
+                });
+
+        },
+        ingresaProspecto() {
+            let rut_ = $('#txtRutPorsp').val();
+            let oficina = getCookie("Oficina");
+            let fechaHoy = new Date();
+            let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
+
+            if ($('#txtRutPorsp').val() == "") {
+                $.niftyNoty({
+                    type: 'danger',
+                    message: 'Debe ingresar un rut...',
+                    container: '#msjProspecto',
+                    timer: 3000
+                });
+                return false;
+            }
+            if ($('#txtNombrePorsp').val() == "") {
+                $.niftyNoty({
+                    type: 'danger',
+                    message: 'Debe ingresar un nombre...',
+                    container: '#msjProspecto',
+                    timer: 3000
+                });
+                return false;
+            }
+            if ($('#txtCelularPorsp').val() == "") {
+                $.niftyNoty({
+                    type: 'danger',
+                    message: 'Debe ingresar un celular...',
+                    container: '#msjProspecto',
+                    timer: 3000
+                });
+                return false;
+            }
+            if ($('#slComunaPorsp').val() == "") {
+                $.niftyNoty({
+                    type: 'danger',
+                    message: 'Debe ingresar una comuna...',
+                    container: '#msjProspecto',
+                    timer: 3000
+                });
+                return false;
+            }
+            if ($('#slEjePorsp').val() == "") {
+                $.niftyNoty({
+                    type: 'danger',
+                    message: 'Debe ingresar un ejecutivo...',
+                    container: '#msjProspecto',
+                    timer: 3000
+                });
+                return false;
+            }
+
+            const formData = {
+                rut: rut_,
+                nombre: $('#txtNombrePorsp').val(),
+                celular: $('#txtCelularPorsp').val(),
+                comuna: $('#slComunaPorsp').val(),
+                ejecutivo: $('#slEjePorsp').val(),
+                oficina: oficina,
+                marca: 'prospecto',
+                periodo: periodo,
+            };
+
+            fetch(`http://${motor_api_server}:4002/pensionados/busca-prospecto/${rut_}`, {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'default'
+            })
+                .then(response => response.json())
+                .then(datos => {
+                    if (datos.length > 0) {
+                        $(Swal.fire({
+                            title: 'Pensionado ya existe en campaña',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        }));
+                        return false;
+                    }
+                    else {
+                        fetch(`http://${motor_api_server}:4002/pensionados/guarda-prospecto`, {
+                            method: 'POST',
+                            body: JSON.stringify(formData),
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Token': getCookie('Token')
+                            }
+                        }).then(async (response) => {
+                            if (!response.ok) {
+                                $(Swal.fire({
+                                    title: 'Error al guardar pensionado',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                }));
+                                return false;
+                            }
+                            Swal.fire({
+                                title: 'Se ingreso correctamente!',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            })
+                            $('#txtRutPorsp').val('');
+                            $('#txtNombrePorsp').val('');
+                            $('#txtCelularPorsp').val('');
+                            $('#slComunaPorsp').val('');
+                            $('#slEjePorsp').val('');
+                        });
+                    }
+                })
+        },
+    }
 });
 

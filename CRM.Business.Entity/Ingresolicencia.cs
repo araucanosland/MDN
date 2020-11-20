@@ -132,18 +132,24 @@ namespace CRM.Business.Entity
         public string Subcomision { get; set; }
         public DateTime Subido_a_plataforma_compin { get; set; }
         public string EstadoActivo { get; set; }
-
         public DateTime FechaGestion { get; set; }
         public string EjecutadoPor { get; set; }
-
         public int Flagas400 { get; set; }
-
-
         public int DiasLicencia { get; set; }
         public DateTime FechaLicenciaDesde { get; set; }
         public DateTime FechaLicenciaHasta { get; set; }
+        public string Glosa { get; set; }
 
 
+        public string EntidadPAgo { get; set; }
+        public string TipoPAgo { get; set; }
+        public string MontoPago { get; set; }
+        public string EstadoPago { get; set; }
+        public string Fechapago { get; set; }
+        public string TipoLicencia { get; set; }
+        public string TipoSubLicencia { get; set; }
+        public string TipoConvenio { get; set; }
+        public string FechaPrescribeString { get; set; }
         /// <summary>
         /// Inicializa una nueva instancia de la clase <see cref="Ingresolicencia"/>.
         /// </summary>

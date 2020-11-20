@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
 }
-
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
 
 <!--Page content-->
@@ -661,7 +661,7 @@
                                     <a data-toggle="tab" href="#tab-gestion-2" aria-expanded="false">Historial de Gestión</a>
                                 </li>
                                 <li class="">
-                                    <a data-toggle="tab"  id="tabContacComercial" href="#tab-gestion-3" aria-expanded="false">Contactabilidad</a>
+                                    <a data-toggle="tab" id="tabContacComercial" href="#tab-gestion-3" aria-expanded="false">Contactabilidad</a>
                                 </li>
                                 <li class="">
                                     <a data-toggle="tab" href="#tab-gestion-4" aria-expanded="false">Filtros</a>
@@ -1215,7 +1215,7 @@
                         <div id="tab-seguro_cesantia-3" class="tab-pane fade">
 
                             <div class="alert alert-warning" id="msjContactSeguro" style="display:none;">
-                                <strong>Warning!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                                <strong>Contacto!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
                             </div>
 
                             <div class="row">
@@ -1303,7 +1303,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label">Sub Estado</label>
-                                <select class="form-control" v-on:change="manejarVisibilidadCalendario" v-model="modelosModal.subEstado">
+                                <select class="form-control" id="slSubEstadoScesantia" v-on:change="manejarVisibilidadCalendario" v-model="modelosModal.subEstado">
                                     <option value="">Seleccione</option>
                                     <option v-for="sEstadoModal in filtrosModal.subEstadosModal" :value="sEstadoModal.id">{{sEstadoModal.nombre}}</option>
                                 </select>
@@ -1528,7 +1528,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label">Sub Estado</label>
-                                <select class="form-control subEstado" v-on:change="manejarVisibilidadCalendario" v-model="modelosModal.subEstado">
+                                <select class="form-control subEstado" id="subEstado" v-on:change="manejarVisibilidadCalendario" v-model="modelosModal.subEstado">
                                     <option value="">Seleccione</option>
                                     <option v-for="sEstadoModal in filtrosModal.subEstadosModal" :value="sEstadoModal.id">{{sEstadoModal.nombre}}</option>
                                 </select>
@@ -1763,7 +1763,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label">Sub Estado</label>
-                                <select class="form-control" v-on:change="manejarVisibilidadCalendario" v-model="modelosModal.subEstado">
+                                <select class="form-control" id="slSubEstadoAcuerdoP" v-on:change="manejarVisibilidadCalendario" v-model="modelosModal.subEstado">
                                     <option value="">Seleccione</option>
                                     <option v-for="sEstadoModal in filtrosModal.subEstadosModal" :value="sEstadoModal.id">{{sEstadoModal.nombre}}</option>
                                 </select>
@@ -2192,6 +2192,7 @@
     <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
     <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
     <script src="~/Assets/js.App/printThis.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
     <script src="~/Assets/js.App/src/acuerdo_pagos.js?g=@Guid.NewGuid().ToString()"></script>
     <script src="~/Assets/js.App/src/index.js?g=@Guid.NewGuid().ToString()"></script>
     <!--<script src="~/Assets/js.App/gestion/index.js?v=@Html.Raw(ViewBag.hash)"></script>-->

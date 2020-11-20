@@ -228,15 +228,11 @@ namespace CRM.Business.Data
 
 
 
-        public static long HitoricoBitacora(long CodIngreso, int etapaId, DateTime fechainicio, DateTime fechatermino)
+        public static long HitoricoBitacora(long CodIngreso)
         {
             Parametros parametros = new Parametros()
             {
-                new Parametro("@pcodingreso", CodIngreso),
-                new Parametro("@etapaId", etapaId),
-                new Parametro("@responsable", ""),
-                new Parametro("@fechaingreso", fechainicio),
-                new Parametro("@fechatermino", fechatermino)
+                new Parametro("@pcodingreso", CodIngreso)
 
             };
             try
@@ -755,6 +751,10 @@ namespace CRM.Business.Data
 
         }
 
+
+
+
+
         public static List<LicenciasDevueltas> ListaLMdevueltasCompinRRLL(string folio, DateTime diadesde, DateTime diahasta, int codOficina, string responsable, string subcomision)
         {
             Parametros parametros = new Parametros
@@ -1008,6 +1008,131 @@ namespace CRM.Business.Data
         }
 
 
+        public static DataTable ListaLmDocumentoPendientePf(string Folio, int codOficina, string Tipo_LM, string Tipo_Convenio, string TipoReporte)
+        {
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@CodOficina", codOficina),
+                new Parametro("@FolioLM", Folio),
+                new Parametro("@tipoLM", Tipo_LM),
+                new Parametro("@tipoCovenio", Tipo_Convenio),
+                 new Parametro("@tipoReporte", TipoReporte)
+            };
+            return DBHelper.InstanceCRM.ObtenerDataTable("licencias.sp_Lic_Ingresolicencia_LM_Documentos_Pendientes", parametros);
+        }
+
+
+        public static List<Ingresolicencia> ListaLmDocumentoPendiente(string Folio, int codOficina, string Tipo_LM, string Tipo_Convenio, string TipoReporte)
+        {
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@CodOficina", codOficina),
+                new Parametro("@FolioLM", Folio),
+                new Parametro("@tipoLM", Tipo_LM),
+                new Parametro("@tipoCovenio", Tipo_Convenio),
+                new Parametro("@tipoReporte", TipoReporte),
+            };
+
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_LM_Documentos_Pendientes", parametros, ContructorLMDocumentoPendiente);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+        }
+
+
+
+
+
+        public static List<Ingresolicencia> ListaLMPronunciadaNoAs400(string Folio, int codOficina, string Tipo_LM, string Tipo_Convenio, string Tipo_Reporte)
+        {
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@CodOficina", codOficina),
+                new Parametro("@FolioLM", Folio),
+                new Parametro("@tipoLM", Tipo_LM),
+                new Parametro("@tipoCovenio", Tipo_Convenio),
+                new Parametro("@tipoReporte", Tipo_Reporte)
+            };
+
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_LM_Pronunciadas_No_Procesadas_AS400", parametros, ContructorLMPronunciadasNoAs400);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+        }
+
+
+        public static DataTable ListaLMPronunciadaNoAs400Pdf(string Folio, int codOficina, string Tipo_LM, string Tipo_Convenio, string TipoReporte)
+        {
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@CodOficina", codOficina),
+                new Parametro("@FolioLM", Folio),
+                new Parametro("@tipoLM", Tipo_LM),
+                new Parametro("@tipoCovenio", Tipo_Convenio),
+                 new Parametro("@tipoReporte", TipoReporte)
+            };
+            return DBHelper.InstanceCRM.ObtenerDataTable("licencias.sp_Lic_Ingresolicencia_LM_Pronunciadas_No_Procesadas_AS400", parametros);
+        }
+
+
+        public static DataTable ReportependientecobroPdf(string Folio, int codOficina, string Tipo_LM, string Tipo_Convenio, string TipoReporte)
+        {
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@CodOficina", codOficina),
+                new Parametro("@FolioLM", Folio),
+                new Parametro("@tipoLM", Tipo_LM),
+                new Parametro("@tipoCovenio", Tipo_Convenio),
+                 new Parametro("@tipoReporte", TipoReporte)
+            };
+            return DBHelper.InstanceCRM.ObtenerDataTable("licencias.sp_Lic_Ingresolicencia_LM_Pendiente_Cobro", parametros);
+        }
+
+
+
+
+        public static List<Ingresolicencia> ListaLMPendienteCobro(string Folio, int codOficina, string tipoLM, string tipoCovenio, string tipoReporte)
+        {
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@CodOficina", codOficina),
+                new Parametro("@FolioLM", Folio),
+                new Parametro("@tipoLM", tipoLM),
+                new Parametro("@tipoCovenio", tipoCovenio),
+                new Parametro("@tipoReporte", tipoReporte),
+
+            };
+
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_LM_Pendiente_Cobro", parametros, ContructorLMPendienteCobro);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+        }
+
         public static List<Ingresolicencia> ObtenerEntidadesByOficinaFiltro(string responsable, string estado, string folio, DateTime diadesde, DateTime diahasta, string formatoLM, int codOficina)
         {
             Parametros parametros = new Parametros()
@@ -1201,6 +1326,89 @@ namespace CRM.Business.Data
                 throw ex;
             }
         }
+
+        private static Ingresolicencia ContructorLMDocumentoPendiente(DataRow row)
+        {
+            try
+            {
+
+
+                return new Ingresolicencia
+                {
+                    CodIngreso = row["CodIngreso"] != DBNull.Value ? Convert.ToInt64(row["CodIngreso"]) : 0,
+                    RutAfiliado = row["RutAfiliado"] != DBNull.Value ? row["RutAfiliado"].ToString() : string.Empty,
+                    NombreAfiliado = row["NombreAfiliado"] != DBNull.Value ? row["NombreAfiliado"].ToString() : string.Empty,
+                    FolioLicencia = row["FolioLicencia"] != DBNull.Value ? row["FolioLicencia"].ToString() : string.Empty,
+                    TipoLicencia = row["TipoLicencia"] != DBNull.Value ? row["TipoLicencia"].ToString() : string.Empty,
+                    TipoConvenio = row["TipoConvenio"] != DBNull.Value ? row["TipoConvenio"].ToString() : string.Empty,
+                    FechaGestion = row["fechAct"] != DBNull.Value ? Convert.ToDateTime(row["fechAct"]) : new DateTime(1900, 1, 1),
+                    FechaIngreso = row["mespreescribe"] != DBNull.Value ? Convert.ToDateTime(row["mespreescribe"]) : new DateTime(1900, 1, 1),
+                    FechaPrescribeString = row["mespreescribeString"] != DBNull.Value ? row["mespreescribeString"].ToString() : string.Empty,
+                    TipoSubLicencia = row["tiposublicencia"] != DBNull.Value ? row["tiposublicencia"].ToString() : string.Empty,
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        private static Ingresolicencia ContructorLMPronunciadasNoAs400(DataRow row)
+        {
+            try
+            {
+
+
+                return new Ingresolicencia
+                {
+                    CodIngreso = row["CodIngreso"] != DBNull.Value ? Convert.ToInt64(row["CodIngreso"]) : 0,
+                    RutAfiliado = row["RutAfiliado"] != DBNull.Value ? row["RutAfiliado"].ToString() : string.Empty,
+                    NombreAfiliado = row["NombreAfiliado"] != DBNull.Value ? row["NombreAfiliado"].ToString() : string.Empty,
+                    FolioLicencia = row["FolioLicencia"] != DBNull.Value ? row["FolioLicencia"].ToString() : string.Empty,
+                    TipoSubLicencia = row["TipoLM"] != DBNull.Value ? row["TipoLM"].ToString() : string.Empty,
+                    FechaIngreso = row["fecresol"] != DBNull.Value ? Convert.ToDateTime(row["fecresol"]) : new DateTime(1900, 1, 1),
+                    FechaGestion = row["fechaact"] != DBNull.Value ? Convert.ToDateTime(row["fechaact"]) : new DateTime(1900, 1, 1),
+
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        private static Ingresolicencia ContructorLMPendienteCobro(DataRow row)
+        {
+            try
+            {
+
+
+                return new Ingresolicencia
+                {
+                    CodIngreso = row["CodIngreso"] != DBNull.Value ? Convert.ToInt64(row["CodIngreso"]) : 0,
+                    RutAfiliado = row["RutAfiliado"] != DBNull.Value ? row["RutAfiliado"].ToString() : string.Empty,
+                    NombreAfiliado = row["NombreAfiliado"] != DBNull.Value ? row["NombreAfiliado"].ToString() : string.Empty,
+                    FolioLicencia = row["folioreal"] != DBNull.Value ? row["folioreal"].ToString() : string.Empty,
+                    TipoSubLicencia = row["tip_sub"] != DBNull.Value ? row["tip_sub"].ToString() : string.Empty,
+                    TipoConvenio = row["tip_com"] != DBNull.Value ? row["tip_com"].ToString() : string.Empty,
+                    TipoLicencia = row["lmm"] != DBNull.Value ? row["lmm"].ToString() : string.Empty,
+                    FechaGestion = row["fechapagodisponibledesde"] != DBNull.Value ? Convert.ToDateTime(row["fechapagodisponibledesde"]) : new DateTime(1900, 1, 1),
+                    FechaPrescribeString = row["PagodesdeString"] != DBNull.Value ? row["PagodesdeString"].ToString() : string.Empty,
+
+
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
 
 
         private static Ingresolicencia EntidadEncabezado(DataRow row)

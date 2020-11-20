@@ -352,7 +352,7 @@ var appAcuerdoPagoModal = new Vue({
                 appAcuerdoPagosFiltros.handleEventoClickFiltrar();
                 $('#new_datos-gestion_acuerdo_pago').trigger("reset");
 
-                if (valContact == 1 || valContact == 2) {
+                if ($('#slSubEstadoAcuerdoP').val() == 21 || $('#slSubEstadoAcuerdoP').val() == 23) {
                     $("#tabContacAcuerdo").tab('show');
                     $("#msjContactAcuerdoP").css('display', 'block')
                 }

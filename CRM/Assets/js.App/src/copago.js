@@ -225,6 +225,11 @@ var appConsultaCopago = new Vue({
                     container: '#msjregsitro',
                     timer: 4000
                 });
+                if ($('#dllSubEstadoModal').val() == 102 || $('#dllSubEstadoModal').val() == 201 || $('#dllSubEstadoModal').val() == 202) {
+                    $("#tabContactCopago").tab('show');
+                    $("#msjContactCopago").css('display', 'block');
+                }
+
                 appConsultaCopago.limpiezaCampos();
             });
         },

@@ -195,56 +195,65 @@ var appModalAcuenta = new Vue({
             let beneficio_6 = "";
             let beneficio_7 = "";
             let beneficio_8 = "";
-            let bnf = [];
 
-            if ($('#dllSubEstadoModal').val() == 102) {
+
+            if ($('#dllSubEstadoModal').val() == 101 || $('#dllSubEstadoModal').val() == 102) {
+
 
                 if ($('#beneficio_1:checked').val() == 'on') {
                     beneficio_1 = $('#lbBeneficio_1').html();
                     contador = contador + 1;
-                    bnf.push(beneficio_1)
+
+
                 }
 
                 if ($('#beneficio_2:checked').val() == 'on') {
                     beneficio_2 = $('#lbBeneficio_2').html();
                     contador = contador + 1;
-                    bnf.push(beneficio_2)
+
+
                 }
 
                 if ($('#beneficio_3:checked').val() == 'on') {
                     beneficio_3 = $('#lbBeneficio_3').html();
                     contador = contador + 1;
-                    bnf.push(beneficio_3)
+
+
                 }
 
                 if ($('#beneficio_4:checked').val() == 'on') {
                     beneficio_4 = $('#lbBeneficio_4').html();
                     contador = contador + 1;
-                    bnf.push(beneficio_4)
+
+
                 }
 
                 if ($('#beneficio_5:checked').val() == 'on') {
                     beneficio_5 = $('#lbBeneficio_5').html();
                     contador = contador + 1;
-                    bnf.push(beneficio_5)
+
+
                 }
 
                 if ($('#beneficio_6:checked').val() == 'on') {
                     beneficio_6 = $('#lbBeneficio_6').html();
                     contador = contador + 1;
-                    bnf.push(beneficio_6)
+
+
                 }
 
                 if ($('#beneficio_7:checked').val() == 'on') {
                     beneficio_7 = $('#lbBeneficio_7').html();
                     contador = contador + 1;
-                    bnf.push(beneficio_7)
+
+
                 }
 
                 if ($('#beneficio_8:checked').val() == 'on') {
                     beneficio_8 = $('#lbBeneficio_8').html();
                     contador = contador + 1;
-                    bnf.push(beneficio_8)
+
+
                 }
                 if (contador == 0) {
                     $(Swal.fire({
@@ -330,7 +339,7 @@ var appModalAcuenta = new Vue({
                     timer: 3000
                 });
 
-            });
+                });
 
             if (bnf.length > 0) {
                 var rut = $('#txtRutModalAcuenta').val();
@@ -381,7 +390,9 @@ var appModalAcuenta = new Vue({
 $('#dllSubEstadoModal').change(function (e) {
     e.preventDefault();
     $("#dvBeneficiosG").html("");
-    if ($(this).val() == 102) {
+
+    if ($(this).val() == 101 || $(this).val() == 102) {
+
         fetch(`http://${motor_api_server}:4002/acuenta/lista-beneficios-vigentes`, {
             method: 'GET',
             mode: 'cors',
