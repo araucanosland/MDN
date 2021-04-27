@@ -904,6 +904,9 @@
                                 <option value="2">LM con Documentación Pendiente</option>
                                 <option value="3">Pendientes de Cobro</option>
                                 <option value="4">LM Pronunciadas No Procesadas AS400</option>
+
+                                <option value="5">LM Pendiente Convenio por Empresa</option>
+
                             </select>
                         </div>
                     </div>
@@ -1032,6 +1035,9 @@
                                                 <th data-hide="phone">Tipo LM</th>
                                                 <th style="width:10%;" data-hide="phone">Tipo Convenio</th>
                                                 <th style="width:10%;" data-hide="phone">Mes Prescribe</th>
+
+                                                <th data-hide="phone">Anexo Estamento</th>
+
                                                 <th style="width:10%;" data-hide="phone">Bitácora</th>
 
 
@@ -1188,6 +1194,7 @@
                                                     </div>
                                                     <div class="text-right">
                                                         <ul class="pagination"></ul>
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -1197,8 +1204,6 @@
 
                             </div>
                         </div>
-
-
 
                         <div id="div_lm_pendiente_cobro" style="display:none">
                             <div class="panel">
@@ -1280,7 +1285,17 @@
                                                 <div class="col-sm-1" style="margin-top:37px;">
                                                     <div class="input-group">
                                                         <button class="btn btn-success" type="button" id="btn-buscar-LM-pendiente-cobro">Buscar</button>
+
                                                     </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
 
                                                 </div>
 
@@ -1293,6 +1308,95 @@
                                                 <td colspan="10">
                                                     <div class="text-left">
                                                         <label id="cantLmPendienteCobro" class="control-label"></label>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <ul class="pagination"></ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                        <div id="div_lm_Pendiente_Convenio" style="display:none">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">LM Pendiente Convenio por Empresa</h3>
+
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-1" style="margin-left:20px;margin-top:20px;">
+                                        <div class="input-group">
+
+                                            <button class="btn btn-primary" type="button" id="btn-buscar-lm-pendiente-convenio-pdf">Reporte Pdf</button>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <div class="panel-body">
+
+
+                                    <table id="demo-foo-filtering_LM_pendiente-convenio" class="table table-bordered table-hover toggle-circle" data-page-size="20">
+
+                                        <thead>
+                                            <tr>
+                                                <th data-toggle="true">Rut Afiliado</th>
+                                                <th data-toggle="true">Nombre Afiliado</th>
+
+                                                <th data-hide="phone">Folio Licencia</th>
+                                                <th data-hide="phone">Topo Licencia</th>
+                                                <th data-hide="phone">Tipo SubLicencia</th>
+                                                <th data-hide="phone">Días Licencia</th>
+                                                <th data-hide="phone">Fecha Resolución Compin</th>
+                                                <th data-hide="phone">Estado Licencia</th>
+                                                <th data-hide="phone">Motivo</th>
+
+
+
+
+                                            </tr>
+                                        </thead>
+
+                                        <div class="pad-btm">
+                                            <div class="">
+
+
+
+                                                <div class="col-sm-4 mar-top">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Empresa</label>
+                                                        <select class="form-control" id="ddlempresa_pendiente_convenio" name="ddlempresa_pendiente_convenio"></select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-1" style="margin-top:37px;">
+                                                    <div class="input-group">
+                                                        <button class="btn btn-success" type="button" id="btn-buscar-LM-pendiente-convenio">Buscar</button>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+
+                                        <tbody id="bdy_datos_Lm_pendiente_convenio"></tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="9">
+                                                    <div class="text-left">
+                                                        <label id="cantLmPendienteConvenio" class="control-label"></label>
+
                                                     </div>
                                                     <div class="text-right">
                                                         <ul class="pagination"></ul>
@@ -1896,7 +2000,20 @@
                                     Médico o Prestador No existe o No Inscrito
                                 </label>
                             </div>
+
+                            <div div="divfinalizado" class="checkbox">
+                                <input name="lista" id="chk_finalizado" class="magic-checkbox" type="checkbox" value="1">
+                                <label for="chk_finalizado">
+                                    Finalizar Licencia
+                                </label>
+                            </div>
+
                         </div>
+                        <!-- Checkboxes -->
+
+
+
+
                     </div>
 
                 </div>
@@ -2002,18 +2119,20 @@
 
 
                         var $wrapper = (`
-                                                                <tr>
 
-                                                                <td>${e.IngresoData.RutAfiliado}</td>
-                                                                <td>${e.IngresoData.NombreAfiliado}</td>
-                                                                <td>${e.IngresoData.FolioLicencia}</td>
-                                                                <td>${e.IngresoData.FormatoLM}</td>
-                                                                <td align="center">${e.IngresoData.compincentralizado}</td>
-                                                                <td>${e.IngresoData.EtapaActual}</td>
-                                                                <td>${e.IngresoData.DescripcionEstadoRevision}</td>
-                                                                <td>${e.IngresoData.Responsable}</td>
-                                                                <td align="center">${e.IngresoData.Flagas400.toString().toEtiquetaFlagLicenciaGrilla()}</td>
-                                                                   `);
+                                                                    <tr>
+
+                                                                    <td>${e.IngresoData.RutAfiliado}</td>
+                                                                    <td>${e.IngresoData.NombreAfiliado}</td>
+                                                                    <td>${e.IngresoData.FolioLicencia}</td>
+                                                                    <td>${e.IngresoData.FormatoLM}</td>
+                                                                    <td align="center">${e.IngresoData.compincentralizado}</td>
+                                                                    <td>${e.IngresoData.EtapaActual}</td>
+                                                                    <td>${e.IngresoData.DescripcionEstadoRevision}</td>
+                                                                    <td>${e.IngresoData.Responsable}</td>
+                                                                    <td align="center">${e.IngresoData.Flagas400.toString().toEtiquetaFlagLicenciaGrilla()}</td>
+                                                                       `);
+
 
 
 
@@ -2084,17 +2203,19 @@
 
 
                         var $wrapper = (`   <tr>
-                                                                                            <td>${e.RutAfiliado}</td>
-                                                                                            <td>${e.NombreAfiliado}</td>
-                                                                                            <td>${e.FechaIngreso.toFecha()}</td>
-                                                                                            <td>${e.FormatoLM}</td>
-                                                                                            <td align="center">${e.compincentralizado}</td>
-                                                                                            <td>${e.OficinaDescripcion}</td>
-                                                                                            <td>${e.FolioLicencia}</td>
-                                                                                            <td>${e.EstadoLicencia}</td>
-                                                                                            <td>${e.descripcionEstadoRevision}</td>
-                                                                                           <td>${e.Responsable}</td>
-                                                                                                                                                            `);
+
+                                                                                                <td>${e.RutAfiliado}</td>
+                                                                                                <td>${e.NombreAfiliado}</td>
+                                                                                                <td>${e.FechaIngreso.toFecha()}</td>
+                                                                                                <td>${e.FormatoLM}</td>
+                                                                                                <td align="center">${e.compincentralizado}</td>
+                                                                                                <td>${e.OficinaDescripcion}</td>
+                                                                                                <td>${e.FolioLicencia}</td>
+                                                                                                <td>${e.EstadoLicencia}</td>
+                                                                                                <td>${e.descripcionEstadoRevision}</td>
+                                                                                               <td>${e.Responsable}</td>
+                                                                                                                                                                `);
+
                         $wrapper = $wrapper + (`<td>`);
 
 
@@ -2197,18 +2318,20 @@
 
 
                         var $wrapper = (`
-                                                                <tr>
-                                                                    <td>${e.RutAfiliado}</td>
-                                                                    <td>${e.NombreAfiliado}</td>
-                                                                    <td>${e.FechaIngreso.toFecha()}</td>
-                                                                    <td>${e.OficinaDescripcion}</td>
-                                                                    <td>${e.FolioLicencia}</td>
-                                                                    <td>${e.FormatoLM}</td>
-                                                                    <td>${e.estadoLicencia}</td>
-                                                                    <td>${e.DescripcionEstadoRevision}</td>
-                                                                    <td>${e.Responsable}</td>
 
-                                                                `);
+                                                                    <tr>
+                                                                        <td>${e.RutAfiliado}</td>
+                                                                        <td>${e.NombreAfiliado}</td>
+                                                                        <td>${e.FechaIngreso.toFecha()}</td>
+                                                                        <td>${e.OficinaDescripcion}</td>
+                                                                        <td>${e.FolioLicencia}</td>
+                                                                        <td>${e.FormatoLM}</td>
+                                                                        <td>${e.estadoLicencia}</td>
+                                                                        <td>${e.DescripcionEstadoRevision}</td>
+                                                                        <td>${e.Responsable}</td>
+
+                                                                    `);
+
 
 
                         $wrapper = $wrapper + (`<td>`);
@@ -2262,15 +2385,17 @@
 
 
                         var $wrapper = (`
-                            <tr>
-                                <td>${e.RutAfiliado}</td>
-                                <td>${e.NombreAfiliado}</td>
-                                <td>${e.FechaIngreso.toFecha()}</td>
-                                <td>${e.OficinaDescripcion}</td>
-                                <td>${e.FolioLicencia}</td>
-                                <td>${e.FormatoLM}</td>
 
-                            `);
+                                <tr>
+                                    <td>${e.RutAfiliado}</td>
+                                    <td>${e.NombreAfiliado}</td>
+                                    <td>${e.FechaIngreso.toFecha()}</td>
+                                    <td>${e.OficinaDescripcion}</td>
+                                    <td>${e.FolioLicencia}</td>
+                                    <td>${e.FormatoLM}</td>
+
+                                `);
+
                         $wrapper = $wrapper + (`<td>`);
                         $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.CodIngreso}"><i class="ion-edit"></i></a>`);
 
@@ -2599,16 +2724,18 @@
                     $.each(result, function (i, e) {
 
                         var $wrapper = (`
-                                                    <tr>
-                                                    <td>${e.IngresoData.RutAfiliado}</td>
-                                                    <td>${e.IngresoData.NombreAfiliado}</td>
-                                                    <td>${e.IngresoData.FolioLicencia}</td>
-                                                    <td>${e.IngresoData.OficinaDescripcion}</td>
-                                                    <td>${e.IngresoData.FechaLicenciaDesde.toFecha()}</td>
-                                                    <td>${e.IngresoData.FechaLicenciaHasta.toFecha()}</td>
-                                                    <td>${e.IngresoData.DiasLicencia}</td>
 
-                                                    `);
+                                                        <tr>
+                                                        <td>${e.IngresoData.RutAfiliado}</td>
+                                                        <td>${e.IngresoData.NombreAfiliado}</td>
+                                                        <td>${e.IngresoData.FolioLicencia}</td>
+                                                        <td>${e.IngresoData.OficinaDescripcion}</td>
+                                                        <td>${e.IngresoData.FechaLicenciaDesde.toFecha()}</td>
+                                                        <td>${e.IngresoData.FechaLicenciaHasta.toFecha()}</td>
+                                                        <td>${e.IngresoData.DiasLicencia}</td>
+
+                                                        `);
+
 
                         $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Seguimiento" href="/motor/App/Licencias/bitacora?ci=${e.CodIngreso}"><i class="ion-search"></i></a>`);
 
@@ -2633,21 +2760,27 @@
                 var total = 0;
                 $("#bdy_datos_Lm_doc_pendiente").html("");
                 $("#cantdocpendiente").html('');
+
+                debugger;
                 $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-Lm-Documentos-pendientes", { Folio: folio_LM, codOficina: getCookie("Oficina"), Tipo_LM: tipo_LM, Tipo_Convenio: tipo_convenio }, function (result) {
-                    debugger;
+
+
                     $("#lbldocumentosPendiente").html(result[0].IngresoData.FechaGestion.toFecha());
                     $.each(result, function (i, e) {
 
                         var $wrapper = (`
-                                                    <tr>
-                                                    <td>${e.IngresoData.RutAfiliado}</td>
-                                                    <td>${e.IngresoData.NombreAfiliado}</td>
-                                                    <td>${e.IngresoData.FolioLicencia}</td>
-                                                    <td>${e.IngresoData.TipoSubLicencia}</td>
-                                                    <td>${e.IngresoData.TipoLicencia}</td>
-                                                    <td>${e.IngresoData.TipoConvenio}</td>
-                                                    <td>${e.IngresoData.FechaIngreso.toFecha()}</td>
-                                                    <td>`);
+
+                                                        <tr>
+                                                        <td>${e.IngresoData.RutAfiliado}</td>
+                                                        <td>${e.IngresoData.NombreAfiliado}</td>
+                                                        <td>${e.IngresoData.FolioLicencia}</td>
+                                                        <td>${e.IngresoData.TipoSubLicencia}</td>
+                                                        <td>${e.IngresoData.TipoLicencia}</td>
+                                                        <td>${e.IngresoData.TipoConvenio}</td>
+                                                        <td>${e.IngresoData.FechaIngreso.toFecha()}</td>
+                                                         <td>${e.IngresoData.AnexoEstamento}</td>
+                                                        <td>`);
+
 
                         if (e.IngresoData.CodIngreso != 0) {
                             $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Seguimiento" href="/motor/App/Licencias/bitacora?ci=${e.IngresoData.CodIngreso}"><i class="ion-search"></i></a>`);
@@ -2673,16 +2806,18 @@
                     $("#lbl_no_as400").html(result[0].IngresoData.FechaGestion.toFecha());
 
                     $.each(result, function (i, e) {
-                        debugger;
-                        var $wrapper = (`
-                                                    <tr>
-                                                    <td>${e.IngresoData.RutAfiliado}</td>
-                                                    <td>${e.IngresoData.NombreAfiliado}</td>
-                                                    <td>${e.IngresoData.FolioLicencia}</td>
-                                                    <td>${e.IngresoData.TipoSubLicencia}</td>
-                                                    <td>${e.IngresoData.FechaIngreso.toFecha()}</td>
 
-                                                       <td> `);
+
+                        var $wrapper = (`
+                                                        <tr>
+                                                        <td>${e.IngresoData.RutAfiliado}</td>
+                                                        <td>${e.IngresoData.NombreAfiliado}</td>
+                                                        <td>${e.IngresoData.FolioLicencia}</td>
+                                                        <td>${e.IngresoData.TipoSubLicencia}</td>
+                                                        <td>${e.IngresoData.FechaIngreso.toFecha()}</td>
+
+                                                           <td> `);
+
 
                         if (e.IngresoData.CodIngreso != 0) {
                             $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Seguimiento" href="/motor/App/Licencias/bitacora?ci=${e.IngresoData.CodIngreso}"><i class="ion-search"></i></a>`);
@@ -2702,6 +2837,65 @@
                 $("#bdy_datos_Lm_pendiente_cobro").html("");
                 $("#cantLmPendienteCobro").html('');
                 $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-LM-Pendiente-Cobro", { Folio: folio_LM, codOficina: getCookie("Oficina"), Tipo_LM: tipo_LM, Tipo_Convenio: tipo_convenio }, function (result) {
+
+
+                    $.each(result, function (i, e) {
+
+                        var $wrapper = (`
+                                            <tr>
+                                            <td>${e.IngresoData.RutAfiliado}</td>
+                                            <td>${e.IngresoData.NombreAfiliado}</td>
+                                            <td>${e.IngresoData.FechaIngreso.toFecha()}</td>
+                                            <td>${e.IngresoData.FolioLicencia}</td>
+                                            <td>${e.IngresoData.TipoSubLicencia}</td>
+                                            <td>${e.IngresoData.TipoConvenio}</td>
+                                            <td> ${ e.IngresoData.TipoLicencia}</td>
+                                            <td>${e.IngresoData.FechaGestion.toFecha()}</td>
+                                            <td> `);
+                        if (e.IngresoData.CodIngreso != 0) {
+                            $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Seguimiento" href="/motor/App/Licencias/bitacora?ci=${e.IngresoData.CodIngreso}"><i class="ion-search"></i></a>`);
+                        }
+                        $wrapper = $wrapper + (`</td>`);
+
+                        $("#bdy_datos_Lm_pendiente_cobro").append($wrapper);
+                        total++;
+                    })
+                    $("#cantLmPendienteCobro").html("Cantidad de Registros " + total);
+                    $("#cantLmPendienteCobro").show();
+                })
+            },
+
+            CargaTablaLMpendienteConvenio: function (Empresa) {
+                $("#cantLmPendienteConvenio").html('');
+                $("#cantLmPendienteConvenio").hide();
+                var total = 0;
+                $("#bdy_datos_Lm_pendiente_convenio").html("");
+                $("#cantLmPendienteConvenio").html('');
+                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-LM-Pendiente-Convenio", { codOficina: getCookie("Oficina"), Empresa: Empresa }, function (result) {
+
+                    $.each(result, function (i, e) {
+
+                        var $wrapper = (`
+                                            <tr>
+                                            <td>${e.IngresoData.RutAfiliado}</td>
+                                            <td>${e.IngresoData.NombreAfiliado}</td>
+                                            <td>${e.IngresoData.FolioLicencia}</td>
+                                            <td>${e.IngresoData.TipoLicencia}</td>
+                                            <td>${e.IngresoData.TipoSubLicencia}</td>
+                                            <td>${e.IngresoData.DiasLicencia}</td>
+                                            <td>${e.IngresoData.FechaPrescribeString}</td>
+                                            <td>${e.IngresoData.estadoLicencia}</td>
+                                            <td>${e.IngresoData.Observacion}</td>
+                                            `);
+
+                        $("#bdy_datos_Lm_pendiente_convenio").append($wrapper);
+                        total++;
+                    })
+                    $("#cantLmPendienteConvenio").html("Cantidad de Registros " + total);
+                    $("#cantLmPendienteConvenio").show();
+                })
+            },
+
 
                     $.each(result, function (i, e) {
                         debugger;
@@ -2746,10 +2940,12 @@
 
 
                         var $wrapper = (`<tr>
-                                                                                                                         <td>${e.RutAfiliado}</td>
-                                                                                                                         <td>${e.NombreAfiliado}</td>
-                                                                                                                         <td>${e.FolioLicencia}</td>
-                                                                                                         `);
+
+                                                                                                                             <td>${e.RutAfiliado}</td>
+                                                                                                                             <td>${e.NombreAfiliado}</td>
+                                                                                                                             <td>${e.FolioLicencia}</td>
+                                                                                                             `);
+
                         $wrapper = $wrapper + (`<td>`);
                         $wrapper = $wrapper + (`<a class="btn btn-warning mar-lft" data-target="#modal-gestion-oficina" data-toggle="modal" data-tipo='1' data-codingreso=${e.CodIngreso}><i class="ion-edit"></i></a>`);
 
@@ -2820,6 +3016,52 @@
             }
 
 
+            //---------session LM Informes
+
+            if (sessionStorage.getItem('ddltipoConsulta') == 2) {
+                $('#ddltipoConsulta').val(2);
+                $('#div_manual_presencial').hide();
+                $('#div_lm_doc_pendiente').show();
+                $('#div_lm_pronunciadas_no_as400').hide();
+                $('#div_lm_pendiente_cobro').hide()
+                $('#div_lm_Pendiente_Convenio').hide();
+                cargador.CargaTablaLMDocPendiente("", $("#dddlltipoLM_doc_Pendiente").val(), $("#dddlltipoConvenio_doc_Pendiente").val());
+
+            }
+            if (sessionStorage.getItem('ddltipoConsulta') == 3) {
+                $('#ddltipoConsulta').val(3);
+                $('#div_manual_presencial').hide();
+                $('#div_lm_doc_pendiente').hide();
+                $('#div_lm_pronunciadas_no_as400').hide();
+                $('#div_lm_Pendiente_Convenio').hide();
+                $('#div_lm_pendiente_cobro').show()
+                cargador.CargaTablaLMPendienteCobro("", $("#dddlltipoLM_pendiente_cobro").val(), $("#dddlltipoConvenio_pendiente_cobro").val());
+
+
+            }
+
+            if (sessionStorage.getItem('ddltipoConsulta') == 4) {
+                $('#ddltipoConsulta').val(4);
+                $('#div_manual_presencial').hide();
+                $('#div_lm_doc_pendiente').hide();
+                $('#div_lm_pronunciadas_no_as400').show();
+                $('#div_lm_pendiente_cobro').hide()
+                $('#div_lm_Pendiente_Convenio').hide();
+                cargador.CargaTablaLMPronunciadasNoAs400("", $("#dddlltipoLM_no_as400").val(), $("#dddlltipoConvenio_no_as400").val());
+
+            }
+
+            if (sessionStorage.getItem('ddltipoConsulta') == 5) {
+                $('#ddltipoConsulta').val(5);
+                $('#div_manual_presencial').hide();
+                $('#div_lm_doc_pendiente').hide();
+                $('#div_lm_pronunciadas_no_as400').hide();
+                $('#div_lm_pendiente_cobro').hide()
+                $('#div_lm_Pendiente_Convenio').show();
+                cargador.CargaTablaLMpendienteConvenio($("#ddlempresa_pendiente_convenio").val());
+            }
+
+
 
             if (activeTab == "#demo-lft-tab-2") {
 
@@ -2870,6 +3112,7 @@
 
             $('#demo-foo-filtering_LM_doc_pendiente').footable().on('footable_filtering', function (e) {
 
+
                 e.clear = !e.filter;
             });
 
@@ -2879,6 +3122,7 @@
             });
 
             $('#demo-foo-filtering_LM_pendiente_cobro').footable().on('footable_filtering', function (e) {
+
 
                 e.clear = !e.filter;
             });
@@ -3086,8 +3330,8 @@
 
                     e.clear = !e.filter;
                 });
-
-                localStorage.setItem('RutAfiliado', buscar);
+                debugger;
+                sessionStorage.setItem('RutAfiliado', buscar);
                 cargador.CargaDatosTablaTab2Busequda(buscar);
 
             })
@@ -3099,7 +3343,7 @@
                 $(txt_buscar_licencia).attr("placeholder", "Ej:13831003-5");
                 $("#txt_buscar_licencia").mask('99.999.999-*');
                 $("#bdy_datos_busqueda").html("");
-                localStorage.setItem('RutAfiliado', '');
+                sessionStorage.setItem('RutAfiliado', '');
 
             });
 
@@ -3681,7 +3925,9 @@
             });
 
 
-            //-----------------Seleccion de Consultas-------------------
+
+            //-----------------Seleccion de INFORMES LM -------------------
+
             $('#ddltipoConsulta').on('change', function (event) {
 
                 if ($("#ddltipoConsulta").val() == "-1") {
@@ -3698,12 +3944,21 @@
                     $('#div_lm_pronunciadas_no_as400').hide();
                     $('#div_lm_pendiente_cobro').hide()
 
+                    $('#div_lm_Pendiente_Convenio').hide();
+
+
                 }
                 if ($("#ddltipoConsulta").val() == "2") {
                     $('#div_manual_presencial').hide();
                     $('#div_lm_doc_pendiente').show();
                     $('#div_lm_pronunciadas_no_as400').hide();
                     $('#div_lm_pendiente_cobro').hide()
+
+                    $('#div_lm_Pendiente_Convenio').hide();
+
+                    sessionStorage.setItem('ddltipoConsulta', 2);
+
+
                     cargador.CargaTablaLMDocPendiente("", $("#dddlltipoLM_doc_Pendiente").val(), $("#dddlltipoConvenio_doc_Pendiente").val());
                 }
 
@@ -3712,7 +3967,11 @@
                     $('#div_manual_presencial').hide();
                     $('#div_lm_doc_pendiente').hide();
                     $('#div_lm_pronunciadas_no_as400').hide();
+
+                    $('#div_lm_Pendiente_Convenio').hide();
                     $('#div_lm_pendiente_cobro').show()
+                    sessionStorage.setItem('ddltipoConsulta', 3);
+
                     cargador.CargaTablaLMPendienteCobro("", $("#dddlltipoLM_pendiente_cobro").val(), $("#dddlltipoConvenio_pendiente_cobro").val());
                 }
 
@@ -3721,12 +3980,34 @@
                     $('#div_lm_doc_pendiente').hide();
                     $('#div_lm_pronunciadas_no_as400').show();
                     $('#div_lm_pendiente_cobro').hide()
+
+                    $('#div_lm_Pendiente_Convenio').hide();
+                    sessionStorage.setItem('ddltipoConsulta', 4);
                     cargador.CargaTablaLMPronunciadasNoAs400("", $("#dddlltipoLM_no_as400").val(), $("#dddlltipoConvenio_no_as400").val());
 
                 }
+
+
+                if ($("#ddltipoConsulta").val() == "5") {
+                    $('#div_manual_presencial').hide();
+                    $('#div_lm_doc_pendiente').hide();
+                    $('#div_lm_pronunciadas_no_as400').hide();
+                    $('#div_lm_pendiente_cobro').hide()
+                    $('#div_lm_Pendiente_Convenio').show();
+                    sessionStorage.setItem('ddltipoConsulta', 5);
+                    //cargador.CargaTablaLMPronunciadasNoAs400("", $("#dddlltipoLM_no_as400").val(), $("#dddlltipoConvenio_no_as400").val());
+
+                }
+
+
+
+
+
             });
 
             $("#btn-buscar-LM-doc-pendiente").on("click", function () {
+
+
                 cargador.CargaTablaLMDocPendiente($("#txt_folio_LM_doc_pendiente").val(), $("#dddlltipoLM_doc_Pendiente").val(), $("#dddlltipoConvenio_doc_Pendiente").val());
             });
 
@@ -3748,23 +4029,58 @@
 
             });
             $("#btn-buscar-lm-no-as400-xls").on("click", function () {
-                window.location.href = "/motor/api/Licencias/reporte-no-pronunciadas-as400-xls?codOficina=" + getCookie("Oficina") + "&FolioLM=" + $("#txt_folio_LM_pronunciada_no_as400").val() + "&TipoLM=" + $("#dddlltipoLM_no_as400").val() + "&TipoConvenio=" + $("dddlltipoConvenio_no_as400").val();
+
+                window.location.href = "/motor/api/Licencias/reporte-no-pronunciadas-as400-xls?codOficina=" + getCookie("Oficina") + "&FolioLM=" + $("#txt_folio_LM_pronunciada_no_as400").val() + "&TipoLM=" + $("#ddlltipoLM_no_as400").val() + "&TipoConvenio=" + $("#dddlltipoConvenio_no_as400").val();
+
 
             });
 
             $("#btn-buscar-lm-no-as400-pdf").on("click", function () {
-                window.location.href = "/motor/api/Licencias/reporte-no-pronunciadas-as400-pdf?codOficina=" + getCookie("Oficina") + "&FolioLM=" + $("#txt_folio_LM_pronunciada_no_as400").val() + "&TipoLM=" + $("#dddlltipoLM_no_as400").val() + "&TipoConvenio=" + $("dddlltipoConvenio_no_as400").val();
+
+                window.location.href = "/motor/api/Licencias/reporte-no-pronunciadas-as400-pdf?codOficina=" + getCookie("Oficina") + "&FolioLM=" + $("#txt_folio_LM_pronunciada_no_as400").val() + "&TipoLM=" + $("#dddlltipoLM_no_as400").val() + "&TipoConvenio=" + $("#dddlltipoConvenio_no_as400").val();
 
             });
             $("#btn-buscar-lm-pendiente-cobro-xls").on("click", function () {
-                window.location.href = "/motor/api/Licencias/reporte-pendiente-cobro-xls?codOficina=" + getCookie("Oficina") + "&FolioLM=" + $("#txt_folio_LM_pendiente_cobro").val() + "&TipoLM=" + $("#dddlltipoLM_pendiente_cobro").val() + "&TipoConvenio=" + $("dddlltipoConvenio_pendiente_cobro").val();
+                window.location.href = "/motor/api/Licencias/reporte-pendiente-cobro-xls?codOficina=" + getCookie("Oficina") + "&FolioLM=" + $("#txt_folio_LM_pendiente_cobro").val() + "&TipoLM=" + $("#dddlltipoLM_pendiente_cobro").val() + "&TipoConvenio=" + $("#dddlltipoConvenio_pendiente_cobro").val();
+
 
             });
 
             $("#btn-buscar-lm-pendiente-cobro-pdf").on("click", function () {
-                window.location.href = "/motor/api/Licencias/reporte-pendiente-cobro-pdf?codOficina=" + getCookie("Oficina") + "&FolioLM=" + $("#txt_folio_LM_pendiente_cobro").val() + "&TipoLM=" + $("#dddlltipoLM_pendiente_cobro").val() + "&TipoConvenio=" + $("dddlltipoConvenio_pendiente_cobro").val();
+
+                window.location.href = "/motor/api/Licencias/reporte-pendiente-cobro-pdf?codOficina=" + getCookie("Oficina") + "&FolioLM=" + $("#txt_folio_LM_pendiente_cobro").val() + "&TipoLM=" + $("#dddlltipoLM_pendiente_cobro").val() + "&TipoConvenio=" + $("#dddlltipoConvenio_pendiente_cobro").val();
 
             });
+
+            $("#btn-buscar-LM-pendiente-convenio").on("click", function () {
+                cargador.CargaTablaLMpendienteConvenio($("#ddlempresa_pendiente_convenio").val());
+            });
+
+            $("#btn-buscar-lm-pendiente-convenio-pdf").on("click", function () {
+                window.location.href = "/motor/api/Licencias/listar-lm-pendiente-convenio-pdf?codOficina=" + getCookie("Oficina") + "&Empresa=" + $("#ddlempresa_pendiente_convenio").val();
+
+            });
+
+
+
+
+
+            //-----CARGA COMBO EMPRESA PENDIENTE CONVENIO
+
+            $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-LM-Pendiente-Convenio-Empresa", { codOficina: getCookie("Oficina") }, function (datos) {
+                $("#ddlempresa_pendiente_convenio").html("");
+                // $("#ddlestadosindex").html("");
+
+
+                $.each(datos, function (i, estado) {
+
+                    $("#ddlempresa_pendiente_convenio").append($("<option>").val(estado.IngresoData.RutEmpresa).html(estado.IngresoData.NombreEmpresa));
+                    //   $("#ddlestadosindex").append($("<option>").val(estado.Id).html(estado.Estado));
+
+                });
+            });
+
+
 
 
 

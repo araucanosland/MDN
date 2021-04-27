@@ -74,8 +74,9 @@
                                                 <option value="">Seleccione</option>
                                                 <option value="Pensionados">Pensionados Nuevos</option>
                                                 <option value="Cumpleanos">Cumpleaños</option>
-                                                <option value="Cartera">Compra Cartera</option>
+                                                <option value="Cartera">Compra Cartera Inter-Caja</option>
                                                 <option value="BNF">Beneficios</option>
+                                                <option value="carteraExterna">Compra Catera Externa</option>
                                                 @* <option value="PDG">Prioridad Gestión</option>*@
                                             </select>
                                         </div>
@@ -116,6 +117,7 @@
                                                 <option value="PARALELO">Paralelo</option>
                                                 <option value="RENEGOCIACION">Renegociación</option>
                                                 <option value="PENSIONADOS TARGET">Pensionados Target</option>
+                                                <option value="PORTABILIDAD">Portabilidad</option>
                                             </select>
                                         </div>
                                     </div>
@@ -496,8 +498,8 @@
                                         <th data-field="empresa.nombre" data-sortable="true">N° de Creditos</th>
                                         <th data-field="prioridad" data-sortable="true" data-formatter="seguroCesantiaPrioridadFormatter">Prioridad</th>
                                         <th data-field="ultimaGestion.fechaCompromiso" data-sortable="true">Prox. Gestion</th>
-                                        <th data-field="gestiones" data-formatter="subEstadoAfiliadoFormatter" data-sortable="true">Estado</th>
-                                        <th data-field="gestiones.estado" data-formatter="estadoAfiliadoFormatter" data-sortable="true">Sub-Estado</th>
+                                        <th data-field="gestiones" data-formatter="subEstadoAfiliadoFormatterSeguroC" data-sortable="true">Estado</th>
+                                        <th data-field="gestiones.estado" data-formatter="estadoAfiliadoFormatterSeguroC" data-sortable="true">Sub-Estado</th>
                                         <th data-field="listaTrabajo.nombre" data-sortable="true">Lista Trabajo</th>
                                     </tr>
                                 </thead>
@@ -562,6 +564,7 @@
                                                 <option value="NUEVOS">Nuevos</option>
                                                 <option value="PARALELO">Paralelo</option>
                                                 <option value="RENEGOCIACION">Renegociación</option>
+                                                <option value="PORTABILIDAD">Portabilidad</option>
                                             </select>
                                         </div>
                                     </div>
@@ -724,6 +727,43 @@
                                             </div>
                                         </div>
 
+
+
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <div class="form-group">
+                                                    <label class="control-label">Entidades con Mora</label>
+                                                    <input class="form-control" id="afi_entidad_mora" type="text" readonly="readonly">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Mora más Antigua</label>
+                                                    <input class="form-control" type="text" id="afi_mora_antigua" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group has-warning">
+                                                    <label class="control-label">Montos Deudas</label>
+                                                    <div class="input-group mar-btm">
+                                                        <span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+                                                        <input class="form-control text-lg-right" id="afi_monto_deudas" type="text" readonly="readonly">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+
                                         <div class="row" style="display:none;">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
@@ -838,8 +878,8 @@
                                         </div>
 
                                         @*<div class="alert alert-purple" style="border-radius: 5px; display:none" id="lbMensajeEncuesta">
-                                                Afiliado no ha realizado la encuesta. "Enfermedades Cronicas y Medicamentos" <strong><u><a style="color: #076fc7;" id="linkencuesta" href="/motor/App/DatosAfiliados?RutBuscar=" target="_blank">  ir a encuesta! </a></u></strong>
-                                            </div>*@
+            Afiliado no ha realizado la encuesta. "Enfermedades Cronicas y Medicamentos" <strong><u><a style="color: #076fc7;" id="linkencuesta" href="/motor/App/DatosAfiliados?RutBuscar=" target="_blank">  ir a encuesta! </a></u></strong>
+        </div>*@
 
                                         <div class="row charlyNTF" style="display:none;">
                                             <div class="col-sm-12 charlyNTFContainer">

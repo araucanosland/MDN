@@ -1,10 +1,14 @@
 jQuery.support.cors = true;
 
 /////// CONTACTABILIDAD ///////////////////
+
+let marcaGestionConctact = 0;
+
+
 function opcionContactabilidad(val, row, index) {
-    console.log({
-        val, row, index
-    })
+    //console.log({
+    //    val, row, index
+    //})
 
     return `<select class="form-contol" onchange="ejecutarAccion(${row.id})">
                 <option value="0">Seleccione</option>
@@ -23,7 +27,7 @@ function ejecutarAccion(id) {
         marca: opt,
     }
 
-    console.log(marcaPotenciada)
+    //console.log(marcaPotenciada)
 
     fetch(`http://${motor_api_server}:4002/pensionados/cambiaMarcaPotenciada`, {
         method: 'POST',
@@ -34,6 +38,7 @@ function ejecutarAccion(id) {
         }
     }).then(async (response) => {
         appPensionadoBasePotenciada.handleEventoClickBuscaBasePotenciada($('#txtRutPen').val())
+        marcaGestionConctact = 1;
     });
 
 }
@@ -327,13 +332,13 @@ var appPensionadoUniversal = new Vue({
                         if (datos[0].estado == null || datos[0].estado == "") {
                             $('#divGestUni').css('display', 'block');
                             $('#btGesPen').html("");
-                            $('#btGesPen').append("<a href='#' class='btn btn-primary' style='margin-top: -7px; border-radius: 7px;' data-toggle='modal' data-target='#mdl_data_gestion_pensionado' data-backdrop='static' data-keyboard='false' data-lead='" + datos[0].id + "' data-rut='" + datos[0].lead + "'>Gestionar</a>")
+                            $('#btGesPen').append("<a href='#' id='btSeachPen' class='btn btn-primary' style='margin-top: -7px; border-radius: 7px;' data-toggle='modal' data-target='#mdl_data_gestion_pensionado' data-backdrop='static' data-keyboard='false' data-lead='" + datos[0].id + "' data-rut='" + datos[0].lead + "'>Gestionar</a>")
                         }
                         else {
                             //$('#divGestUni').css('display', 'none');
                             $('#divGestUni').css('display', 'block');
                             $('#btGesPen').html("");
-                            $('#btGesPen').append("<a href='#' class='btn btn-primary' style='margin-top: -7px; border-radius: 7px;' data-toggle='modal' data-target='#mdl_data_gestion_pensionado' data-backdrop='static' data-keyboard='false' data-lead='" + datos[0].id + "' data-rut='" + datos[0].lead + "'>Gestionar</a>")
+                            $('#btGesPen').append("<a href='#' id='btSeachPen' class='btn btn-primary' style='margin-top: -7px; border-radius: 7px;' data-toggle='modal' data-target='#mdl_data_gestion_pensionado' data-backdrop='static' data-keyboard='false' data-lead='" + datos[0].id + "' data-rut='" + datos[0].lead + "'>Gestionar</a>")
                         }
                     }
                     else {
@@ -522,6 +527,8 @@ $(function () {
             $('#newContacto').css('display', 'none')
             //appPensionadoBasePotenciada.handleEventoClickBuscaBasePotenciada($('#txtId').val())
             appPensionadoBasePotenciada.handleEventoClickBuscaBasePotenciada($('#txtRutPen').val())
+            marcaGestionConctact = 1;
+
         });
     });
 });
@@ -712,14 +719,29 @@ var appPensionadosModal = new Vue({
             }
         },
         handleEventoClickbtn_interes_guardar() {
+
+
+
             var fecha;
-            var fechaCompromete = $('#txtFechacita').val() + ' ' + $('#slHoraInteres').val();
-            if (fechaCompromete == " " || fechaCompromete == "") {
-                fechaCompromete = '01-01-1900';
-            }
+            let fecha_1;
+            let fecha_2;
+            var fechaCompromete = '';
+            fecha_1 = $('#txtFechacita').val() + ' ' + $('#slHoraInteres').val();
+            fecha_2 = $('#txtFechacita2').val() + ' ' + $('#slHoraInteres2').val();
 
             var ges_subEstado_interes;
             var ges_estado_interes = $('input:radio[name=inline-form-radioInteres]:checked').val()
+
+            if (ges_estado_interes == '1') {
+                fechaCompromete = fecha_1
+            }
+            else if (ges_estado_interes == '4') {
+                fechaCompromete = fecha_2
+            }
+            else if (ges_estado_interes != '1' && ges_estado_interes != '4') {
+                fechaCompromete = '01-01-1900';
+            }
+
             if (ges_estado_interes == '1') {
                 ges_subEstado_interes = $('input:radio[name=gRbInteresSI]:checked').val()
             }
@@ -729,6 +751,10 @@ var appPensionadosModal = new Vue({
             else if (ges_estado_interes == '3') {
                 ges_subEstado_interes = $('input:radio[name=gRbInteresNoInteresado]:checked').val()
             }
+            else if (ges_estado_interes == '4') {
+                ges_subEstado_interes = 103//$('input:radio[name=gRbInteresNoInteresado]:checked').val()
+            }
+
 
 
             const formData = {
@@ -821,6 +847,19 @@ var appPensionadosModal = new Vue({
                 }
             }
 
+
+            if (ges_estado_interes == '4') {
+                if ($('#txtFechacita2').val() == "" || $('#slHoraInteres2').val() == "") {
+                    $.niftyNoty({
+                        type: 'danger',
+                        message: 'Debe indicar fecha y hora',
+                        container: '#msjMantPensionado',
+                        timer: 4000
+                    });
+                    return false;
+                }
+            }
+
             fetch(`http://${motor_api_server}:4002/pensionados/guardar-gestion-pensionados`, {
                 method: 'POST',
                 body: JSON.stringify(formData),
@@ -857,6 +896,8 @@ var appPensionadosModal = new Vue({
                 $('#txt_interes_comentarios_pen').val("");
                 $('#txtFechacita').val("");
                 $('#slHoraInteres').val("");
+                $('#txtFechacita2').val("");
+                $('#slHoraInteres2').val("");
                 $('#btn_interes').attr('disabled', false);
                 $('#btn_interes_guardar').attr('disabled', true);
 
@@ -1078,9 +1119,22 @@ var appPensionadosModal = new Vue({
                 return false;
             }
             else if ($('#txtFechaConFonoNO').val() == "" && $('input:radio[name=rbContactoNoFono]:checked').val() != undefined) {
+
+                if ($('input:radio[name=rbContactoNoSubFono]:checked').val() == '70101') {
+                    $.niftyNoty({
+                        type: 'danger',
+                        message: 'Debe ingresar una fecha de agendamiento',
+                        container: '#msjMantPensionado',
+                        timer: 4000
+                    });
+                    return false;
+                }
+            }
+
+            else if ($('#txtObservacionContacto').val() == "") {
                 $.niftyNoty({
                     type: 'danger',
-                    message: 'Debe ingresar una fecha y observación',
+                    message: 'Debe ingresar una observación',
                     container: '#msjMantPensionado',
                     timer: 4000
                 });
@@ -1475,6 +1529,7 @@ $(function () {
     $("#demo-lg-modal-pensionado").on("hidden.bs.modal", function () {
         $("#tabContactabilidad").css('display', 'none')
         $('#divGestUni').css('display', 'none');
+        marcaGestionConctact = 1;
 
     });
 
@@ -1747,6 +1802,9 @@ $(function () {
         $('#txtRelacConPotDirecciones').val("")
         $('#newContacto').css('display', 'none')
         $('#newContactoDirecciones').css('display', 'none')
+        marcaGestionConctact = 0;
+        $('#tabPenGestionModal a[href="#tab-gestion-pensionado"]').trigger('click');
+
     });
 
 
@@ -1921,6 +1979,9 @@ $(function () {
                 else if (e.id == 3) {
                     titulo = 'NO'
                 }
+                else if (e.id == 4) {
+                    titulo = 'Cliente Ocupado'
+                }
                 else {
                     titulo = 'Gestión Terminada'
                 }
@@ -1944,32 +2005,33 @@ $(function () {
         let cargo;
         let rut = getCookie('Rut')
 
-        if (this.value == 1) {
-            fetch(`http://${motor_api_server}:4002/pensionados/perfil-gestion/${rut}`, {
-                method: 'GET',
-                mode: 'cors',
-                cache: 'default'
-            })
-                .then(response => response.json())
-                .then(datos => {
-                    if (datos[0].rut != undefined) {
-                        if (datos[0].perfil == 1) {
-                            cargo = 'Jefe Servicio al Cliente'
-                        }
-                        else if (datos[0].perfil == 2) {
-                            cargo = 'Agente'
-                        }
-                    }
-                    else {
-                        cargo = getCookie('Cargo')
-                    }
-                })
-        }
+        //if (this.value == 1) {
+        //    fetch(`http://${motor_api_server}:4002/pensionados/perfil-gestion/${rut}`, {
+        //        method: 'GET',
+        //        mode: 'cors',
+        //        cache: 'default'
+        //    })
+        //        .then(response => response.json())
+        //        .then(datos => {
+        //            if (datos.length != 0 || datos[0].rut != undefined) {
+        //                if (datos[0].perfil == 1) {
+        //                    cargo = 'Jefe Servicio al Cliente'
+        //                }
+        //                else if (datos[0].perfil == 2) {
+        //                    cargo = 'Agente'
+        //                }
+        //            }
+        //            else {
+        //                cargo = getCookie('Cargo')
+        //            }
+        //        })
+        //}
 
         switch (this.value) {
             case "1":
                 $("#Interes_NO").css('display', 'none')
                 $("#Interes_Terminada").css('display', 'none')
+                $("#Interes_Ocupado").css('display', 'none')
                 $("#Interes_Si").css('display', 'block')
                 $('#btn_interes').html("Finalizar")
                 $('#txt_interes_comentarios_pen').val("");
@@ -1985,42 +2047,51 @@ $(function () {
                 })
                     .then(response => response.json())
                     .then(datos => {
-                        if (cargo == 'Agente') {
-                            $.each(datos, function (i, e) {
-                                if (e.id != 105 & e.id != 106 & e.id != 107 & e.id != 108) {
-                                    var lb = $('<label>').prop('for', `contacto-rdInteresSi-${e.id}`).text(e.nombre);
-                                    var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'gRbInteresSI', id: `contacto-rdInteresSi-${e.id}` }).val(e.id)
-                                    var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
-                                    $("#divInteresSI").append(dv)
-                                }
-                            });
-                        }
-                        else if (cargo == 'Jefe Servicio al Cliente' || cargo == 'Jefe Plataforma') {
-                            $.each(datos, function (i, e) {
-                                if (e.id != 105 & e.id != 106 & e.id != 109 & e.id != 110) {
-                                    var lb = $('<label>').prop('for', `contacto-rdInteresSi-${e.id}`).text(e.nombre);
-                                    var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'gRbInteresSI', id: `contacto-rdInteresSi-${e.id}` }).val(e.id)
-                                    var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
-                                    $("#divInteresSI").append(dv)
-                                }
-                            });
-                        }
-                        else {
-                            $.each(datos, function (i, e) {
-                                if (e.id != 107 & e.id != 108 & e.id != 109 & e.id != 110) {
-                                    var lb = $('<label>').prop('for', `contacto-rdInteresSi-${e.id}`).text(e.nombre);
-                                    var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'gRbInteresSI', id: `contacto-rdInteresSi-${e.id}` }).val(e.id)
-                                    var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
-                                    $("#divInteresSI").append(dv)
-                                }
-                            });
-                        }
+                        $.each(datos, function (i, e) {
+                            var lb = $('<label>').prop('for', `contacto-rdInteresSi-${e.id}`).text(e.nombre);
+                            var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'gRbInteresSI', id: `contacto-rdInteresSi-${e.id}` }).val(e.id)
+                            var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
+                            $("#divInteresSI").append(dv)
+                        });
+
+                        /* if (cargo == 'Agente') {
+                             $.each(datos, function (i, e) {
+                                 if (e.id != 105 & e.id != 106 & e.id != 107 & e.id != 108) {
+                                     var lb = $('<label>').prop('for', `contacto-rdInteresSi-${e.id}`).text(e.nombre);
+                                     var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'gRbInteresSI', id: `contacto-rdInteresSi-${e.id}` }).val(e.id)
+                                     var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
+                                     $("#divInteresSI").append(dv)
+                                 }
+                             });
+                         }
+                         else if (cargo == 'Jefe Servicio al Cliente' || cargo == 'Jefe Plataforma') {
+                             $.each(datos, function (i, e) {
+                                 if (e.id != 105 & e.id != 106 & e.id != 109 & e.id != 110) {
+                                     var lb = $('<label>').prop('for', `contacto-rdInteresSi-${e.id}`).text(e.nombre);
+                                     var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'gRbInteresSI', id: `contacto-rdInteresSi-${e.id}` }).val(e.id)
+                                     var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
+                                     $("#divInteresSI").append(dv)
+                                 }
+                             });
+                         }
+                         else {
+                             $.each(datos, function (i, e) {
+                                 if (e.id != 107 & e.id != 108 & e.id != 109 & e.id != 110) {
+                                     var lb = $('<label>').prop('for', `contacto-rdInteresSi-${e.id}`).text(e.nombre);
+                                     var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'gRbInteresSI', id: `contacto-rdInteresSi-${e.id}` }).val(e.id)
+                                     var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
+                                     $("#divInteresSI").append(dv)
+                                 }
+                             });
+                         }*/
+
                     });
                 break;
 
             case "2":
                 $("#Interes_Si").css('display', 'none')
                 $("#Interes_NO").css('display', 'none')
+                $("#Interes_Ocupado").css('display', 'none')
                 $("#Interes_Terminada").css('display', 'block')
                 $('#btn_interes').html("Finalizar")
                 $('#txt_interes_comentarios_pen').val("");
@@ -2048,6 +2119,7 @@ $(function () {
             case "3":
                 $("#Interes_Si").css('display', 'none');
                 $("#Interes_Terminada").css('display', 'none');
+                $("#Interes_Ocupado").css('display', 'none')
                 $("#Interes_NO").css('display', 'block')
                 //$('#divInteresNoInteresado').css('display', 'block');
                 $('#btn_interes').html("Finalizar")
@@ -2078,6 +2150,37 @@ $(function () {
                 $('#divInteresNO').css('display', 'none');
                 $('#divInteresNoInteresado').css('display', 'block');
                 break;
+
+
+            case "4":
+                $("#Interes_NO").css('display', 'none')
+                $("#Interes_Terminada").css('display', 'none')
+                $("#Interes_Si").css('display', 'none')
+                $("#Interes_Ocupado").css('display', 'block')
+                $('#btn_interes').html("Finalizar")
+                $('#txt_interes_comentarios_pen').val("");
+                $('#txtFechacita').val("");
+                $('#slHoraInteres').val("");
+                $("#divInteresSI").html("");
+                $('#btn_interes_guardar').attr('disabled', false);
+
+                //fetch(`http://${motor_api_server}:4002/pensionados/lista-sub-estado-gestion/4`, {
+                //    method: 'GET',
+                //    mode: 'cors',
+                //    cache: 'default'
+                //})
+                //    .then(response => response.json())
+                //    .then(datos => {
+                //        $.each(datos, function (i, e) {
+                //            var lb = $('<label>').prop('for', `contacto-rdInteresSi-${e.id}`).text(e.nombre);
+                //            var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'gRbInteresSI', id: `contacto-rdInteresSi-${e.id}` }).val(e.id)
+                //            var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
+                //            $("#divInteresSI").append(dv)
+                //        });
+                //    });
+                break;
+
+
         }
     })
 
@@ -2238,6 +2341,27 @@ $(function () {
                 $("#dp-txtFechaConFonoNO").css('display', 'none')
 
                 break;
+
+            case "703":
+                $("#subFonoNo").html("");
+                fetch(`http://${motor_api_server}:4002/pensionados/lista-estado-gestion/703`, {
+                    method: 'GET',
+                    mode: 'cors',
+                    cache: 'default'
+                })
+                    .then(response => response.json())
+                    .then(datos => {
+                        $.each(datos, function (i, e) {
+                            var lb = $('<label>').prop('for', `contacto-rdSubFonoNO-${e.id}`).text(e.nombre);
+                            var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'rbContactoNoSubFono', id: `contacto-rdSubFonoNO-${e.id}` }).val(e.id)
+                            var dv = $('<div>').addClass('radio').css('margin-top', '42px').append(inp).append(lb)
+                            $("#subFonoNo").append(dv)
+                        });
+                    });
+                $("#subFonoNo").css('display', 'block')
+                $("#dp-txtFechaConFonoNO").css('display', 'none')
+
+                break;
         }
     });
 
@@ -2317,7 +2441,16 @@ $(function () {
                 $("#dp-txtFechaConFonoNO").css('display', 'block')
                 break;
 
+            case "70102":
+                $("#dp-txtFechaConFonoNO").css('margin-top', '-20px')
+                $("#dp-txtFechaConFonoNO").css('display', 'none')
+                break;
+
             case "70201":
+                $("#dp-txtFechaConFonoNO").css('margin-top', '9px')
+                $("#dp-txtFechaConFonoNO").css('display', 'block')
+                break;
+            case "70301":
                 $("#dp-txtFechaConFonoNO").css('margin-top', '9px')
                 $("#dp-txtFechaConFonoNO").css('display', 'block')
                 break;
@@ -2451,6 +2584,17 @@ $(function () {
     //        $('#btCerrarModal').css('display', 'block');
     //    }
     //});
+
+    $('#tabgestion').click(function () {
+        if (marcaGestionConctact == 0) {
+            $(Swal.fire({
+                title: 'Primero debe registrar numero en contactabilidad ...',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            }));
+            return false;
+        }
+    });
 });
 ////////////////////////////////////////////////////////////////////////////////////////
 var appPensionadosProspectos = new Vue({
@@ -2490,7 +2634,8 @@ var appPensionadosProspectos = new Vue({
 
         },
         cargaComunaProspecto() {
-            fetch(`http://${motor_api_server}:4002/pensionados/lista-comuna-pensionados`, {
+            fetch(`http://${motor_api_server}:4002/pensionados/lista-comuna-pensionados-prospecto`, {
+
                 method: 'GET',
                 mode: 'cors',
                 cache: 'default'
@@ -2612,4 +2757,19 @@ var appPensionadosProspectos = new Vue({
         },
     }
 });
+
+
+$('#demo-lg-modal-prospecto').on('show.bs.modal', async (event) => {
+    $('#slEjePorsp').chosen({ width: '100%' });
+    $('#slComunaPorsp').chosen({ width: '100%' });
+});
+
+$('#demo-lg-modal-prospecto').on('hidden.bs.modal', function (e) {
+    $('#txtRutPorsp').val('');
+    $('#txtNombrePorsp').val('');
+    $('#txtCelularPorsp').val('');
+    $('#slComunaPorsp').val('');
+    $('#slEjePorsp').val('');
+})
+
 

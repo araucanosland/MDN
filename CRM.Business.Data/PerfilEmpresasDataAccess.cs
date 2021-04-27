@@ -786,6 +786,8 @@ namespace CRM.Business.Data
                 RutEjeIngreso = row["RutEjeIngreso"] != DBNull.Value ? row["RutEjeIngreso"].ToString() : string.Empty,
                 FechaIngreso = row["FechaIngreso"] != DBNull.Value ? Convert.ToDateTime(row["FechaIngreso"]) : DateTime.MinValue,
                 NombreEjecutivo = row["NombreEjecutivo"] != DBNull.Value ? row["NombreEjecutivo"].ToString() : string.Empty,
+                TelefonoContacto = row["TelefonoContacto"] != DBNull.Value ? row["TelefonoContacto"].ToString() : string.Empty,
+                CorreoContacto = row["CorreoContacto"] != DBNull.Value ? row["CorreoContacto"].ToString() : string.Empty,
             };
         }
 

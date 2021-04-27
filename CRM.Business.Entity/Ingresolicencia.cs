@@ -150,6 +150,13 @@ namespace CRM.Business.Entity
         public string TipoSubLicencia { get; set; }
         public string TipoConvenio { get; set; }
         public string FechaPrescribeString { get; set; }
+
+        public string RutEmpresa { get; set; }
+        public string NombreEmpresa { get; set; }
+        public string FechaActulizacionString { get; set; }
+        public string AnexoEstamento { get; set; }
+
+
         /// <summary>
         /// Inicializa una nueva instancia de la clase <see cref="Ingresolicencia"/>.
         /// </summary>

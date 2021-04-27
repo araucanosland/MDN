@@ -435,7 +435,9 @@ var appPortabilidad_ingreso = new Vue({
             if ($('#txtobservacionPort').val() == '') {
                 $(Swal.fire({
                     title: 'Gestion',
-                    html: `<ul><li class="msg-part">Debe ingresar un aobservación</li></ul>`,
+
+                    html: `<ul><li class="msg-part">Debe ingresar una observación</li></ul>`,
+
                     icon: 'error',
                     confirmButtonText: 'OK'
                 }));

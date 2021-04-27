@@ -122,17 +122,25 @@
                                     <!-- Checkboxes -->
                                     <div class="radio" style="margin-top:24px">
                                         <input id="chk_casilla_derivada" name="chk_casilla_derivada" class="magic-radio" type="checkbox">
-                                        <label for="chk_casilla_derivada">Casilla</label>
+                                        <label id="lbl_casilla_derivada" for="chk_casilla_derivada">Casilla</label>
                                     </div>
 
                                 </div>
                                 <div class="col-md-2">
                                     <div class="radio" style="margin-top:24px">
                                         <input id="chk_presencial_derivada" name="chk_presencial_derivada" class="magic-radio" type="checkbox">
-                                        <label for="chk_presencial_derivada">Presencial</label>
+                                        <label id="lbl_presencial_derivada" for="chk_presencial_derivada">Presencial</label>
                                     </div>
 
                                 </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label" id="lblvalija">N° Nota Interna</label>
+                                        <input type="text" class="form-control" id="valija" name="valija">
+                                    </div>
+                                </div>
+
                             </div>
 
                             <div class="col-sm-4">
@@ -304,6 +312,7 @@
                                                 <input type="text" class="form-control" id="telefono" name="telefono" placeholder="ej: 912345678" disabled>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -353,6 +362,7 @@
                                             <div class="form-group">
                                                 <label class="control-label">Nuevo Folio</label>
                                                 <input type="text" class="form-control" id="nuevo_folio" name="nuevo_folio" placeholder="">
+                                                <input type="hidden" id="nuevo_folio_valor">
                                             </div>
                                         </div>
                                     </div>
@@ -633,6 +643,12 @@
             var CodIng = httpGet("ci");
             var Tab = httpGet("tab");
 
+            //-------------------Valija
+
+            $("#lblvalija").hide();
+            $("#valija").hide();
+
+
             var cargador = {
                 cargaLC: function (CodIng) {
 
@@ -678,10 +694,6 @@
 
                         }
 
-
-
-
-                        //check conforme pendiente
 
 
 
@@ -732,11 +744,6 @@
 
                         //----valida chk fecha liqudacion
 
-                        //$(`#falta_doc_si`).prop('checked', response.DocumentosFaltantes.FaltaDocumentacion);
-                        //
-                        //if (response.DocumentosFaltantes.FaltaDocumentacion) {
-                        //    $(`#falta_doc_si`).trigger('change');
-                        //}
 
                         $(`#m1`).prop('checked', response.DocumentosFaltantes.Liquidacion1);
                         $(`#m2`).prop('checked', response.DocumentosFaltantes.Liquidacion2);
@@ -864,6 +871,9 @@
                             $("#tabDatos").show();
                             $("#email").prop("disabled", false);
                             $("#telefono").prop("disabled", false);
+                            //$("#lblvalija").hide();
+                            //$("#valija").hide();
+
                             //$("#divdevuelta").show();
 
                             $("#divdevueltacheck").show();
@@ -911,6 +921,8 @@
                             $("#divopc-casilla").hide();
                             $("#email").prop("disabled", false);
                             $("#telefono").prop("disabled", false);
+                            //$("#lblvalija").show();
+                            //$("#valija").show();
 
                             $("#tabDatos").show();
                             $("#divdevuelta").hide();
@@ -985,6 +997,8 @@
                             $("#email").val('');
                             $("#telefono").val('');
                             $("#DerivarLM").prop("checked", false);
+                            $("#DerivarLM").prop("disabled", true);
+
 
                             if (response.IngresoData.viaIngresoLicenica == 1) {
                                 $(`#chk_casilla`).prop('checked', true);
@@ -994,6 +1008,26 @@
 
                                 $(`#chk_casilla`).prop('checked', false);
                                 $(`#chk_presencial`).prop('checked', true);
+
+                                if (response.IngresoData.FlagLM == 1) {
+
+                                    $("#div_Viaingreso_derivacion").show();
+                                    $("#chk_casilla_derivada").hide();
+                                    $("#lbl_casilla_derivada").hide();
+                                    $("#chk_presencial_derivada").hide();
+                                    $("#lbl_presencial_derivada").hide();
+                                    $("#lblvalija").show();
+                                    $("#valija").show();
+                                    $("#valija").prop('disabled', true);
+                                    $("#valija").prop('style', "margin-left:-300px");
+                                    $("#lblvalija").prop('style', "margin-left:-300px");
+                                    $("#valija").val(response.DocumentosFaltantes.Comentarios);
+
+
+
+                                }
+
+
                             }
 
 
@@ -1049,7 +1083,7 @@
                         $.niftyNoty({
                             type: 'danger',
                             container: 'floating',
-                            html: '<strong>Error</strong> Debe ingresar Formato de licencia !!',
+                            html: '<strong>Error</strong><li>Debe ingresar Formato de licencia!!</li>',
                             focus: false,
                             timer: 3000
                         });
@@ -1067,7 +1101,7 @@
                             $.niftyNoty({
                                 type: 'danger',
                                 container: 'floating',
-                                html: '<strong>Error</strong> Debe ingresar Folio de licencia !!',
+                                html: '<strong>Error</strong><li>Debe ingresar Folio de licencia!!</li>',
                                 focus: false,
                                 timer: 3000
                             });
@@ -1087,7 +1121,7 @@
                                 $.niftyNoty({
                                     type: 'danger',
                                     container: 'floating',
-                                    html: '<strong>Error</strong> Formato de licencia no válido, favor revisar!!',
+                                    html: '<strong>Error</strong><li>Formato de licencia no válido, favor revisar!!</li>',
                                     focus: false,
                                     timer: 3000
                                 });
@@ -1100,7 +1134,7 @@
                             $.niftyNoty({
                                 type: 'danger',
                                 container: 'floating',
-                                html: '<strong>Error</strong> Formato de licencia no válido, favor revisar!!',
+                                html: '<strong>Error</strong><li>Formato de licencia no válido, favor revisar!!</li>',
                                 focus: false,
                                 timer: 3000
                             });
@@ -1116,7 +1150,7 @@
                             $.niftyNoty({
                                 type: 'danger',
                                 container: 'floating',
-                                html: '<strong>Error</strong> Debe ingresar Folio de licencia !!',
+                                html: '<strong>Error</strong><li>Debe ingresar Folio de licencia!!</li>',
                                 focus: false,
                                 timer: 3000
                             });
@@ -1132,7 +1166,7 @@
                             $.niftyNoty({
                                 type: 'danger',
                                 container: 'floating',
-                                html: '<strong>Error</strong> Largo de licencia no válido, favor revisar!!',
+                                html: '<strong>Error</strong><li>Largo de licencia no válido, favor revisar!!></li>',
                                 focus: false,
                                 timer: 3000
                             });
@@ -1144,7 +1178,7 @@
                             $.niftyNoty({
                                 type: 'danger',
                                 container: 'floating',
-                                html: '<strong>Error</strong> Formato de licencia no válido, favor revisar!!',
+                                html: '<strong>Error</strong><li>Formato de licencia no válido, favor revisar!!</li>',
                                 focus: false,
                                 timer: 3000
                             });
@@ -1232,7 +1266,7 @@
                                     $.niftyNoty({
                                         type: 'danger',
                                         container: 'floating',
-                                        html: '<strong>Error</strong> Debe ingresar Email!!',
+                                        html: '<strong>Error</strong><li>Debe ingresar Email!!</li>',
                                         focus: false,
                                         timer: 3000
                                     });
@@ -1248,7 +1282,7 @@
                                         $.niftyNoty({
                                             type: 'danger',
                                             container: 'floating',
-                                            html: '<strong>Error</strong> Formato de Email no válido, favor revisar!!',
+                                            html: '<strong>Error</strong><li>Formato de Email no válido, favor revisar!!</li>',
                                             focus: false,
                                             timer: 3000
                                         });
@@ -1269,7 +1303,7 @@
                                         $.niftyNoty({
                                             type: 'danger',
                                             container: 'floating',
-                                            html: '<strong>Error</strong> Largo teléfono no válido!!',
+                                            html: '<strong>Error</strong><li>Largo teléfono no válido!!</li>',
                                             focus: false,
                                             timer: 3000
                                         });
@@ -1283,7 +1317,7 @@
                                     $.niftyNoty({
                                         type: 'danger',
                                         container: 'floating',
-                                        html: '<strong>Error</strong> Formato de teléfono no válido!!',
+                                        html: '<strong>Error</strong><li>Formato de teléfono no válido!!</li>',
                                         focus: false,
                                         timer: 3000
                                     });
@@ -1314,7 +1348,7 @@
                                         $.niftyNoty({
                                             type: 'danger',
                                             container: 'floating',
-                                            html: '<strong>Error</strong> Formato de Email no válido, favor revisar!!',
+                                            html: '<strong>Error</strong><li> Formato de Email no válido, favor revisar!!</li>',
                                             focus: false,
                                             timer: 3000
                                         });
@@ -1337,7 +1371,7 @@
                                     $.niftyNoty({
                                         type: 'danger',
                                         container: 'floating',
-                                        html: '<strong>Error</strong> Debe ingresar teléfono de contacto!!',
+                                        html: '<strong>Error</strong><li>Debe ingresar teléfono de contacto!!</li>',
                                         focus: false,
                                         timer: 3000
                                     });
@@ -1352,7 +1386,7 @@
                                         $.niftyNoty({
                                             type: 'danger',
                                             container: 'floating',
-                                            html: '<strong>Error</strong> Largo teléfono no válido!!',
+                                            html: '<strong>Error</strong><li>Largo teléfono no válido!!</li>',
                                             focus: false,
                                             timer: 3000
                                         });
@@ -1366,7 +1400,7 @@
                                     $.niftyNoty({
                                         type: 'danger',
                                         container: 'floating',
-                                        html: '<strong>Error</strong> Formato de teléfono no válido!!',
+                                        html: '<strong>Error</strong><li>Formato de teléfono no válido!!</li>',
                                         focus: false,
                                         timer: 3000
                                     });
@@ -1375,6 +1409,20 @@
                                     return false;
                                 }
 
+                                //if ($('#valija').val() == '') {
+                                //        $.niftyNoty({
+                                //            type: 'danger',
+                                //            container: 'floating',
+                                //            html: '<strong>Error</strong> <li>Debe ingresar Número de Valija!!</li>',
+                                //            focus: false,
+                                //            timer: 3000
+                                //        });
+                                //        $('#bt-guarda-otra').prop('disabled', false);
+                                //        $('#valija').focus();
+                                //        return false;
+
+                                //}
+                                //$('#comentarios').val($('#valija').val())
 
                             }
 
@@ -1425,7 +1473,7 @@
                                         $.niftyNoty({
                                             type: 'danger',
                                             container: 'floating',
-                                            html: '<strong>Error</strong> Formato de licencia no válido, favor revisar!!',
+                                            html: '<strong>Error</strong> <li>Formato de licencia no válido, favor revisar!!</li>',
                                             focus: false,
                                             timer: 3000
                                         });
@@ -1455,7 +1503,7 @@
                                     $.niftyNoty({
                                         type: 'danger',
                                         container: 'floating',
-                                        html: '<strong>Error</strong> Formato de licencia no válido, favor revisar!!',
+                                        html: '<strong>Error</strong><li>Formato de licencia no válido, favor revisar!!</li>',
                                         focus: false,
                                         timer: 3000
                                     });
@@ -1554,7 +1602,7 @@
                                 $.niftyNoty({
                                     type: 'danger',
                                     container: 'floating',
-                                    html: '<strong>Error</strong> Liq. Mes 1 debe ingresar fecha LM!!',
+                                    html: '<strong>Error</strong><li>Liq. Mes 1 debe ingresar fecha LM!!</li>',
                                     focus: false,
                                     timer: 3000
                                 });
@@ -1568,7 +1616,7 @@
                                 $.niftyNoty({
                                     type: 'danger',
                                     container: 'floating',
-                                    html: '<strong>Error</strong> Liq. Mes 2 debe ingresar fecha LM!!',
+                                    html: '<strong>Error</strong><li>Liq. Mes 2 debe ingresar fecha LM!!</li>',
                                     focus: false,
                                     timer: 3000
                                 });
@@ -1582,7 +1630,7 @@
                                 $.niftyNoty({
                                     type: 'danger',
                                     container: 'floating',
-                                    html: '<strong>Error</strong> Liq. Mes 3 debe ingresar fecha LM!!',
+                                    html: '<strong>Error</strong><li>Liq. Mes 3 debe ingresar fecha LM!!</li>',
                                     focus: false,
                                     timer: 3000
                                 });
@@ -1596,7 +1644,7 @@
                                 $.niftyNoty({
                                     type: 'danger',
                                     container: 'floating',
-                                    html: '<strong>Error</strong> Liq. Mes 4 debe ingresar fecha LM!!',
+                                    html: '<strong>Error</strong><li>Liq. Mes 4 debe ingresar fecha LM!!</li>',
                                     focus: false,
                                     timer: 3000
                                 });
@@ -1610,7 +1658,7 @@
                                 $.niftyNoty({
                                     type: 'danger',
                                     container: 'floating',
-                                    html: '<strong>Error</strong> Liq. Mes 5 debe ingresar fecha LM!!',
+                                    html: '<strong>Error</strong><li>Liq. Mes 5 debe ingresar fecha LM!!</li>',
                                     focus: false,
                                     timer: 3000
                                 });
@@ -1624,7 +1672,7 @@
                                 $.niftyNoty({
                                     type: 'danger',
                                     container: 'floating',
-                                    html: '<strong>Error</strong> Liq. Mes 6 debe ingresar fecha LM!!',
+                                    html: '<strong>Error</strong><li>Liq. Mes 6 debe ingresar fecha LM!!</li>',
                                     focus: false,
                                     timer: 3000
                                 });
@@ -1660,7 +1708,7 @@
                             pendienteDocumentacion = 42;
                             Faltadoc = 1;
 
-                            $('#nuevo_folio').trigger("blur");
+                            //$('#nuevo_folio').trigger("blur");
                             if ($("#chk_devuelta_reemplazada").prop("checked") == true) {
                                 var dato = $('#nuevo_folio').val();
                                 var rut = $('#AfiliadoRut').val();
@@ -1669,7 +1717,7 @@
                                     $.niftyNoty({
                                         type: 'danger',
                                         container: 'floating',
-                                        html: '<strong>Error</strong> Debe Ingresar Folio Nuevo!!!',
+                                        html: '<strong>Error</strong><li>Debe Ingresar Folio Nuevo!!!</li>',
                                         focus: false,
                                         timer: 3000
                                     });
@@ -1682,7 +1730,7 @@
                                     $.niftyNoty({
                                         type: 'danger',
                                         container: 'floating',
-                                        html: '<strong>Error</strong> Largo de licencia no válido, favor revisar!!',
+                                        html: '<strong>Error</strong><li>Largo de licencia no válido, favor revisar!!</li>',
                                         focus: false,
                                         timer: 3000
                                     });
@@ -1696,7 +1744,7 @@
                                     $.niftyNoty({
                                         type: 'danger',
                                         container: 'floating',
-                                        html: '<strong>Error</strong> Formato de licencia no válido, favor revisar!!',
+                                        html: '<strong>Error</strong><li>Formato de licencia no válido, favor revisar!!</li>',
                                         focus: false,
                                         timer: 3000
                                     });
@@ -1704,24 +1752,21 @@
                                     $('#bt-guarda-otra').prop('disabled', false);
                                     return false;
                                 }
-                                $.SecGetJSON(BASE_URL + "/motor/api/Licencias/Valida-folio-existente", { FolioLicencia: dato, Rut: rut }, function (response) {
 
-                                    if (response == 0) {
-                                        $.niftyNoty({
-                                            type: 'danger',
-                                            container: 'floating',
-                                            html: '<strong>Error</strong> Folio No Existe o No Está Asociado al Rut Del Afiliado!!',
-                                            focus: false,
-                                            timer: 3000
-                                        });
-                                        $('#nuevo_folio').focus();
-                                        $('#bt-guarda-otra').prop('disabled', false);
-                                        return false;
+                                if ($('#nuevo_folio_valor').val() == '') {
+                                    $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                        html: '<strong>Error</strong> Folio No Existe o No Está Asociado al Rut Del Afiliado!!',
+                                        focus: false,
+                                        timer: 3000
+                                    });
 
-                                    }
+                                    $('#nuevo_folio').focus();
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    return false;
 
-                                });
-
+                                }
                             }
 
                             $('#comentarios').val(dato);
@@ -1747,7 +1792,7 @@
                             $.niftyNoty({
                                 type: 'danger',
                                 container: 'floating',
-                                html: '<strong>Error</strong> Debe seleccinar oficia para derivar!! ',
+                                html: '<strong>Error</strong><li>Debe seleccinar oficia para derivar!!</li>',
                                 focus: false,
                                 timer: 3000
                             });
@@ -1759,7 +1804,8 @@
                             $.niftyNoty({
                                 type: 'danger',
                                 container: 'floating',
-                                html: '<strong>Error</strong> Debe Seleccionar Tipo de Ingreso!! ',
+
+                                html: '<strong>Error</strong><li> Debe Seleccionar Tipo de Ingreso!!</li> ',
                                 focus: false,
                                 timer: 3000
                             });
@@ -1768,10 +1814,34 @@
                             return false;
                         }
 
+
+                            $('#bt-guarda-otra').prop('disabled', false);
+                            return false;
+                        }
+
                         if ($("#chk_casilla_derivada").prop("checked") == true) {
                             viaIngresoLicenica = 1
                         }
+
+
                         if ($("#chk_presencial_derivada").prop("checked") == true) {
+
+
+                            if ($('#valija').val() == '') {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong> <li>Debe ingresar Número de Nota Interna!!</li>',
+                                    focus: false,
+                                    timer: 3000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                $('#valija').focus();
+                                return false;
+
+                            }
+                            $('#comentarios').val($('#valija').val())
+
                             viaIngresoLicenica = 2
                         }
                     }
@@ -1844,7 +1914,6 @@
 
                     const fl = $("#FormLM").val();
                     console.log({ fl })
-
 
                     $.SecPostJSON(BASE_URL + "/motor/api/Licencias/guardar-licencia", WebIngresoLicencia, function (respuesta) {
 
@@ -2082,7 +2151,8 @@
 
 
 
-
+                    $("#lblvalija").hide();
+                    $("#valija").hide();
 
                     // $("#AfiliadoRut").val("");
                     //$("#AfiliadoRut").focus();
@@ -2356,7 +2426,7 @@
                 // $("#divcartaAutorizacion").show();
                 $("#divfataFirmaemleador").hide();
                 $("#DerivarLM").prop("disabled", false);
-                $("#sslOfiDerivacion").prop("disabled", false);
+                $("#sslOfiDerivacion").prop("disabled", true);
 
 
 
@@ -2635,11 +2705,6 @@
                 //}
             })
 
-
-
-
-
-            //
             //-----------------check click liq licencias -------------------------------
 
 
@@ -2816,6 +2881,8 @@
                 $("#email").prop("disabled", false);
                 $("#telefono").prop("disabled", false);
                 $("#divdevuelta").hide();
+                //$("#valija").hide();
+                //$("#lblvalija").hide();
                 var value = $(this).val();
                 $("#divdevueltacheck").show();
                 $("#divnotramitadacheck").show();
@@ -2834,73 +2901,70 @@
 
             $('#nuevo_folio').on('blur', function (event) {
 
-                //if ($("#chk_devuelta_reemplazada").prop("checked") == true) {
-                //    var dato = $('#nuevo_folio').val();
-                //    var rut = $('#AfiliadoRut').val();
-                //    if (dato == '') {
+                if ($("#chk_devuelta_reemplazada").prop("checked") == true) {
+                    var dato = $('#nuevo_folio').val();
+                    var rut = $('#AfiliadoRut').val();
+                    if (dato == '') {
 
-                //        $.niftyNoty({
-                //            type: 'danger',
-                //            container: 'floating',
-                //            html: '<strong>Error</strong> Debe Ingresar Folio Nuevo!!!',
-                //            focus: false,
-                //            timer: 3000
-                //        });
+                        $.niftyNoty({
+                            type: 'danger',
+                            container: 'floating',
+                            html: '<strong>Error</strong> Debe Ingresar Folio Nuevo!!!',
+                            focus: false,
+                            timer: 3000
+                        });
 
-                //        $('#nuevo_folio').focus();
-                //        return false;
-                //    }
-                //    if (dato.length != 8) {
-                //        $.niftyNoty({
-                //            type: 'danger',
-                //            container: 'floating',
-                //            html: '<strong>Error</strong> Largo de licencia no válido, favor revisar!!',
-                //            focus: false,
-                //            timer: 3000
-                //        });
+                        $('#nuevo_folio').focus();
+                        return false;
+                    }
+                    if (dato.length != 8) {
+                        $.niftyNoty({
+                            type: 'danger',
+                            container: 'floating',
+                            html: '<strong>Error</strong> Largo de licencia no válido, favor revisar!!',
+                            focus: false,
+                            timer: 3000
+                        });
 
-                //        $('#nuevo_folio').focus();
-                //        return false;
-                //    }
+                        $('#nuevo_folio').focus();
+                        $('#bt-guarda-otra').prop('disabled', true);
+                        return false;
+                    }
 
-                //    if (isNaN(dato)) {
-                //        $.niftyNoty({
-                //            type: 'danger',
-                //            container: 'floating',
-                //            html: '<strong>Error</strong> Formato de licencia no válido, favor revisar!!',
-                //            focus: false,
-                //            timer: 3000
-                //        });
-                //        $('#nuevo_folio').focus();
-                //        return false;
-                //    }
-                //    $.SecGetJSON(BASE_URL + "/motor/api/Licencias/Valida-folio-existente", { FolioLicencia: dato, Rut: rut }, function (response) {
-                //
-                //        if (response == 0) {
-                //            $.niftyNoty({
-                //                type: 'danger',
-                //                container: 'floating',
-                //                html: '<strong>Error</strong> Folio No Existe o No Está Asociado al Rut Del Afiliado!!',
-                //                focus: false,
-                //                timer: 3000
-                //            });
-                //            $('#nuevo_folio').focus();
-                //            return false;
+                    if (isNaN(dato)) {
+                        $.niftyNoty({
+                            type: 'danger',
+                            container: 'floating',
+                            html: '<strong>Error</strong> Formato de licencia no válido, favor revisar!!',
+                            focus: false,
+                            timer: 3000
+                        });
+                        $('#nuevo_folio').focus();
+                        $('#bt-guarda-otra').prop('disabled', true);
+                        return false;
+                    }
+                    $.SecGetJSON(BASE_URL + "/motor/api/Licencias/Valida-folio-existente", { FolioLicencia: dato, Rut: rut }, function (response) {
 
-                //        }
-                //        else {
-                //            $.niftyNoty({
-                //                type: 'success',
-                //                container: 'floating',
-                //                html: '<strong>Correcto</strong> Nuevo Folio Correcto!!',
-                //                focus: false,
-                //                timer: 3000
-                //            });
+                        if (response == 0) {
+                            $.niftyNoty({
+                                type: 'danger',
+                                container: 'floating',
+                                html: '<strong>Error</strong> Folio No Existe o No Está Asociado al Rut Del Afiliado!!',
+                                focus: false,
+                                timer: 3000
+                            });
+                            $('#nuevo_folio').focus();
+                            $('#bt-guarda-otra').prop('disabled', false);
+                            $('#nuevo_folio_valor').val();
+                            return false;
 
-                //        }
-                //    });
+                        }
+                        else {
+                            $('#nuevo_folio_valor').val(1);
+                        }
+                    });
 
-                //}
+                }
             });
             $('#chk_presencial').on('change', function (event) {
 
@@ -2921,7 +2985,8 @@
                 $("#divnotramitadacheck").hide();
                 $("#divcoforme").hide();
                 $("#divdevuelta1").hide();
-
+                //$("#valija").show();
+                //$("#lblvalija").show();
 
             })
 
@@ -2998,7 +3063,8 @@
                     $("#chk_casilla_derivada").prop("checked", true);
                     $("#chk_presencial_derivada").prop("checked", false);
 
-
+                    $("#lblvalija").hide();
+                    $("#valija").hide();
                 }
                 if ($('#chk_casilla_derivada').prop("checked") == false) {
                     $("#chk_casilla_derivada").prop("checked", true);
@@ -3009,7 +3075,8 @@
                 if ($('#chk_presencial_derivada').prop("checked") == true) {
                     $("#chk_casilla_derivada").prop("checked", false);
                     $("#chk_presencial_derivada").prop("checked", true);
-
+                    $("#lblvalija").show();
+                    $("#valija").show();
 
                 }
                 if ($('#chk_presencial_derivada').prop("checked") == false) {

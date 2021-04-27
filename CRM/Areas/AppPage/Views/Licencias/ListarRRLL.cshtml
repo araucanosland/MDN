@@ -982,7 +982,7 @@
                                     <tbody id="bdy_datos_tabconsolidadodevuelta"></tbody>
                                     <tfoot>
                                         <tr>
-                                            <td colspan="10">
+                                            <td colspan="11">
                                                 <div class="text-left">
                                                     <label id="cantLMConsolidadodevuelta" class="control-label"></label>
                                                 </div>
@@ -1193,7 +1193,7 @@
                                                 $('<option>').val("Envío TATA").text("Envío TATA"),
                                                 $('<option>').val("Devuelta").text("Devuelta Oficina")
                                             ).on('change', function () {
-                                                debugger;
+
                                                 var indiceResponsable = $(this).val();
                                                 if (indiceResponsable == "Envío TATA") {
                                                     $.SecGetJSON(BASE_URL + "/motor/api/Licencias/guardar-responsable", { folioLM: e.FolioLicencia, responsable: indiceResponsable, CodIngreso: e.CodIngreso }, function (respuesta) {
@@ -1216,7 +1216,7 @@
 
                                             }),
 
-                                        )
+                                    )
                                 )
 
                         );
@@ -1270,7 +1270,7 @@
                                 .append($("<td>").html(e.CargaExcel))
 
                         );
-                        debugger;
+
                         var strng;
                         strng = e.Estado.toString();
                         var incStr = strng.includes("Rechazad");
@@ -1284,8 +1284,11 @@
                             NoCarga++;
 
 
-                        if (e.CargaExcel == 'OK' && incStr == true)
+                        if (e.CargaExcel == 'OK' && incStr == true) {
+                            debugger;
                             Devueltas++;
+                        }
+
 
                         total++;
                     });
@@ -1354,7 +1357,7 @@
 
                         total++;
                     });
-                    debugger;
+
                     if (sessionStorage.getItem('subcomisionCompin') != null)
                         $("#ddlsubcomisionCompin").val(sessionStorage.getItem('subcomisionCompin'));
                     //  $("#").val(result.Subcomision);
@@ -1390,7 +1393,7 @@
 
                     $("#bdy_datos_ExcelRRLL_compin").html("");
                     $.each(result, function (i, e) {
-
+                        debugger;
 
                         $("#bdy_datos_ExcelRRLL_compin").append(
                             $("<tr>")
@@ -1402,6 +1405,7 @@
                                 .append($("<td>").html(e.CargaExcel))
 
                         );
+
 
                         var strng;
                         strng = e.Estado.toString().toLowerCase();
@@ -1744,17 +1748,17 @@
 
                         //--- habiliar cuando este con Auditoria
 
-                        if (e.FormatoLM == "Manual" && e.viaIngresoLicenica == 1 && e.EstadoLicencia != 'Conforme' || e.EstadoLicencia != 'Devuelta') {
-                            $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Revisar" href="/motor/App/Licencias/auditorialicencia?ci=${e.CodIngreso}&tab=secundaria&read=read"><i class="ion-search"></i></a>`);
+                        //if (e.FormatoLM == "Manual" && e.viaIngresoLicenica == 1 && e.EstadoLicencia != 'Conforme' || e.EstadoLicencia != 'Devuelta') {
+                        //$wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Revisar" href="/motor/App/Licencias/auditorialicencia?ci=${e.CodIngreso}&tab=secundaria&read=read"><i class="ion-search"></i></a>`);
 
-                        }
+                        //}
 
 
 
-                        if (e.FormatoLM == "Manual" && e.viaIngresoLicenica == 1 && e.EstadoLicencia == 'Conforme' || e.EstadoLicencia == 'Devuelta') {
-                            $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.CodIngreso}&tab=read"><i class="ion-search"></i></a>`);
+                        //if (e.FormatoLM == "Manual" && e.viaIngresoLicenica == 1 && e.EstadoLicencia == 'Conforme'|| e.EstadoLicencia == 'Devuelta') {
+                        //    $wrapper = $wrapper + (`<a class="btn btn-primary mar-lft" title="Editar" href="/motor/App/Licencias/Ingreso?ci=${e.CodIngreso}&tab=read"><i class="ion-search"></i></a>`);
 
-                        }
+                        //}
 
                         $wrapper = $wrapper + (`<a class="btn btn-warning mar-lft" title="Seguimiento" href="/motor/App/Licencias/bitacora?ci=${e.CodIngreso}"><i class="ion-search"></i></a>`);
 
@@ -1847,6 +1851,34 @@
 
         //$(function () {
         $(document).ready(function () {
+
+
+
+            $.SecGetJSON(BASE_URL + "/motor/api/Licencias/valida-tab-RRLL", {}, function (response) {
+                debugger;
+                if (response.Objeto == 1) {
+                    $("#tab_envioTATA").hide();
+                    $("#tab_CargaExcel").hide();
+                    $("#tab_envio_compin").hide();
+                    $("#tab_CargaExcel_compin").hide();
+                    $("#tab_devueltas_compin").hide();
+                    $("#tab_consolidado_devueltas_compin").hide();
+                    $("#tab_multi_oficina").show();
+                    $('#myTab a[href="#demo-lft-tab-8"]').tab('show');
+                }
+                else {
+                    $("#tab_envioTATA").show();
+                    $("#tab_CargaExcel").show();
+                    $("#tab_envio_compin").show();
+                    $("#tab_CargaExcel_compin").show();
+                    $("#tab_devueltas_compin").show();
+                    $("#tab_consolidado_devueltas_compin").show();
+                    $("#tab_multi_oficina").show();
+                }
+            });
+
+
+
             $("#txt_buscar_licencia").mask('99.999.999-*')
             var hoy = new Date();
             var d = hoy.getDate().toString().paddingLeft("00") + "-" + (hoy.getMonth() + 1).toString().paddingLeft("00") + "-" + hoy.getFullYear().toString();
@@ -2075,6 +2107,10 @@
                 location.href = BASE_URL + "/motor/api/Licencias/export-Consolidado-devuelta-compin?folioLM=" + $("#txt_folio_LM_consolidado_devuelta").val() + "&dia_desde=" + $("#flt_dia_consolidado_devuelta_desde").val() + "&dia_hasta=" + $("#flt_dia_consolidado_devuelta_hasta").val() + "&responsable=" + $("#ddlresponsableConsolidadoCompin").val() + "&codOficina=" + $("#ddloficinaReenvio").val() + "&subcomision=" + $("#ddlsubcomision").val();
 
             });
+
+
+
+
 
 
             //-----------------------tab 4 Multioficina !!!

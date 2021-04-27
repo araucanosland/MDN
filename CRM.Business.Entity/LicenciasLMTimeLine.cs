@@ -79,5 +79,7 @@ namespace CRM.Business.Entity
         public string MotivoDevolucion { get; set; }
 
         public string MotivoDevueltaOficina { get; set; }
+
+        public string Mandato { get; set; }
     }
 }

@@ -16,11 +16,12 @@ namespace CRM.Areas.AppPage.Controllers
     [RoutePrefix("api/Contactos")]
     public class ContactabilidadController : ApiController
     {
-       // [AuthorizationRequired]
+        [AuthorizationRequired]
         [HttpGet]
         [Route("lista-contactos-afi")]
         public IEnumerable<Business.Entity.Contactibilidad.ContactabilidadEntity> ListarContactoAfiliado(int RutAfiliado)
         {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
             return Business.Data.ContactabilidadDataAccess.ContactabilidadDataAccess.ListarContacto(RutAfiliado);
         }
 

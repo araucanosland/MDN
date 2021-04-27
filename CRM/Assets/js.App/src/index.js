@@ -885,8 +885,63 @@ $(function () {
                 field: 'Seguimiento.Prioridad',
                 title: 'Prioridad',
                 sortable: false,
+                //formatter: function (value, row, index) {
+                //    return value.toString().toEtiquetaPrioridad() + (row.Notificaciones.length > 0 ? '    <span class="badge badge-info">!</span>' : '')
+                //}
                 formatter: function (value, row, index) {
-                    return value.toString().toEtiquetaPrioridad() + (row.Notificaciones.length > 0 ? '    <span class="badge badge-info">!</span>' : '')
+                    //var prioPens = row.Notificaciones.findIndex(function (x) {
+                    //    return x.Tipo === 'PRIOPENS';
+                    //});
+                    jQuery.ajaxSetup({ async: false });
+
+                    let descripcion = "";
+                    $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-comercial-beneficios", { Rut_: row.Seguimiento.Afiliado_Rut }, function (datos) {
+                        $.each(datos, function (i, e) {
+
+                            if (e.color != '') {
+                                if (e.Color == 'azul') {
+                                    descripcion = descripcion + ' ' + '<span class="badge badge-primary">' + e.Descripcion + '</span>';
+                                }
+                                else if (e.Color == 'amarillo') {
+                                    descripcion = descripcion + ' ' + '<span class="badge badge-warning">' + e.Descripcion + '</span>';
+                                }
+
+                                else if (e.Color == 'gris') {
+                                    descripcion = descripcion + ' ' + '<span class="badge badge-warning" style="background-color: #999;">' + e.Descripcion + '</span>';
+                                }
+
+                                else if (e.Color == 'rojo') {
+                                    descripcion = descripcion + ' ' + '<span class="badge badge-danger">' + e.Descripcion + '</span>';
+                                }
+
+                                else if (e.Color == 'verde') {
+                                    descripcion = descripcion + ' ' + '<span class="badge badge-success">' + e.Descripcion + '</span>';
+                                }
+
+                                else if (e.Color == 'celeste') {
+                                    descripcion = descripcion + ' ' + '<span class="badge badge-info">' + e.Descripcion + '</span>';
+                                }
+
+
+                            }
+                            else {
+                                descripcion = descripcion + ' ' + '<span class="badge badge-info">' + e.Descripcion + '</span>';
+                            }
+                        });
+                    });
+
+                    let contingencia = "";
+                    $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-contingencia-motor", { Rut_Empresa: row.Seguimiento.Empresa_Rut }, function (datos) {
+                        $.each(datos, function (i, e) {
+                            contingencia = contingencia + ' ' + '<span class="badge badge-danger">CN</span>';
+                        });
+                    });
+
+                    //return value.toString().toEtiquetaPrioridad() + (prioPens >= 0 ? '    <span class="badge badge-warning">!</span>' : (row.Notificaciones.length > 0 ? '    <span class="badge badge-info">!</span>' : '')) //+ (row.TieneEncuesta === 0 ? '    <span class="badge badge-purple">E</span>' : '') 
+                    //eturn value.toString().toEtiquetaPrioridad() + (row.Notificaciones.length > 0 ? '    <span class="badge badge-info">!</span>' : '') + (row.Seguimiento.MARCA_CC === 1 ? '    <span class="badge badge-purple">C.C</span>' : '') + (row.Seguimiento.MarcaPsu === 1 ? '    <span class="badge badge-primary">PSU</span>' : '') //+ (row.TieneEncuesta === 0 ? '    <span class="badge badge-purple">E</span>' : '') 
+                    jQuery.ajaxSetup({ async: true });
+                    //turn value.toString().toEtiquetaPrioridad() + ' ' + descripcion;
+                    return value.toString().toEtiquetaPrioridad() + (row.Notificaciones.length > 0 ? '    <span class="badge badge-info">!</span>' : '') + (row.Seguimiento.MARCA_CC === 1 ? '    <span class="badge badge-purple">CC_ESI</span>' : '') + (row.Seguimiento.MARCA_CC === 2 ? '    <span class="badge badge-purple">CC_ENO</span>' : '') + (row.Seguimiento.MARCA_CC === 3 ? '    <span class="badge badge-purple">CC_NE</span>' : '') + (row.Seguimiento.MarcaPsu === 1 ? '    <span class="badge badge-primary">PSU</span>' : '') + ' ' + descripcion + ' ' + contingencia; //+ (row.TieneEncuesta === 0 ? '    <span class="badge badge-purple">E</span>' : '') 
                 }
             },
 
@@ -973,6 +1028,7 @@ $(function () {
             params.tipoCampagna = 1;
             params.estado = $('#demo-foo-filter-status').val();
             params.subestado = $('#demo-foo-filter-statusSub').val();
+            params.marca = $('#demo-foo-filter-statusMarca').val();
             params.prioridad = $('#slPrioridad').val();
             params.segmento = $('#slSegmento').val();
             params.tipo = $('#slTipo').val();
@@ -1004,13 +1060,13 @@ $(function () {
                 title: 'Nombre',
                 sortable: false,
                 formatter: function (value, row, index) {
-                    //return value + ' ' + row.Seguimiento.Apellido
-                    if (row.Seguimiento.Telefono1 != "") {
-                        return value + ' ' + row.Seguimiento.Apellido + " " + ' <span class="badge badge-danger">Dif.</span>'
-                    }
-                    else {
-                        return value + ' ' + row.Seguimiento.Apellido
-                    }
+                    return value + ' ' + row.Seguimiento.Apellido
+                    //if (row.Seguimiento.Telefono1 != "") {
+                    //    return value + ' ' + row.Seguimiento.Apellido + " " + ' <span class="badge badge-danger">Dif.</span>'
+                    //}
+                    //else {
+                    //    return value + ' ' + row.Seguimiento.Apellido
+                    //}
                 }
             },
             {
@@ -1018,12 +1074,13 @@ $(function () {
                 title: 'Empresa',
                 sortable: true,
                 formatter: function (value, row, index) {
-                    if (row.Seguimiento.Telefono2 != "") {
-                        return value + " " + '<span class="badge badge-danger">LE.</span>'
-                    }
-                    else {
-                        return value
-                    }
+                    return value
+                    //if (row.Seguimiento.Telefono2 != "") {
+                    //    return value + " " + '<span class="badge badge-danger">LE.</span>'
+                    //}
+                    //else {
+                    //    return value
+                    //}
                 }
             },
             {
@@ -1352,6 +1409,10 @@ $(function () {
                 $('#afi_horario_preferencia').val(Asignacion.HorarioPreferencia.Valor_preferencia);
                 $("#OficinaAsig").val(Asignacion.NombreOficina)
 
+                $("#afi_entidad_mora").val(afiData.Telefono1)
+                $("#afi_mora_antigua").val(afiData.Telefono2)
+                $("#afi_monto_deudas").val('$' + afiData.Email.toMoney2(0))
+
 
                 //CONTACTO
                 ///////////////////////////////////////////////////////
@@ -1541,41 +1602,41 @@ $(function () {
                     }
 
 
+                    // nueva modificacion 27-01.2021
+                    //if (afiData.Telefono1 != "") {
+                    //    $(".msjCovid").show();
+                    //    $(".covidNTFContainer").html("");
 
-                    if (afiData.Telefono1 != "") {
-                        $(".msjCovid").show();
-                        $(".covidNTFContainer").html("");
-
-                        $.niftyNoty({
-                            type: "danger",
-                            container: '.covidNTFContainer',
-                            html: "<strong>" + afiData.Telefono1 + "</strong>",
-                            focus: false,
-                            closeBtn: false
-                        });
-                    }
-                    else {
-                        $(".msjCovid").hide();
-                    }
+                    //    $.niftyNoty({
+                    //        type: "danger",
+                    //        container: '.covidNTFContainer',
+                    //        html: "<strong>" + afiData.Telefono1 + "</strong>",
+                    //        focus: false,
+                    //        closeBtn: false
+                    //    });
+                    //}
+                    //else {
+                    //    $(".msjCovid").hide();
+                    //}
 
 
-                    if (afiData.Telefono2 != "") {
-                        $(".msjCovidEmp").show();
-                        $(".covidEmpNTFContainer").html("");
+                    //if (afiData.Telefono2 != "") {
+                    //    $(".msjCovidEmp").show();
+                    //    $(".covidEmpNTFContainer").html("");
 
-                        $.niftyNoty({
-                            type: "danger",
-                            container: '.covidEmpNTFContainer',
-                            html: "<strong>" + afiData.Telefono2 + "</strong>",
-                            focus: false,
-                            closeBtn: false,
-                            font: 11,
+                    //    $.niftyNoty({
+                    //        type: "danger",
+                    //        container: '.covidEmpNTFContainer',
+                    //        html: "<strong>" + afiData.Telefono2 + "</strong>",
+                    //        focus: false,
+                    //        closeBtn: false,
+                    //        font: 11,
 
-                        });
-                    }
-                    else {
-                        $(".msjCovidEmp").hide();
-                    }
+                    //    });
+                    //}
+                    //else {
+                    //    $(".msjCovidEmp").hide();
+                    //}
 
 
                     render.HistorialGestion(gesList);

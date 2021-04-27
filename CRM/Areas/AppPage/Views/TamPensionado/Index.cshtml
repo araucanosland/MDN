@@ -42,10 +42,10 @@
         <div class="col-lg-12">
             <div class="tab-base">
                 <ul class="nav nav-tabs">
-                    <li class="active">
+                    <li class="" style="display:none;" id="tabIngreso">
                         <a data-toggle="tab" href="#tab-index-tam" aria-expanded="true" id="tab_index_tam" class="tab-principal">Ingreso</a>
                     </li>
-                    <li class="">
+                    <li class="active" id="tabBusqueda">
                         <a data-toggle="tab" href="#tab-busqueda-tam" aria-expanded="false" id="tab_busqueda_tam" class="tab-principal">Búsqueda</a>
                     </li>
 
@@ -56,7 +56,7 @@
                 </ul>
 
                 <div class="tab-content">
-                    <div id="tab-index-tam" class="tab-pane fade active in">
+                    <div id="tab-index-tam" class="tab-pane fade">
                         <div class="panel-body">
                             <div id="app-tam">
                                 <div>
@@ -419,7 +419,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="tab-busqueda-tam" class="tab-pane fade">
+                    <div id="tab-busqueda-tam" class="tab-pane fade active in">
                         <div class="panel-body">
                             <div id="query-app">
                                 <div class="panel">
@@ -1036,6 +1036,55 @@
     <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
     <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
     <script src="~/Assets/js.App/src/index.js?g=@Guid.NewGuid().ToString()"></script>
+
+
+    <script>
+        $(function () {
+
+            if (getCookie('Rut') == '10199069-9' ||
+                getCookie('Rut') == '11477083-3' ||
+                getCookie('Rut') == '11494358-4' ||
+                getCookie('Rut') == '16108279-1' ||
+                getCookie('Rut') == '14369881-5' ||
+                getCookie('Rut') == '12657855-6' ||
+                getCookie('Rut') == '15939212-0' ||
+                getCookie('Rut') == '15352268-5' ||
+                getCookie('Rut') == '14016016-4' ||
+                getCookie('Rut') == '15672208-1' ||
+                getCookie('Rut') == '09838974-1' ||
+                getCookie('Rut') == '17157571-0' ||
+                getCookie('Rut') == '10130196-6' ||
+                getCookie('Rut') == '17661906-6' ||
+                getCookie('Rut') == '15351327-9' ||
+                getCookie('Rut') == '09980249-9' ||
+                getCookie('Rut') == '14161931-4' ||
+                getCookie('Rut') == '13529754-2' ||
+                getCookie('Rut') == '12657855-5' ||
+                getCookie('Rut') == '19149359-1' ||
+                getCookie('Rut') == '15283814-k'
+            ) {
+                $('#tabBusqueda').removeClass()
+                $('#tab-busqueda-tam').removeClass()
+                $('#tab-busqueda-tam').addClass('tab-pane fade')
+
+
+                $('#tabIngreso').addClass('active')
+                $('#tab-index-tam').removeClass()
+                $('#tab-index-tam').addClass('tab-pane fade active in')
+                $('#tabIngreso').css('display', 'block')
+
+            }
+            else {
+                $('#tabIngreso').css('display', 'none')
+            }
+
+        })
+
+    </script>
+
+
+
+
 }
 
 

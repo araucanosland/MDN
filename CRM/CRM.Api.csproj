@@ -205,10 +205,14 @@
     <Compile Include="Areas\AppPage\Controllers\CarteraFFVVController.cs" />
     <Compile Include="Areas\AppPage\Controllers\CopagoController.cs" />
     <Compile Include="Areas\AppPage\Controllers\CosalController.cs" />
+    <Compile Include="Areas\AppPage\Controllers\DigitalizacionController.cs" />
     <Compile Include="Areas\AppPage\Controllers\DistribucionWappController.cs" />
     <Compile Include="Areas\AppPage\Controllers\MantenedoresController.cs" />
+    <Compile Include="Areas\AppPage\Controllers\MedicionCalidadController.cs" />
+    <Compile Include="Areas\AppPage\Controllers\PensionadosController.cs" />
     <Compile Include="Areas\AppPage\Controllers\PortabilidadController.cs" />
     <Compile Include="Areas\AppPage\Controllers\RecertificaciónController.cs" />
+    <Compile Include="Areas\AppPage\Controllers\RetiroController.cs" />
     <Compile Include="Areas\AppPage\Controllers\SegurosController.cs" />
     <Compile Include="Areas\AppPage\Controllers\TamPensionadoController.cs" />
     <Compile Include="Areas\AppPage\Controllers\UpdateController.cs" />
@@ -385,6 +389,7 @@
     <Content Include="Assets\js.App\Conf.js" />
     <Content Include="Assets\js.App\Ext.js" />
     <Content Include="Assets\js.App\FileSaver.js" />
+    <Content Include="Assets\js.App\inicio.min.js" />
     <Content Include="Assets\js.App\jspdf.min.js" />
     <Content Include="Assets\js.App\jspdf.plugin.autotable.min.js" />
     <Content Include="Assets\js.App\jspdf.plugin.cell.js" />
@@ -396,6 +401,7 @@
     <Content Include="Assets\js.App\src\atencion-cliente.js" />
     <Content Include="Assets\js.App\src\beneficios.js" />
     <Content Include="Assets\js.App\src\BuscadorGrilla.js" />
+    <Content Include="Assets\js.App\src\calidad.js" />
     <Content Include="Assets\js.App\src\call-back.js" />
     <Content Include="Assets\js.App\src\callbackTAM.js" />
     <Content Include="Assets\js.App\src\CargasFamiliares.js" />
@@ -414,8 +420,10 @@
     <Content Include="Assets\js.App\src\ign.js" />
     <Content Include="Assets\js.App\src\index.js" />
     <Content Include="Assets\js.App\src\info-empresa.js" />
+    <Content Include="Assets\js.App\src\ingreso-venta.js" />
     <Content Include="Assets\js.App\src\inicio.js" />
     <Content Include="Assets\js.App\jspdf.plugin.from_html.js" />
+    <Content Include="Assets\js.App\src\mandatosLM.js" />
     <Content Include="Assets\js.App\src\normalizacion.js" />
     <Content Include="Assets\js.App\src\oferta.js" />
     <Content Include="Assets\js.App\src\pensionados.js" />
@@ -423,6 +431,8 @@
     <Content Include="Assets\js.App\src\portabilidad-ingreso.js" />
     <Content Include="Assets\js.App\src\portabilidad.js" />
     <Content Include="Assets\js.App\src\recertificación.js" />
+    <Content Include="Assets\js.App\src\retencion-pensionados.js" />
+    <Content Include="Assets\js.App\src\retiro.js" />
     <Content Include="Assets\js.App\src\seguros.js" />
     <Content Include="Assets\js.App\src\seguro_cesantia.js" />
     <Content Include="Assets\js.App\src\validacion-portabilidad.js" />
@@ -621,6 +631,12 @@
     <Content Include="Areas\AppPage\Views\Portabilidad\Index.cshtml" />
     <Content Include="Areas\AppPage\Views\Portabilidad\Ingreso.cshtml" />
     <Content Include="Areas\AppPage\Views\Portabilidad\Validacion.cshtml" />
+    <Content Include="Areas\AppPage\Views\Retiro\Index.cshtml" />
+    <Content Include="Areas\AppPage\Views\MedicionCalidad\Index.cshtml" />
+    <Content Include="Areas\AppPage\Views\Pensionados\RetencionPensionados.cshtml" />
+    <Content Include="Areas\AppPage\Views\Licencias\Mandatos.cshtml" />
+    <Content Include="Areas\AppPage\Views\Digitalizacion\Index.cshtml" />
+
     <None Include="Properties\PublishProfiles\CharlyMOTOR.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\Settings.settings">

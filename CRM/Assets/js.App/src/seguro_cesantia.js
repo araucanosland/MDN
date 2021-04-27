@@ -113,26 +113,28 @@ function formatoMoneyFormatter(value, row, index) {
     return value.toMoney(0);
 }
 
-function estadoAfiliadoFormatter(value, row, index) {
+function estadoAfiliadoFormatterSeguroC(value, row, index) {
 
     if (row.gestiones.length > 0) {
         const maximo = Math.max.apply(Math, row.gestiones.map(function (o) { return o.id; }));
         const objetoFinal = row.gestiones.find((e) => {
             return e.id === maximo;
         });
-        return `<span class="${objetoFinal.estado.color}">${objetoFinal.estado.nombre}</span>`
+       // return `<span class="${objetoFinal.estado}">${objetoFinal.estado.padre.nombre}</span>`
+        try { return `<span class="${objetoFinal.estado}">${objetoFinal.estado.nombre}</span>` } catch{ }
     }
     return 'Sin Gestion';
 }
 
-function subEstadoAfiliadoFormatter(value, row, index) {
+function subEstadoAfiliadoFormatterSeguroC(value, row, index) {
 
     if (row.gestiones.length > 0) {
         const maximo = Math.max.apply(Math, row.gestiones.map(function (o) { return o.id; }));
         const objetoFinal = row.gestiones.find((e) => {
             return e.id === maximo;
         });
-        return `<span class="${objetoFinal.estado.padre.color}">${objetoFinal.estado.padre.nombre}</span>`
+        try { return `<span class="${objetoFinal.estado}">${objetoFinal.estado.padre.nombre}</span>` } catch{ }
+
     }
     return 'Sin Gestion';
 }

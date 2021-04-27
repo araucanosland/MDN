@@ -90,6 +90,10 @@ namespace CRM.Areas.AppPage.Controllers
             return View();
         }
 
+        public ActionResult Mandatos()
+        {
+            return View();
+        }
 
         [HttpPost]
         public ActionResult Upload()

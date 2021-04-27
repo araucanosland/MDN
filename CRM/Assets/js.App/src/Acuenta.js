@@ -6,16 +6,19 @@ var appAcuenta = new Vue({
             estados: [],
             subEstados: [],
             campana: [],
+            marca: [],
         },
         modelos: {
             estados: '',
             subEstados: '',
             campana: '',
+            marca: '',
         }
     },
     mounted() {
         this.obtenerEstados();
         this.obtenerCampanaRetencion();
+        this.obtenerMarca();
     },
     methods: {
         obtenerCampanaRetencion() {
@@ -27,6 +30,17 @@ var appAcuenta = new Vue({
                 .then(response => response.json())
                 .then(campanaJSON => {
                     this.filtros.campana = campanaJSON;
+                });
+        },
+        obtenerMarca() {
+            fetch(`http://${motor_api_server}:4002/acuenta/lista-marca`, {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'default'
+            })
+                .then(response => response.json())
+                .then(marcaJSON => {
+                    this.filtros.marca = marcaJSON;
                 });
         },
         obtenerEstados() {
@@ -75,6 +89,7 @@ var appAcuenta = new Vue({
                     campana: $('#dllCampana').val(),
                     rut: $('#txtRutAcuenta').val(),
                     credito_vigente: $('#dllCreditoVigente').val(),
+                    marca: $('#dllCreditoMarca').val(),
                     oferta: $('#dllOferta').val(),
                     estado: this.modelos.estado,
                     subEstado: this.modelos.subEstados,
@@ -514,14 +529,13 @@ $('#form-registro-contacto_acuenta').bootstrapValidator({
         });
     });
 
-    });
+});
 
 function cargaDatosDeContacto(rutAf) {
 
     $("#bdy_datos_contactos_acuenta > tr").remove();
     $("#bdy_datos_contactos_acuenta").html("");
 
-});
 
     $.SecGetJSON(BASE_URL + "/motor/api/Contactos/lista-contactos-afi", { RutAfiliado: rutAf }, function (contac) {
         $.each(contac, function (i, e) {

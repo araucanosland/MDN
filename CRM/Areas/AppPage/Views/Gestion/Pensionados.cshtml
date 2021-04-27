@@ -4,6 +4,8 @@
 <link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
 
+<script src="~/Assets/tam/deps/sweetalert.js"></script>
+
 <style>
     #tblAsigPen > tbody {
         font-size: 11px;
@@ -275,7 +277,7 @@
                         <div class="panel">
                             <div class="tab-base" id="MDL_Primario" style="margin-bottom: 0px !important;">
                                 <!--Nav Tabs-->
-                                <ul class="nav nav-tabs">
+                                <ul class="nav nav-tabs" id="tabPenGestionModal">
                                     <li class="active tabDatos">
                                         <a data-toggle="tab" id="tabDatosPen" href="#tab-gestion-pensionado" aria-expanded="true">Datos Pensionado</a>
                                     </li>
@@ -722,12 +724,12 @@
                                                 <div class="panel-body">
                                                     <label class="control-label" style="margin-top: 20px;"><strong>Fono</strong></label>
                                                     <div class="row">
-                                                        <div class="col-sm-6">
+                                                        <div class="col-sm-5">
                                                             <div class="form-group">
                                                                 <div class="col-md-12" id="dvRbMedioNoFono" style="margin-top: 20px;"></div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-3">
+                                                        <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <div id="subFonoNo" style="display:none;"></div>
                                                             </div>
@@ -782,7 +784,7 @@
                                         <div class="modal-body" id="etapaInteres" style="display:none">
                                             <div class="alert alert-success" style="border-radius: 5px; height: 54px; background-color: #f3f3f3; color: #696666;">
                                                 <label class="col-md-5 control-label">Pensionado  está interesado?  </label>
-                                                <div class="col-md-6" style="margin-top: -11px;">
+                                                <div class="col-md-7" style="margin-top: -11px;">
                                                     <div class="radio" id="divInteres"></div>
                                                 </div>
                                             </div>
@@ -871,6 +873,66 @@
                                                         <div class="col-md-8" id="divInteresNoInteresado" style="display:none;">
 
                                                         </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; display:none;" id="Interes_Ocupado">
+                                                <div class="panel-body">
+
+                                                    <div style="visibility: hidden;">
+                                                        separador
+                                                    </div>
+                                                    <div class="form-group pad-ver">
+                                                        <div class="col-md-4 control-label">
+                                                            <div class="form-group">
+                                                                <label class="control-label" style="margin-top: 27px;">Agendar nueva llamada!</label>
+                                                            </div>
+                                                        </div>
+                                                        <div id="dp-component-pensionados-interes" class="col-md-4">
+                                                            <label class="control-label">Fecha</label>
+                                                            <div class="input-group date">
+                                                                <input type="text" class="form-control" id="txtFechacita2" name="txtFechacita2">
+                                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Hora</label>
+                                                                <div class="input-group date">
+                                                                    <select id="slHoraInteres2" name="slHoraInteres2" class="form-control" tabindex="-98">
+                                                                        <option value="">Seleccione</option>
+                                                                        <option value="09:00">9:00 hrs.</option>
+                                                                        <option value="09:30">9:30 hrs.</option>
+                                                                        <option value="10:00">10:00 hrs.</option>
+                                                                        <option value="10:30">10:30 hrs.</option>
+                                                                        <option value="11:00">11:00 hrs.</option>
+                                                                        <option value="11:30">11:30 hrs.</option>
+                                                                        <option value="12:00">12:00 hrs.</option>
+                                                                        <option value="12:30">12:30 hrs.</option>
+                                                                        <option value="13:00">13:00 hrs.</option>
+                                                                        <option value="13:30">13:30 hrs.</option>
+                                                                        <option value="14:00">14:00 hrs.</option>
+                                                                        <option value="14:30">14:30 hrs.</option>
+                                                                        <option value="15:00">15:00 hrs.</option>
+                                                                        <option value="15:30">15:30 hrs.</option>
+                                                                        <option value="16:00">16:00 hrs.</option>
+                                                                        <option value="16:30">16:30 hrs.</option>
+                                                                        <option value="17:00">17:00 hrs.</option>
+                                                                        <option value="17:30">17:30 hrs.</option>
+                                                                        <option value="18:00">18:00 hrs.</option>
+                                                                        <option value="18:30">18:30 hrs.</option>
+                                                                        <option value="19:00">19:00 hrs.</option>
+                                                                        <option value="19:30">19:30 hrs.</option>
+                                                                        <option value="20:00">20:00 hrs.</option>
+                                                                        <option value="20:30">20:30 hrs.</option>
+                                                                        <option value="21:00">21:00 hrs.</option>
+                                                                    </select>
+                                                                    <span class="input-group-addon"><i class="demo-pli-clock"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>

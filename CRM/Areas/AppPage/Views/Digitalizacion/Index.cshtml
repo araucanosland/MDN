@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+<div id="page-content">
+    <h1 class="page-header text-overflow">DIGITALIZACIÓN VENTA</h1>
+    <br />
+    <div class="panel" style="border-radius: 8px">
+        <div class="panel-heading">
+            <h3 class="panel-title">FILTROS DE BUSQUEDA</h3>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">RUT AFILIADO</label>
+                        <input type="text" id="txtRutAfiSearch" class="form-control" maxlength="10">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label class="control-label">FOLIO CREDITO</label>
+                        <input type="text" id="txtNFolioSearch" class="form-control numero" maxlength="12">
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" v-on:click="cargalistaVentas">BUSCAR</button>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <button class="btn btn-default btn-rounded btn-labeled ion-plus-round" id="btNewIngreso">INGRESO NUEVA VENTA </button>
+        </div>
+    </div>
+
+    <div class="mar-btm" style="display: none;" id="formulario-ingreso_dig">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel" style="border-radius: 8px">
+                        <div class="panel-body form-horizontal form-padding">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Rut Afiliado</label>
+                                <div class="col-md-4">
+                                    <input type="text" id="txtIdUpdate" class="form-control" disabled style="display:none">
+                                    <input type="text" id="txtRutAfi" class="form-control" maxlength="10">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Folio Venta</label>
+                                <div class="col-md-4">
+                                    <input type="text" id="txtNfolio" class="form-control numero" maxlength="15">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Tipo Venta</label>
+                                <div class="col-md-4">
+                                    <select class="form-control" id="dllTipoVenta" name="dllTipoVenta" v-model="modelos.tipo_venta">
+                                        <option value="">SELECCIONE...</option>
+                                        <option v-for="tipoV in filtros.tipo_venta" :value="tipoV.id">{{tipoV.tipo_venta}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group pad-ver">
+                                <label class="col-md-3 control-label"><strong>Tiene documentos digitalizados ?</strong></label>
+                                <div class="col-md-9">
+                                    <div class="radio">
+                                        <input id="rbDgSi" class="magic-radio" type="radio" name="rbDgDigitalizacion" value="SI">
+                                        <label for="rbDgSi">SI</label>
+
+                                        <input id="rbDgNo" class="magic-radio" type="radio" name="rbDgDigitalizacion" value="NO">
+                                        <label for="rbDgNo">NO</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="text-right" id="btSeves" style="display:block">
+                                <button class="btn btn-warning btn-rounded btCancelar" id="btCancelar">CANCELAR</button>
+                                <button class="btn btn-success btn-rounded" v-on:click="handleSubmitIngresoVentas">GUARDAR</button>
+                            </div>
+                            <div class="text-right" id="btUpdates" style="display:none">
+                                <button class="btn btn-warning btn-rounded btCancelar" id="btCancelarUpdate">CANCELAR</button>
+                                <button class="btn btn-success btn-rounded" v-on:click="handleSubmitUpdateVentas" id="btIngUpdate">ACTUALIZAR</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel" style="border-radius: 8px">
+        <div class="panel-heading">
+            <h3 class="panel-title">DIGITALIZACIONES DEL DIA</h3>
+        </div>
+        <form class="form-horizontal">
+            <div class="panel-body">
+                <div class="panel-body">
+                    <table data-toggle="table"
+                           data-sort-name="id"
+                           data-page-list="[]"
+                           data-page-size="50"
+                           data-search="false"
+                           data-pagination="true" id="tblVentaDiarias" style="font-size: 12px">
+
+                        <thead>
+                            <tr>
+                                <th data-field="rut_afiliado" data-sortable="true">RUT</th>
+                                <th data-field="folio_venta" data-sortable="true">N° FOLIO </th>
+                                <th data-field="tipo_venta" data-sortable="true">TIPO VENTA</th>
+                                <th data-field="fecha_ingreso" data-sortable="true" data-formatter="formatoFecha">FECHA INGRESO</th>
+                                <th data-field="id" data-formatter="formatoUpdate"></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section script{
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
+    <script src="~/Assets/js.App/src/ingreso-venta.js?g=@Guid.NewGuid().ToString()"></script>
+
+}

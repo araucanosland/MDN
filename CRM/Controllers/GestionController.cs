@@ -265,11 +265,12 @@ namespace CRM.Controllers
 
         }
 
-
+        [AuthorizationRequired]
         [HttpGet]
         [Route("lista-comercial-beneficios")]
         public IEnumerable<TipoComercialBeneficioEntity> ListaFlagComerciaBenf(int Rut_)
         {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
             return EstadosyTiposDataAccess.ListaComercialBeneficios(Rut_);
 
         }

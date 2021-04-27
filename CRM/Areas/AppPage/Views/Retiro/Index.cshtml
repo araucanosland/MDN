@@ -1,0 +1,452 @@
+﻿
+@{
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+<div id="page-title">
+    <h1 class="page-header text-overflow" style="color: #cccccc;">Retiro 10%</h1>
+</div>
+
+<div id="page-content">
+    <div id="contAtencion">
+        <div class="panel" style="border-radius: 7px;">
+            <div class="panel-heading">
+                <div class="panel-control">
+                    <div class="col-sm-12 table-toolbar-right">
+                        <div class="form-group">
+                            <button data-target="#modal-search-retiro" data-toggle="modal" data-evento="1" class="btn btn-success btn-labeled demo-pli-magnifi-glass" style="margin-top: 9px; border-radius: 7px;">BUSCAR AFILIADO..</button>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="panel-title"><i class="demo-pli-information icon-fw"></i></h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-2 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">RUT</label>
+                            <input id="txtRutFiltro" type="text" placeholder="Ej. 12345678-0" class="form-control" maxlength="10" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">ESTADO</label>
+                            <select class="form-control" id="dllEstadoRetiro" name="dllEstadoRetiro" v-on:change="eventoCambSubEstado" v-model="modelos.estados">
+                                <option value="">Todos...</option>
+                                <option v-for="estadoRet in filtros.estados" :value="estadoRet.id">{{estadoRet.nombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 text-xs-center">
+                        <label class="control-label">SUB-ESTADO</label>
+                        <select class="form-control" id="dllSubEstadoRetiro" name="dllSubEstadoRetiro" v-model="modelos.subEstados">
+                            <option value="">Todos...</option>
+                            <option v-for="subestadoRet in filtros.subEstados" :value="subestadoRet.id">{{subestadoRet.nombre}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2 text-xs-center">
+                        <label class="control-label">PRIORIDAD</label>
+                        <select class="form-control" id="slPrioridad">
+                            <option value="">Todos...</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+
+                        </select>
+                    </div>
+                    <div class="col-sm-1 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label"></label>
+                            <button class="btn btn-primary btn-rounded" v-on:click="cargaLeadFiltroRetiro" style="margin-top: 21px;">FILTRAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel" style="border-radius: 7px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">DATOS</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table data-toggle="table"
+                               data-sort-name="id"
+                               data-page-list="[]"
+                               data-page-size="50"
+                               data-search="false"
+                               data-pagination="true" id="tblRetiro" style="font-size: 12px">
+                            <thead>
+                                <tr>
+                                    <th data-field="rut" data-sortable="true" data-formatter="formaterRut">RUT</th>
+                                    <th data-field="nombre" data-sortable="true">NOMBRE</th>
+                                    <th data-field="empresa" data-sortable="true">EMPRESA</th>
+                                    <th data-field="segmento" data-sortable="true">SEGMENTO</th>
+                                    <th data-field="prioridad" data-sortable="true">PRIORIDAD</th>
+                                    <th data-field="TotalDeuda" data-sortable="true" data-formatter="formatoMoneyRetiro">TOTAL DEUDA</th>
+                                    <th data-field="OfertaAcuerdoPago" data-sortable="true" data-formatter="formatoMoneyRetiro">OFERTA ACUERDO PAGO</th>
+                                    <th data-field="ofertaPagoTotal" data-sortable="true" data-formatter="formatoMoneyRetiro">OFERTA PAGO TOTAL</th>
+                                    <th data-field="ultimaGestion.estado" data-sortable="true">ESTADO</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-search-retiro" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header" style="background: #337ab7;">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" style="color: #f1f1f1;">GESTION</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="tab-base" id="MDL_Primario_acuerdo_pago" style="margin-bottom: 0px !important;">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-gestion-retiro" aria-expanded="false">GESTION</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-historial-retiro" aria-expanded="false">HISTORIAL</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-contactabiliadad" aria-expanded="false">CONTACTABILIDAD</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-gestion-retiro" class="tab-pane fade active in">
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <div id="dvDatosAfiliado" style="display:none;">
+                                            <label class="control-label">RUT</label>
+                                            <div class="row">
+                                                <div class="col-sm-4 text-xs-center">
+                                                    <div class="form-group">
+                                                        <input class="form-control" id="afi_rut_retiro" style="width: 250px;" maxlength="10" placeholder="12345678-9" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 text-xs-center">
+                                                    <div class="form-group">
+                                                        <button class="btn btn-primary" id="btn_buscar_pens" type="submit" style="border-radius: 7px;" v-on:click="cargaAfiliadoRetiroSearch">Buscar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="NotfGenericaPensionado"></div>
+                                            <hr />
+                                            <div class="pad-all">
+                                                <div class="media mar-btm">
+                                                    <div class="media-left">
+                                                        <img src="/Motor/Assets/img/profile-photos/1.png" class="img-md img-circle" alt="Avatar">
+                                                    </div>
+                                                    <div class="media-body" style="vertical-align: middle;">
+                                                        <p class="text-lg text-main text-semibold mar-no">Afiliado: <label class="control-label"> {{dataModal.nombre != undefined && dataModal.nombre != "" ? dataModal.nombre : '------'}}</label></p>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                            </div>
+                                            <div class="panel panel-bordered-primary" style="border-radius:8px; display:none;" id="divNoAsignado">
+                                                <div class="panel-body">
+                                                    <ul class="list-group bg-trans bord-no">
+                                                        <li class="list-group-item list-item-sm">
+                                                            <div class="row">
+                                                                <div class="col-sm-12 text-xs-center">
+                                                                    <div class="form-group">
+                                                                        <div class="media-left">
+                                                                            <i class="ion-person icon-lg"></i>
+                                                                        </div>
+                                                                        <div class="media-body">
+                                                                            <a href="#" class="btn-link text-semibold">Afiliado no se encuentra asignado!</a>
+                                                                            <br>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-5 text-xs-center">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">SUCURSAL</label>
+                                                                    <select class="form-control" id="dllOfinaRetiro" name="dllOfinaRetiro" v-on:change="eventoCambOficinaM" v-model="modelosM.oficina">
+                                                                        <option value="">Seleccione...</option>
+                                                                        <option v-for="oficinaRet in filtrosM.oficina" :value="oficinaRet.Cod_Oficina">{{oficinaRet.Oficina}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-5 text-xs-center">
+                                                                <label class="control-label">EJECUTIVO</label>
+                                                                <select class="form-control" id="dllEjecutivosR" name="dllEjecutivosR" v-model="modelosM.ejecutivos">
+                                                                    <option value="">Seleccione...</option>
+                                                                    <option v-for="ejecutivosoRet in filtrosM.ejecutivos" :value="ejecutivosoRet.Rut">{{ejecutivosoRet.Nombre}}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-sm-2 text-xs-center">
+                                                                <div class="form-group">
+                                                                    <button class="btn btn-primary" type="submit" style="border-radius: 7px; margin-top: 22px;" v-on:click="handleSubmitAsignaEjecutivoRetiro">Asignar</button>
+                                                                </div>
+                                                            </div>
+
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-bordered-primary" style="border-radius:8px; display:block;" id="divAsignado">
+                                                <div class="panel-body">
+                                                    <ul class="list-group bg-trans bord-no">
+                                                        <li class="list-group-item list-item-sm">
+                                                            <div class="row">
+                                                                <div class="col-sm-4 text-xs-center">
+                                                                    <div class="form-group">
+                                                                        <div class="media-left">
+                                                                            <i class="ion-person icon-lg"></i>
+                                                                        </div>
+                                                                        <div class="media-body">
+                                                                            <a href="#" class="btn-link text-semibold">Ejecutivo Asignado</a>
+                                                                            <br>
+                                                                            <p class="text-semibold text-main">{{dataEjecutivo.Nombre != undefined ? dataEjecutivo.Nombre != "" ?  dataEjecutivo.Nombre : "SIN ASIGNAR"  : '------------'}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-3 text-xs-center">
+                                                                    <div class="form-group">
+                                                                        <div class="media-left">
+                                                                            <i class="ion-home icon-lg"></i>
+                                                                        </div>
+                                                                        <div class="media-body">
+                                                                            <a href="#" class="btn-link text-semibold">Sucursal</a>
+                                                                            <br />
+                                                                            <p class="text-semibold text-main">{{dataEjecutivo.Sucursal != undefined ? dataEjecutivo.Sucursal != "" ? dataEjecutivo.Sucursal : "SIN ASIGNAR" : '------------'}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-bordered-primary" style="border-radius:8px;">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Rut</label>
+                                                            <input class="form-control" id="txtRutAfiAcuerdo" type="text" :value="dataModal.rut" readonly="readonly">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Nombres</label>
+                                                            <input class="form-control" type="text" id="txtNombAfiAcuerdo" :value="dataModal.nombre" readonly="readonly">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group has-success">
+                                                            <label class="control-label" id="morfeable_monto">Total Deuda</label>
+                                                            <div class="input-group mar-btm">
+                                                                <span class="input-group-addon" style="color: #000000; background-color: rgb(255, 179, 174); border-color: #3c763d;"><i class="demo-pli-wallet-2"></i></span>
+                                                                <input class="form-control text-lg-right" type="text" :value="dataModal.TotalDeuda !== undefined && dataModal.TotalDeuda.toMoney(0)" readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group has-success">
+                                                            <label class="control-label" id="morfeable_monto">Total Capital</label>
+                                                            <div class="input-group mar-btm">
+                                                                <span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+                                                                <input class="form-control text-lg-right" type="text" :value="dataModal.totalCapital !== undefined && dataModal.totalCapital.toMoney(0)" readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3" style="display:none;">
+                                                        <div class="form-group has-success">
+                                                            <label class="control-label" id="morfeable_monto">Oferta Acuerdo Pago</label>
+                                                            <div class="input-group mar-btm">
+                                                                <span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+                                                                <input class="form-control text-lg-right" type="text" :value="dataModal.OfertaAcuerdoPago !== undefined && dataModal.OfertaAcuerdoPago.toMoney(0)" readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group has-success">
+                                                            <label class="control-label" id="morfeable_monto">Oferta Pago Total</label>
+                                                            <div class="input-group mar-btm">
+                                                                <span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+                                                                <input class="form-control text-lg-right" type="text" :value="dataModal.ofertaPagoTotal !== undefined && dataModal.ofertaPagoTotal.toMoney(0)" readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                                <div id="msjRetiro"></div>
+                                                <div class="row" style="text-align: left;">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Estado</label>
+                                                            <select class="form-control" id="slEstadoMRetiro" name="slEstadoMRetiro" v-on:change="eventoCambSubEstadoM" v-model="modelosM.estadosM">
+                                                                <option value="">Seleccione</option>
+                                                                <option v-for="estadoModal in filtrosM.estadosM" :value="estadoModal.id">{{estadoModal.nombre}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Sub Estado</label>
+                                                            <select class="form-control" id="slSubEstadoMRetiro" name="slSubEstadoMRetiro" v-model="modelosM.subEstadosM">
+                                                                <option value="">Seleccione</option>
+                                                                <option v-for="subEstadoModal in filtrosM.subEstadosM" :value="subEstadoModal.id">{{subEstadoModal.nombre}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4" style="display:none;" id="dpFechaAgen">
+                                                        <div class="form-group" id="fpg_acuerdo">
+                                                            <label class="control-label">Fecha Agendamiento</label>
+                                                            <div id="demo-dp-component_retiro">
+                                                                <div class="input-group date">
+                                                                    <input type="text" class="form-control" id="dpfechaAgenRetiro">
+                                                                    <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row esconder" style="text-align: left;">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Comentarios</label>
+                                                            <textarea placeholder="Comentarios" rows="3" class="form-control" id="txtCometariosRetiro"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                                                <button class="btn btn-primary" v-on:click="handleSubmitGestionRetiro" type="button">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-historial-retiro" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div v-for="gestion in dataModalHist">
+                                    <a href="#">
+                                        @*<h4 class="list-group-item-heading"><strong>Gestor: </strong>{{gestion.rut_ejecutivo != undefined && gestion.rut_ejecutivo}}</h4>*@
+                                        <h4 class="list-group-item-heading"><strong>Gestor: </strong>{{gestion.nom_ejecutivo != undefined && gestion.nom_ejecutivo}}</h4>
+                                        <p class="list-group-item-text">
+                                            <strong>Fecha Gestión: </strong>{{gestion.fecha_gestion != undefined && gestion.fecha_gestion.toFechaHoraPrueba()}}
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Estado: </strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado: '------'}}
+                                            <strong>Sub-Estado: </strong>{{gestion.sub_estado != undefined && gestion.sub_estado != null ? gestion.sub_estado: '------'}}
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Fecha Agendamiento: </strong>{{gestion.fecha_agendamiento != undefined && gestion.fecha_agendamiento != null ? gestion.fecha_agendamiento: '------'}}
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Comentarios: </strong> {{gestion.comentarios}}
+                                        </p>
+                                    </a>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-contactabiliadad" class="tab-pane fade">
+                            <div class="row">
+                                <button type="button" id="btn-add-contac_retiro" class="btn btn-primary btn-xs">+</button>
+                            </div>
+                            <div class="mar-btm" style="display: none;" id="formulario-contac_retiro">
+                                <form id="form-registro-contacto_retiro" action="#" method="post">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Tipo de Contacto</label>
+                                                    <select class="selectpicker" id="cbtippContac_retiro" name="cbtippContac_retiro">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Celular</option>
+                                                        <option value="2">Teléfono</option>
+                                                        <option value="3">Mail</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Clasificación de Contacto</label>
+                                                    <select class="selectpicker" id="cbClasificacionConctac_retiro" name="cbClasificacionConctac_retiro">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Personal</option>
+                                                        <option value="2">Comercial</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Datos de Contacto</label>
+                                                <input class="form-control" id="afi_NewContacto_retiro" type="text" value="" maxlength="150" name="afi_NewContacto_retiro">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" id="btGuardaContacto_retiro" type="submit">Guardar Contacto</button>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <table class="table table-hover table-vcenter" style="font-size: 11px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Gestión</th>
+                                            <th>Datos Contacto</th>
+                                            <th>Tipo contacto</th>
+                                            <th>Indice</th>
+                                            <th>Ultimo Contacto Valido</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bdy_datos_contactos_retiro"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
+    <script src="~/Assets/js.App/src/retiro.js?g=@Guid.NewGuid().ToString()"></script>
+
+}

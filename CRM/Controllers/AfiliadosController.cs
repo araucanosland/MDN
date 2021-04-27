@@ -17,7 +17,7 @@ namespace CRM.Areas.AppPage.Controllers
     [RoutePrefix("api/Afiliados")]
     public class AfiliadosController : ApiController
     {
-        // [AuthorizationRequired]
+        [AuthorizationRequired]
         [HttpGet]
         [Route("obtener-info-afiliado")]
         public Business.Entity.Afiliados.AfiliadosEntity ObtenerInfoAfiliado(int RutAfiliado)
@@ -39,25 +39,28 @@ namespace CRM.Areas.AppPage.Controllers
         {
             return AfiliadoDataAccess.ListarAlertasAfiliado(RutAfiliado);
         }
-        // [AuthorizationRequired]
+        [AuthorizationRequired]
         [HttpGet]
         [Route("lista-rut-empresa")]
         public IEnumerable<Business.Entity.Afiliados.AfiliadoEmpresaEntity> ListarRutEmpresa(int RutAfiliado)
         {
             return AfiliadoDataAccess.ListaRutEmpresa(RutAfiliado);
         }
+        [AuthorizationRequired]
         [HttpGet]
         [Route("obtener-info-empresa")]
         public Business.Entity.Afiliados.EmpresaAfiliadoEntity ObtenerInfoEmpresa(int RutEmpresa, int RutAfiliado)
         {
             return AfiliadoDataAccess.ObtenerDatosEmpresa(RutEmpresa, RutAfiliado);
         }
+        [AuthorizationRequired]
         [HttpGet]
         [Route("obtener-hist-tipo-campana")]
         public IEnumerable<Business.Entity.Afiliados.AfiliadoCampanas> ObtenerHistorialCamapana(int RutAfiliado, int TipoAsignacion)
         {
             return AfiliadoDataAccess.ObtenerHistorialCampana(RutAfiliado, TipoAsignacion);
         }
+        [AuthorizationRequired]
         [HttpGet]
         [Route("obtener-cumpleanos")]
         public Business.Entity.Afiliados.AfiliadoDatosCumpleanios ObtenerCumpleanos(int RutAfiliado)
@@ -91,21 +94,21 @@ namespace CRM.Areas.AppPage.Controllers
             string token = ActionContext.Request.Headers.GetValues("Token").First();
             return AfiliadoDataAccess.sacaMarcaNoMolestar(RutAfiliado, token);
         }
-
+       // [AuthorizationRequired]
         [HttpGet]
         [Route("obtener-proyeccion")]
         public IEnumerable<Business.Entity.Afiliados.AfiliadoProyeccion> ObtenerProyeccion(string RutAfiliado)
         {
             return AfiliadoDataAccess.ObtieneProyeccionAfiliado(RutAfiliado);
         }
-
+        [AuthorizationRequired]
         [HttpGet]
         [Route("filtro-proyeccion")]
         public IEnumerable<Business.Entity.Afiliados.AfiliadoProyeccion> FiltroProyeccion(string RutAfiliado, int Estado)
         {
             return AfiliadoDataAccess.FiltroProyeccionAfiliado(RutAfiliado, Estado);
         }
-
+        [AuthorizationRequired]
         [HttpGet]
         [Route("afiliado-falabella/{RutAfiliado}")]
         public IHttpActionResult afiliadoFalabella(string RutAfiliado)
@@ -143,7 +146,7 @@ namespace CRM.Areas.AppPage.Controllers
 
 
 
-
+        [AuthorizationRequired]
         [HttpGet]
         [Route("lista-enfermedades-encuesta")]
         public IEnumerable<Business.Entity.Afiliados.EnfermedadesEncuestaEntity> ListarEnfermedades()
@@ -153,7 +156,7 @@ namespace CRM.Areas.AppPage.Controllers
 
 
 
-     
+        [AuthorizationRequired]
         [HttpGet]
         [Route("lista-medicamentos-encuesta")]
         public IEnumerable<Business.Entity.Afiliados.MedicamantosEncuestaEntity> ListarMedicamentos()
@@ -161,7 +164,7 @@ namespace CRM.Areas.AppPage.Controllers
             return AfiliadoDataAccess.ObtenerMedicamentos();
         }
 
-     
+        [AuthorizationRequired]
         [HttpPost]
         [Route("guarda-encueasta-enfermedades")]
         public IHttpActionResult GuardaEncuestas(EncuestaEntity entrada)
@@ -218,7 +221,7 @@ namespace CRM.Areas.AppPage.Controllers
         }
 
 
-     
+        [AuthorizationRequired]
         [HttpGet]
         [Route("lista-estado-encuesta")]
         public IEnumerable<Business.Entity.Afiliados.EncuestaEntity> ListaEstadoEncuesta(string RutAfiliado)

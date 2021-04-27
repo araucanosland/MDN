@@ -1,16 +1,15 @@
 ﻿function envio(rut) {
+
     localStorage.clear();
     sessionStorage.clear();
-    location.href = "/Motor/Home/Acceso?RE=" + rut
+    location.href = "/Motor/Home/AccesoAdmin?RE=" + rut
 }
 
 $(function () {
 
-    if (getCookie("Cargo") == 'Administrador Sistema' || getCookie("Cargo") == 'Usuario Avanzado') {
+    if (getCookie("Cargo") == 'Administrador Sistema' || getCookie("Cargo") == 'Usuario Avanzado' || getCookie("Cargo") == 'Zonal') {
 
 
-
-        
 
         $("#bdy_datos").html("");
         $.getJSON(BASE_URL + "/motor/api/busqueda-dotacion/listar-ejecutivos", function (ejecutivos) {
@@ -23,7 +22,7 @@ $(function () {
                 $("#bdy_datos")
                     .append(
                         $("<tr>")
-                            .append($("<td>").append('<a href="javascript:envio(\''+e.Rut+'\')" class="btn-link envio" >' + e.Rut + '</a>'))
+                            .append($("<td>").append('<a href="javascript:envio(\'' + e.Rut + '\')" class="btn-link envio" >' + e.Rut + '</a>'))
                             .append($("<td>").html(e.Nombres))
                             .append($("<td>").html(e.IdSucursal))
                             .append($("<td>").html(e.Sucursal))
@@ -39,7 +38,7 @@ $(function () {
 
         });
 
-        
+
 
 
 

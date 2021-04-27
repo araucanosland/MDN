@@ -670,6 +670,73 @@ namespace CRM.Controllers
 
         }
 
+
+
+        [HttpGet]
+        [Route("lista-LM-Pendiente-Convenio")]
+        public IEnumerable<BaseLicencia> ListaLMPendienteConvenio(int codOficina, string Empresa)
+        {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<Ingresolicencia> ingLc = IngresolicenciaDataAccess.ListaLMPendienteConvenio(codOficina, Empresa, "");
+            List<BaseLicencia> Retorno = new List<BaseLicencia>();
+
+            ingLc.ForEach(lc =>
+            {
+                Retorno.Add(new BaseLicencia
+                {
+                    IngresoData = lc,
+                });
+            });
+
+            return Retorno;
+
+        }
+
+
+        [HttpGet]
+        [Route("lista-LM-Pendiente-Convenio-Empresa")]
+        public IEnumerable<BaseLicencia> ListaLMPendienteConvenioEmpresa(int codOficina)
+        {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<Ingresolicencia> ingLc = IngresolicenciaDataAccess.ListaLMPendienteConvenioEmpresa(codOficina);
+            List<BaseLicencia> Retorno = new List<BaseLicencia>();
+
+            ingLc.ForEach(lc =>
+            {
+                Retorno.Add(new BaseLicencia
+                {
+                    IngresoData = lc,
+                });
+            });
+
+
+            return Retorno;
+
+        }
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("lista-LM-Pendiente-Cobro")]
+        public IEnumerable<BaseLicencia> ListaLMPendienteCobro(string Folio, int codOficina, string Tipo_LM, string Tipo_Convenio)
+        {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<Ingresolicencia> ingLc = IngresolicenciaDataAccess.ListaLMPendienteCobro(Folio, codOficina, Tipo_LM, Tipo_Convenio, "XLS");
+            List<BaseLicencia> Retorno = new List<BaseLicencia>();
+
+            ingLc.ForEach(lc =>
+            {
+                Retorno.Add(new BaseLicencia
+                {
+                    IngresoData = lc,
+                });
+            });
+
+            return Retorno;
+
+        }
+
+
+
         [AuthorizationRequired]
         [HttpGet]
         [Route("licencia-data")]
@@ -1087,6 +1154,26 @@ namespace CRM.Controllers
             }
         }
 
+
+
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("valida-tab-RRLL")]
+        public ResultadoBase ValidaTabRRLL()
+        {
+            try
+            {
+                string token = ActionContext.Request.Headers.GetValues("Token").First();
+                long existe = IngresolicenciaDataAccess.ValidaTabRRLL(token);
+                return new ResultadoBase() { Estado = "OK", Mensaje = "Licencia Eliminada con éxito", Objeto = existe };
+            }
+            catch (Exception ex)
+            {
+                return new ResultadoBase() { Estado = "ERR", Mensaje = "Error al eliminar licencia: " + ex.Message, Objeto = ex };
+            }
+        }
+
         [AuthorizationRequired]
         [HttpGet]
         [Route("eliminar-licencia-ingresada")]
@@ -1308,6 +1395,8 @@ namespace CRM.Controllers
 
 
 
+
+
         public byte[] CreatePDFDocumentosPendientes(string formatoPdf, DataTable dataTable, string heading = "", bool showSrNo = false, params Columna[] columnsToTake)
         {
             string titulo;
@@ -1323,7 +1412,7 @@ namespace CRM.Controllers
                 doc.Open();
                 PdfPTable tblPrueba = new PdfPTable(dataTable.Columns.Count);
                 PdfPRow row = null;
-                float[] widths = new float[] { 4f, 4f, 4f, 4f, 4f, 4f, 4f };
+                float[] widths = new float[] { 4f, 4f, 4f, 4f, 4f, 4f, 4f, 4f, 4f, 4f, 4f };
                 iTextSharp.text.Font font5 = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
                 iTextSharp.text.Font font6 = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
                 Paragraph header = new Paragraph("Informe Licencia Documentación Pendiente " + titulo.ToString()) { Alignment = Element.ALIGN_CENTER };
@@ -1355,6 +1444,10 @@ namespace CRM.Controllers
                         tblPrueba.AddCell(new Phrase(r[4].ToString(), font5));
                         tblPrueba.AddCell(new Phrase(r[5].ToString(), font5));
                         tblPrueba.AddCell(new Phrase(r[6].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[7].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[8].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[9].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[10].ToString(), font5));
                     }
                 }
 
@@ -1457,10 +1550,81 @@ namespace CRM.Controllers
                 doc.Open();
                 PdfPTable tblPrueba = new PdfPTable(dataTable.Columns.Count);
                 PdfPRow row = null;
-                float[] widths = new float[] { 4f, 4f, 4f, 4f, 4f, 4f, 4f };
+                float[] widths = new float[] { 4f, 4f, 4f, 4f, 4f, 4f, 4f, 4f, 4f };
                 iTextSharp.text.Font font5 = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
                 iTextSharp.text.Font font6 = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
                 Paragraph header = new Paragraph("Informe Licencia Pendiente de Cobro " + titulo.ToString()) { Alignment = Element.ALIGN_CENTER };
+
+
+                tblPrueba.SetWidths(widths);
+
+                tblPrueba.WidthPercentage = 100;
+                int iCol = 0;
+                string colname = "";
+                PdfPCell cell = new PdfPCell(new Phrase("Products"));
+                cell.BorderWidthBottom = 0.75f;
+                cell.Colspan = dataTable.Columns.Count;
+
+                foreach (DataColumn c in dataTable.Columns)
+                {
+
+                    tblPrueba.AddCell(new Phrase(c.ColumnName, font5));
+                }
+
+                foreach (DataRow r in dataTable.Rows)
+                {
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        tblPrueba.AddCell(new Phrase(r[0].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[1].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[2].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[3].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[4].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[5].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[6].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[7].ToString(), font5));
+                        tblPrueba.AddCell(new Phrase(r[8].ToString(), font5));
+                    }
+                }
+
+
+
+                iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+
+
+                // agregamos titulo y adjuntamos tabla desde base
+                // agregamos titulo y adjuntamos tabla desde base
+                doc.Add(header);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(tblPrueba);
+                doc.Close();
+                return output.ToArray();
+            }
+
+        }
+
+
+
+        public byte[] CreatePDFPendienteConvenios(string formatoPdf, DataTable dataTable, string heading = "", bool showSrNo = false, params Columna[] columnsToTake)
+        {
+            string titulo;
+            if (formatoPdf == "Todos")
+                titulo = "";
+            else
+                titulo = formatoPdf;
+            Document doc = new Document(PageSize.LETTER, 50, 50, 50, 50);
+            string cantiadad = dataTable.Rows.Count.ToString();
+            using (MemoryStream output = new MemoryStream())
+            {
+                PdfWriter wri = PdfWriter.GetInstance(doc, output);
+                doc.Open();
+                PdfPTable tblPrueba = new PdfPTable(dataTable.Columns.Count);
+                PdfPRow row = null;
+                float[] widths = new float[] { 4f, 4f, 4f, 4f, 4f, 4f, 4f };
+                iTextSharp.text.Font font5 = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+                iTextSharp.text.Font font6 = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
+                Paragraph header = new Paragraph("Informe Licencia Documentación Pendiente " + titulo.ToString()) { Alignment = Element.ALIGN_CENTER };
 
 
                 tblPrueba.SetWidths(widths);
@@ -1508,6 +1672,7 @@ namespace CRM.Controllers
             }
 
         }
+
 
 
         [HttpGet]
@@ -1805,21 +1970,32 @@ namespace CRM.Controllers
 
 
 
-        [AuthorizationRequired]
-        [HttpGet]
-        [Route("listar-Bitacora-LM")]
-        public IEnumerable<LicenciasLMTimeLine> listaBitacoraLM(long codIngreso)
-        {
-            string token = ActionContext.Request.Headers.GetValues("Token").First();
-            List<LicenciasLMTimeLine> ingLc = IngresolicenciaDataAccess.ObtenerBitacoraLM(codIngreso);
+        //[AuthorizationRequired]
+        //[HttpGet]
+        //[Route("listar-Bitacora-LM")]
+        //public IEnumerable<LicenciasLMTimeLine> listaBitacoraLM(long codIngreso)
+        //{
+        //    string token = ActionContext.Request.Headers.GetValues("Token").First();
+        //    List<LicenciasLMTimeLine> ingLc = IngresolicenciaDataAccess.ObtenerBitacoraLM(codIngreso);
 
-            return ingLc;
-        }
+        //    return ingLc;
+        //}
 
         [AuthorizationRequired]
         [HttpGet]
         [Route("listar-Bitacora")]
         public IEnumerable<LicenciasLMTimeLine> listaBitacora(long codIngreso)
+        {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<LicenciasLMTimeLine> ingLc = IngresolicenciaDataAccess.ObtenerBitacora(codIngreso);
+
+            return ingLc;
+        }
+
+
+        [HttpGet]
+        [Route("listar-Bitacora-CallCenter")]
+        public IEnumerable<LicenciasLMTimeLine> listaBitacoraCallCenter(long codIngreso)
         {
             string token = ActionContext.Request.Headers.GetValues("Token").First();
             List<LicenciasLMTimeLine> ingLc = IngresolicenciaDataAccess.ObtenerBitacora(codIngreso);
@@ -2074,6 +2250,7 @@ namespace CRM.Controllers
 
         }
 
+
         [HttpGet]
         [Route("export-LM-Pendente-Cobro-pdf")]
         public HttpResponseMessage ExportLMPendenteCobropdf(int codOficina, string diadesde)
@@ -2120,6 +2297,7 @@ namespace CRM.Controllers
 
 
         }
+
         public byte[] CreatePDFManualPresencial(DateTime diadesde, string oficina, string fechaCompin, DataTable dataTable, string heading = "", bool showSrNo = false, params Columna[] columnsToTake)
         {
             Document doc = new Document(PageSize.LETTER, 50, 50, 50, 50);
@@ -2258,6 +2436,8 @@ namespace CRM.Controllers
                                                 string estadodesdecompin = line.Split(';')[9];
                                                 string fecha = line.Split(';')[12];
                                                 string observacion = line.Split(';')[10];
+
+
                                                 // imprimir = imprimir + "ANEXO[" + anexo + "] RUT[" + final + "]";
                                                 IngresolicenciaDataAccess.ValidaExcelRRLLCompin(diarecepcion, comision, Folio, estadodesdecompin, observacion, fecha);
                                             }
@@ -2605,10 +2785,15 @@ namespace CRM.Controllers
                                     new Columna("RutAfiliado", "Rut Afiliado"),
                                     new Columna("NombreAfiliado", "Nombre Afiliado"),
                                     new Columna("FolioLicencia", "Folio Licencia"),
-                                     new Columna("Tiposublicencia","Tipo Subsidio"),
+
+                                    new Columna("Tiposublicencia","Tipo Subsidio"),
                                     new Columna("TipoLicencia","Tipo LM"),
                                     new Columna("TipoConvenio", "Tipo Convenio"),
-                                    new Columna("FechaPrescribeString", "Mes Prescribe")
+                                    new Columna("FechaPrescribeString", "Mes Prescribe"),
+                                    new Columna("RutEmpresa", "Rut Empresa"),
+                                    new Columna("NombreEmpresa", "Nombre Empresa"),
+                                    new Columna("Observacion", "Motivo Pendiente"),
+                                    new Columna("AnexoEstamento", "Anexo Estamento")
 
 
             };
@@ -2742,6 +2927,10 @@ namespace CRM.Controllers
                                     new Columna("RutAfiliado", "Rut Afiliado"),
                                     new Columna("NombreAfiliado", "Nombre Afiliado"),
                                     new Columna("FolioLicencia", "Folio Licencia"),
+
+                                    new Columna("RutEmpresa", "Rut Empresa"),
+                                    new Columna("NombreEmpresa", "Razón Social"),
+
                                     new Columna("TipoSublicencia","Tipo Subsidio"),
                                     new Columna("TipoConvenio","Tipo Convenio"),
                                     new Columna("TipoLicencia","Tipo Licencia"),
@@ -2798,6 +2987,143 @@ namespace CRM.Controllers
 
 
         }
+
+
+
+
+
+
+        [HttpGet]
+        [Route("listar-lm-pendiente-convenio-pdf")]
+        public HttpResponseMessage listarlmpendienteconveniopdf(int codOficina, string Empresa)
+        {
+
+
+            var ingLc = IngresolicenciaDataAccess.ListaLMPendienteConvenioPdf(codOficina, Empresa, "PDF");
+
+            var datosExtra = IngresolicenciaDataAccess.ListaLMPendienteConvenioPdfDatosExtra(codOficina, Empresa);
+
+
+            Columna[] columns = {
+                                    //new Columna("RutAfiliado", "Rut Afiliado"),
+                                    //new Columna("NombreAfiliado", "Nombre Afiliado"),
+                                    //new Columna("FolioLicencia", "Folio Licencia"),
+                                    // new Columna("Tiposublicencia","Tipo Subsidio"),
+                                    //new Columna("TipoLicencia","Tipo LM"),
+                                    //new Columna("TipoConvenio", "Tipo Convenio"),
+                                    //new Columna("mespreescribe", "Mes Prescribe")
+            };
+
+            byte[] filecontent = CreatePDPendienteConvenio(datosExtra, ingLc, "LM Pendiente Documentación para Pago", true, columns);
+            HttpResponseMessage response = new HttpResponseMessage();
+
+
+            Stream stri = new MemoryStream(filecontent);
+            response.Content = new StreamContent(stri);
+            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            response.Content.Headers.ContentDisposition.FileName = "LM Pendiente Documentación para Pago.pdf";
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+            response.Content.Headers.ContentLength = stri.Length;
+
+            return response;
+
+
+        }
+
+        public byte[] CreatePDPendienteConvenio(DataTable dataTableExtra, DataTable dataTable, string heading = "", bool showSrNo = false, params Columna[] columnsToTake)
+        {
+            Document doc = new Document(PageSize.LETTER.Rotate(), 50, 50, 50, 50);
+
+            string cantiadad = dataTable.Rows.Count.ToString();
+            using (MemoryStream output = new MemoryStream())
+            {
+                PdfWriter wri = PdfWriter.GetInstance(doc, output);
+                doc.Open();
+                PdfPTable tblPrueba = new PdfPTable(dataTable.Columns.Count);
+                PdfPRow row = null;
+                float[] widths = new float[] { 4f, 4f, 4f, 4f, 4f, 4f, 4f, 4f, 4f, 4f };
+
+
+                //con salto de linea
+
+
+                iTextSharp.text.Font font5 = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
+                iTextSharp.text.Font font6 = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+                Paragraph header = new Paragraph("INFORME LICENCIA MEDICAS PENDIENTES DE DOCUMENTACION PARA PROCESAR PAGO") { Alignment = Element.ALIGN_CENTER };
+
+
+                tblPrueba.SetWidths(widths);
+
+                tblPrueba.WidthPercentage = 100;
+                int iCol = 0;
+                string colname = "";
+                PdfPCell cell = new PdfPCell(new Phrase("Products"));
+                cell.BorderWidthBottom = 0.75f;
+                cell.Colspan = dataTable.Columns.Count;
+                cell.BorderColor = BaseColor.BLUE;
+                tblPrueba.HeaderRows = 1;
+                foreach (DataColumn c in dataTable.Columns)
+                {
+
+                    tblPrueba.AddCell(new Phrase(c.ColumnName, font5));
+                }
+
+
+
+                foreach (DataRow r in dataTable.Rows)
+                {
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        tblPrueba.AddCell(new Phrase(r[0].ToString(), font6));
+                        tblPrueba.AddCell(new Phrase(r[1].ToString(), font6));
+                        tblPrueba.AddCell(new Phrase(r[2].ToString(), font6));
+                        tblPrueba.AddCell(new Phrase(r[3].ToString(), font6));
+                        tblPrueba.AddCell(new Phrase(r[4].ToString(), font6));
+                        tblPrueba.AddCell(new Phrase(r[5].ToString(), font6));
+                        tblPrueba.AddCell(new Phrase(r[6].ToString(), font6));
+                        tblPrueba.AddCell(new Phrase(r[7].ToString(), font6));
+                        tblPrueba.AddCell(new Phrase(r[8].ToString(), font6));
+                        tblPrueba.AddCell(new Phrase(r[9].ToString(), font6));
+                        //tblPrueba.AddCell(new Phrase(r[10].ToString(), font5));
+                        //tblPrueba.AddCell(new Phrase(r[11].ToString(), font5));
+                        //tblPrueba.AddCell(new Phrase(r[12].ToString(), font5));
+                        //tblPrueba.AddCell(new Phrase(r[13].ToString(), font5));
+                        //tblPrueba.AddCell(new Phrase(r[14].ToString(), font5));
+                        //tblPrueba.AddCell(new Phrase(r[15].ToString(), font5));
+                        //tblPrueba.AddCell(new Phrase(r[16].ToString(), font5));
+                    }
+                }
+
+
+
+                iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
+
+
+                // agregamos titulo y adjuntamos tabla desde base
+                doc.Add(header);
+                doc.Add(Chunk.NEWLINE);
+                Font font3 = new Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.BLACK);
+                Chunk chunk3 = new Chunk("Empresa: " + dataTableExtra.Rows[0][1].ToString(), font3);
+                doc.Add(new Paragraph(chunk3) { Alignment = Element.ALIGN_LEFT });
+                Font font4 = new Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.BLACK);
+                Chunk chunk4 = new Chunk("Rut: " + dataTableExtra.Rows[0][0].ToString(), font4);
+                doc.Add(new Paragraph(chunk4) { Alignment = Element.ALIGN_LEFT });
+                Font font10 = new Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.BLACK);
+                Chunk chunk10 = new Chunk("Oficina Caja: " + dataTableExtra.Rows[0][2].ToString(), font10);
+                doc.Add(new Paragraph(chunk10) { Alignment = Element.ALIGN_LEFT });
+                Font font11 = new Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, Font.BOLD, BaseColor.BLACK);
+                Chunk chunk11 = new Chunk("Fecha Datos: " + dataTableExtra.Rows[0][3].ToString(), font11);
+                doc.Add(new Paragraph(chunk11) { Alignment = Element.ALIGN_LEFT });
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(Chunk.NEWLINE);
+                doc.Add(tblPrueba);
+                doc.Close();
+                return output.ToArray();
+            }
+
+        }
+
+
 
 
     }

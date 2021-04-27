@@ -737,7 +737,24 @@ $(function () {
                 
             </li>`
                 $("#mainnav-menu").html(menu);
+            } else if (getCookie("Oficina") == 801) {
+
+                let menu =
+                    `<li class="list-header">Medición Calidad</li>
+                
+                <li>
+                <a href="/motor/App/medicionCalidad">
+                    <i class="ion-clipboard"></i>
+                    <span class="menu-title">Medición Calidad</span>
+                    <i class="arrow"></i>
+                </a>
+                
+            </li>`
+                $("#mainnav-menu").html(menu);
             }
+
+
+
             else {
                 sessionStorage.setItem('menu_principal', JSON.stringify(categorias));
 

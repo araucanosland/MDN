@@ -279,16 +279,27 @@
                                             <label for="chk_reparo_LMPresencial">LM Tramitada Presencialmente en Oficina </label>
                                         </div>
 
-                                        <div class="radio">
-                                            <input id="chk_devuelta_reemplazada" name="chk_devuelta_reemplazada" class="magic-radio" type="checkbox">
-                                            <label for="chk_devuelta_reemplazada">LM Reemplazada Por Una Nueva </label>
-                                        </div>
+
+
+
                                         <div class="radio">
                                             <input id="chk_devuelta_oficina" name="chk_devuelta_oficina" class="magic-radio" type="checkbox">
                                             <label for="chk_devuelta_oficina">LM Devuelta Trabajador/Empleador</label>
                                         </div>
 
-
+                                        <div class="radio" id="divreemplazada">
+                                            <div class="radio">
+                                                <input id="chk_devuelta_reemplazada" name="chk_devuelta_reemplazada" class="magic-radio" type="checkbox">
+                                                <label for="chk_devuelta_reemplazada">LM Reemplazada Por Una Nueva </label>
+                                            </div>
+                                            <div class="col-sm-2" style="display:none" id="Divnuevofolio">
+                                                <div class="form-group">
+                                                    <label class="control-label">Nuevo Folio</label>
+                                                    <input type="text" class="form-control" id="nuevo_folio" name="nuevo_folio" placeholder="">
+                                                    <input type="hidden" id="nuevo_folio_valor">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -687,7 +698,7 @@
                         $(`#chk_no_autorizacion`).prop('checked', response.Lmsoncarta);
                         $(`#observaciones`).val(response.Observacion);
                         $('#chk_no_conforme').trigger('change');
-                       // $("#div_observacion_otromotivo").show();
+                        // $("#div_observacion_otromotivo").show();
                     }
                     else {
                         $('#chk_conforme').prop("checked", false);
@@ -988,7 +999,7 @@
                     }
 
                     if ($('#chk_no_conforme').prop('checked')) {
-                        if ($('#chk_no_autorizacion').prop('checked') == false && $('#chk_no_diagnostico').prop('checked') == false && $('#chk_incompleta').prop('checked') == false && $('#chk_no_legible').prop('checked') == false && $('#chk_otro_motivo2').prop('checked') == false ) {
+                        if ($('#chk_no_autorizacion').prop('checked') == false && $('#chk_no_diagnostico').prop('checked') == false && $('#chk_incompleta').prop('checked') == false && $('#chk_no_legible').prop('checked') == false && $('#chk_otro_motivo2').prop('checked') == false) {
                             $.niftyNoty({
                                 type: 'danger',
                                 container: 'floating',
@@ -1002,7 +1013,7 @@
 
                     }
 
-                   
+
                     if ($('#chk_no_encontrada').prop('checked')) {
                         estadoRevision = 1;
                         lmincompleta = 0;
@@ -1023,10 +1034,10 @@
                         otromotivo = $('#chk_otro_motivo2').is(':checked') ? 1 : 0;
                         comentarios = $('#comentariosnoconforme').val();
                     }
-                    debugger;
+
                     if ($('#chk_otro_motivo').prop('checked')) {
 
-                        if ($('#observaciones').val()=='') {
+                        if ($('#observaciones').val() == '') {
                             $.niftyNoty({
                                 type: 'danger',
                                 container: 'floating',
@@ -1040,7 +1051,7 @@
                     }
                     if ($('#chk_otro_motivo2').prop('checked')) {
 
-                        if ($('#comentariosnoconforme').val()=='') {
+                        if ($('#comentariosnoconforme').val() == '') {
                             $.niftyNoty({
                                 type: 'danger',
                                 container: 'floating',
@@ -1053,7 +1064,7 @@
                         }
                     }
 
-                    debugger;
+
                     var WebIngresoAuditoria = {
 
                         //Los Obligatorios
@@ -1422,7 +1433,7 @@
 
                         }
 
-                        debugger;
+
 
                         Faltadoc = 1;
                         liqMes1 = $('#m1').is(':checked') ? 1 : 0;
@@ -1431,31 +1442,31 @@
                         liqMes4 = $('#m4').is(':checked') ? 1 : 0;
                         liqMes5 = $('#m5').is(':checked') ? 1 : 0;
                         liqMes6 = $('#m6').is(':checked') ? 1 : 0;;
-                        CertificadoRenta= $('#certificado_renta').is(':checked') ? 1 : 0;
-                        Acredita90= $('#accr1').is(':checked') ? 1 : 0;
-                        CertificadoAfiliacionAFP= $('#accr2').is(':checked') ? 1 : 0;
-                        CertPagPensiones= $('#accr3').is(':checked') ? 1 : 0;
-                        Otros= $('#otros').is(':checked') ? 1 : 0;
-                        Comentarios= $('#comentariospendiente').val().length > 0 ? $('#comentariospendiente').val() : '';
-                        FaltaDocumentacion= Faltadoc;
-                        tipoSeleccion= pendienteDocumentacion;
-                        imagen= $('#chk_ilm').is(':checked') ? 1 : 0;
-                        diagnostico= $('#chk_empl').is(':checked') ? 1 : 0;
-                        sinfirma= $('#chk_sinfirma').is(':checked') ? 1 : 0;
-                        contrato= $('#chk_trabajnuevo').is(':checked') ? 1 : 0;
-                        cedular_identidad= $('#chk_sinCI').is(':checked') ? 1 : 0;
-                        seccion_c= $('#chk_datoincompl').is(':checked') ? 1 : 0;
-                        certificado_nacimiento= $('#chk_RN').is(':checked') ? 1 : 0;
-                        mutual= $('#chk_mutual').is(':checked') ? 1 : 0;
-                        isapre= $('#chk_isapre').is(':checked') ? 1 : 0;
-                        fechaliquidacion1= $("#fechaLm1 option:selected").data('Fecha');
-                        fechaliquidacion2= $("#fechaLm2 option:selected").data('Fecha');
-                        fechaliquidacion3= $("#fechaLm3 option:selected").data('Fecha');
-                        fechaliquidacion4= $("#fechaLm4 option:selected").data('Fecha');
-                        fechaliquidacion5= $("#fechaLm5 option:selected").data('Fecha');
-                        fechaliquidacion6= $("#fechaLm6 option:selected").data('Fecha');
-                        rutusuario= getCookie("Rut");
-                        cartaAutorizacion= $('#chk_cartaAutorizacion').is(':checked') ? 1 : 0;
+                        CertificadoRenta = $('#certificado_renta').is(':checked') ? 1 : 0;
+                        Acredita90 = $('#accr1').is(':checked') ? 1 : 0;
+                        CertificadoAfiliacionAFP = $('#accr2').is(':checked') ? 1 : 0;
+                        CertPagPensiones = $('#accr3').is(':checked') ? 1 : 0;
+                        Otros = $('#otros').is(':checked') ? 1 : 0;
+                        Comentarios = $('#comentariospendiente').val().length > 0 ? $('#comentariospendiente').val() : '';
+                        FaltaDocumentacion = Faltadoc;
+                        tipoSeleccion = pendienteDocumentacion;
+                        imagen = $('#chk_ilm').is(':checked') ? 1 : 0;
+                        diagnostico = $('#chk_empl').is(':checked') ? 1 : 0;
+                        sinfirma = $('#chk_sinfirma').is(':checked') ? 1 : 0;
+                        contrato = $('#chk_trabajnuevo').is(':checked') ? 1 : 0;
+                        cedular_identidad = $('#chk_sinCI').is(':checked') ? 1 : 0;
+                        seccion_c = $('#chk_datoincompl').is(':checked') ? 1 : 0;
+                        certificado_nacimiento = $('#chk_RN').is(':checked') ? 1 : 0;
+                        mutual = $('#chk_mutual').is(':checked') ? 1 : 0;
+                        isapre = $('#chk_isapre').is(':checked') ? 1 : 0;
+                        fechaliquidacion1 = $("#fechaLm1 option:selected").data('Fecha');
+                        fechaliquidacion2 = $("#fechaLm2 option:selected").data('Fecha');
+                        fechaliquidacion3 = $("#fechaLm3 option:selected").data('Fecha');
+                        fechaliquidacion4 = $("#fechaLm4 option:selected").data('Fecha');
+                        fechaliquidacion5 = $("#fechaLm5 option:selected").data('Fecha');
+                        fechaliquidacion6 = $("#fechaLm6 option:selected").data('Fecha');
+                        rutusuario = getCookie("Rut");
+                        cartaAutorizacion = $('#chk_cartaAutorizacion').is(':checked') ? 1 : 0;
                         Faltadoc = 1;
                     }
 
@@ -1489,7 +1500,7 @@
                         fechaliquidacion6 = $("#fechaLm6 option:selected").data('Fecha');
                         Faltadoc = 0;
 
-                        }
+                    }
 
 
 
@@ -1526,7 +1537,72 @@
                     if ($('#chk_devuelta_reemplazada').prop('checked')) {
 
                         //---validaciones
+                        debugger;
                         pendienteDocumentacion = 42;
+                        Faltadoc = 1;
+
+                        //$('#nuevo_folio').trigger("blur");
+                        if ($("#chk_devuelta_reemplazada").prop("checked") == true) {
+                            var dato = $('#nuevo_folio').val();
+                            var rut = $('#AfiliadoRut').val();
+                            if (dato == '') {
+
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong><li>Debe Ingresar Folio Nuevo!!!</li>',
+                                    focus: false,
+                                    timer: 3000
+                                });
+
+                                $('#nuevo_folio').focus();
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                return false;
+                            }
+                            if (dato.length != 8) {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong><li>Largo de licencia no válido, favor revisar!!</li>',
+                                    focus: false,
+                                    timer: 3000
+                                });
+
+                                $('#nuevo_folio').focus();
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                return false;
+                            }
+
+                            if (isNaN(dato)) {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong><li>Formato de licencia no válido, favor revisar!!</li>',
+                                    focus: false,
+                                    timer: 3000
+                                });
+                                $('#nuevo_folio').focus();
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                return false;
+                            }
+
+                            if ($('#nuevo_folio_valor').val() == '') {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong> Folio No Existe o No Está Asociado al Rut Del Afiliado!!',
+                                    focus: false,
+                                    timer: 3000
+                                });
+
+                                $('#nuevo_folio').focus();
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                return false;
+
+                            }
+                        }
+
+                        $('#comentarios').val(dato);
                         liqMes1 = 0;
                         liqMes2 = 0;
                         liqMes3 = 0;
@@ -1554,7 +1630,7 @@
                     }
 
                     var WebIngresoLicenciaReparosAuditoria = {
-                      //Los Obligatorios
+                        //Los Obligatorios
                         CodIngreso: (typeof CodIng != "undefined") ? CodIng : 0,
                         CodOficina: getCookie("Oficina"),
                         //Los Documentos
@@ -1945,7 +2021,7 @@
 
             //----Check subsanado
             $('#chk_reparo_subsanado').on('change', function (event) {
-                 $("#checkList1").show();
+                $("#checkList1").show();
                 $(".docs-faltantes-op1").hide();
                 $('#chk_devuelta_reemplazada').prop("checked", false);
                 $('#chk_devuelta_oficina').prop("checked", false);
@@ -1954,7 +2030,7 @@
                 $('#chk_devuelta_audit').prop("checked", false);
                 $('#chk_reparo_pendiente').prop("checked", false);
                 $('#chk_reparo_subsanado').prop("checked", true);
-
+                $('#Divnuevofolio').hide();
 
             })
             $('#chk_reparo_pendiente').on('change', function (event) {
@@ -1970,6 +2046,7 @@
                 $('#chk_reparo_subsanado').prop("checked", false);
                 $("#divcoforme").show();
                 $("#divdevuelta1").show();
+                $('#Divnuevofolio').hide();
             })
 
 
@@ -1983,10 +2060,11 @@
                 $('#chk_devuelta_audit').prop("checked", false);
                 $('#chk_reparo_pendiente').prop("checked", false);
                 $('#chk_reparo_subsanado').prop("checked", false);
-
+                $('#Divnuevofolio').hide();
 
 
             })
+
 
 
 
@@ -2003,7 +2081,7 @@
                 $("#divdevuelta").show();
                 $("#divcoforme").hide();
                 $("#divdevuelta1").hide();
-
+                $('#Divnuevofolio').show();
             })
 
             $('#chk_devuelta_oficina').on('change', function (event) {
@@ -2019,7 +2097,7 @@
                 $("#divdevuelta").show();
                 $("#divcoforme").hide();
                 $("#divdevuelta1").hide();
-
+                $('#Divnuevofolio').hide();
             })
 
 
@@ -2277,11 +2355,79 @@
             });
 
 
+            $('#nuevo_folio').on('blur', function (event) {
+
+                if ($("#chk_devuelta_reemplazada").prop("checked") == true) {
+                    var dato = $('#nuevo_folio').val();
+                    var rut = $('#AfiliadoRut').val();
+                    if (dato == '') {
+
+                        $.niftyNoty({
+                            type: 'danger',
+                            container: 'floating',
+                            html: '<strong>Error</strong> Debe Ingresar Folio Nuevo!!!',
+                            focus: false,
+                            timer: 3000
+                        });
+
+                        $('#nuevo_folio').focus();
+                        return false;
+                    }
+                    if (dato.length != 8) {
+                        $.niftyNoty({
+                            type: 'danger',
+                            container: 'floating',
+                            html: '<strong>Error</strong> Largo de licencia no válido, favor revisar!!',
+                            focus: false,
+                            timer: 3000
+                        });
+
+                        $('#nuevo_folio').focus();
+                        $('#bt-guarda-otra').prop('disabled', true);
+                        return false;
+                    }
+
+                    if (isNaN(dato)) {
+                        $.niftyNoty({
+                            type: 'danger',
+                            container: 'floating',
+                            html: '<strong>Error</strong> Formato de licencia no válido, favor revisar!!',
+                            focus: false,
+                            timer: 3000
+                        });
+                        $('#nuevo_folio').focus();
+                        $('#bt-guarda-otra').prop('disabled', true);
+                        return false;
+                    }
+                    $.SecGetJSON(BASE_URL + "/motor/api/Licencias/Valida-folio-existente", { FolioLicencia: dato, Rut: rut }, function (response) {
+
+                        if (response == 0) {
+                            $.niftyNoty({
+                                type: 'danger',
+                                container: 'floating',
+                                html: '<strong>Error</strong> Folio No Existe o No Está Asociado al Rut Del Afiliado!!',
+                                focus: false,
+                                timer: 3000
+                            });
+                            $('#nuevo_folio').focus();
+                            $('#bt-guarda-otra').prop('disabled', false);
+                            $('#nuevo_folio_valor').val();
+                            return false;
+
+                        }
+                        else {
+                            $('#nuevo_folio_valor').val(1);
+                        }
+                    });
+
+                }
+            });
+
 
 
             var read = httpGet("read");
             if (read == "read") {
-                debugger;
+
                 $("#chk_casilla").prop("disabled", true);
                 $("#chk_banner_si").prop("disabled", true);
                 $("#chk_banner_no").prop("disabled", true);

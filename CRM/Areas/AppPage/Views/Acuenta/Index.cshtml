@@ -51,6 +51,16 @@
 
                     <div class="col-sm-2 text-xs-center">
                         <div class="form-group">
+                            <label class="control-label">MARCA</label>
+                            <select class="form-control" id="dllCreditoMarca" name="dllCreditoMarca" v-model="modelos.marca">
+                                <option value="">Todos...</option>
+                                <option v-for="marcaAcuenta in filtros.marca" :value="marcaAcuenta.nombre">{{marcaAcuenta.nombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 text-xs-center">
+                        <div class="form-group">
                             <label class="control-label">OFERTA CRÉDITO</label>
                             <select class="form-control" id="dllOferta" name="dllOferta">
                                 <option value="">Todos...</option>
@@ -111,6 +121,7 @@
                                     <th data-field="oferta" data-sortable="true">OFERTA CREDITO</th>
                                     <th data-field="campana" data-sortable="true">CAMPAÑA</th>
                                     <th data-field="ultimaGestion.subEstado" data-sortable="true">SUB-ESTADO</th>
+                                    <th data-field="mandato" data-sortable="true">MANDATO</th>
                                 </tr>
                             </thead>
                         </table>
