@@ -203,6 +203,7 @@
     <Compile Include="Areas\AppPage\Controllers\CallCenterController.cs" />
     <Compile Include="Areas\AppPage\Controllers\CampanaPexController.cs" />
     <Compile Include="Areas\AppPage\Controllers\CarteraFFVVController.cs" />
+    <Compile Include="Areas\AppPage\Controllers\CobranzaPrevisionalController.cs" />
     <Compile Include="Areas\AppPage\Controllers\CopagoController.cs" />
     <Compile Include="Areas\AppPage\Controllers\CosalController.cs" />
     <Compile Include="Areas\AppPage\Controllers\DigitalizacionController.cs" />
@@ -405,6 +406,7 @@
     <Content Include="Assets\js.App\src\call-back.js" />
     <Content Include="Assets\js.App\src\callbackTAM.js" />
     <Content Include="Assets\js.App\src\CargasFamiliares.js" />
+    <Content Include="Assets\js.App\src\cobranza-previsional.js" />
     <Content Include="Assets\js.App\src\contactabilidad-empresa.js" />
     <Content Include="Assets\js.App\src\copago.js" />
     <Content Include="Assets\js.App\src\distribucion-wapp.js" />
@@ -636,6 +638,11 @@
     <Content Include="Areas\AppPage\Views\Pensionados\RetencionPensionados.cshtml" />
     <Content Include="Areas\AppPage\Views\Licencias\Mandatos.cshtml" />
     <Content Include="Areas\AppPage\Views\Digitalizacion\Index.cshtml" />
+
+    <Content Include="Areas\AppPage\Views\CobranzaPrevisional\Index.cshtml" />
+    <Content Include="Areas\AppPage\Views\Pensionados\IngresoPensionadoWeb.cshtml" />
+    <Content Include="Areas\AppPage\Views\CobranzaPrevisional\cotizacionesImpagas.cshtml" />
+    <Content Include="Areas\AppPage\Views\CobranzaPrevisional\ctzDeclaradaNoPagada.cshtml" />
 
     <None Include="Properties\PublishProfiles\CharlyMOTOR.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />

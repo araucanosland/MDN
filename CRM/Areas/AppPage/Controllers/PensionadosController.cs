@@ -13,5 +13,10 @@ namespace CRM.Areas.AppPage.Controllers
         {
             return View();
         }
+
+        public ActionResult IngresoPensionadoWeb()
+        {
+            return View();
+        }
     }
 }

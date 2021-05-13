@@ -1,0 +1,71 @@
+﻿<div id="contDeclaradas">
+    <div class="panel" style="border-radius: 7px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">FILTROS</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-3 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label">ESTADO</label>
+                        <select class="form-control" id="dllEstadoDec" name="dllEstadoDec" v-on:change="eventoCambiaEstadoDec" v-model="modelos.estadosDec">
+                            <option value="">TODOS...</option>
+                            <option v-for="eEstadoDec in filtros.estadosDec" :value="eEstadoDec.id">{{eEstadoDec.nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label">SUB-ESTADO</label>
+                        <select class="form-control" id="dllSubEstadoDec" name="dllSubEstadoDec" v-model="modelos.subEstadosDec">
+                            <option value="">TODOS...</option>
+                            <option v-for="eSubEstadoDec in filtros.subEstadosDec" :value="eSubEstadoDec.id">{{eSubEstadoDec.nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-1 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label"></label>
+                        <button class="btn btn-primary btn-rounded" v-on:click="cargaLeadFiltroCotizacionDec" style="margin-top: 21px;">FILTRAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel" style="border-radius: 7px;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">DATOS</h3>
+                </div>
+                <div class="panel-body">
+                    <table data-toggle="table"
+                           data-sort-name="id"
+                           data-page-list="[]"
+                           data-page-size="50"
+                           data-search="false"
+                           data-pagination="true" id="tblDeclaradas" style="font-size: 11px">
+                        <thead>
+                            <tr>
+                                <th data-field="rut_empresa" data-sortable="true" data-formatter="formaterRutDec">RUT</th>
+                                <th data-field="nombre_empresa" data-sortable="true">RAZON SOCIAL</th>
+                                <th data-field="fecha_declaracion" data-sortable="true">F. DECLARACION</th>
+                                <th data-field="renta_total" data-sortable="true" data-formatter="formaterNum">RENTA TOTAL</th>
+                                <th data-field="monto_cotizacion" data-sortable="true"  data-formatter="formaterNum">M. COTIZACION</th>
+                                <th data-field="total_asfam" data-sortable="true" data-formatter="formaterNum">T. ASFAM</th>
+                                <th data-field="saldo_caja_plan" data-sortable="true" data-formatter="formaterNum">SALDO CAJA</th>
+                                <th data-field="total_trabajador" data-sortable="true" data-formatter="formaterNum">N° TRABAJADOR</th>
+                                <th data-field="estado" data-sortable="true">ESTADO</th>
+                                <th data-field="ultimaGestion.estado" data-sortable="true">ESTADO GEST.</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

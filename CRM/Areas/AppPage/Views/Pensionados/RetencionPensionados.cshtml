@@ -1,20 +1,23 @@
 ﻿
-@{
-    ViewBag.Title = "RetencionPensionados";
-}
 
+@{ ViewBag.Title = "RetencionPensionados"; }
 <div id="page-content">
     <div id="contRetencionPen">
         <div class="row">
-
             <div class="tab-base">
-                <ul class="nav nav-tabs">
+                <ul id="myTab" class="nav nav-tabs">
+
                     <li class="active">
                         <a data-toggle="tab" href="#tab-retencion" aria-expanded="true" id="tab_retencion_p" class="tab-principal">RETENCIÓN</a>
                     </li>
                     <li class="">
                         <a data-toggle="tab" href="#tab-mis-casos" aria-expanded="true" id="tab_casos" class="tab-principal" v-on:click="cargaMisCasos">CASOS INGRESADOS</a>
                     </li>
+
+                    <li class="">
+                        <a data-toggle="tab" href="#tab-solicitud-web" aria-expanded="true" id="tab_solicitud-web" class="tab-principal">SOLICITUD WEB</a>
+                    </li>
+
                 </ul>
                 <div class="tab-content">
                     <div id="tab-retencion" class="tab-pane fade active in">
@@ -208,8 +211,7 @@
                             </div>
                         </div>
 
-
-                        <div class="row">
+         <div class="row">
                             <div class="col-lg-12">
                                 <div class="panel" style="border-radius: 7px;">
                                     <div class="panel-heading">
@@ -236,11 +238,77 @@
                             </div>
                         </div>
                     </div>
+
+                    <div id="tab-solicitud-web" class="tab-pane fade">
+                        <div class="panel" style="border-radius: 7px;">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">MODULO PENSIONADO WEB</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">RUT</label>
+                                            <input id="txtRutFiltroSolicitudWeb" type="text" placeholder="Ej. 12345678" class="form-control numero" maxlength="8" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">ESTADO</label>
+                                            <select id="dllEstadoGestion" name="dllEstadoGestion" class="form-control limpiar">
+                                                <option value="">TODOS...</option>
+                                                <option value="SIN GESTION">SIN GESTION</option>
+                                                <option value="RETENIDO">RETENIDO</option>
+                                                <option value="DESAFILIADO">DESAFILIADO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-xs-center" style="">
+                                        <div class="form-group">
+                                            <label class="control-label"></label>
+                                            <button class="btn btn-primary btn-rounded" v-on:click="cargaPesionadosWeb">FILTRAR</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel" style="border-radius: 7px;">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">AFILIADOS</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table data-toggle="table"
+                                               data-sort-name="id"
+                                               data-page-list="[]"
+                                               data-page-size="50"
+                                               data-search="false"
+                                               data-pagination="true" id="tblretencionWeb" style="font-size: 12px">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="rut" data-align="left" data-sortable="false" data-formatter="formatoRut">Rut</th>
+                                                    <th data-field="nombre" data-sortable="true">NOMBRE</th>
+                                                    <th data-field="gestion_pensionado" data-sortable="true">ESTADO GESTION</th>
+                                                    <th data-field="fecha_gestion" data-sortable="true" data-formatter="formatoFecha">FECHA GESTION</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 @section script{
     <script src="~/Assets/js/vue.js"></script>
@@ -258,4 +326,3 @@
     <script src="~/Assets/tam/deps/sweetalert.js"></script>
     <script src="~/Assets/js.App/src/retencion-pensionados.js?g=@Guid.NewGuid().ToString()"></script>
 
-}
