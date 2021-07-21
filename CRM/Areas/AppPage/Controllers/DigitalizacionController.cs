@@ -13,5 +13,13 @@ namespace CRM.Areas.AppPage.Controllers
         {
             return View();
         }
+        public ActionResult Gestion()
+        {
+            return View();
+        }
+        public ActionResult Gestionlegalizados()
+        {
+            return View();
+        }
     }
 }

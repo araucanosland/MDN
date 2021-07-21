@@ -5,11 +5,11 @@
       <xsd:import schemaLocation="ConsultaDatosAfiliadoService_schema1.xsd" namespace="http://delegate.consultadatosafiliado.laaraucana.cl/" />
     </xsd:schema>
   </types>
-  <message name="obtenerDatosAfiliadoResponse">
-    <part name="parameters" element="tns:obtenerDatosAfiliadoResponse" />
-  </message>
   <message name="obtenerDatosAfiliado">
     <part name="parameters" element="tns:obtenerDatosAfiliado" />
+  </message>
+  <message name="obtenerDatosAfiliadoResponse">
+    <part name="parameters" element="tns:obtenerDatosAfiliadoResponse" />
   </message>
   <portType name="ConsultaDatosAfiliadoDelegate">
     <operation name="obtenerDatosAfiliado">

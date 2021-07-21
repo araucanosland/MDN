@@ -58,6 +58,7 @@
     <Compile Include="CosalDataAccess.cs" />
     <Compile Include="CuestionarioDataAccess.cs" />
     <Compile Include="DesarrolloDataAccess.cs" />
+    <Compile Include="DigitalizacionDataAccess.cs" />
     <Compile Include="DocumentosFaltantesLMDataAccess.cs" />
     <Compile Include="DotacionDataAccess.cs" />
     <Compile Include="EmpresaDataAccess.cs" />

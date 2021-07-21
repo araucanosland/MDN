@@ -15,7 +15,7 @@ namespace CRM.Business.Data
     {
         public static List<EmpresaLicenciaEntity> ListarEmpresaLicencia()
         {
-            return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_ObtenerEmpresaLicencia", ConstructorEntidad);
+            return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_ObtenerEmpresaLicencia",  ConstructorEntidad);
         }
 
         public static List<FechaLMEntity> ListaFechaLM()
@@ -25,7 +25,7 @@ namespace CRM.Business.Data
         }
 
 
-        public static LicenciaEntity ObtenerRecepcionLicencia(string empresaRut, DateTime fecha)
+        public static LicenciaEntity ObtenerRecepcionLicencia(string empresaRut, DateTime fecha )
         {
             Parametros prms = new Parametros()
             {
@@ -72,7 +72,7 @@ namespace CRM.Business.Data
             return DBHelper.InstanceCRM.ObtenerEscalar<int>("spMotor_LicenciaEnvioCompin_Guardar", parametros);
         }
 
-
+       
 
 
 
@@ -92,18 +92,7 @@ namespace CRM.Business.Data
         public static List<Ingresolicencia> listahistoricoporestado()
         {
             //return DBHelper.InstanceReportes.ObtenerColeccion("negocios.spReporte_ListaPeriodos", ConstructorEntidad);
-
-            try
-            {
-                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_listahistoricoporestado", ConstructorHistorico);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
-
+            return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_listahistoricoporestado", ConstructorHistorico);
         }
 
 
@@ -147,8 +136,8 @@ namespace CRM.Business.Data
         {
             return new OficinaDerivacionEntity
             {
-                codOficina = row["Cod_Oficina"] != DBNull.Value ? Convert.ToInt32(row["Cod_Oficina"]) : 0,
-                DescOficina = row["Oficina"] != DBNull.Value ? row["Oficina"].ToString() : string.Empty,
+                codOficina= row["Cod_Oficina"] != DBNull.Value ? Convert.ToInt32(row["Cod_Oficina"]) : 0,
+                DescOficina= row["Oficina"] != DBNull.Value ? row["Oficina"].ToString() : string.Empty,
                 codOficinaCompin = row["CodOficinaCompin"] != DBNull.Value ? Convert.ToInt32(row["CodOficinaCompin"]) : 0,
                 OficinaCompin = row["OficinaCompin"] != DBNull.Value ? row["OficinaCompin"].ToString() : string.Empty,
 
@@ -161,7 +150,7 @@ namespace CRM.Business.Data
             {
                 Id = row["Id"] != DBNull.Value ? Convert.ToInt32(row["Id"]) : 0,
                 Estado = row["Estado"] != DBNull.Value ? row["Estado"].ToString() : string.Empty,
-
+             
 
             };
         }
@@ -171,10 +160,10 @@ namespace CRM.Business.Data
         {
             return new Ingresolicencia
             {
-                CodIngreso = row["CodIngreso"] != DBNull.Value ? Convert.ToInt32(row["CodIngreso"]) : 0,
+                 CodIngreso= row["CodIngreso"] != DBNull.Value ? Convert.ToInt32(row["CodIngreso"]) : 0,
                 FechaIngreso = row["FechaIngreso"] != DBNull.Value ? Convert.ToDateTime(row["FechaIngreso"]) : new DateTime(1900, 1, 1),
-                FechaLicenciaDesde = row["FechaTermino"] != DBNull.Value ? Convert.ToDateTime(row["FechaTermino"]) : new DateTime(1900, 1, 1),
-                CodEstado = row["EtapaId"] != DBNull.Value ? Convert.ToInt32(row["EtapaId"]) : 0,
+                FechaLicenciaDesde = row["fechaRegistro"] != DBNull.Value ? Convert.ToDateTime(row["fechaRegistro"]) : new DateTime(1900, 1, 1),
+
             };
         }
 

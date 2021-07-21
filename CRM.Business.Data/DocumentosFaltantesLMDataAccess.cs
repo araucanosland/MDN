@@ -214,7 +214,7 @@ namespace CRM.Business.Data
     };
             try
             {
-                DBHelper.InstanceCRM.EjecutarProcedimiento("licencias.sp_Lic_DocumentosFaltantes_Guardar_Reparos_COMPIN_Nuevo_Flujo_v2o", prm);
+                DBHelper.InstanceCRM.EjecutarProcedimiento("licencias.sp_Lic_DocumentosFaltantes_Guardar_Reparos_COMPIN_Nuevo_Flujo_v2", prm);
 
             }
             catch (Exception ex)

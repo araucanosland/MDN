@@ -70,7 +70,6 @@ namespace CRM.Business.Entity
         public int Rut_ { get; set; }
         public string Glosa { get; set; }
         public string Descripcion { get; set; }
-        public string Color { get; set; }
     }
 
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CRM.Business.Entity
 {
-    public class BusquedaLicenciasEntity
+   public  class BusquedaLicenciasEntity
     {
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace CRM.Business.Entity
 
         public string descripcionEstadoRevision { get; set; }
 
-        public int viaIngresoLicenica { get; set; }
+        public int  viaIngresoLicenica { get; set; }
         public string Responsable { get; set; }
         public string compincentralizado { get; set; }
 

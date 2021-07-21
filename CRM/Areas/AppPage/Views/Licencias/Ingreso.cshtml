@@ -122,14 +122,14 @@
                                     <!-- Checkboxes -->
                                     <div class="radio" style="margin-top:24px">
                                         <input id="chk_casilla_derivada" name="chk_casilla_derivada" class="magic-radio" type="checkbox">
-                                        <label id="lbl_casilla_derivada" for="chk_casilla_derivada">Casilla</label>
+                                        <label id ="lbl_casilla_derivada"  for="chk_casilla_derivada">Casilla</label>
                                     </div>
 
                                 </div>
                                 <div class="col-md-2">
                                     <div class="radio" style="margin-top:24px">
                                         <input id="chk_presencial_derivada" name="chk_presencial_derivada" class="magic-radio" type="checkbox">
-                                        <label id="lbl_presencial_derivada" for="chk_presencial_derivada">Presencial</label>
+                                        <label id="lbl_presencial_derivada"for="chk_presencial_derivada">Presencial</label>
                                     </div>
 
                                 </div>
@@ -362,7 +362,7 @@
                                             <div class="form-group">
                                                 <label class="control-label">Nuevo Folio</label>
                                                 <input type="text" class="form-control" id="nuevo_folio" name="nuevo_folio" placeholder="">
-                                                <input type="hidden" id="nuevo_folio_valor">
+                                                <input type="hidden"  id="nuevo_folio_valor" >
                                             </div>
                                         </div>
                                     </div>
@@ -695,8 +695,6 @@
                         }
 
 
-
-
                         if (response.DocumentosFaltantes.tipoSeleccion == "1") {
                             $(`#pendiente`).prop('checked', response.DocumentosFaltantes.tipoSeleccion);
 
@@ -966,7 +964,7 @@
                         //--------------- DerivarLM
 
                         if (response.IngresoData.OficinaDerivacion != 0) {
-
+                           
                             $("#sslOfiDerivacion").val(response.IngresoData.OficinaDerivacion);
                             $("#sslOfiDerivacion").prop("disabled", false);
                             $("#falta_doc_no").prop("checked", false);
@@ -1010,7 +1008,7 @@
                                 $(`#chk_presencial`).prop('checked', true);
 
                                 if (response.IngresoData.FlagLM == 1) {
-
+                                    
                                     $("#div_Viaingreso_derivacion").show();
                                     $("#chk_casilla_derivada").hide();
                                     $("#lbl_casilla_derivada").hide();
@@ -1023,10 +1021,10 @@
                                     $("#lblvalija").prop('style', "margin-left:-300px");
                                     $("#valija").val(response.DocumentosFaltantes.Comentarios);
 
-
+                                    
 
                                 }
-
+                    
 
                             }
 
@@ -1408,7 +1406,7 @@
                                     $('#telefono').focus();
                                     return false;
                                 }
-
+                                
                                 //if ($('#valija').val() == '') {
                                 //        $.niftyNoty({
                                 //            type: 'danger',
@@ -1704,7 +1702,7 @@
                             Faltadoc = 1;
                         }
                         if ($('#chk_devuelta_reemplazada').prop('checked')) {
-
+                            
                             pendienteDocumentacion = 42;
                             Faltadoc = 1;
 
@@ -1754,10 +1752,10 @@
                                 }
 
                                 if ($('#nuevo_folio_valor').val() == '') {
-                                    $.niftyNoty({
+                                     $.niftyNoty({
                                         type: 'danger',
                                         container: 'floating',
-                                        html: '<strong>Error</strong> Folio No Existe o No Está Asociado al Rut Del Afiliado!!',
+                                         html: '<strong>Error</strong> Folio No Existe o No Está Asociado al Rut Del Afiliado!!',
                                         focus: false,
                                         timer: 3000
                                     });
@@ -1785,7 +1783,7 @@
                         pendienteDocumentacion = -1;
                         Faltadoc = 1;
 
-
+                        
 
                         if ($("#sslOfiDerivacion").val() == 0) {
 
@@ -1804,7 +1802,6 @@
                             $.niftyNoty({
                                 type: 'danger',
                                 container: 'floating',
-
                                 html: '<strong>Error</strong><li> Debe Seleccionar Tipo de Ingreso!!</li> ',
                                 focus: false,
                                 timer: 3000
@@ -1815,17 +1812,12 @@
                         }
 
 
-                            $('#bt-guarda-otra').prop('disabled', false);
-                            return false;
-                        }
-
                         if ($("#chk_casilla_derivada").prop("checked") == true) {
                             viaIngresoLicenica = 1
                         }
-
-
+                      
                         if ($("#chk_presencial_derivada").prop("checked") == true) {
-
+                          
 
                             if ($('#valija').val() == '') {
                                 $.niftyNoty({
@@ -1841,7 +1833,6 @@
 
                             }
                             $('#comentarios').val($('#valija').val())
-
                             viaIngresoLicenica = 2
                         }
                     }
@@ -1914,7 +1905,7 @@
 
                     const fl = $("#FormLM").val();
                     console.log({ fl })
-
+                   
                     $.SecPostJSON(BASE_URL + "/motor/api/Licencias/guardar-licencia", WebIngresoLicencia, function (respuesta) {
 
                         if (respuesta.Estado === "OK") {
@@ -2150,10 +2141,8 @@
                     $("#fechaLm6").prop("disabled", true);
 
 
-
                     $("#lblvalija").hide();
                     $("#valija").hide();
-
                     // $("#AfiliadoRut").val("");
                     //$("#AfiliadoRut").focus();
                     // $("#FolioLic").val("");
@@ -2944,7 +2933,7 @@
                         return false;
                     }
                     $.SecGetJSON(BASE_URL + "/motor/api/Licencias/Valida-folio-existente", { FolioLicencia: dato, Rut: rut }, function (response) {
-
+                
                         if (response == 0) {
                             $.niftyNoty({
                                 type: 'danger',

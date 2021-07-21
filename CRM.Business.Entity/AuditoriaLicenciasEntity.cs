@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CRM.Business.Entity
 {
     /// <summary>
-
+   
     public class AuditoriaLicenciasEntity
     {
 
@@ -174,7 +174,7 @@ namespace CRM.Business.Entity
             Otromotivo = 0;
             esBanner = 0;
             DescripcionesBanner = string.Empty;
-            fechaAuditoria = new DateTime(1900, 1, 1);
+            fechaAuditoria= new DateTime(1900, 1, 1);
             FechaDf = new DateTime(1900, 1, 1);
             DescripcionOficina = string.Empty;
             Responsable = string.Empty;
@@ -197,5 +197,5 @@ namespace CRM.Business.Entity
             /// <summary>
         }
 
-    }
+}
 }

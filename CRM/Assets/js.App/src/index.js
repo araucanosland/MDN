@@ -616,10 +616,11 @@ $(function () {
 
     //Evento de Estado maestro Pre Aprobados
     $("#ges_estado").on("change", function () {
-
+        debugger;
         if ($(this).val() != '') {
             $("#ges_subestado").attr("disabled", false);
             $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-estados-gestion", { tipoCampagna: $(this).data("TipoAsignacion"), padre: $(this).val() }, function (datos) {
+                
                 $("#ges_subestado").html("");
                 $("#ges_subestado").append($("<option>").attr("value", "").html("Seleccione"));
                 $('#datos-gestion').bootstrapValidator('updateStatus', 'ges_subestado', 'NOT_VALIDATED').bootstrapValidator('validateField', 'ges_subestado');
@@ -628,7 +629,8 @@ $(function () {
                 });
             });
 
-
+            var a = $("#ges_estado").val();
+            var dat = $("#ges_estado").data("terminal");
             if ($(this).find("option:selected").data("terminal") == "CERRADOS" || $(this).find("option:selected").data("terminal") == "PENDIENTESNOCAL") {
                 $("#fpg").hide();
             }
@@ -1825,7 +1827,9 @@ $(function () {
         });
 
         //COMERCIAL
+        debugger;
         if (tipoCamp === 1 || tipoCamp === 5) {
+            debugger;
             $('#datos-gestion').show();
 
             //Datepicker de Pre Aprobados

@@ -17,7 +17,7 @@ namespace CRM.Business.Data
             {
                 new Parametro("@p_codOficina", Oficina),
                 new Parametro("@p_estado", estado)
-                
+
             };
             return DBHelper.InstanceCRM.ObtenerColeccion("empresas.spEmp_incorporacion_ListarByOficina", pram, ListadoEmpresasIncorporacion);
 

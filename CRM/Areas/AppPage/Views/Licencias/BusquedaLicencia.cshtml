@@ -35,13 +35,13 @@
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label class="control-label">Rut Afiliado</label>
-                                    <input type="text" class="form-control es-rut" name="AfiliadoRut" id="AfiliadoRut" tabindex="1" required disabled="disabled">
+                                    <input type="text" class="form-control es-rut" name="AfiliadoRut" id="AfiliadoRut" tabindex="1" required  disabled="disabled">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Nombre Afiliado</label>
-                                    <input type="text" class="form-control" readonly="readonly" id="AfiNombres" disabled="disabled">
+                                    <input type="text" class="form-control" readonly="readonly" id="AfiNombres"  disabled="disabled">
                                 </div>
                             </div>
                             <div class="col-sm-3">
@@ -74,11 +74,11 @@
                                     <label class="control-label">Formato Licencia</label>
                                     <div class="radio">
                                         <!-- Inline radio buttons -->
-                                        <input id="radio-formato-manual-lm" class="magic-radio" type="radio" name="radio-formato-licencia" disabled="disabled">
+                                        <input id="radio-formato-manual-lm" class="magic-radio" type="radio" name="radio-formato-licencia"  disabled="disabled">
                                         <label for="radio-formato-manual-lm">Manual</label>
                                         <!-- <input id="radio-formato-electronico-lm" class="magic-radio" type="radio" name="radio-formato-licencia">
                                         <label for="radio-formato-electronico-lm">Electrónica</label> -->
-                                        <input id="radio-formato-mixto-lm" class="magic-radio" type="radio" name="radio-formato-licencia" disabled="disabled">
+                                        <input id="radio-formato-mixto-lm" class="magic-radio" type="radio" name="radio-formato-licencia"  disabled="disabled">
                                         <label for="radio-formato-mixto-lm">Mixta</label>
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
                                 <div class="form-group">
                                     <div class="checkbox pad-top">
                                         <label>
-                                            <input type="checkbox" name="DerivarLM" id="DerivarLM" tabindex="2" disabled="disabled"> Derivar Licencia
+                                            <input type="checkbox" name="DerivarLM" id="DerivarLM" tabindex="2"  disabled="disabled"> Derivar Licencia
                                         </label>
                                     </div>
                                 </div>
@@ -205,11 +205,11 @@
                                 <div class="col-md-4" id="">
                                     <!-- Checkboxes -->
                                     <div class="radio">
-                                        <input id="chk_casilla" name="chk_casilla" class="magic-radio" type="checkbox" disabled="disabled">
+                                        <input id="chk_casilla" name="chk_casilla" class="magic-radio" type="checkbox"  disabled="disabled">
                                         <label for="chk_casilla">Casilla</label>
                                     </div>
                                     <div class="radio">
-                                        <input id="chk_presencial" name="chk_presencial" class="magic-radio" type="checkbox" disabled="disabled">
+                                        <input id="chk_presencial" name="chk_presencial" class="magic-radio" type="checkbox"  disabled="disabled">
                                         <label for="chk_presencial">Presencial</label>
                                     </div>
 
@@ -219,11 +219,11 @@
                                     <h5 class="title">Quén envía Licencia</h5>
                                     <!-- Checkboxes -->
                                     <div class="radio">
-                                        <input id="chk_trabajador" name="chk_trabajador" class="magic-radio" type="checkbox" checked disabled="disabled">
+                                        <input id="chk_trabajador" name="chk_trabajador" class="magic-radio" type="checkbox" checked  disabled="disabled">
                                         <label for="chk_trabajador">Trabajador</label>
                                     </div>
                                     <div class="radio">
-                                        <input id="chk_empleador" name="chk_empleador" class="magic-radio" type="checkbox" disabled="disabled">
+                                        <input id="chk_empleador" name="chk_empleador" class="magic-radio" type="checkbox"  disabled="disabled">
                                         <label for="chk_empleador">Empleador</label>
                                     </div>
 
@@ -514,6 +514,7 @@
                         <button class="btn btn-success" type="submit" id="bt-guarda-otra">Guardar</button>
                         <!--<button class="btn btn-success" type="submit" id="bt-guarda-bolver" tabindex="4">Guardar y Volver</button>-->
                     </div>
+
                 </form>
                 <!--===================================================-->
                 <!--End Block Styled Form -->
@@ -546,9 +547,10 @@
 
 
         $(function () {
+
             var CodIng = httpGet("ci");
             $("#DerivarLM").on("click", function () {
-
+                
                 if (DerivarLM.checked) {
 
                     $("#sslOfiDerivacion").prop("disabled", false);
@@ -606,9 +608,9 @@
                 }
             });
 
-
+            
             $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-suc-derivacion", function (datos) {
-
+                
                 $("#sslOfiDerivacion").html("");
                 $.each(datos, function (i, oficina) {
                     $("#sslOfiDerivacion").append($("<option>").val(oficina.codOficina).html(oficina.DescOficina).data("id", oficina.codOficinaCompin).data("nombre", oficina.OficinaCompin));
@@ -855,7 +857,7 @@
                         else
                             $('#fechaLm6').val(response.DocumentosFaltantes.fechaliquidacion6.substring(3, 10));
 
-
+                        
 
 
                         //nueva informacion
@@ -937,7 +939,7 @@
                         });
 
                         //--------------- DerivarLM
-
+                        
                         if (response.IngresoData.OficinaDerivacion != 0) {
                             $("#DerivarLM").prop("checked", true);
                             $("#sslOfiDerivacion").val(response.IngresoData.OficinaDerivacion);
@@ -1056,7 +1058,7 @@
                     }
 
                     if ($('#radio-formato-mixto-lm').prop('checked')) {
-
+                        
                         var dato = $('#FolioLic').val();
 
                         if (dato == '') {
@@ -1107,7 +1109,7 @@
 
                     }
                     if ($('#radio-formato-manual-lm').prop('checked')) {
-
+                        
                         var dato = $('#FolioLic').val();
                         if (dato == '') {
                             $.niftyNoty({
@@ -1371,7 +1373,7 @@
 
                             }
                         }
-
+                        
                         //--vaidacion nuevos casos
                         if ($('#chk_casilla').prop('checked') == true) {
                             if ($('#falta_doc_no').prop('checked') == false && $('#notramitada').prop('checked') == false && $('#pendiente').prop('checked') == false && $('#devuelta').prop('checked') == false) {
@@ -1591,7 +1593,7 @@
                     const fl = $("#FormLM").val();
                     console.log({ fl })
 
-
+                    
                     $.SecPostJSON(BASE_URL + "/motor/api/Licencias/guardar-licencia", WebIngresoLicencia, function (respuesta) {
                         if (respuesta.Estado === "OK") {
 
@@ -1867,7 +1869,7 @@
 
 
             $("#AfiliadoRut").on("blur", function () {
-
+                
                 if ($(this).val().length > 7) {
                     $.SecGetJSON(BASE_URL + "/motor/api/Licencias/datos-afiliado", { AfiliadoRut: $(this).val() }, function (respuesta) {
                         if (respuesta.Estado === "OK") {
@@ -1932,7 +1934,7 @@
 
             })
 
-
+           
 
 
             $('#FolioLic').on("click", function (e) {
@@ -2085,7 +2087,7 @@
 
 
             $('#pendiente').on('change', function (event) {
-
+                
                 $("#falta_doc_no").prop("checked", false);
                 $("#pendiente").prop("checked", true);
                 $("#devuelta").prop("checked", false);

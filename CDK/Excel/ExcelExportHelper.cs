@@ -92,7 +92,7 @@ namespace CDK.Excel
                 // autofit width of cells with small content
                 int columnIndex = 1;
                 foreach (DataColumn column in dataTable.Columns)
-                {
+                { 
 
                     workSheet.Column(columnIndex).AutoFit();
                     columnIndex++;
@@ -130,8 +130,8 @@ namespace CDK.Excel
                         continue;
                     }
 
-
-                    if (columnsToTake.Any(y => y.nombreMostrar.Contains(dataTable.Columns[i].ColumnName)))
+                    
+                    if(columnsToTake.Any(y => y.nombreMostrar.Contains(dataTable.Columns[i].ColumnName)))
                     {
                         continue;
                     }
@@ -151,7 +151,7 @@ namespace CDK.Excel
                     workSheet.Column(1).Width = 5;
                 }
 
-
+                
                 result = package.GetAsByteArray();
             }
 

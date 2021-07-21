@@ -29,8 +29,8 @@ namespace CRM.ConsultaDatosAfiliadoService {
         System.Threading.Tasks.Task<CRM.ConsultaDatosAfiliadoService.obtenerDatosAfiliadoResponse> obtenerDatosAfiliadoAsync(CRM.ConsultaDatosAfiliadoService.obtenerDatosAfiliadoRequest request);
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -49,7 +49,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
         
         private perfiles perfilField;
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("datosAfiliado", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
         public persona datosAfiliado1 {
             get {
@@ -61,7 +61,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
         public datosEmpresa datosEmpresa {
             get {
@@ -73,7 +73,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("empresas", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=true, Order=2)]
         public datosEmpresa[] empresas {
             get {
@@ -85,7 +85,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("empresasACargo", Form=System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable=true, Order=3)]
         public datosEmpresa[] empresasACargo {
             get {
@@ -97,7 +97,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
         public log log {
             get {
@@ -109,7 +109,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
         public perfiles perfil {
             get {
@@ -131,8 +131,8 @@ namespace CRM.ConsultaDatosAfiliadoService {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -169,7 +169,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
         
         private string telFijoField;
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
         public string apellidoMaterno {
             get {
@@ -181,7 +181,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
         public string apellidoPaterno {
             get {
@@ -193,7 +193,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
         public string codAreaTelFijo {
             get {
@@ -205,7 +205,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
         public string codComuna {
             get {
@@ -217,7 +217,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
         public string direccion {
             get {
@@ -229,7 +229,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
         public string email {
             get {
@@ -241,7 +241,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
         public string estadoCivil {
             get {
@@ -253,7 +253,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=7)]
         public string fechaNac {
             get {
@@ -265,7 +265,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=8)]
         public string nombres {
             get {
@@ -277,7 +277,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=9)]
         public string nroCelular {
             get {
@@ -289,7 +289,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=10)]
         public string nroDpto {
             get {
@@ -301,7 +301,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=11)]
         public string prefijoCelular {
             get {
@@ -313,7 +313,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=12)]
         public string rutAfiliado {
             get {
@@ -325,7 +325,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=13)]
         public string sexo {
             get {
@@ -337,7 +337,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=14)]
         public string telFijo {
             get {
@@ -359,8 +359,8 @@ namespace CRM.ConsultaDatosAfiliadoService {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -385,7 +385,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
         
         private bool esPensionadoField;
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
         public bool esAfiliadoActivo {
             get {
@@ -397,7 +397,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
         public bool esAfiliadoCesado {
             get {
@@ -409,7 +409,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
         public bool esAhorrante {
             get {
@@ -421,7 +421,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
         public bool esEmpleadoPublico {
             get {
@@ -433,7 +433,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
         public bool esEmpresa {
             get {
@@ -445,7 +445,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=5)]
         public bool esEmpresaPublica {
             get {
@@ -457,7 +457,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=6)]
         public bool esEncargadoEmpresa {
             get {
@@ -469,7 +469,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=7)]
         public bool esIndependiente {
             get {
@@ -481,7 +481,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=8)]
         public bool esPensionado {
             get {
@@ -503,8 +503,8 @@ namespace CRM.ConsultaDatosAfiliadoService {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -515,7 +515,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
         
         private string msgRespuestaField;
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
         public string codRespuesta {
             get {
@@ -527,7 +527,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
         public string msgRespuesta {
             get {
@@ -549,8 +549,8 @@ namespace CRM.ConsultaDatosAfiliadoService {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -565,7 +565,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
         
         private string tipoEmpresaField;
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
         public string estado {
             get {
@@ -577,7 +577,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
         public string razonSocial {
             get {
@@ -589,7 +589,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
         public string rutEmpresa {
             get {
@@ -601,7 +601,7 @@ namespace CRM.ConsultaDatosAfiliadoService {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
         public string tipoEmpresa {
             get {

@@ -11,124 +11,663 @@
 <link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
 
+<style>
+    #tblDigitalizacion > tbody {
+        font-size: 11px;
+    }
+
+    .nav-tabs .badge {
+        position: absolute;
+        top: -10px;
+        right: 1px;
+        background: red;
+    }
+</style>
+
 <div id="page-content">
-    <h1 class="page-header text-overflow">DIGITALIZACIÓN VENTA</h1>
-    <br />
-    <div class="panel" style="border-radius: 8px">
-        <div class="panel-heading">
-            <h3 class="panel-title">FILTROS DE BUSQUEDA</h3>
-        </div>
+    <div class="tab-base">
+        <ul id="myTab" class="nav nav-tabs">
+            <li class="">
+                <a data-toggle="tab" href="#demo-lft-tab-1" aria-expanded="true" id="tab_ingreso" class="tab-principal">Documentación Inicial<span class="badge"><label id="conteoDocGeneral"></label></span></a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#demo-lft-tab-2" aria-expanded="true" id="tab_documentos" class="tab-principal">Documentos Legalizados<span class="badge"><label id="conteoDocLegalizado"></label></span></a>
+            </li>
 
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label class="control-label">RUT AFILIADO</label>
-                        <input type="text" id="txtRutAfiSearch" class="form-control" maxlength="10">
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="form-group">
-                        <label class="control-label">FOLIO CREDITO</label>
-                        <input type="text" id="txtNFolioSearch" class="form-control numero" maxlength="12">
-                    </div>
-                </div>
+            <li class="">
+                <a data-toggle="tab" href="#demo-lft-tab-3" aria-expanded="true" id="tab_misreparos" class="tab-principal">Reparos de Mi Oficina<span class="badge"><label id="conteoMisreparos"></label></span></a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#demo-lft-tab-4" aria-expanded="true" id="tab_Agente" class="tab-principal">Digitalización<span class="badge"><label id="conteoAgenteDigit"></label></span></a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#demo-lft-tab-5" aria-expanded="true" id="tab_misreparos_Agente" class="tab-principal">Reparos<span class="badge"><label id="conteoAgenteReparo"></label></span></a>
+            </li>
 
-                <div class="col-sm-2">
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" v-on:click="cargalistaVentas">BUSCAR</button>
-                    </div>
-                </div>
-            </div>
-            <hr />
-            <button class="btn btn-default btn-rounded btn-labeled ion-plus-round" id="btNewIngreso">INGRESO NUEVA VENTA </button>
-        </div>
-    </div>
-
-    <div class="mar-btm" style="display: none;" id="formulario-ingreso_dig">
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-lg-12">
+        </ul>
+        <div class="tab-content">
+            <div id="demo-lft-tab-1" class="tab-pane fade">
+                <div class="row">
+                    <h1 class="page-header text-overflow">Digitalización </h1>
+                    <br />
                     <div class="panel" style="border-radius: 8px">
-                        <div class="panel-body form-horizontal form-padding">
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Rut Afiliado</label>
-                                <div class="col-md-4">
-                                    <input type="text" id="txtIdUpdate" class="form-control" disabled style="display:none">
-                                    <input type="text" id="txtRutAfi" class="form-control" maxlength="10">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Folio Venta</label>
-                                <div class="col-md-4">
-                                    <input type="text" id="txtNfolio" class="form-control numero" maxlength="15">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Tipo Venta</label>
-                                <div class="col-md-4">
-                                    <select class="form-control" id="dllTipoVenta" name="dllTipoVenta" v-model="modelos.tipo_venta">
-                                        <option value="">SELECCIONE...</option>
-                                        <option v-for="tipoV in filtros.tipo_venta" :value="tipoV.id">{{tipoV.tipo_venta}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="form-group pad-ver">
-                                <label class="col-md-3 control-label"><strong>Tiene documentos digitalizados ?</strong></label>
-                                <div class="col-md-9">
-                                    <div class="radio">
-                                        <input id="rbDgSi" class="magic-radio" type="radio" name="rbDgDigitalizacion" value="SI">
-                                        <label for="rbDgSi">SI</label>
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Filtros de Búsqueda</h3>
+                        </div>
 
-                                        <input id="rbDgNo" class="magic-radio" type="radio" name="rbDgDigitalizacion" value="NO">
-                                        <label for="rbDgNo">NO</label>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Rut Afiliado</label>
+                                        <input type="text" id="txtrut" class="form-control " maxlength="10">
                                     </div>
                                 </div>
-                            </div>
-                            <hr />
-                            <div class="text-right" id="btSeves" style="display:block">
-                                <button class="btn btn-warning btn-rounded btCancelar" id="btCancelar">CANCELAR</button>
-                                <button class="btn btn-success btn-rounded" v-on:click="handleSubmitIngresoVentas">GUARDAR</button>
-                            </div>
-                            <div class="text-right" id="btUpdates" style="display:none">
-                                <button class="btn btn-warning btn-rounded btCancelar" id="btCancelarUpdate">CANCELAR</button>
-                                <button class="btn btn-success btn-rounded" v-on:click="handleSubmitUpdateVentas" id="btIngUpdate">ACTUALIZAR</button>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">N° Folio</label>
+                                        <input type="text" id="txtcredito" class="form-control numero" maxlength="12">
+                                    </div>
+                                </div>
+                                @*<div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">N° Oferta</label>
+                                    <input type="text" id="txtoferta" class="form-control numero" maxlength="12">
+                                </div>
+                            </div>*@
+
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Estado Gestión</label>
+                                        <select class="form-control" id="ddlEstados" name="ddlEstados">
+                                            <option value="-2">Todos...</option>
+                                            <option value="-1">Sin Gestión</option>
+                                            <option value="0">Reparado</option>
+                                            <option value="1">Aprobado</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Venta Desde</label>
+                                        <div id="index-dp-component">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="dt_fecha_venta_desde" name="dt_fecha_venta_desde">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Venta Hasta</label>
+                                        <div id="index-dp-component">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="dt_fecha_venta_hasta" name="dt_fecha_venta_hasta">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="btn_buscar">BUSCAR</button>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
                     </div>
+
+
                 </div>
+                <div class="panel" style="border-radius: 8px">
+                    <div class="panel-control">
+                        <div class="col-sm-8" id="divmdAsigEjePen">
+                            <button class="demo-panel-ref-btn btn btn-default btn-active-success" data-toggle="panel-overlay" id="btnmodalAsignacion">
+                                <i class="demo-psi-repeat-2 icon-fw"></i> Asignar Digitalización
+                            </button>
+                        </div>
+
+                    </div>
+                    <h3 class="panel-title">Digitalizaciones del Día</h3>
+                    @*data-url="/motor/api/digitalizacion/listar-digitalizacion"*@
+                    <form class="form-horizontal">
+                        <div class="panel-body">
+                            <div class="panel-body">
+                                <table data-toggle="table"
+                                       data-sort-name="id"
+                                       data-page-list="[]"
+                                       data-page-size="30"
+                                       data-search="false"
+                                       data-show-pagination-switch="false"
+                                       data-pagination="true" id="tblDigitalizacion" style="font-size: 12px">
+
+                                    <thead>
+                                        <tr>
+                                            <th data-field="RutAfiliado" data-sortable="true">Rut</th>
+                                            <th data-field="Folio" data-sortable="true">N° Folio</th>
+                                            <th data-field="Oferta" data-sortable="true">N° Oferta</th>
+                                            <th data-field="FechaVenta" data-sortable="true" data-formatter="formatoFecha">Fecha Venta</th>
+                                            <th data-field="EstadoGestion">Estado Gestión</th>
+                                            <th data-field="Id" data-formatter="digitalLinkFormatter">Acción</th>
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="demo-lft-tab-2" class="tab-pane fade">
+                <div class="row">
+                    <h1 class="page-header text-overflow">Digitalización </h1>
+                    <br />
+                    <div class="panel" style="border-radius: 8px">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Filtros de Búsqueda</h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Rut Afiliado</label>
+                                        <input type="text" id="txtrutlegal" class="form-control " maxlength="10">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">N° Folio</label>
+                                        <input type="text" id="txtcreditoLegal" class="form-control numero" maxlength="12">
+                                    </div>
+                                </div>
+                                @*<div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">N° Oferta</label>
+                                    <input type="text" id="txtoferta" class="form-control numero" maxlength="12">
+                                </div>
+                            </div>*@
+
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Estado Gestión</label>
+                                        <select class="form-control" id="ddlEstadosLegal">
+                                            <option value="-2">Todos...</option>
+                                            <option value="-1">Sin Gestión</option>
+                                            <option value="0">Reparado</option>
+                                            <option value="1">Aprobado</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Venta Desde</label>
+                                        <div id="index-dp-component">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="dt_fecha_venta_desdeLegal">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Venta Hasta</label>
+                                        <div id="index-dp-component">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="dt_fecha_venta_hasta_Legal">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="btn_buscar_legal">BUSCAR</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel" style="border-radius: 8px">
+                    <div class="panel-control">
+                        <div class="col-sm-8" id="divmdAsigEjePen">
+                            <button class="demo-panel-ref-btn btn btn-default btn-active-success" data-toggle="panel-overlay" id="btnmodalAsignacionlegalizado">
+                                <i class="demo-psi-repeat-2 icon-fw"></i> Asignar Digitalización
+                            </button>
+                        </div>
+
+                    </div>
+                    <h3 class="panel-title">Digitalizaciones del Día</h3>
+                    @*data-url="/motor/api/digitalizacion/listar-digitalizacion"*@
+                    <form class="form-horizontal">
+                        <div class="panel-body">
+                            <div class="panel-body">
+                                <table data-toggle="table"
+                                       data-sort-name="id"
+                                       data-page-list="[]"
+                                       data-page-size="30"
+                                       data-search="false"
+                                       data-pagination="true" id="tblDigitalizacionLegal" style="font-size: 12px">
+
+                                    <thead>
+                                        <tr>
+
+                                            <th data-field="RutAfiliado" data-sortable="true">Rut</th>
+                                            <th data-field="Folio" data-sortable="true">N° Folio</th>
+                                            <th data-field="Oferta" data-sortable="true">N° Oferta</th>
+                                            <th data-field="FechaVenta" data-sortable="true" data-formatter="formatoFecha">Fecha Venta</th>
+                                            <th data-field="EstadoGestion">Estado Gestión</th>
+                                            <th data-field="id" data-formatter="digitalLegaLinkFormatter">Acción</th>
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div id="demo-lft-tab-3" class="tab-pane fade">
+                <div class="row">
+                    <h1 class="page-header text-overflow">Mis Reparos </h1>
+                    <br />
+                    <div class="panel" style="border-radius: 8px">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Filtros de Búsqueda</h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Rut Afiliado</label>
+                                        <input type="text" id="txtrut" class="form-control " maxlength="10">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">N° Folio</label>
+                                        <input type="text" id="txtcredito" class="form-control numero" maxlength="12">
+                                    </div>
+                                </div>
+                                @*<div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">N° Oferta</label>
+                                    <input type="text" id="txtoferta" class="form-control numero" maxlength="12">
+                                </div>
+                            </div>*@
+
+                                <div class="col-sm-2" style="display:none">
+                                    <div class="form-group">
+                                        <label class="control-label">Estado Gestión</label>
+                                        <select class="form-control" id="ddlEstados" name="ddlEstados">
+                                            <option value="-2">Todos...</option>
+                                            <option value="-1">Sin Gestión</option>
+                                            <option value="0">Reparado</option>
+                                            <option value="1">Aprobado</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2" style="display:none">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Venta Desde</label>
+                                        <div id="index-dp-component">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="dt_fecha_venta_desde" name="dt_fecha_venta_desde">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2" style="display:none">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Venta Hasta</label>
+                                        <div id="index-dp-component">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="dt_fecha_venta_hasta" name="dt_fecha_venta_hasta">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="btn_buscar_reparos">BUSCAR</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="panel" style="border-radius: 8px">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Reparos </h3>
+                        </div>
+                        @*data-url="/motor/api/digitalizacion/listar-digitalizacion"*@
+                        <form class="form-horizontal">
+                            <div class="panel-body">
+                                <div class="panel-body">
+                                    <table data-toggle="table"
+                                           data-sort-name="id"
+                                           data-page-list="[]"
+                                           data-page-size="30"
+                                           data-search="false"
+                                           data-pagination="true" id="tblDigitalizacionMisReparos" style="font-size: 12px">
+
+                                        <thead>
+                                            <tr>
+                                                <th data-field="RutAfiliado" data-sortable="true">Rut</th>
+                                                <th data-field="Folio" data-sortable="true">N° Folio</th>
+                                                <th data-field="Oferta" data-sortable="true">N° Oferta</th>
+                                                <th data-field="FechaVenta" data-sortable="true" data-formatter="formatoFecha">Fecha Venta</th>
+                                                <th data-field="TipoDescripcion" data-sortable="true">Tipo Documentación</th>
+                                                <th data-field="EstadoGestion">Estado Gestión</th>
+                                                <th data-field="id" data-formatter="digitalMisReparosLinkFormatter">Acción</th>
+
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            @*  ***************************Tab Asignaciom Agente Documentos **************************************   *@
+            <div id="demo-lft-tab-4" class="tab-pane fade">
+                <div class="row">
+                    <h1 class="page-header text-overflow">Digitalización </h1>
+                    <br />
+                    <div class="panel" style="border-radius: 8px">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Filtros de Búsqueda</h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Ejecutivo</label>
+                                        <select id="ddlejecutivoAsignacion" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Tipo Gestión</label>
+                                        <select class="form-control" id="ddlTipo_asignacion">
+                                            <option value="-1">Todos...</option>
+                                            <option value="1">Documentación Inicial</option>
+                                            <option value="2">Documentos Legalizados</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Venta Desde</label>
+                                        <div id="index-dp-component">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="dt_fecha_asignacion_desde">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Venta Hasta</label>
+                                        <div id="index-dp-component">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="dt_fecha_asignacion_hasta">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="btn_buscar_asignacion">BUSCAR</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="panel" style="border-radius: 8px">
+                    <div class="panel-control">
+                        <div class="col-sm-8">
+                            <button class="demo-panel-ref-btn btn btn-default btn-active-success" data-toggle="panel-overlay" id="btnmodalAsignacionEjecutivo">
+                                <i class="demo-psi-repeat-2 icon-fw"></i> Asignar Ejecutivo
+                            </button>
+                        </div>
+
+                    </div>
+                    <h3 class="panel-title">Digitalizaciones del Día</h3>
+                    @*data-url="/motor/api/digitalizacion/listar-digitalizacion"*@
+                    <form class="form-horizontal">
+                        <div class="panel-body">
+                            <div class="panel-body">
+                                <table data-toggle="table"
+                                       data-sort-name="id"
+                                       data-page-list="[]"
+                                       data-page-size="30"
+                                       data-search="false"
+                                       data-show-pagination-switch="false"
+                                       data-pagination="true" id="tblDigitalizacionAsignacion" style="font-size: 12px">
+
+                                    <thead>
+                                        <tr>
+                                            <th data-field="state" data-checkbox="true"></th>
+                                            <th data-field="Id" data-sortable="false">Id</th>
+                                            <th data-field="RutejecutivoAgente" data-sortable="true">Rut Ejecutivo</th>
+                                            <th data-field="NombreEjecutivo" data-sortable="true">Nombre Ejecutivo</th>
+                                            <th data-field="TipoDescripcion" data-sortable="true">Tipo Documentación</th>
+                                            <th data-field="Oferta" data-sortable="true">N° Oferta</th>
+                                            <th data-field="FechaVenta" data-sortable="true" data-formatter="formatoFecha">Fecha Venta</th>
+                                            <th data-field="EstadoGestion">Estado Gestión</th>
+                                            <th data-field="Id" data-formatter="digitalLinkFormatter">Acción</th>
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            @*  ***************************Tab Asignaciom Agente Reparos **************************************   *@
+            <div id="demo-lft-tab-5" class="tab-pane fade">
+                <div class="row">
+                    <h1 class="page-header text-overflow">Reparos </h1>
+                    <br />
+                    <div class="panel" style="border-radius: 8px">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Filtros de Búsqueda</h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Ejecutivo</label>
+                                        <select id="ddlejecutivoAsignacionReparo" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2" style="display:none">
+                                    <div class="form-group">
+                                        <label class="control-label">Tipo Gestión</label>
+                                        <select class="form-control" id="ddlTipo_asignacionReparo">
+                                            <option value="-1">Todos...</option>
+                                            <option value="1">Documentación Inicial</option>
+                                            <option value="2">Documentos Legalizados</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Venta Desde</label>
+                                        <div id="index-dp-component">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="dt_fecha_asignacion_reparo_desde">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Venta Hasta</label>
+                                        <div id="index-dp-component">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="dt_fecha_asignacion_reparo_hasta">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="btn_buscar_asignacion_reparo">BUSCAR</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="panel" style="border-radius: 8px">
+                    <div class="panel-control">
+                        <div class="col-sm-8">
+                            <button class="demo-panel-ref-btn btn btn-default btn-active-success" data-toggle="panel-overlay" id="btnmodalAsignacionEjecutivoReparo">
+                                <i class="demo-psi-repeat-2 icon-fw"></i> Asignar Ejecutivo
+                            </button>
+                        </div>
+
+                    </div>
+                    <h3 class="panel-title">Digitalizaciones del Día</h3>
+                    @*data-url="/motor/api/digitalizacion/listar-digitalizacion"*@
+                    <form class="form-horizontal">
+                        <div class="panel-body">
+                            <div class="panel-body">
+                                <table data-toggle="table"
+                                       data-sort-name="id"
+                                       data-page-list="[]"
+                                       data-page-size="30"
+                                       data-search="false"
+                                       data-show-pagination-switch="false"
+                                       data-pagination="true" id="tblDigitalizacionAsignacionReparo" style="font-size: 12px">
+
+                                    <thead>
+                                        <tr>
+                                            <th data-field="state" data-checkbox="true"></th>
+                                            <th data-field="Id" data-sortable="false">Id</th>
+                                            <th data-field="RutejecutivoAgente" data-sortable="true">Rut Ejecutivo</th>
+                                            <th data-field="NombreEjecutivo" data-sortable="true">Nombre Ejecutivo</th>
+                                            <th data-field="TipoDescripcion" data-sortable="true">Tipo Documentación</th>
+                                            <th data-field="Oferta" data-sortable="true">N° Oferta</th>
+                                            <th data-field="FechaVenta" data-sortable="true" data-formatter="formatoFecha">Fecha Venta</th>
+                                            <th data-field="EstadoGestion">Estado Gestión</th>
+                                            <th data-field="Id" data-formatter="digitalLinkFormatter">Acción</th>
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<div id="modal_asigna_digitalizacion" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-xs">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header">
+                <div class="panel-control">
+                    <span class="badge badge-pink" id="cantPensScheck">0</span>
+                    <span>Digitalizaciones seleccionados</span>
+                </div>
+                <h4 class="modal-title">Asiganción de Digitalizacón</h4>
+            </div>
+            <div></div>
+            <div class="modal-body" id="panelejecutivo">
+                <div class="col-sm-8 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label">Seleccione un ejecutivo para asignar...</label>
+                        <select id="ddlejecutivo" class="form-control"></select>
+                    </div>
+                </div>
+            </div>
+            <!--Modal footer-->
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                <button class="btn btn-primary" id="btAsignarDigitalizacion">Asignar</button>
             </div>
         </div>
     </div>
-    <div class="panel" style="border-radius: 8px">
-        <div class="panel-heading">
-            <h3 class="panel-title">DIGITALIZACIONES DEL DIA</h3>
-        </div>
-        <form class="form-horizontal">
-            <div class="panel-body">
-                <div class="panel-body">
-                    <table data-toggle="table"
-                           data-sort-name="id"
-                           data-page-list="[]"
-                           data-page-size="50"
-                           data-search="false"
-                           data-pagination="true" id="tblVentaDiarias" style="font-size: 12px">
+</div>
 
-                        <thead>
-                            <tr>
-                                <th data-field="rut_afiliado" data-sortable="true">RUT</th>
-                                <th data-field="folio_venta" data-sortable="true">N° FOLIO </th>
-                                <th data-field="tipo_venta" data-sortable="true">TIPO VENTA</th>
-                                <th data-field="fecha_ingreso" data-sortable="true" data-formatter="formatoFecha">FECHA INGRESO</th>
-                                <th data-field="id" data-formatter="formatoUpdate"></th>
-                            </tr>
-                        </thead>
-                    </table>
+<div id="modal_asigna_Reparos" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-xs">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header">
+                <div class="panel-control">
+                    <span class="badge badge-pink" id="cantPensScheckReparo">0</span>
+                    <span>Digitalizaciones seleccionados</span>
+                </div>
+                <h4 class="modal-title">Asiganción de Reparos</h4>
+            </div>
+            <div></div>
+            <div class="modal-body" id="panelejecutivoReparo">
+                <div class="col-sm-8 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label">Seleccione un ejecutivo para asignar...</label>
+                        <select id="ddlejecutivoReparo" class="form-control"></select>
+                    </div>
                 </div>
             </div>
-        </form>
+            <!--Modal footer-->
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                <button class="btn btn-primary" id="btAsignarAgenteReparo">Asignar</button>
+            </div>
+        </div>
     </div>
 </div>
 @section script{
@@ -145,6 +684,6 @@
     <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
     <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
     <script src="~/Assets/tam/deps/sweetalert.js"></script>
-    <script src="~/Assets/js.App/src/ingreso-venta.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/js.App/src/digitalizacion.js?g=@Guid.NewGuid().ToString()"></script>
 
 }

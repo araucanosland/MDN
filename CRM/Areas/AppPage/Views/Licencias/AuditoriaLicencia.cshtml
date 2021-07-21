@@ -381,14 +381,14 @@
                                             </div>
                                         </div>
 
-                                        @*Checkboxes
-                                            <div id="divRN" class="checkbox" style="display:none">
-                                                <input  id="chk_RN" class="magic-checkbox" type="checkbox">
-                                                <label for="chk_RN">
-                                                    Certificado de Nacimiento Recién Nacido
+                                         @*Checkboxes 
+                                        <div id="divRN" class="checkbox" style="display:none">
+                                            <input  id="chk_RN" class="magic-checkbox" type="checkbox">
+                                            <label for="chk_RN">
+                                                Certificado de Nacimiento Recién Nacido
 
-                                                </label>
-                                            </div>*@
+                                            </label>
+                                        </div>*@
                                     </div>
                                     <div class="col-md-4" id="divdevuelta1">
                                         <!-- Checkboxes -->
@@ -566,7 +566,7 @@
 
                 $.SecGetJSON(BASE_URL + "/motor/api/Licencias/licencia-data-auditoria", { codIngreso: CodIng }, function (response) {
                     console.log(response);
-
+                  
                     $("#AfiliadoRut").val(response.RutAfiliado);
                     $("#AfiliadoRut").mask('99.999.999-*')
                     $("#AfiliadoRut").trigger("blur");
@@ -941,7 +941,7 @@
                 var seccion_c = 0;
                 var certificado_nacimiento = 0;
                 var mutual = 0;
-                var isapre = 0;
+                var isapre = 0;                
                 var cartaAutorizacion = 0;
                 var Faltadoc = 1;
                 var rutusuario = 0;
@@ -1044,7 +1044,7 @@
                         Otromotivo: otromotivo
 
                     }
-
+                
                     $.SecPostJSON(BASE_URL + "/motor/api/Licencias/guardar-licencia-auditoria", WebIngresoAuditoria, function (respuesta) {
 
                         if (respuesta.Estado === "OK") {
@@ -1083,8 +1083,8 @@
                         return false;
                     }
 
-                    //---        Validaciones
-
+                    //---        Validaciones  
+              
                     //---------reparo pendiente
                     if ($('#chk_reparo_pendiente').prop('checked')) {
                         //---validaciones
@@ -1187,7 +1187,7 @@
 
                     }//fin reparo pendiente
 
-                    //---------Reparo Auditoria
+                    //---------Reparo Auditoria 
                     if ($('#chk_devuelta_audit_doc_pendiente').prop('checked')) {
                         //---validaciones
                         if ($('#accr3').prop('checked') == false && $('#accr2').prop('checked') == false && $('#accr1').prop('checked') == false && $('#certificado_renta').prop('checked') == false && $('#m1').prop('checked') == false && $('#m2').prop('checked') == false && $('#m3').prop('checked') == false && $('#m4').prop('checked') == false && $('#m5').prop('checked') == false && $('#m6').prop('checked') == false) {
@@ -1371,7 +1371,7 @@
                         Faltadoc = 0;
                     }
 
-                    //-------devuelta
+                    //-------devuelta 
                     if ($('#chk_devuelta_oficina').prop('checked')) {
 
 
@@ -1397,8 +1397,8 @@
 
                         }
 
-
-
+                        
+                        
                         Faltadoc = 1;
                         liqMes1 = $('#m1').is(':checked') ? 1 : 0;
                         liqMes2 = $('#m2').is(':checked') ? 1 : 0;
@@ -1406,31 +1406,31 @@
                         liqMes4 = $('#m4').is(':checked') ? 1 : 0;
                         liqMes5 = $('#m5').is(':checked') ? 1 : 0;
                         liqMes6 = $('#m6').is(':checked') ? 1 : 0;;
-                        CertificadoRenta = $('#certificado_renta').is(':checked') ? 1 : 0;
-                        Acredita90 = $('#accr1').is(':checked') ? 1 : 0;
-                        CertificadoAfiliacionAFP = $('#accr2').is(':checked') ? 1 : 0;
-                        CertPagPensiones = $('#accr3').is(':checked') ? 1 : 0;
-                        Otros = $('#otros').is(':checked') ? 1 : 0;
-                        Comentarios = $('#comentariospendiente').val().length > 0 ? $('#comentariospendiente').val() : '';
-                        FaltaDocumentacion = Faltadoc;
-                        tipoSeleccion = pendienteDocumentacion;
-                        imagen = $('#chk_ilm').is(':checked') ? 1 : 0;
-                        diagnostico = $('#chk_empl').is(':checked') ? 1 : 0;
-                        sinfirma = $('#chk_sinfirma').is(':checked') ? 1 : 0;
-                        contrato = $('#chk_trabajnuevo').is(':checked') ? 1 : 0;
-                        cedular_identidad = $('#chk_sinCI').is(':checked') ? 1 : 0;
-                        seccion_c = $('#chk_datoincompl').is(':checked') ? 1 : 0;
-                        certificado_nacimiento = $('#chk_RN').is(':checked') ? 1 : 0;
-                        mutual = $('#chk_mutual').is(':checked') ? 1 : 0;
-                        isapre = $('#chk_isapre').is(':checked') ? 1 : 0;
-                        fechaliquidacion1 = $("#fechaLm1 option:selected").data('Fecha');
-                        fechaliquidacion2 = $("#fechaLm2 option:selected").data('Fecha');
-                        fechaliquidacion3 = $("#fechaLm3 option:selected").data('Fecha');
-                        fechaliquidacion4 = $("#fechaLm4 option:selected").data('Fecha');
-                        fechaliquidacion5 = $("#fechaLm5 option:selected").data('Fecha');
-                        fechaliquidacion6 = $("#fechaLm6 option:selected").data('Fecha');
-                        rutusuario = getCookie("Rut");
-                        cartaAutorizacion = $('#chk_cartaAutorizacion').is(':checked') ? 1 : 0;
+                        CertificadoRenta= $('#certificado_renta').is(':checked') ? 1 : 0;
+                        Acredita90= $('#accr1').is(':checked') ? 1 : 0;
+                        CertificadoAfiliacionAFP= $('#accr2').is(':checked') ? 1 : 0;
+                        CertPagPensiones= $('#accr3').is(':checked') ? 1 : 0;
+                        Otros= $('#otros').is(':checked') ? 1 : 0;
+                        Comentarios= $('#comentariospendiente').val().length > 0 ? $('#comentariospendiente').val() : '';
+                        FaltaDocumentacion= Faltadoc;
+                        tipoSeleccion= pendienteDocumentacion;
+                        imagen= $('#chk_ilm').is(':checked') ? 1 : 0;
+                        diagnostico= $('#chk_empl').is(':checked') ? 1 : 0;
+                        sinfirma= $('#chk_sinfirma').is(':checked') ? 1 : 0;
+                        contrato= $('#chk_trabajnuevo').is(':checked') ? 1 : 0;
+                        cedular_identidad= $('#chk_sinCI').is(':checked') ? 1 : 0;
+                        seccion_c= $('#chk_datoincompl').is(':checked') ? 1 : 0;
+                        certificado_nacimiento= $('#chk_RN').is(':checked') ? 1 : 0;
+                        mutual= $('#chk_mutual').is(':checked') ? 1 : 0;
+                        isapre= $('#chk_isapre').is(':checked') ? 1 : 0;
+                        fechaliquidacion1= $("#fechaLm1 option:selected").data('Fecha');
+                        fechaliquidacion2= $("#fechaLm2 option:selected").data('Fecha');
+                        fechaliquidacion3= $("#fechaLm3 option:selected").data('Fecha');
+                        fechaliquidacion4= $("#fechaLm4 option:selected").data('Fecha');
+                        fechaliquidacion5= $("#fechaLm5 option:selected").data('Fecha');
+                        fechaliquidacion6= $("#fechaLm6 option:selected").data('Fecha');
+                        rutusuario= getCookie("Rut");
+                        cartaAutorizacion= $('#chk_cartaAutorizacion').is(':checked') ? 1 : 0;
                         Faltadoc = 1;
                     }
 
@@ -1464,7 +1464,7 @@
                         fechaliquidacion6 = $("#fechaLm6 option:selected").data('Fecha');
                         Faltadoc = 0;
 
-                    }
+                        }
 
 
 
@@ -1529,7 +1529,7 @@
                     }
 
                     var WebIngresoLicenciaReparosAuditoria = {
-                        //Los Obligatorios
+                      //Los Obligatorios
                         CodIngreso: (typeof CodIng != "undefined") ? CodIng : 0,
                         CodOficina: getCookie("Oficina"),
                         //Los Documentos
@@ -1566,7 +1566,7 @@
                         cartaAutorizacion: cartaAutorizacion,
 
                     }
-
+                    
                     $.SecPostJSON(BASE_URL + "/motor/api/Licencias/guardar-licencia-Auditoria-Reparos", WebIngresoLicenciaReparosAuditoria, function (respuesta) {
 
                         if (respuesta.Estado === "OK") {
@@ -1594,7 +1594,7 @@
         $(function () {
 
             var CodIng = httpGet("ci");
-
+   
 
             if (CodIng == "") {
                 location.href = BASE_URL + "/motor/App/Licencias";
@@ -1918,7 +1918,7 @@
 
             //----Check subsanado
             $('#chk_reparo_subsanado').on('change', function (event) {
-                $("#checkList1").show();
+                 $("#checkList1").show();
                 $(".docs-faltantes-op1").hide();
                 $('#chk_devuelta_reemplazada').prop("checked", false);
                 $('#chk_devuelta_oficina').prop("checked", false);
@@ -1933,7 +1933,7 @@
             $('#chk_reparo_pendiente').on('change', function (event) {
                 $("#checkList1").show();
                 $(".docs-faltantes-op1").show();
-                $("#divdevuelta").hide();
+                $("#divdevuelta").hide();              
                 $('#chk_devuelta_reemplazada').prop("checked", false);
                 $('#chk_devuelta_oficina').prop("checked", false);
                 $('#chk_reparo_LMPresencial').prop("checked", false);
@@ -2019,7 +2019,7 @@
                 $('#chk_reparo_subsanado').prop("checked", false);
                 $("#checkList1").show();
                 $(".docs-faltantes-op1").show();
-                $("#divdevuelta").hide();
+                $("#divdevuelta").hide();              
                 $("#divcoforme").show();
                 $("#divdevuelta1").show();
             })
@@ -2254,7 +2254,7 @@
 
             var read = httpGet("read");
             if (read == "read") {
-
+                
                 $("#chk_casilla").prop("disabled", true);
                 $("#chk_banner_si").prop("disabled", true);
                 $("#chk_banner_no").prop("disabled", true);
@@ -2300,7 +2300,7 @@
                 $('#chk_reparo_subsanado').prop("disabled", true);
             }
 
-
+          
         })
 
 

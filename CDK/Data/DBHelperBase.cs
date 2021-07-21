@@ -377,7 +377,7 @@ namespace CDK.Data
                     command.CommandText = procedimiento;
 
                     ConfigurarParametros(parametros, command);
-                    command.CommandTimeout = 2000;
+                    command.CommandTimeout=2000;
                     SqlDataReader reader = command.ExecuteReader();
                     table.Load(reader);
                 }
@@ -863,7 +863,7 @@ namespace CDK.Data
                 CerrarConexion(connection);
             }
 
-            return (T)Convert.ChangeType(result, typeof(T));
+            return (T) Convert.ChangeType(result, typeof (T));
         }
 
         /// <summary>
@@ -920,7 +920,7 @@ namespace CDK.Data
                 CerrarConexion(connection);
             }
 
-            return (T)Convert.ChangeType(result, typeof(T));
+            return (T) Convert.ChangeType(result, typeof (T));
         }
 
         /// <summary>
@@ -1088,7 +1088,7 @@ namespace CDK.Data
         {
             switch (parametro.Tipo)
             {
-                default: { return new SqlParameter(parametro.Nombre, parametro.Valor); }
+                default:{ return new SqlParameter(parametro.Nombre, parametro.Valor); }
                 case eTipoParametro.BINARY: { return new SqlParameter(parametro.Nombre, SqlDbType.Binary) { Value = parametro.Valor }; }
                 case eTipoParametro.BOOL: { return new SqlParameter(parametro.Nombre, SqlDbType.Bit) { Value = parametro.Valor }; }
                 case eTipoParametro.FLOAT: { return new SqlParameter(parametro.Nombre, SqlDbType.Float) { Value = parametro.Valor }; }
@@ -1107,10 +1107,10 @@ namespace CDK.Data
                     {
                         return !string.IsNullOrWhiteSpace(parametro.NombreTipo)
                                    ? new SqlParameter(parametro.Nombre, SqlDbType.Udt)
-                                   {
-                                       TypeName = parametro.NombreTipo,
-                                       Value = parametro.Valor
-                                   }
+                                       {
+                                           TypeName = parametro.NombreTipo,
+                                           Value = parametro.Valor
+                                       }
                                    : new SqlParameter(parametro.Nombre, parametro.Valor);
                     }
             }

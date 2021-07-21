@@ -2013,10 +2013,12 @@
             if ($(this).val() != '') {
                 $("#ges_subestado").attr("disabled", false);
                 $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-estados-gestion", { tipoCampagna: 1, padre: $(this).val() }, function (datos) {
+                    
                     $("#ges_subestado").html("");
                     $("#ges_subestado").append($("<option>").attr("value", "").html("Seleccione"));
                     //  $('#datos-gestion').bootstrapValidator('updateStatus', 'ges_subestado', 'NOT_VALIDATED').bootstrapValidator('validateField', 'ges_subestado');
                     $.each(datos, function (i, e) {
+                       
                         $("#ges_subestado").append($("<option>").attr("value", e.eges_id).html(e.eges_nombre))
                     });
                 });
@@ -3386,8 +3388,9 @@
         });
 
         $("#ges_subestado").on("change", function () {
+       
             switch (this.value) {
-                case "307":
+                case "1101":
                     $('#divBancos').css('display', 'block');
                     break;
                 case "308":

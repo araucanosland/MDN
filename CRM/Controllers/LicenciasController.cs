@@ -25,7 +25,7 @@ namespace CRM.Controllers
     {
 
 
-
+       
 
         // [AuthorizationRequired]
         [HttpGet]
@@ -550,7 +550,7 @@ namespace CRM.Controllers
         }
 
 
-
+        [AuthorizationRequired]
         [HttpGet]
         [Route("lista-licencias-dia-index")]
         public IEnumerable<BaseLicencia> ListaLicenciasIngresadasIndex(string responsable, string estado, string folio, string diadesde, string diahasta, string formatoLM, int codOficina)
@@ -709,31 +709,12 @@ namespace CRM.Controllers
                 });
             });
 
-
             return Retorno;
 
         }
 
-        [AuthorizationRequired]
-        [HttpGet]
-        [Route("lista-LM-Pendiente-Cobro")]
-        public IEnumerable<BaseLicencia> ListaLMPendienteCobro(string Folio, int codOficina, string Tipo_LM, string Tipo_Convenio)
-        {
-            string token = ActionContext.Request.Headers.GetValues("Token").First();
-            List<Ingresolicencia> ingLc = IngresolicenciaDataAccess.ListaLMPendienteCobro(Folio, codOficina, Tipo_LM, Tipo_Convenio, "XLS");
-            List<BaseLicencia> Retorno = new List<BaseLicencia>();
 
-            ingLc.ForEach(lc =>
-            {
-                Retorno.Add(new BaseLicencia
-                {
-                    IngresoData = lc,
-                });
-            });
 
-            return Retorno;
-
-        }
 
 
 
@@ -1395,8 +1376,6 @@ namespace CRM.Controllers
 
 
 
-
-
         public byte[] CreatePDFDocumentosPendientes(string formatoPdf, DataTable dataTable, string heading = "", bool showSrNo = false, params Columna[] columnsToTake)
         {
             string titulo;
@@ -2004,17 +1983,6 @@ namespace CRM.Controllers
         }
 
 
-        [HttpGet]
-        [Route("listar-Bitacora-CallCenter")]
-        public IEnumerable<LicenciasLMTimeLine> listaBitacoraCallCenter(long codIngreso)
-        {
-            string token = ActionContext.Request.Headers.GetValues("Token").First();
-            List<LicenciasLMTimeLine> ingLc = IngresolicenciaDataAccess.ObtenerBitacora(codIngreso);
-
-            return ingLc;
-        }
-
-
 
         [AuthorizationRequired]
         [HttpGet]
@@ -2250,7 +2218,6 @@ namespace CRM.Controllers
 
         }
 
-
         [HttpGet]
         [Route("export-LM-Pendente-Cobro-pdf")]
         public HttpResponseMessage ExportLMPendenteCobropdf(int codOficina, string diadesde)
@@ -2297,7 +2264,6 @@ namespace CRM.Controllers
 
 
         }
-
         public byte[] CreatePDFManualPresencial(DateTime diadesde, string oficina, string fechaCompin, DataTable dataTable, string heading = "", bool showSrNo = false, params Columna[] columnsToTake)
         {
             Document doc = new Document(PageSize.LETTER, 50, 50, 50, 50);
@@ -2785,7 +2751,6 @@ namespace CRM.Controllers
                                     new Columna("RutAfiliado", "Rut Afiliado"),
                                     new Columna("NombreAfiliado", "Nombre Afiliado"),
                                     new Columna("FolioLicencia", "Folio Licencia"),
-
                                     new Columna("Tiposublicencia","Tipo Subsidio"),
                                     new Columna("TipoLicencia","Tipo LM"),
                                     new Columna("TipoConvenio", "Tipo Convenio"),
@@ -2794,7 +2759,6 @@ namespace CRM.Controllers
                                     new Columna("NombreEmpresa", "Nombre Empresa"),
                                     new Columna("Observacion", "Motivo Pendiente"),
                                     new Columna("AnexoEstamento", "Anexo Estamento")
-
 
             };
 
@@ -2927,10 +2891,8 @@ namespace CRM.Controllers
                                     new Columna("RutAfiliado", "Rut Afiliado"),
                                     new Columna("NombreAfiliado", "Nombre Afiliado"),
                                     new Columna("FolioLicencia", "Folio Licencia"),
-
                                     new Columna("RutEmpresa", "Rut Empresa"),
                                     new Columna("NombreEmpresa", "Razón Social"),
-
                                     new Columna("TipoSublicencia","Tipo Subsidio"),
                                     new Columna("TipoConvenio","Tipo Convenio"),
                                     new Columna("TipoLicencia","Tipo Licencia"),
@@ -2987,7 +2949,6 @@ namespace CRM.Controllers
 
 
         }
-
 
 
 
@@ -3122,8 +3083,6 @@ namespace CRM.Controllers
             }
 
         }
-
-
 
 
     }

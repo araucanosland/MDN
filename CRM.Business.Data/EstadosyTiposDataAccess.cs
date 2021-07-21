@@ -67,7 +67,6 @@ namespace CRM.Business.Data
                 Rut_ = row["rut_"] != DBNull.Value ? Convert.ToInt32(row["rut_"]) : 0,
                 Glosa = row["glosa"] != DBNull.Value ? row["glosa"].ToString() : string.Empty,
                 Descripcion = row["descripcion"] != DBNull.Value ? row["descripcion"].ToString() : string.Empty,
-                Color = row["color"] != DBNull.Value ? row["color"].ToString() : string.Empty,
             };
         }
 

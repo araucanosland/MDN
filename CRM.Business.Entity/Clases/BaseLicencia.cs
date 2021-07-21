@@ -12,5 +12,6 @@ namespace CRM.Business.Entity.Clases
         public Estadolicencia EstadoData { get; set; }
         public DocumentosFaltantesLM DocumentosFaltantes { get; set; }
         public string NombreEjecutivo { get; set; }
+   
     }
 }

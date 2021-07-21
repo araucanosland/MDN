@@ -151,6 +151,8 @@ function normalizacionLinkFormatter(value, row, index) {
     return `<a href="#" class="btn-link" data-target="#mdl_data_normalizacion" data-toggle="modal" data-lead="${row.id}" data-periodo="${row.periodo}" data-rut="${value}" >${value}</a>`;
 }
 
+
+
 function normalizacionNombresFormatter(value, row, index) {
     try {
         return value + ' ' + row.afiliado.apellidos;
@@ -267,6 +269,7 @@ var appNormalizacionModal = new Vue({
                 });
         },
         obtenerSubEstadosModal(padre) {
+            debugger;
             fetch(`http://${motor_api_server}:4002/normalizacion/estados?padre=${padre}`, {
                 method: 'GET',
                 mode: 'cors',
@@ -312,6 +315,7 @@ var appNormalizacionModal = new Vue({
 
         },
         manejarVisibilidadCalendario() {
+            debugger;
             const sbestado = this.filtrosModal.subEstadosModal.find(est => est.id == this.modelosModal.subEstado);
             this.comportamientos.mostrarProximaGestion = (new RegExp('--compromiso')).test(sbestado.opciones);
         },
@@ -446,10 +450,12 @@ $(function () {
 
     $('#mdl_data_normalizacion').on('hidden.bs.modal', async (event) => {
         appNormalizacionModal.setDefaultsModal();
+
         $('#slBasalModNormalizacion').attr("disabled", true);
     });
 
     $('#slEstadoModNormalizacion').change(function (e) {
+        debugger;
         e.preventDefault();
         if ($(this).val() == 1) {
             $('#slBasalModNormalizacion').attr("disabled", false);

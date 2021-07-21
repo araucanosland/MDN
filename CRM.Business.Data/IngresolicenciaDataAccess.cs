@@ -1118,7 +1118,6 @@ namespace CRM.Business.Data
                 new Parametro("@tipoCovenio", Tipo_Convenio),
                  new Parametro("@tipoReporte", TipoReporte)
             };
-          
             try
             {
                 return DBHelper.InstanceCRM.ObtenerDataTable("licencias.sp_Lic_Ingresolicencia_LM_Pendiente_Cobro", parametros);
@@ -1232,6 +1231,7 @@ namespace CRM.Business.Data
 
 
         }
+
 
 
 
@@ -1447,13 +1447,11 @@ namespace CRM.Business.Data
                     FechaIngreso = row["mespreescribe"] != DBNull.Value ? Convert.ToDateTime(row["mespreescribe"]) : new DateTime(1900, 1, 1),
                     FechaPrescribeString = row["mespreescribeString"] != DBNull.Value ? row["mespreescribeString"].ToString() : string.Empty,
                     TipoSubLicencia = row["tiposublicencia"] != DBNull.Value ? row["tiposublicencia"].ToString() : string.Empty,
-
                     NombreEmpresa = row["nombreempresa"] != DBNull.Value ? row["nombreempresa"].ToString() : string.Empty,
                     RutEmpresa = row["RutEmpresa"] != DBNull.Value ? row["RutEmpresa"].ToString() : string.Empty,
                     Observacion = row["Observacion"] != DBNull.Value ? row["Observacion"].ToString() : string.Empty,
                     AnexoEstamento = row["AnexoEstamento"] != DBNull.Value ? row["AnexoEstamento"].ToString() : string.Empty,
                 };
-
 
             }
             catch (Exception ex)
@@ -1507,7 +1505,6 @@ namespace CRM.Business.Data
                     TipoLicencia = row["lmm"] != DBNull.Value ? row["lmm"].ToString() : string.Empty,
                     FechaGestion = row["fechapagodisponibledesde"] != DBNull.Value ? Convert.ToDateTime(row["fechapagodisponibledesde"]) : new DateTime(1900, 1, 1),
                     FechaPrescribeString = row["PagodesdeString"] != DBNull.Value ? row["PagodesdeString"].ToString() : string.Empty,
-
                     RutEmpresa = row["rutEmpresa"] != DBNull.Value ? row["rutEmpresa"].ToString() : string.Empty,
                     NombreEmpresa = row["raz_soc"] != DBNull.Value ? row["raz_soc"].ToString() : string.Empty,
 
@@ -1541,7 +1538,6 @@ namespace CRM.Business.Data
                     Subcomision = row["sucursal"] != DBNull.Value ? row["sucursal"].ToString() : string.Empty,
                     FechaActulizacionString = row["sucursal"] != DBNull.Value ? row["sucursal"].ToString() : string.Empty
 
-
                 };
             }
             catch (Exception ex)
@@ -1550,7 +1546,6 @@ namespace CRM.Business.Data
                 throw ex;
             }
         }
-
 
 
         private static Ingresolicencia ContructorLMPendienteConvenioEmpresa(DataRow row)
@@ -1571,7 +1566,6 @@ namespace CRM.Business.Data
                 throw ex;
             }
         }
-
 
         private static Ingresolicencia EntidadEncabezado(DataRow row)
         {

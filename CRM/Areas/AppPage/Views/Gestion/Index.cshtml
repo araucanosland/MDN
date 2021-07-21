@@ -1,6 +1,4 @@
-﻿@{
-    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
-}
+﻿@{ Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml"; }
 <link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
 
@@ -39,6 +37,9 @@
                     </li>
                     <li class="">
                         <a data-toggle="tab" href="#demo-lft-tab-beneficios" aria-expanded="false" id="tab_beneficios" class="tab-principal">Beneficios</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#demo-lft-tab-10" aria-expanded="false" id="tab_cobranza" class="tab-principal">Cobranza</a>
                     </li>
                 </ul>
 
@@ -614,6 +615,120 @@
                     <div id="demo-lft-tab-beneficios" class="tab-pane fade">
                         @Html.Partial("Beneficios")
                     </div>
+
+
+
+                    <div id="demo-lft-tab-10" class="tab-pane fade">
+                        <div class="panel-body">
+                            <div class="pad-btm">
+                                <div class="row">
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Causa </label>
+                                            <select class="form-control" v-model="modelos.causa">
+                                                <option value="">Todos</option>
+                                                <option v-for="causa in filtros.causas" :value="causa.id">{{causa.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Estado</label>
+                                            <select class="form-control" v-on:change="eventoCambiaEstado" v-model="modelos.estado_cobranza">
+                                                <option value="">Todos</option>
+                                                <option v-for="estado in filtros.estados" :value="estado.id">{{estado.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Sub-Estados</label>
+                                            <select class="form-control" v-model="modelos.subEstado_cobranza">
+                                                <option value="">Todos</option>
+                                                <option v-for="sEstado in filtros.subEstados" :value="sEstado.id">{{sEstado.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Prioridad</label>
+                                            <select class="form-control" v-model="modelos.prioridad_cobranza">
+                                                <option value="">Todos</option>
+                                                <option v-for="prio in filtros.prioridad" :data-content="`<span class='${prio.color}'>${prio.id}</span>`">{{prio.glosa}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Tipo Campaña</label>
+                                            <select class="form-control" v-model="modelos.tipoCampana_cobranza">
+                                                <option value="">Todos</option>
+                                                <option v-for="tipoCamp in filtros.tipoCampana" :value="tipoCamp.id">{{tipoCamp.glosa}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Estado Cliente</label>
+                                            <select class="form-control" v-model="modelos.estadoCliente_cobranza">
+                                                <option value="">Todos</option>
+                                                <option v-for="estadoCli in filtros.estadoCliente" :value="estadoCli.id">{{estadoCli.estado}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Derivación</label>
+                                            <select class="form-control" v-model="modelos.derivacion_cobranza">
+                                                <option value="">Ninguno</option>
+                                                <option v-for="deriv in filtros.derivacion" :value="deriv.id">{{deriv.glosa}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <button id="btn_recuperaciones" class="btn btn-default" v-on:click="handleEventoClickFiltrarCobranza">Filtrar</button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h4>Para visualizar datos debe presionar el botón filtrar.</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group pull-right" style="margin-top: 10px;">
+                                <button data-target="#demo-lg-modal-search" data-toggle="modal" class="btn btn-primary" type="button">
+                                    <i class="pli-search-on-cloud"></i>
+                                </button>
+                            </div>
+                            <span class="counter pull-right"></span>
+                            <table id="tabla_cobranza"
+                                   class="table table-bordered table-hover toggle-circle results"
+                                   data-search="true"
+                                   data-show-refresh="false"
+                                   data-show-toggle="false"
+                                   data-show-columns="false"
+                                   data-page-list="[]"
+                                   data-page-size="50"
+                                   data-pagination="true"
+                                   data-side-pagination="client"
+                                   data-show-pagination-switch="false"
+                                   data-locale="es-CL">
+                                <thead>
+                                    <tr>
+                                        <th data-field="rut" data-sortable="true" data-formatter="cobranzaLinkFormatter">Rut</th>
+                                        <th data-field="afiliado.nombres" data-sortable="true" data-formatter="normalizacionNombresFormatter">Nombres</th>
+                                        <th data-field="empresa.nombre" data-sortable="true">Nom. Empresa</th>
+                                        <th data-field="montoAdeudado" data-sortable="true" data-formatter="formatoMoneyFormatter">Monto Adeudado</th>
+                                        <th data-field="prioridad" data-sortable="true" data-formatter="normalizacionPrioridadFormatter">Prioridad</th>
+                                        <th data-field="gestiones.causaBasal" data-sortable="true" data-formatter="normalizacionFormaterBasal">Causa Basal</th>
+                                        <th data-field="gestiones.estadoCliente" data-sortable="true" data-formatter="normalizacionFormaterEstado">Estado Cliente</th>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -878,8 +993,8 @@
                                         </div>
 
                                         @*<div class="alert alert-purple" style="border-radius: 5px; display:none" id="lbMensajeEncuesta">
-            Afiliado no ha realizado la encuesta. "Enfermedades Cronicas y Medicamentos" <strong><u><a style="color: #076fc7;" id="linkencuesta" href="/motor/App/DatosAfiliados?RutBuscar=" target="_blank">  ir a encuesta! </a></u></strong>
-        </div>*@
+                                                Afiliado no ha realizado la encuesta. "Enfermedades Cronicas y Medicamentos" <strong><u><a style="color: #076fc7;" id="linkencuesta" href="/motor/App/DatosAfiliados?RutBuscar=" target="_blank">  ir a encuesta! </a></u></strong>
+                                            </div>*@
 
                                         <div class="row charlyNTF" style="display:none;">
                                             <div class="col-sm-12 charlyNTFContainer">
@@ -2216,6 +2331,242 @@
     </div>
 </div>
 
+
+
+
+
+<!--MODAL PARA COBRANZA-->
+<div id="mdl_data_cobranza" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" id="myLargeModalLabel">Gestión Cobranza </h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="tab-base" id="MDL_Primario_cobranza" style="margin-bottom: 0px !important;">
+                    <!--Nav Tabs-->
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-cobranza-1" id="tab_contacti_cobranza" aria-expanded="true">Contacto</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-cobranza-2" aria-expanded="false">Historial de Gestión</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" id="tabNormContact" href="#tab-cobranza-3" aria-expanded="false">Contactabilidad</a>
+                        </li>
+                        <li class="" style="display:none;">
+                            <a data-toggle="tab" href="#tab-normalizacion-4" aria-expanded="false">Filtros</a>
+                        </li>
+                    </ul>
+
+                    <!--Tabs Content-->
+                    <div class="tab-content msjCobranza" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-cobranza-1" class="tab-pane fade active in">
+                            <form id="form-registro-contacto-cobranza" action="#" method="post">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Rut</label>
+                                            <input class="form-control" id="txtRutAfiNormcobranza" type="text" :value="dataModal.rut" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class="form-group">
+                                            <label class="control-label">Nombres</label>
+                                            <input class="form-control" type="text" :value="dataModal.afiliado && dataModal.afiliado.nombres + ' ' + dataModal.afiliado.apellidos" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group has-success">
+                                            <label class="control-label" id="morfeable_monto">Monto Adeudado</label>
+                                            <div class="input-group mar-btm">
+                                                <span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+                                                <input class="form-control text-lg-right" type="text" :value="dataModal.montoAdeudado" readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label" id="labelrutempresa">Rut Empresa</label>
+                                            <input class="form-control" id="afi_empresa_rut" type="text" :value="dataModal.rutempresa" readonly="readonly">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-9" id="morf_cnvs">
+                                        <div class="form-group">
+                                            <label class="control-label" id="labelempresa">Empresa</label>
+                                            <input class="form-control" type="text" id="afi_empresa_nombre" :value="dataModal.empresa && dataModal.empresa.nombre" readonly="readonly">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="tab-cobranza-2" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div v-for="gestion in dataModal.gestiones">
+                                    <a href="#">
+                                        <h4 class="list-group-item-heading"><strong>Gestor:</strong>{{gestion.nombreEjecutivo != undefined && gestion.nombreEjecutivo.OrdenaNombre()}}</h4>
+                                        <p class="list-group-item-text">
+                                            <strong>Fecha Gestión: </strong> {{gestion.fechaGestion != undefined && gestion.fechaGestion.toFechaHoraPrueba()}}, <strong>Fecha Prox. Gestión: </strong>
+                                            
+                                        </p>
+                                        <p class="list-group-item-text">
+                                                                                   </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Comentario:</strong> {{gestion.comentarios}}
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-cobranza-3" class="tab-pane fade">
+
+                            <div class="alert alert-warning" id="msjContactNormalizacion" style="display:none;">
+                                <strong>Warning!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                            </div>
+
+                            <div class="row">
+                                <button type="button" id="btn-add-contac-normalizacion" class="btn btn-primary btn-xs">+</button>
+                            </div>
+                            <div class="mar-btm" style="display: none;" id="formulario-contac_normalizacion">
+                                <form id="form-registro-contacto_norm" action="#" method="post">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Tipo de Contacto</label>
+                                                    <select class="selectpicker" id="cbtippContac_norm" name="cbtippContac_norm">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Celular</option>
+                                                        <option value="2">Teléfono</option>
+                                                        <option value="3">Mail</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Clasificación de Contacto</label>
+                                                    <select class="selectpicker" id="cbClasificacionConctac_norm" name="cbClasificacionConctac_norm">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Personal</option>
+                                                        <option value="2">Comercial</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Datos de Contacto</label>
+                                                <input class="form-control" id="afi_NewContacto_norm" type="text" value="" maxlength="150" name="afi_NewContacto_norm">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" id="btGuardaContacto_norm" type="submit">Guardar Contacto</button>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <table class="table table-hover table-vcenter" style="font-size: 11px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Gestión</th>
+                                            <th>Datos Contacto Nor</th>
+                                            <th>Tipo contacto</th>
+                                            <th>Indice</th>
+                                            <th>Ultimo Contacto Valido</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bdy_datos_contactos_cobranza"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="tab-cobranza-4" class="tab-pane fade">
+                            <div class="table-responsive" style="overflow:scroll; height:350px;">
+                                <table class="table table-striped">
+                                    <tbody id="letable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Modal footer-->
+            <div class="modal-footer" id="mensahes-must">
+
+                <form id="new_datos-gestion_cobranza" action="#" method="post">
+                    <div class="row esconder" style="text-align: left;">
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Estado</label>
+                                <select class="form-control" id="slEstadoModcobranza" v-on:change="eventoCambiaEstadoModal">
+                                    <option value="">Seleccione</option>
+                                    <option v-for="estadoModal in filtrosModal.estadosModal" :value="estadoModal.id">{{estadoModal.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Sub Estado</label>
+                                <select class="form-control subEstadoCobranza" id="subEstadoCobranza" v-on:change="manejarVisibilidadCalendarioCobranza" v-model="modelosModal.subEstado">
+                                    <option value="">Seleccione</option>
+                                    <option v-for="sEstadoModal in filtrosModal.subEstadosModal" :value="sEstadoModal.id">{{sEstadoModal.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Causa</label>
+                                <select class="form-control limpiar" id="slBasalModcobranza" v-model="modelosModal.causaBasal" disabled>
+                                    <option value="">Seleccione</option>
+                                    <option v-for="causaModal in filtrosModal.causasModal" :value="causaModal.id">{{causaModal.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" v-if="comportamientos.mostrarProximaGestionCobranza">
+                            <div class="form-group" id="fpg_cobranza">
+                                <label class="control-label">Fecha Próxima Gestión</label>
+                                <div id="demo-dp-component_cobranza">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" v-model="modelosModal.fechaCompromiso">
+                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row esconder" style="text-align: left;">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Comentarios</label>
+                                <textarea placeholder="Comentarios" rows="3" class="form-control" v-model="modelosModal.comentarios"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <input type="hidden" id="ges_id_asignacion_normalizacion" name="ges_id_asignacion_normalizacion" value="" />
+
+                    <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                    <button id="btGestCobranza" class="btn btn-primary esconder" v-on:click="handleSubmitcobranza" type="button">Guardar</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 @section script{
 
     <script src="~/Assets/js/vue.js"></script>
@@ -2242,6 +2593,6 @@
     <script src="~/Assets/js.App/src/ign.js?g=@Guid.NewGuid().ToString()"></script>
     <script src="~/Assets/js.App/src/beneficios.js?g=@Guid.NewGuid().ToString()"></script>
     <script src="~/Assets/js.App/src/venta-remota.js?g=@Guid.NewGuid().ToString()"></script>
-
+    <script src="~/Assets/js.App/src/cobranza.js?g=@Guid.NewGuid().ToString()"></script>
 }
 

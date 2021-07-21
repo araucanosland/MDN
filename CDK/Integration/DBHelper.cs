@@ -12,7 +12,7 @@ namespace CDK.Integration
         private static DBHelperBase _instanceReportesCRF;
         private static DBHelperBase _instanceEngine;
         private static DBHelperBase _instanceMotorHerramientas;
-
+        private static DBHelperBase _instanceNegocio;
         #endregion
 
         #region Instancias Singleton
@@ -26,6 +26,11 @@ namespace CDK.Integration
         public static DBHelperBase InstanceSecurity
         {
             get { return (_instanceBusiness = _instanceBusiness ?? new DBHelperBase("CN_CRM")); }
+        }
+
+        public static DBHelperBase InstanceNegocio
+        {
+            get { return (_instanceNegocio = _instanceNegocio ?? new DBHelperBase("CN_Negocio")); }
         }
 
         public static DBHelperBase InstanceReportes

@@ -1,12 +1,10 @@
 ﻿
 
 @{
-                /**/
+    /**/
 
-                /**/
-
-                ViewBag.Title = "Ingreso";
-                Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Ingreso";
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -158,8 +156,8 @@
             $('.contenedor-folios').html("");
             $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-Bitacora", { codIngreso: CodIng }, function (datos) {
 
-
-
+                debugger;
+              
                 let glosa;
                 let html = ``;
                 let responsable;
@@ -167,14 +165,14 @@
                     glosa = 'En espera gestión oficina';
                     responsable = 'Oficina';
                     html = `<div class="timeline-entry" >
-                                         <div class="timeline-stat">` ;
+                                     <div class="timeline-stat">` ;
                     html = html + `<div class="timeline-icon  bg-success"></div>`;
                     html = html + `<div class="timeline-time">${datos[0].FechaEtapa.toFecha()}</div>
-                                         </div>`;
+                                     </div>`;
                     html = html + `<div class="timeline-label text-left" style="background-color:#398452;border-right-color:#398452">`;
                     html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Estado LM: ${glosa}</p><p style="color:#f5f5f5">Responsable : ${responsable}`;
                     html = html + `  </div>
-                                </div>` ;
+                            </div>` ;
 
                     console.log(html);
                     //  $('.contenedor-folios').append(html);
@@ -184,14 +182,14 @@
                     glosa = 'En Espera de Gestión Carta Certificada';
                     responsable = 'Oficina';
                     html = `<div class="timeline-entry" >
-                                         <div class="timeline-stat">` ;
+                                     <div class="timeline-stat">` ;
                     html = html + `<div class="timeline-icon  bg-success"></div>`;
                     html = html + `<div class="timeline-time">${datos[0].FechaEtapa.toFecha()}</div>
-                                         </div>`;
+                                     </div>`;
                     html = html + `<div class="timeline-label text-left" style="background-color:#398452;border-right-color:#398452">`;
                     html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Estado LM: ${glosa}</p><p style="color:#f5f5f5">Responsable : ${responsable}`;
                     html = html + `  </div>
-                                </div>` ;
+                            </div>` ;
 
                     console.log(html);
                     //$('.contenedor-folios').append(html);
@@ -200,14 +198,14 @@
                     glosa = 'En Espera de Gestión Carta Certificada';
                     responsable = 'Oficina';
                     html = `<div class="timeline-entry" >
-                                         <div class="timeline-stat">` ;
+                                     <div class="timeline-stat">` ;
                     html = html + `<div class="timeline-icon  bg-success"></div>`;
                     html = html + `<div class="timeline-time">${datos[0].FechaEtapa.toFecha()}</div>
-                                         </div>`;
+                                     </div>`;
                     html = html + `<div class="timeline-label text-left" style="background-color:#398452;border-right-color:#398452">`;
                     html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Estado LM: ${glosa}</p><p style="color:#f5f5f5">Responsable : ${responsable}`;
                     html = html + `  </div>
-                                </div>` ;
+                            </div>` ;
 
                     console.log(html);
                     //$('.contenedor-folios').append(html);
@@ -217,14 +215,14 @@
                     glosa = 'En espera de Pronunciamiento';
                     responsable = 'RRLL';
                     html = `<div class="timeline-entry" >
-                                         <div class="timeline-stat">` ;
+                                     <div class="timeline-stat">` ;
                     html = html + `<div class="timeline-icon  bg-success"></div>`;
                     html = html + `<div class="timeline-time">${datos[0].FechaEtapa.toFecha()}</div>
-                                         </div>`;
+                                     </div>`;
                     html = html + `<div class="timeline-label text-left" style="background-color:#398452;border-right-color:#398452">`;
                     html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Estado LM: ${glosa}</p><p style="color:#f5f5f5">Responsable : ${responsable}`;
                     html = html + `  </div>
-                                </div>` ;
+                            </div>` ;
 
                     console.log(html);
                     //$('.contenedor-folios').append(html);
@@ -234,14 +232,14 @@
                     glosa = 'En Gestión Oficina "Devueltas TATA"';
                     responsable = 'Oficina';
                     html = `<div class="timeline-entry" >
-                                         <div class="timeline-stat">` ;
+                                     <div class="timeline-stat">` ;
                     html = html + `<div class="timeline-icon  bg-success"></div>`;
                     html = html + `<div class="timeline-time">${datos[0].FechaEtapa.toFecha()}</div>
-                                         </div>`;
+                                     </div>`;
                     html = html + `<div class="timeline-label text-left" style="background-color:#398452;border-right-color:#398452">`;
                     html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Estado LM: ${glosa}</p><p style="color:#f5f5f5">Responsable : ${responsable}`;
                     html = html + `  </div>
-                                </div>` ;
+                            </div>` ;
 
                     console.log(html);
                     //$('.contenedor-folios').append(html);
@@ -252,14 +250,14 @@
                     glosa = 'En Gestión RRLL "Devueltas Compin"';
                     responsable = datos[0].Responsable;
                     html = `<div class="timeline-entry" >
-                                         <div class="timeline-stat">` ;
+                                     <div class="timeline-stat">` ;
                     html = html + `<div class="timeline-icon  bg-success"></div>`;
                     html = html + `<div class="timeline-time">${datos[0].FechaEtapa.toFecha()}</div>
-                                         </div>`;
+                                     </div>`;
                     html = html + `<div class="timeline-label text-left" style="background-color:#398452;border-right-color:#398452">`;
                     html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Estado LM: ${glosa}</p><p style="color:#f5f5f5">Responsable : ${responsable}`;
                     html = html + `  </div>
-                                </div>` ;
+                            </div>` ;
 
                     console.log(html);
                     //$('.contenedor-folios').append(html);
@@ -270,14 +268,14 @@
                     glosa = "En Espera de Reenvío a Compin";
                     responsable = datos[0].Responsable;
                     html = `<div class="timeline-entry" >
-                                         <div class="timeline-stat">` ;
+                                     <div class="timeline-stat">` ;
                     html = html + `<div class="timeline-icon  bg-success"></div>`;
                     html = html + `<div class="timeline-time">${datos[0].FechaEtapa.toFecha()}</div>
-                                         </div>`;
+                                     </div>`;
                     html = html + `<div class="timeline-label text-left" style="background-color:#398452;border-right-color:#398452">`;
                     html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Estado LM: ${glosa}</p><p style="color:#f5f5f5">Responsable : ${responsable}`;
                     html = html + `  </div>
-                                </div>` ;
+                            </div>` ;
 
                     console.log(html);
                     //$('.contenedor-folios').append(html);
@@ -307,14 +305,14 @@
                     glosa = 'En espera de Pronunciamiento';
                     responsable = 'LM Presencial';
                     html = `<div class="timeline-entry" >
-                                         <div class="timeline-stat">` ;
+                                     <div class="timeline-stat">` ;
                     html = html + `<div class="timeline-icon  bg-success"></div>`;
                     html = html + `<div class="timeline-time">${datos[0].FechaEtapa.toFecha()}</div>
-                                         </div>`;
+                                     </div>`;
                     html = html + `<div class="timeline-label text-left" style="background-color:#398452;border-right-color:#398452">`;
                     html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Estado LM: ${glosa}</p><p style="color:#f5f5f5">Responsable : ${responsable}`;
                     html = html + `  </div>
-                                </div>` ;
+                            </div>` ;
 
                     console.log(html);
                     //$('.contenedor-folios').append(html);
@@ -324,14 +322,14 @@
                     glosa = "En Espera Envío TATA";
                     responsable = "RRLL";
                     html = `<div class="timeline-entry" >
-                                         <div class="timeline-stat">` ;
+                                     <div class="timeline-stat">` ;
                     html = html + `<div class="timeline-icon  bg-success"></div>`;
                     html = html + `<div class="timeline-time">${datos[0].FechaEtapa.toFecha()}</div>
-                                         </div>`;
+                                     </div>`;
                     html = html + `<div class="timeline-label text-left" style="background-color:#398452;border-right-color:#398452">`;
                     html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Estado LM: ${glosa}</p><p style="color:#f5f5f5">Responsable : ${responsable}`;
                     html = html + `  </div>
-                                </div>` ;
+                            </div>` ;
 
                     console.log(html);
                     //$('.contenedor-folios').append(html);
@@ -368,14 +366,12 @@
                     $("#lblquienenvia").text(licencia.Quienenvia);
                     $("#lbltelefono").text(licencia.Telefono);
                     $("#lblcorreo").text(licencia.Email);
-
                     $("#lblmandato").text(licencia.Mandato);
                     debugger;
-
-
+                    
                     if (licencia.Responsable != 'RRLL' || licencia.Etapa != 'Conforme') {
                         let html = `<div class="timeline-entry" >
-                                         <div class="timeline-stat">` ;
+                                     <div class="timeline-stat">` ;
 
                         //----------------Licencias esta pronunciada
 
@@ -413,10 +409,8 @@
                         }
 
                         html = html + `<div class="timeline-time">${licencia.FechaEtapa.toFecha()}</div>
-
                                      </div>`;
-
-
+                        
                         if (licencia.EtapaId != 9 && licencia.EtapaId != 8) {//pronunciadas
                             if (i == 0) {
                                 if (licencia.EtapaId == 2) {
@@ -479,6 +473,15 @@
                                     html = html + ` <p class="mar-no pad-btm" > Responsable:  ${licencia.Responsable}</p>`;
 
                                 }
+                                //else if (licencia.EtapaId == '12') { //solicitud de carta
+
+                                //    html = html + `<div class="timeline-label text-left" style="background-color:#398452;border-right-color:#398452">`;
+                                //    html = html + ` <p class="mar-no pad-btm" >Estado LM: ${licencia.Etapa}</p>`;
+                                //    html = html + ` <p class="mar-no pad-btm" > Responsable:  ${licencia.Responsable}</p>`;
+
+                                //}
+
+
 
                                 else {
 
@@ -492,7 +495,7 @@
                             }
                             else {
 
-
+                                
                                 if (licencia.Etapa == 'Pendiente TATA') {
                                     var strng;
                                     var incStr;
@@ -600,7 +603,7 @@
                         }
 
                         html = html + `  </div>
-                                </div>` ;
+                            </div>` ;
 
                         console.log(html);
                         $('.contenedor-folios').append(html);

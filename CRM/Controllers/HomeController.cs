@@ -229,15 +229,11 @@ namespace CRM.Controllers
                     string RutUsuario = User.Identity.Name;
 
 
+                    //if (RutUsuario.Replace("LAARAUCANA\\", "") != RE)
+                    //{
+                    //    return Redirect("/motor/home/SinAcceso");
 
-
-                    // RegistrarLog("rut usuario: "+ RutUsuario,2);
-
-                    if (RutUsuario.Replace("LAARAUCANA\\", "") != RE)
-                    {
-                        return Redirect("/motor/home/SinAcceso");
-
-                    }
+                    //}
 
                     var client = new RestClient(baseUrl + "/motor/api");
 
