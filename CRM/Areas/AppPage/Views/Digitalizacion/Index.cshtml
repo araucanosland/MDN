@@ -38,7 +38,10 @@
                 <a data-toggle="tab" href="#demo-lft-tab-3" aria-expanded="true" id="tab_misreparos" class="tab-principal">Reparos de Mi Oficina<span class="badge"><label id="conteoMisreparos"></label></span></a>
             </li>
             <li class="">
-                <a data-toggle="tab" href="#demo-lft-tab-4" aria-expanded="true" id="tab_Agente" class="tab-principal">Digitalización<span class="badge"><label id="conteoAgenteDigit"></label></span></a>
+                <a data-toggle="tab" href="#demo-lft-tab-4" aria-expanded="true" id="tab_Agente" class="tab-principal">Documentación Inicial<span class="badge"><label id="conteoAgenteDigit"></label></span></a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#demo-lft-tab-6" aria-expanded="true" id="tab_Agente_Legalizados" class="tab-principal">Documentos Legalizados<span class="badge"><label id="conteoAgenteLegalizadoDigit"></label></span></a>
             </li>
             <li class="">
                 <a data-toggle="tab" href="#demo-lft-tab-5" aria-expanded="true" id="tab_misreparos_Agente" class="tab-principal">Reparos<span class="badge"><label id="conteoAgenteReparo"></label></span></a>
@@ -413,7 +416,7 @@
                                         <select id="ddlejecutivoAsignacion" class="form-control"></select>
                                     </div>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-2" style="display:none">
                                     <div class="form-group">
                                         <label class="control-label">Tipo Gestión</label>
                                         <select class="form-control" id="ddlTipo_asignacion">
@@ -493,7 +496,7 @@
                                             <th data-field="FechaVenta" data-sortable="true" data-formatter="formatoFecha">Fecha Venta</th>
                                             <th data-field="EstadoGestion">Estado Gestión</th>
                                             <th data-field="Id" data-formatter="digitalLinkFormatter">Acción</th>
-
+                                            <th data-field="Grilla" data-visible="false">Grilla</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -596,8 +599,8 @@
                                             <th data-field="Id" data-sortable="false">Id</th>
                                             <th data-field="RutejecutivoAgente" data-sortable="true">Rut Ejecutivo</th>
                                             <th data-field="NombreEjecutivo" data-sortable="true">Nombre Ejecutivo</th>
-                                            <th data-field="TipoDescripcion" data-sortable="true">Tipo Documentación</th>
                                             <th data-field="Oferta" data-sortable="true">N° Oferta</th>
+                                            <th data-field="TipoDescripcion" data-sortable="true">Tipo Documentación</th>
                                             <th data-field="FechaVenta" data-sortable="true" data-formatter="formatoFecha">Fecha Venta</th>
                                             <th data-field="EstadoGestion">Estado Gestión</th>
                                             <th data-field="Id" data-formatter="digitalLinkFormatter">Acción</th>
@@ -611,6 +614,113 @@
                 </div>
             </div>
 
+            @*  ***************************Tab Asignaciom Agente Documentos Legalizados **************************************   *@
+            <div id="demo-lft-tab-6" class="tab-pane fade">
+                <div class="row">
+                    <h1 class="page-header text-overflow">Digitalización </h1>
+                    <br />
+                    <div class="panel" style="border-radius: 8px">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Filtros de Búsqueda</h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Ejecutivo</label>
+                                        <select id="ddlejecutivoAsignacionLegalizado" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2" style="display:none">
+                                    <div class="form-group">
+                                        <label class="control-label">Tipo Gestión</label>
+                                        <select class="form-control" id="ddlTipo_asignacionLegalizado">
+                                            <option value="-1">Todos...</option>
+                                            <option value="1">Documentación Inicial</option>
+                                            <option value="2">Documentos Legalizados</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Venta Desde</label>
+                                        <div id="index-dp-component">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="dt_fecha_asignacion_desdeLegalizado">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Venta Hasta</label>
+                                        <div id="index-dp-component">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="dt_fecha_asignacion_hastaLegalizado">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="btn_buscar_asignacionLegalizado">BUSCAR</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="panel" style="border-radius: 8px">
+                    <div class="panel-control">
+                        <div class="col-sm-8">
+                            <button class="demo-panel-ref-btn btn btn-default btn-active-success" data-toggle="panel-overlay" id="btnmodalAsignacionEjecutivoLegalizado">
+                                <i class="demo-psi-repeat-2 icon-fw"></i> Asignar Ejecutivo
+                            </button>
+                        </div>
+
+                    </div>
+                    <h3 class="panel-title">Digitalizaciones del Día</h3>
+                    @*data-url="/motor/api/digitalizacion/listar-digitalizacion"*@
+                    <form class="form-horizontal">
+                        <div class="panel-body">
+                            <div class="panel-body">
+                                <table data-toggle="table"
+                                       data-sort-name="id"
+                                       data-page-list="[]"
+                                       data-page-size="30"
+                                       data-search="false"
+                                       data-show-pagination-switch="false"
+                                       data-pagination="true" id="tblDigitalizacionAsignacionLegalizado" style="font-size: 12px">
+
+                                    <thead>
+                                        <tr>
+                                            <th data-field="state" data-checkbox="true"></th>
+                                            <th data-field="Id" data-sortable="false">Id</th>
+                                            <th data-field="RutejecutivoAgente" data-sortable="true">Rut Ejecutivo</th>
+                                            <th data-field="NombreEjecutivo" data-sortable="true">Nombre Ejecutivo</th>
+                                            <th data-field="TipoDescripcion" data-sortable="true">Tipo Documentación</th>
+                                            <th data-field="Oferta" data-sortable="true">N° Oferta</th>
+                                            <th data-field="FechaVenta" data-sortable="true" data-formatter="formatoFecha">Fecha Venta</th>
+                                            <th data-field="EstadoGestion">Estado Gestión</th>
+                                            <th data-field="Id" data-formatter="digitalLegaLinkFormatter">Acción</th>
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -623,7 +733,7 @@
                     <span class="badge badge-pink" id="cantPensScheck">0</span>
                     <span>Digitalizaciones seleccionados</span>
                 </div>
-                <h4 class="modal-title">Asiganción de Digitalizacón</h4>
+                <h4 class="modal-title">Asiganción Documentación Inicial</h4>
             </div>
             <div></div>
             <div class="modal-body" id="panelejecutivo">
@@ -636,7 +746,7 @@
             </div>
             <!--Modal footer-->
             <div class="modal-footer">
-                <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                <button data-dismiss="modal"  class="btn btn-default" id="btncerrarAsignarDigitalizacion" type="button">Cerrar</button>
                 <button class="btn btn-primary" id="btAsignarDigitalizacion">Asignar</button>
             </div>
         </div>
@@ -664,12 +774,43 @@
             </div>
             <!--Modal footer-->
             <div class="modal-footer">
-                <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                <button data-dismiss="modal" class="btn btn-default" id="btncerrarAsignarAgenteReparo" type="button">Cerrar</button>
                 <button class="btn btn-primary" id="btAsignarAgenteReparo">Asignar</button>
             </div>
         </div>
     </div>
 </div>
+
+<div id="modal_asigna_digitalizacion_Legalizacion" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-xs">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header">
+                <div class="panel-control">
+                    <span class="badge badge-pink" id="cantChecklegalizado">0</span>
+                    <span>Digitalizaciones seleccionados</span>
+                </div>
+                <h4 class="modal-title">Asiganción Documentos Legalizados</h4>
+            </div>
+            <div></div>
+            <div class="modal-body" id="panelejecutivoLegallizacion">
+                <div class="col-sm-8 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label">Seleccione un ejecutivo para asignar...</label>
+                        <select id="ddlejecutivo_modal_Legalizacion" class="form-control"></select>
+                    </div>
+                </div>
+            </div>
+            <!--Modal footer-->
+            <div class="modal-footer">
+                <button data-dismiss="modal"  class="btn btn-default" type="button" id="btcerrarDigitalizacionLegalizados">Cerrar</button>
+                <button class="btn btn-primary" id="btAsignarDigitalizacionLegalizados">Asignar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 @section script{
     <script src="~/Assets/js/vue.js"></script>
     <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>

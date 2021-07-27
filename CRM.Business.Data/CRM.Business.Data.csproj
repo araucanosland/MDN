@@ -80,6 +80,7 @@
     <Compile Include="InformesDataAccess.cs" />
     <Compile Include="IngresoCarteraEmpresaDataAccess.cs" />
     <Compile Include="IngresolicenciaDataAccess.cs" />
+    <Compile Include="MantenedoresDataAccess.cs" />
     <Compile Include="PensionadosDataAccess.cs" />
     <Compile Include="PerfilEmpresasDataAccess.cs" />
     <Compile Include="InstalacionDataAccess.cs" />

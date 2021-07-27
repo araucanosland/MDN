@@ -752,7 +752,21 @@ $(function () {
             </li>`
                 $("#mainnav-menu").html(menu);
             }
+            else if (getCookie("Cargo") == "Mesa Ayuda") {
 
+                let menu =
+                    `<li class="list-header">Mantenedor Usuario</li>
+                
+                <li>
+                <a href="/motor/App/Mantenedores/ListarUsuarios">
+                    <i class="ion-clipboard"></i>
+                    <span class="menu-title">Usuarios</span>
+                    <i class="arrow"></i>
+                </a>
+                
+            </li>`
+                $("#mainnav-menu").html(menu);
+            }
 
 
             else {

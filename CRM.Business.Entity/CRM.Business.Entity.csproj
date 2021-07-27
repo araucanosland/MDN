@@ -129,6 +129,7 @@
     <Compile Include="SucursalEntity.cs" />
     <Compile Include="TipoausenciaEntity.cs" />
     <Compile Include="TrackingEntity.cs" />
+    <Compile Include="UsuarioEntity.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

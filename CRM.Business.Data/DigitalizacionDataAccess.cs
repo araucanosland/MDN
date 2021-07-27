@@ -170,6 +170,7 @@ namespace CRM.Business.Data
                 TipoDescripcion = row["TipoDocumento"] != DBNull.Value ? row["TipoDocumento"].ToString() : string.Empty,
                 RutejecutivoAgente = row["RutEjecutivoAsignacion"] != DBNull.Value ? row["RutEjecutivoAsignacion"].ToString() : string.Empty,
                 NombreEjecutivo= row["NombreEjecutivo"] != DBNull.Value ? row["NombreEjecutivo"].ToString() : string.Empty,
+               
             };
 
 

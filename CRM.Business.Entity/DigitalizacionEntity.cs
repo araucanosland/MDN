@@ -112,5 +112,7 @@ namespace CRM.Business.Entity
         public string NombreEjecutivo  { get; set; }
 
         public string RutejecutivoAgente { get; set; }
+
+        public string Grilla { get; set; }
     }
 }

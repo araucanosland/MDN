@@ -16,6 +16,19 @@ namespace CRM.Areas.AppPage.Controllers
         }
 
 
+        public ActionResult IngresoUsuario()
+        {
+            return View();
+        }
+
+
+        public ActionResult ListarUsuarios()
+        {
+            return View();
+        }
+
+
+
         [HttpPost]
         public ActionResult Upload()
         {
