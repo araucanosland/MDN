@@ -565,6 +565,7 @@ namespace CRM.Business.Data
                 Oficina = row["oficina_id"] != DBNull.Value ? Convert.ToInt32(row["oficina_id"]) : 0,
                 Rut_Ejecutivo = row["ejec_asignado"] != DBNull.Value ? row["ejec_asignado"].ToString() : string.Empty,
                 Periodo = row["periodo"] != DBNull.Value ? Convert.ToInt32(row["periodo"]) : 0,
+                Estado = row["estado"] != DBNull.Value ? row["estado"].ToString() : string.Empty,
 
             };
         }
@@ -715,6 +716,7 @@ namespace CRM.Business.Data
                 new Parametro("@SubEstado_id", entrada.SubEstado_id),
                 new Parametro("@Periodo",entrada.Periodo),
                 new Parametro("@EjecutivoRut",entrada.EjecutivoRut),
+                new Parametro("@Observacion",entrada.Observacion),
             };
             return DBHelper.InstanceNegocio.EjecutarProcedimiento("pensionados.Guardar_Gestion_Pensionado", pram);
         }

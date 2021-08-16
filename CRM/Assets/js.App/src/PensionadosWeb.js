@@ -295,7 +295,8 @@ $(function () {
             Estado_id: $('#ModaldllEstadoGestion').val(),
             SubEstado_id: $('#ModaldllSubEstadoGestion').val(),
             Periodo: periodo,
-            EjecutivoRut: $('#rutejecutivo').val()
+            EjecutivoRut: $('#rutejecutivo').val(),
+            Observacion: $('#penObservacion').val()
         }
         $.SecPostJSON(BASE_URL + "/motor/api/pensionados/Guardar-Gestion-Pensionados", webGestionPensionado, function (respuesta) {
             

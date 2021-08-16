@@ -241,6 +241,7 @@ namespace CRM.Business.Entity
         public int Oficina { get; set; }
         public string Rut_Ejecutivo { get; set; }
         public int Periodo { get; set; }
+        public string Estado { get; set; }
     }
 
     #region comunas
@@ -300,6 +301,7 @@ namespace CRM.Business.Entity
         public int SubEstado_id { get; set; }
         public int Periodo { get; set; }
         public string EjecutivoRut { get; set; }
+        public string Observacion { get; set; }
 
     }
 
