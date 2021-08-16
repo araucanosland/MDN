@@ -199,10 +199,11 @@ namespace CRM.Business.Data
             return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_Asignacion_ListarByEjecutivo3", pram, ContainerConstructor);
         }
 
-        public static List<ContenedorCampaniaList> ListarPaginado(int Periodo, int TipoAsignacion, string TokenEjecutivo, int Estado, string Marca, int SubEstado, string Prioridad, string Segmento, string Tipo, string BusEmpresa, string rut, int Offset, int Limit, string Sort, string Orden, string Vencimiento)
+        public static List<ContenedorCampaniaList> ListarPaginado(string TipoDerivacion, int Periodo, int TipoAsignacion, string TokenEjecutivo, int Estado, string Marca, int SubEstado, string Prioridad, string Segmento, string Tipo, string BusEmpresa, string rut, int Offset, int Limit, string Sort, string Orden, string Vencimiento)
         {
             Parametros pram = new Parametros
             {
+                new Parametro("@TipoDerivacion", TipoDerivacion),
                 new Parametro("@Periodo", Periodo),
                 new Parametro("@TokenEjecutivo",TokenEjecutivo),
                 new Parametro("@TipoCamp",TipoAsignacion),

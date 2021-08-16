@@ -1,7 +1,7 @@
-﻿window.Auditor=""
+﻿
 var metodos = {
     cargaGestion: function (Id) {
-        $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-gestion", { Id: Id }, function (response) {
+        $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-gestion-auditoria", { Id: Id }, function (response) {
             debugger;
             $("#AfiliadoRut").val(response.RutAfiliado);
             $("#AfiNombres").val(response.NombreAfiliado)
@@ -21,7 +21,7 @@ var metodos = {
             $("#OficinaPagadora").val(response.OficinaPagadora)
             $("#OficinaVenta").val(response.OficinaVenta)
             $("#OficinaAuditora").val(response.OficinaAuditora)
-            Auditor = response.Auditor;
+            
             if (response.Id_Estado == 1) {
                 $("#lblEstado").text("Aprobado").css("color", "green")
             }
@@ -33,11 +33,6 @@ var metodos = {
 
            
             if (Audit == "4ud1t") {
-
-                if (Auditor == 2) {
-                    $("#OficinaAuditora").val("División Riesgo Crédito")
-                }
-
                 
                 if ($('#ddlLiquidacion').val() == 1 || $('#ddlLiquidacion').val() == 4) {
                     $("#divLiqSueldo").hide();
@@ -213,6 +208,9 @@ $(function () {
     }
 
 
+
+
+
     $('#btn-bolver').on("click", function () {
         location.href = BASE_URL + "/motor/App/digitalizacion"
     });
@@ -248,51 +246,7 @@ $(function () {
             var WebGestionDigitalizacion = {
                 Id_lead: Id_Lead,
                 Id_Estado: estadoAprobado,
-                Auditor: 1,
-                RutEjecutivo: getCookie("Rut"),
-                Tipo_Gestion: 1,
-                LiquidacionSueldo: $("#ddlLiquidacion").val(),
-                InformeCuotas: $("#ddlinformecuotas").val(),
-                SolicitudCredito: $("#ddlsolicitudcredito").val(),
-                Certificacion: $("#ddlcertificacion").val(),
-                HojaResumen: $("#ddlhojaresumen").val(),
-                CompobanteDinero: $("#ddlcomprobante").val(),
-                CheckListDigitalizacion: $("#ddlcheckdigitalizacion").val(),
-                InformacionAval: $("#ddlInformacionval").val(),
-                Afecto15: $("#ddlafecto15").val(),
-                SeguroDesgravamen: $("#ddlsegurodesgravamen").val(),
-                SeguroCesantia: $("#ddlsegurocesantia").val()
-            }
-            $.SecPostJSON(BASE_URL + "/motor/api/digitalizacion/guardar-gestion", WebGestionDigitalizacion, function (respuesta) {
-
-                if (respuesta.estado = 'OK') {
-                    $.niftyNoty({
-                        type: 'success',
-                        container: 'floating',
-                        html: '<strong>Correcto</strong><li>Datos Guardados Correctamente!!!</li>',
-                        focus: false,
-                        timer: 5000
-                    });
-                }
-                else {
-                    $.niftyNoty({
-                        type: 'danger',
-                        message: '<strong>Error al guardar </strong>',
-                        container: 'floating',
-                        timer: 5000
-                    });
-                }
-
-
-            });
-
-        }
-
-        if (httpGet("aud") == "4ud1t") {
-            var WebGestionDigitalizacion = {
-                Id_lead: Id_Lead,
-                Id_Estado: 1,
-                Auditor: Auditor,
+                Auditor: 2,
                 RutEjecutivo: getCookie("Rut"),
                 Tipo_Gestion: 1,
                 LiquidacionSueldo: $("#ddlLiquidacion").val(),
@@ -308,7 +262,7 @@ $(function () {
                 SeguroCesantia: $("#ddlsegurocesantia").val()
             }
             debugger;
-            $.SecPostJSON(BASE_URL + "/motor/api/digitalizacion/guardar-gestion-misreparos", WebGestionDigitalizacion, function (respuesta) {
+            $.SecPostJSON(BASE_URL + "/motor/api/digitalizacion/guardar-gestion-auditoria", WebGestionDigitalizacion, function (respuesta) {
 
                 if (respuesta.estado = 'OK') {
                     $.niftyNoty({
@@ -316,10 +270,7 @@ $(function () {
                         container: 'floating',
                         html: '<strong>Correcto</strong><li>Datos Guardados Correctamente!!!</li>',
                         focus: false,
-                        timer: 1000,
-                        onHidden: function () {
-                            location.href = '/motor/App/Digitalizacion';
-                        }
+                        timer: 5000
                     });
                 }
                 else {
@@ -335,6 +286,53 @@ $(function () {
             });
 
         }
+
+        //if (httpGet("aud") == "4ud1t") {
+        //    var WebGestionDigitalizacion = {
+        //        Id_lead: Id_Lead,
+        //        Id_Estado: 1,
+        //        Auditor: 1,
+        //        RutEjecutivo: getCookie("Rut"),
+        //        Tipo_Gestion: 1,
+        //        LiquidacionSueldo: $("#ddlLiquidacion").val(),
+        //        InformeCuotas: $("#ddlinformecuotas").val(),
+        //        SolicitudCredito: $("#ddlsolicitudcredito").val(),
+        //        Certificacion: $("#ddlcertificacion").val(),
+        //        HojaResumen: $("#ddlhojaresumen").val(),
+        //        CompobanteDinero: $("#ddlcomprobante").val(),
+        //        CheckListDigitalizacion: $("#ddlcheckdigitalizacion").val(),
+        //        InformacionAval: $("#ddlInformacionval").val(),
+        //        Afecto15: $("#ddlafecto15").val(),
+        //        SeguroDesgravamen: $("#ddlsegurodesgravamen").val(),
+        //        SeguroCesantia: $("#ddlsegurocesantia").val()
+        //    }
+        //    $.SecPostJSON(BASE_URL + "/motor/api/digitalizacion/guardar-gestion-misreparos", WebGestionDigitalizacion, function (respuesta) {
+
+        //        if (respuesta.estado = 'OK') {
+        //            $.niftyNoty({
+        //                type: 'success',
+        //                container: 'floating',
+        //                html: '<strong>Correcto</strong><li>Datos Guardados Correctamente!!!</li>',
+        //                focus: false,
+        //                timer: 1000,
+        //                onHidden: function () {
+        //                    location.href = '/motor/App/Digitalizacion';
+        //                }
+        //            });
+        //        }
+        //        else {
+        //            $.niftyNoty({
+        //                type: 'danger',
+        //                message: '<strong>Error al guardar </strong>',
+        //                container: 'floating',
+        //                timer: 5000
+        //            });
+        //        }
+
+
+        //    });
+
+        //}
 
 
     })

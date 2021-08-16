@@ -1,8 +1,8 @@
-﻿window.Auditor = ""
+﻿
 var metodos = {
     cargaGestion: function (Id) {
-        $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-gestion", { Id: Id }, function (response) {
-            
+        $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-gestion-auditoria", { Id: Id }, function (response) {
+            debugger;
             $("#AfiliadoRut").val(response.RutAfiliado);
             $("#AfiNombres").val(response.NombreAfiliado)
             $("#folio").val(response.Folio)
@@ -12,7 +12,6 @@ var metodos = {
             $("#OficinaPagadora").val(response.OficinaPagadora)
             $("#OficinaVenta").val(response.OficinaVenta)
             $("#OficinaAuditora").val(response.OficinaAuditora)
-            Auditor = response.Auditor;
             if (response.Id_Estado == 1) {
                 $("#lblEstado").text("Aprobado").css("color", "green")
             }
@@ -22,9 +21,6 @@ var metodos = {
 
             var Audit = httpGet("aud");
             if (Audit == "4ud1t") {
-                if (Auditor == 2) {
-                    $("#OficinaAuditora").val("División Riesgo Crédito")
-                }
 
                 if ($('#ddPagare').val() == 1 || $('#ddPagare').val() == 4) {
                     $("#divpagare").hide();
@@ -49,7 +45,7 @@ function DeshabilitarCombos() {
 }
 
 function validaEstados() {
-    
+
 
     var estadoPagare = '';
     if ($("#ddPagare").val() == 1 || $("#ddPagare").val() == 4)
@@ -75,13 +71,13 @@ function validaEstados() {
 }
 
 $(function () {
-    
+
     var Id_Lead = httpGet("ci");
 
     var Id_Lead = httpGet("ci");
     var Audit = httpGet("aud");
 
-    
+
     if (Audit == "4ud1t") {
         DeshabilitarCombos();
         $("#btn-guardar").html('Reparar');
@@ -109,7 +105,7 @@ $(function () {
     $("#lblEstado").text("Reparado").css("color", "red")
 
     $('#btn-guardar').on("click", function () {
-        
+
         var estadoAprobado = 0;
         if ($("#lblEstado").text() == "Aprobado") {
             estadoAprobado = 1;
@@ -144,7 +140,7 @@ $(function () {
 
             }
 
-            $.SecPostJSON(BASE_URL + "/motor/api/digitalizacion/guardar-gestion-pagare", WebGestionDigitalizacion, function (respuesta) {
+            $.SecPostJSON(BASE_URL + "/motor/api/digitalizacion/guardar-gestion-auditoria", WebGestionDigitalizacion, function (respuesta) {
 
                 if (respuesta.estado = 'OK') {
                     $.niftyNoty({

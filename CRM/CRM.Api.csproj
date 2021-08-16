@@ -399,6 +399,7 @@
     <Content Include="Assets\js.App\printThis.js" />
     <Content Include="Assets\js.App\src\Acuenta.js" />
     <Content Include="Assets\js.App\src\acuerdo_pagos.js" />
+    <Content Include="Assets\js.App\src\app.js" />
     <Content Include="Assets\js.App\src\atencion-cliente.js" />
     <Content Include="Assets\js.App\src\beneficios.js" />
     <Content Include="Assets\js.App\src\BuscadorGrilla.js" />
@@ -410,6 +411,8 @@
     <Content Include="Assets\js.App\src\contactabilidad-empresa.js" />
     <Content Include="Assets\js.App\src\contacto-diferimiento.js" />
     <Content Include="Assets\js.App\src\copago.js" />
+    <Content Include="Assets\js.App\src\Digitalizacion-Gestion-auditoria-legalizado.js" />
+    <Content Include="Assets\js.App\src\Digitalizacion-Gestion-auditoria.js" />
     <Content Include="Assets\js.App\src\Digitalizacion-Gestion-Pagares.js" />
     <Content Include="Assets\js.App\src\Digitalizacion-Gestion.js" />
     <Content Include="Assets\js.App\src\Digitalizacion.js" />
@@ -437,6 +440,7 @@
     <Content Include="Assets\js.App\src\pex.js" />
     <Content Include="Assets\js.App\src\portabilidad-ingreso.js" />
     <Content Include="Assets\js.App\src\portabilidad.js" />
+    <Content Include="Assets\js.App\src\Prueba.js" />
     <Content Include="Assets\js.App\src\recertificación.js" />
     <Content Include="Assets\js.App\src\retencion-pensionados.js" />
     <Content Include="Assets\js.App\src\retiro.js" />
@@ -647,6 +651,9 @@
     <Content Include="Areas\AppPage\Views\MedicionCalidad\Index.cshtml" />
     <Content Include="Areas\AppPage\Views\Mantenedores\IngresoUsuario.cshtml" />
     <Content Include="Areas\AppPage\Views\Mantenedores\ListarUsuarios.cshtml" />
+    <Content Include="Areas\AppPage\Views\Digitalizacion\GestionAuditoria.cshtml" />
+    <Content Include="Areas\AppPage\Views\Digitalizacion\Prueba.cshtml" />
+    <Content Include="Areas\AppPage\Views\Digitalizacion\GestionAuditoriaLegalizado.cshtml" />
     <None Include="Properties\PublishProfiles\CharlyMOTOR.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\Settings.settings">

@@ -10,5 +10,6 @@ namespace CRM.Business.Entity
     {
         public int Codigo { get; set; }
         public string Nombre { get; set; }
+        public string codigouid { get; set; }
     }
 }

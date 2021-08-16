@@ -218,6 +218,20 @@ $(function () {
                 $(".esconder").show();
             }
         },
+        ComboTipoAsignacion: function () {
+
+            $.SecGetJSON(BASE_URL + "/motor/api/Gestion/v3/lista-tipo-asignacion", function (response) {
+
+
+                $("#ddltipoDerivacion").html("");
+                $("#ddltipoDerivacion").append($("<option>").val("Seleccione").html("Seleccione").data("id", "Seleccione").data("nombre", "Seleccione"));
+                $.each(response, function (i, oficina) {
+                    debugger;
+                    $("#ddltipoDerivacion").append($("<option>").val(oficina.Descripcion).html(oficina.Descripcion));
+
+                });
+            });
+        },
         //CargaEstadosGestion: function () {
         //    $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-estado-gestion", function (datos) {
         //        $("#dllEstadoGestionPadre").html("");
@@ -620,7 +634,7 @@ $(function () {
         if ($(this).val() != '') {
             $("#ges_subestado").attr("disabled", false);
             $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-estados-gestion", { tipoCampagna: $(this).data("TipoAsignacion"), padre: $(this).val() }, function (datos) {
-                
+
                 $("#ges_subestado").html("");
                 $("#ges_subestado").append($("<option>").attr("value", "").html("Seleccione"));
                 $('#datos-gestion').bootstrapValidator('updateStatus', 'ges_subestado', 'NOT_VALIDATED').bootstrapValidator('validateField', 'ges_subestado');
@@ -788,11 +802,14 @@ $(function () {
     })
 
 
+    //Carga Combo Tipo Asignacion
+    render.ComboTipoAsignacion()
     //DERIVACIONES
     $('#btn_derivaciones').click(function () {
         $("#tabla_derivaciones").bootstrapTable('refresh', {
             url: BASE_URL + "/motor/api/Gestion/v3/lista-seguimientos",
             query: {
+                TipoDerivacion: $('#ddltipoDerivacion').val(),
                 tipoCampagna: 5,
                 periodo: entorno.Periodo,
                 estado: $('#demo-foo-filter-statusDR').val(),
@@ -801,7 +818,8 @@ $(function () {
                 segmento: $('#slSegmentoDR').val(),
                 tipo: $('#slTipoDR').val(),
                 rut: $('#demo-foo-searchDR').val(),
-                vencimiento: $('#flt_vencidos_dr').val()
+                vencimiento: $('#flt_vencidos_dr').val(),
+              
             }
         });
 
@@ -819,7 +837,7 @@ $(function () {
             }
         },
         queryParams: function (params) {
-
+            params.TipoDerivacion = $('#ddltipoDerivacion').val();
             params.periodo = entorno.Periodo;
             params.tipoCampagna = 5;
             params.estado = $('#demo-foo-filter-statusDR').val();
@@ -995,9 +1013,11 @@ $(function () {
 
     //COMERCIAL 
     $('#button').click(function () {
+        debugger;
         $("#tabla_comercial").bootstrapTable('refresh', {
             url: BASE_URL + "/motor/api/Gestion/v3/lista-seguimientos",
             query: {
+                TipoDerivacion: '',
                 tipoCampagna: 1,
                 periodo: entorno.Periodo,
                 estado: $('#demo-foo-filter-status').val(),

@@ -17,5 +17,12 @@ namespace CRM.Business.Entity
         public string IdOficina { get; set; }
     }
 
-    
+    public class TipoAsignacionEntity
+    {
+        
+        public string Descripcion { get; set; }
+  
+    }
+
+
 }

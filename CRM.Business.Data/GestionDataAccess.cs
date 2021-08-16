@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CRM.Business.Entity;
-using System.Data;
-using CDK.Data;
+﻿using CDK.Data;
 using CDK.Integration;
+using CRM.Business.Entity;
+using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace CRM.Business.Data
 {
     public static class GestionDataAccess
     {
-        
+
 
         public static int Guardar(GestionEntity gestion)
         {
@@ -34,8 +31,17 @@ namespace CRM.Business.Data
         public static List<GestionEntity> ListarGestion(int idAsignacion)
         {
             Parametro prm = new Parametro("@IdAsignacion", idAsignacion);
-            return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_Listar_GestionByAsignacion", prm,EntidadGestion);
+            return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_Listar_GestionByAsignacion", prm, EntidadGestion);
         }
+
+
+        public static List<TipoAsignacionEntity> ListartipoAsignacion()
+        {
+
+            return DBHelper.InstanceCRM.ObtenerColeccion("dbo.spMotor_Tipo_Asignacion", entidadTipoAsignacion);
+        }
+
+
 
 
         public static List<GestionEntity> ListarGestion(string AfiliadoRut)
@@ -43,6 +49,16 @@ namespace CRM.Business.Data
             Parametro prm = new Parametro("@AfiliadoRut", AfiliadoRut);
             return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_Listar_GestionByAfiliado", prm, EntidadGestion);
         }
+
+
+        private static TipoAsignacionEntity entidadTipoAsignacion(DataRow row)
+        {
+            return new TipoAsignacionEntity
+            {
+                Descripcion = row["tipoderivacion"] != DBNull.Value ? row["tipoderivacion"].ToString() : string.Empty,
+            };
+        }
+
 
 
         private static GestionEntity EntidadGestion(DataRow row)

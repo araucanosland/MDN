@@ -1,24 +1,35 @@
+using CRM.ActionFilters;
+using CRM.Business.Data;
+using CRM.Business.Data.Log;
+using CRM.Business.Entity;
+using CRM.Business.Entity.Clases;
+using CRM.Business.Entity.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Web.Http;
-using CRM.Business.Entity;
-using CRM.Business.Entity.Clases;
-using CRM.Business.Entity.Contracts;
-using CRM.Business.Data;
-using CRM.ActionFilters;
-using CRM.Filters;
 using System.Net.Http.Headers;
-using CRM.Business.Entity.Log;
-using CRM.Business.Data.Log;
+using System.Web.Http;
 
 namespace CRM.Controllers
 {
     [RoutePrefix("api/Gestion")]
     public class GestionController : ApiController
     {
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("v3/lista-tipo-asignacion")]
+        public IEnumerable<TipoAsignacionEntity> listatipoAsignacion()
+        {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<TipoAsignacionEntity> asign = GestionDataAccess.ListartipoAsignacion();
+
+            return asign;
+        }
+
+
+
 
         [AuthorizationRequired]
         [HttpGet]
@@ -59,6 +70,7 @@ namespace CRM.Controllers
             int Retorno = CargasFamiliaresDataAccess.ActualizarCargasEstados(rutAfiliado, codOficina, rutCarga, indice);
             return Retorno;
         }
+
 
 
 
@@ -198,7 +210,7 @@ namespace CRM.Controllers
         [AuthorizationRequired]
         [HttpGet]
         [Route("v3/lista-seguimientos")]
-        public BootstrapTableResult<ContenedorCampaniaList> ListaSeguimientosv3(int tipoCampagna, int periodo, string estado = "-1", string marca = "", string subestado = "-1", string causaBasal = "-1", string consecuencia = "-1", string prioridad = "", string segmento = "", string tipo = "", string busEmpresa = "", string rut = "", int limit = 30, int offset = 0, string sort = "asc", string order = "", string vencimiento = "")
+        public BootstrapTableResult<ContenedorCampaniaList> ListaSeguimientosv3(string TipoDerivacion,int tipoCampagna, int periodo, string estado = "-1", string marca = "", string subestado = "-1", string causaBasal = "-1", string consecuencia = "-1", string prioridad = "", string segmento = "", string tipo = "", string busEmpresa = "", string rut = "", int limit = 30, int offset = 0, string sort = "asc", string order = "", string vencimiento = "")
         {
             string token = ActionContext.Request.Headers.GetValues("Token").First();
             List<ContenedorCampaniaList> res = new List<ContenedorCampaniaList>();
@@ -214,7 +226,7 @@ namespace CRM.Controllers
             {
                 int estado_dos = estado == null ? 0 : Convert.ToInt32(estado);
                 int subestado_dos = subestado == null ? 0 : Convert.ToInt32(subestado);
-                res = AsignacionDataAccess.ListarPaginado(periodo, tipoCampagna, token, estado_dos, marca, subestado_dos, prioridad, segmento, tipo, busEmpresa, rut, offset, limit, sort, order, vencimiento);
+                res = AsignacionDataAccess.ListarPaginado(TipoDerivacion, periodo, tipoCampagna, token, estado_dos, marca, subestado_dos, prioridad, segmento, tipo, busEmpresa, rut, offset, limit, sort, order, vencimiento);
 
 
 
@@ -1650,7 +1662,7 @@ namespace CRM.Controllers
 
         [HttpGet]
         [Route("lista-estado-sub-gestion")]
-        public IEnumerable<EstadoGestionPensionadoEntity> ListaSubEstadoGestion( int padre)
+        public IEnumerable<EstadoGestionPensionadoEntity> ListaSubEstadoGestion(int padre)
         {
             return PensionadosDataAccess.ListaSubEstadoGest(padre);
         }

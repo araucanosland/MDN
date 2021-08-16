@@ -49,6 +49,7 @@ namespace CRM.Business.Entity
         public string DescOficina { get; set; }
         public int codOficinaCompin { get; set; }
         public string OficinaCompin { get; set; }
+        public string cod_oficina { get; set; }
     }
 
     public class EstadosLMEntity

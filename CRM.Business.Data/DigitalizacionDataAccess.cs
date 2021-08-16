@@ -9,9 +9,25 @@ namespace CRM.Business.Data
 {
     public class DigitalizacionDataAccess
     {
+        private static OficinaDerivacionEntity ConstructorOfiDerivacion(DataRow row)
+        {
+            return new OficinaDerivacionEntity
+            {
+                codOficina = row["Cod_Oficina"] != DBNull.Value ? Convert.ToInt32(row["Cod_Oficina"]) : 0,
+                DescOficina = row["Oficina"] != DBNull.Value ? row["Oficina"].ToString() : string.Empty,
 
+            };
+        }
 
-        public static long ListaConteoMisReparos(int CodOficina,string RutEjecutivo,string Reparo)
+        public static List<OficinaDerivacionEntity> ListarOficinaAuditor()
+        {
+            //return DBHelper.InstanceReportes.ObtenerColeccion("negocios.spReporte_ListaPeriodos", ConstructorEntidad);
+            return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_Oficina_auditoria", ConstructorOfiDerivacion);
+        }
+
+    
+
+        public static long ListaConteoMisReparos(int CodOficina, string RutEjecutivo, string Reparo)
         {
             Parametros parametros = new Parametros
             {
@@ -22,7 +38,7 @@ namespace CRM.Business.Data
 
             try
             {
-                return DBHelper.InstanceNegocio.ObtenerEscalar<long>("digit.Listar_MisReparos_Conteo", parametros);
+                return DBHelper.InstanceNegocio.ObtenerEscalar<long>("digit.Listar_lead_MisReparos_Conteo", parametros);
 
             }
             catch (Exception ex)
@@ -39,7 +55,7 @@ namespace CRM.Business.Data
             {
                new Parametro("@Rutejecutivo",Rutejecutivo),
                new Parametro("@tipo",tipo)
-              
+
             };
 
             try
@@ -64,7 +80,7 @@ namespace CRM.Business.Data
 
             try
             {
-                return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_ejecutivo_Asignacion", parametros,ConstructorEjecutivo);
+                return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_ejecutivo_Asignacion", parametros, ConstructorEjecutivo);
 
             }
             catch (Exception ex)
@@ -74,6 +90,25 @@ namespace CRM.Business.Data
             }
         }
 
+        public static List<EjecutivoEntity> Listar_Ejecutivo_Auditoria(int Periodo, int CodOficina)
+        {
+            Parametros parametros = new Parametros
+            {
+               new Parametro("@periodo",Periodo),
+               new Parametro("@CodOficina",CodOficina)
+            };
+
+            try
+            {
+                return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_ejecutivo_Asignacion", parametros, ConstructorEjecutivo);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
 
         private static EjecutivoEntity ConstructorEjecutivo(DataRow row)
         {
@@ -90,7 +125,7 @@ namespace CRM.Business.Data
 
 
 
-        public static List<DigitalizacionEntity> ListaDigitalizacion(long Id, string Credito, string Estado, DateTime FechaVentaDesde, DateTime FechaVentaHasta, int Oficina, int Tipo, string Rut, string Filtro,string ejecutivo)
+        public static List<DigitalizacionEntity> ListaDigitalizacion(long Id, string Credito, string Estado, DateTime FechaVentaDesde, DateTime FechaVentaHasta, int Oficina, int Tipo, string Rut, string Filtro, string ejecutivo)
         {
             Parametros parametros = new Parametros()
             {
@@ -108,6 +143,32 @@ namespace CRM.Business.Data
 
 
             return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_lead", parametros, ConstructorDigitalizacion);
+        }
+
+
+        public static List<DigitalizacionEntity> ListarAuditorDocInicial(DateTime FechaVentaDesde, DateTime FechaVentaHasta, int Oficina, int Tipo, string Filtro, string Ejecutivo)
+        {
+
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@CodOficina", Oficina),
+                new Parametro("@FechaVentaDesde", FechaVentaDesde),
+                new Parametro("@FechaVentaHasta", FechaVentaHasta),
+                new Parametro("@Tipo", Tipo),
+                new Parametro("@Filtro", Filtro),
+                new Parametro("@RutEjecutivo", Ejecutivo)
+            };
+
+            try
+            {
+                return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_lead_Auditor", parametros, ConstructorDigitalizacionAgente);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
 
@@ -169,8 +230,8 @@ namespace CRM.Business.Data
                 FechaRegistro = row["FechaRegistro"] != DBNull.Value ? Convert.ToDateTime(row["FechaRegistro"]) : new DateTime(1900, 1, 1),
                 TipoDescripcion = row["TipoDocumento"] != DBNull.Value ? row["TipoDocumento"].ToString() : string.Empty,
                 RutejecutivoAgente = row["RutEjecutivoAsignacion"] != DBNull.Value ? row["RutEjecutivoAsignacion"].ToString() : string.Empty,
-                NombreEjecutivo= row["NombreEjecutivo"] != DBNull.Value ? row["NombreEjecutivo"].ToString() : string.Empty,
-               
+                NombreEjecutivo = row["NombreEjecutivo"] != DBNull.Value ? row["NombreEjecutivo"].ToString() : string.Empty,
+
             };
 
 
@@ -215,6 +276,43 @@ namespace CRM.Business.Data
 
         }
 
+        public static long Ingresar_DigitalizacionAuditoria(WebGestionDigitalizacion web)
+        {
+
+
+            Parametros parametros = new Parametros
+            {
+                new Parametro("@Id_lead", web.Id_lead),
+                new Parametro("@Id_Estado", web.Id_Estado),
+                new Parametro("@Auditor", web.Auditor),
+                new Parametro("@RutEjecutivo", web.RutEjecutivo),
+                new Parametro("@Tipo_Gestion",web.Tipo_Gestion),
+                new Parametro("@LiquidacionSueldo",web.LiquidacionSueldo),
+                new Parametro("@InformeCuotas", web.InformeCuotas),
+                new Parametro("@SolicitudCredito", web.SolicitudCredito),
+                new Parametro("@Certificacion", web.Certificacion),
+                new Parametro("@HojaResumen", web.HojaResumen),
+                new Parametro("@CompobanteDinero", web.CompobanteDinero),
+                new Parametro("@CheckListDigitalizacion", web.CheckListDigitalizacion),
+                new Parametro("@InformacionAval",web.InformacionAval),
+                new Parametro("@Afecto15", web.Afecto15),
+                new Parametro("@SeguroDesgravamen", web.SeguroDesgravamen),
+                new Parametro("@SeguroCesantia", web.SeguroCesantia),
+            };
+
+            try
+            {
+                return DBHelper.InstanceNegocio.ObtenerEscalar<long>("digit.Ingresar_Gestion_Auditoria", parametros);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+        }
 
         public static long ActualizarGestionEJecutvo(WebGestionDigitalizacion web)
         {
@@ -227,7 +325,7 @@ namespace CRM.Business.Data
                 new Parametro("@RutEjecutivo", web.RutEjecutivo),
                 new Parametro("@CodOficina", web.Oficina),
                 new Parametro("@TipoUpdate", web.TipoEjecutivo),
-                
+
 
             };
 
@@ -273,6 +371,19 @@ namespace CRM.Business.Data
             }
 
 
+        }
+
+        public static DigitalizacionGestionEntity ListaDigitalizacionGestionAuditoria(long Id)
+        {
+            Parametros parametros = new Parametros()
+            {
+               new Parametro("@Id",Id),
+
+
+            };
+
+
+            return DBHelper.InstanceNegocio.ObtenerEntidad("digit.Listar_Gestion_auditoria", parametros, ConstructorDigitalizacionGestion);
         }
 
         public static DigitalizacionGestionEntity ListaDigitalizacionGestion(long Id)
@@ -323,7 +434,7 @@ namespace CRM.Business.Data
                 Cedula = row["RevisionCI"] != DBNull.Value ? Convert.ToInt32(row["RevisionCI"].ToString()) : 0,
                 OficinaPagadora = row["OficinaPagadora"] != DBNull.Value ? row["OficinaPagadora"].ToString() : string.Empty,
                 OficinaVenta = row["OficinaVenta"] != DBNull.Value ? row["OficinaVenta"].ToString() : string.Empty,
-                OficinaAuditora= row["OficinaAuditora"] != DBNull.Value ? row["OficinaAuditora"].ToString() : string.Empty
+                OficinaAuditora = row["OficinaAuditora"] != DBNull.Value ? row["OficinaAuditora"].ToString() : string.Empty
             };
 
 
@@ -345,7 +456,7 @@ namespace CRM.Business.Data
             return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_Reparos_Agente", parametros, ConstructorDigitalizacionAgente);
         }
 
-        public static List<DigitalizacionEntity> ListaDigitalizacionMisReparos(long Id, string Rut, string Credito, int Oficina,string RutEjecutivo,string Reparo)
+        public static List<DigitalizacionEntity> ListaDigitalizacionMisReparos(long Id, string Rut, string Credito, int Oficina, string RutEjecutivo, string Reparo)
         {
             Parametros parametros = new Parametros()
             {
@@ -358,10 +469,10 @@ namespace CRM.Business.Data
             };
 
 
-            return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_MisReparos", parametros, ConstructorDigitalizacion);
+            return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_lead_MisReparos", parametros, ConstructorDigitalizacion);
         }
 
-        public static long Ingresar_Digitalizacion_Audtoria(long Id, int Tipo, int CodOficina, string RutEjecutivo)
+        public static long Ingresar_Digitalizacion_Audtoria(long Id, int Tipo, int CodOficina, string RutEjecutivo,int auditor)
         {
 
 
@@ -370,11 +481,12 @@ namespace CRM.Business.Data
                 new Parametro("@Id_lead", Id),
                 new Parametro("@Tipo",Tipo ),
                 new Parametro("@CodOficina",CodOficina),
-                new Parametro("@RutEjecutivo",RutEjecutivo)
+                new Parametro("@RutEjecutivo",RutEjecutivo),
+                 new Parametro("@Auditor",auditor)
             };
             try
             {
-                return DBHelper.InstanceNegocio.ObtenerEscalar<long>("digit.Ingresar_Gestion_MisReparos", parametros);
+                return DBHelper.InstanceNegocio.ObtenerEscalar<long>("digit.Ingresar_Lead_Gestion_MisReparos", parametros);
 
             }
             catch (Exception ex)

@@ -14,12 +14,22 @@ namespace CRM.Business.Data
         {
             return new OficinaDerivacionEntity
             {
-                codOficina = row["Cod_Oficina"] != DBNull.Value ? Convert.ToInt32(row["Cod_Oficina"]) : 0,
+                codOficina = row["Cod_Oficina"] != DBNull.Value ? Convert.ToInt32(row["Cod_Oficina"].ToString()) : 0,
                 DescOficina = row["Oficina"] != DBNull.Value ? row["Oficina"].ToString() : string.Empty,
 
             };
         }
 
+
+        private static OficinaDerivacionEntity ConstructorOficinaGalvarino(DataRow row)
+        {
+            return new OficinaDerivacionEntity
+            {
+                cod_oficina = row["Cod_Oficina"] != DBNull.Value ? row["Cod_Oficina"].ToString() : string.Empty,
+                DescOficina = row["Oficina"] != DBNull.Value ? row["Oficina"].ToString() : string.Empty,
+
+            };
+        }
         public static List<OficinaDerivacionEntity> ListarOficina()
         {
             //return DBHelper.InstanceReportes.ObtenerColeccion("negocios.spReporte_ListaPeriodos", ConstructorEntidad);
@@ -27,10 +37,17 @@ namespace CRM.Business.Data
         }
 
 
+        public static List<OficinaDerivacionEntity> ListarOficinaGalvarino()
+        {
+            //return DBHelper.InstanceReportes.ObtenerColeccion("negocios.spReporte_ListaPeriodos", ConstructorEntidad);
+            return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_Mantenedor_Lista_Oficinas_galvarino", ConstructorOficinaGalvarino);
+        }
+
+
 
         public static long InsertarUsuario(WebIngreso web)
         {
-     
+
 
             Parametros parametros = new Parametros
             {
@@ -45,6 +62,39 @@ namespace CRM.Business.Data
             return DBHelper.InstanceCRM.ObtenerEscalar<long>("dbo.spMotor_Mantenedor_Ingreso", parametros);
 
         }
+
+        public static long InsertarUsuarioGalvarino(WebIngreso web)
+        {
+
+
+            Parametros parametros = new Parametros
+            {
+                new Parametro("@RutUusario", web.RutUsuario),
+                new Parametro("@NombreUsuario", web.NombreUsuario),
+                new Parametro("@oficina", web.OficinaGalvarino),
+                new Parametro("@Role", web.Cargo),
+                new Parametro("@Correo", web.Correo),
+
+            };
+
+            return DBHelper.InstanceCRM.ObtenerEscalar<long>("dbo.spMotor_Mantenedor_Ingreso_Galvarino", parametros);
+
+        }
+
+
+        public static long EliminarUsuarioGalvarino(string Rut)
+        {
+
+
+            Parametros parametros = new Parametros
+            {
+                new Parametro("@Rut",Rut),
+            };
+
+            return DBHelper.InstanceCRM.ObtenerEscalar<long>("dbo.spMotor_Mantenedor_Eliminar_Usuario_Galvarino", parametros);
+
+        }
+
 
         public static long EliminarUsuario(string Rut)
         {
@@ -61,7 +111,16 @@ namespace CRM.Business.Data
 
 
 
+        public static List<UsuarioEntity> ListarUsuarios(string Rut)
+        {
+            Parametros parametros = new Parametros
+            {
+               new Parametro("@Rut",Rut),
 
+            };
+            return DBHelper.InstanceCRM.ObtenerColeccion("dbo.spMotor_Mantenedor_Lista_usuarios", parametros, ConstructorUsuario);
+
+        }
 
         private static UsuarioEntity ConstructorUsuario(DataRow row)
         {
@@ -97,14 +156,33 @@ namespace CRM.Business.Data
             };
 
         }
-        public static List<UsuarioEntity> ListarUsuarios(string Rut)
+
+
+        private static UsuarioEntity ConstructorUsuarioGalvarino(DataRow row)
+        {
+            return new UsuarioEntity
+            {
+                Id = row["Id"] != DBNull.Value ? row["Id"].ToString() : string.Empty,
+                Rut = row["identificador"] != DBNull.Value ? row["identificador"].ToString() : string.Empty,
+                Nombre = row["Nombres"] != DBNull.Value ? row["Nombres"].ToString() : string.Empty,
+                Cargo = row["rol"] != DBNull.Value ? row["rol"].ToString() : string.Empty,
+                Correo= row["email"] != DBNull.Value ? row["email"].ToString() : string.Empty,
+                Sucursal= row["oficina"] != DBNull.Value ? row["oficina"].ToString() : string.Empty,
+                Cod_of_galvarino= row["Codificacion"] != DBNull.Value ? row["Codificacion"].ToString() : string.Empty,
+            };
+
+        }
+
+
+
+        public static List<UsuarioEntity> ListarUsuariosGalvarino(string Rut, string RutEjecutivo)
         {
             Parametros parametros = new Parametros
             {
                new Parametro("@Rut",Rut),
-
+                new Parametro("@Rutejecutivo",RutEjecutivo),
             };
-            return DBHelper.InstanceCRM.ObtenerColeccion("dbo.spMotor_Mantenedor_Lista_usuarios", parametros, ConstructorUsuario);
+            return DBHelper.InstanceCRM.ObtenerColeccion("dbo.spMotor_Mantenedor_Lista_usuarios_Galvarino", parametros, ConstructorUsuarioGalvarino);
 
         }
 
@@ -118,10 +196,29 @@ namespace CRM.Business.Data
             };
         }
 
+
+        private static CargoEntity ConstructorCargoGalvarino(DataRow row)
+        {
+            return new CargoEntity
+            {
+                Nombre = row["descripcion"] != DBNull.Value ? row["descripcion"].ToString() : string.Empty,
+                codigouid = row["Id"] != DBNull.Value ? row["Id"].ToString() : string.Empty,
+
+            };
+        }
+
+
         public static List<CargoEntity> ListarCargos()
         {
 
             return DBHelper.InstanceCRM.ObtenerColeccion("dbo.spMotor_Mantenedor_Lista_Cargos", ConstructorCargo);
+
+        }
+
+        public static List<CargoEntity> ListarCargosGalvarino()
+        {
+
+            return DBHelper.InstanceCRM.ObtenerColeccion("dbo.spMotor_Mantenedor_Lista_Cargos_galvarino", ConstructorCargoGalvarino);
 
         }
 

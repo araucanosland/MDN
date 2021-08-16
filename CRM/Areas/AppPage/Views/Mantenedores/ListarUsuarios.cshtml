@@ -23,72 +23,155 @@
     }
 </style>
 <div id="page-content">
-    <div class="row">
-        <h1 class="page-header text-overflow">Listado de Usuarios </h1>
-        <br />
-        <div class="panel" style="border-radius: 8px">
-            <div class="panel-heading">
-                <h3 class="panel-title">Filtros de Búsqueda</h3>
-            </div>
+    <div class="tab-content">
+        <div class="tab-base">
+            <!--Nav Tabs-->
+            <ul id="myTab" class="nav nav-tabs">
+                <li class="">
+                    <a data-toggle="tab" href="#demo-lft-tab-1" aria-expanded="true" id="tab_ingreso" class="tab-principal">Mantenedor MDN</a>
+                </li>
+                <li class="">
+                    <a data-toggle="tab" href="#demo-lft-tab-2" aria-expanded="true" id="tab_ingreso_Galvarino" class="tab-principal">Mantenedor Galvarino</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="demo-lft-tab-1" class="tab-pane fade">
+                    <div class="row">
+                        <h1 class="page-header text-overflow">Listado de Usuarios </h1>
+                        <br />
+                        <div class="panel" style="border-radius: 8px">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Filtros de Búsqueda</h3>
+                            </div>
 
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label class="control-label">Rut Usuario</label>
-                            <input type="text" id="txtrut" class="form-control " maxlength="15">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Rut Usuario</label>
+                                            <input type="text" id="txtrut" class="form-control " maxlength="15">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="btn_buscar">BUSCAR</button>
+
+                                            <span class="iconify" data-icon="ant-design:file-add-twotone" data-inline="false"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <button class="btn btn-success btn-rounded btn-labeled ion-plus-round" data-target="#modal-usuarios" data-toggle="modal" data-tipo="nuevo" id="btn_nuevo">Nuevo Usuario</button>
+
+                            </div>
                         </div>
+
+
                     </div>
+                    <div class="panel" style="border-radius: 8px">
 
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="btn_buscar">BUSCAR</button>
+                        <h3 class="panel-title">Datos de Usuarios</h3>
+                        <form class="form-horizontal">
+                            <div class="panel-body">
+                                <div class="panel-body">
+                                    <table data-toggle="table"
+                                           data-sort-name="id"
+                                           data-page-list="[]"
+                                           data-page-size="30"
+                                           data-search="false"
+                                           data-show-pagination-switch="false"
+                                           data-pagination="true" id="tblUsuarios" style="font-size: 12px">
 
-                            <span class="iconify" data-icon="ant-design:file-add-twotone" data-inline="false"></span>
-                        </div>
+                                        <thead>
+                                            <tr>
+                                                <th data-field="Rut" data-sortable="true">Rut Usuario</th>
+                                                <th data-field="Nombre" data-sortable="true">Nombre Usuario</th>
+                                                <th data-field="Sucursal" data-sortable="true">Oficina</th>
+                                                <th data-field="Cargo" data-sortable="true">Cargo</th>
+                                                <th data-field="Id" data-formatter="digitalLinkFormatter">Acción</th>
+
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <hr />
-                <button class="btn btn-success btn-rounded btn-labeled ion-plus-round" data-target="#modal-usuarios" data-toggle="modal" data-tipo="nuevo" id="btn_nuevo">Nuevo Usuario</button>
+                <div id="demo-lft-tab-2" class="tab-pane fade">
+                    <div class="row">
+                        <h1 class="page-header text-overflow">Listado de Usuarios </h1>
+                        <br />
+                        <div class="panel" style="border-radius: 8px">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Filtros de Búsqueda</h3>
+                            </div>
 
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Rut Usuario</label>
+                                            <input type="text" id="txtrutGalvarino" class="form-control" maxlength="15">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="btn_buscar_galvarino">BUSCAR</button>
+
+                                            <span class="iconify" data-icon="ant-design:file-add-twotone" data-inline="false"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <button class="btn btn-success btn-rounded btn-labeled ion-plus-round" data-target="#modal-usuarios-galvarino" data-toggle="modal" data-tipo="nuevogalvarino" id="btn_nuevo_galvarino">Nuevo Usuario</button>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="panel" style="border-radius: 8px">
+
+                        <h3 class="panel-title">Datos de Usuarios</h3>
+                        <form class="form-horizontal">
+                            <div class="panel-body">
+                                <div class="panel-body">
+                                    <table data-toggle="table"
+                                           data-sort-name="id"
+                                           data-page-list="[]"
+                                           data-page-size="30"
+                                           data-search="false"
+                                           data-show-pagination-switch="false"
+                                           data-pagination="true" id="tblUsuariosGalvarino" style="font-size: 12px">
+
+                                        <thead>
+                                            <tr>
+                                                <th data-field="Rut" data-sortable="true">Rut Usuario</th>
+                                                <th data-field="Nombre" data-sortable="true">Nombre Usuario</th>
+                                                <th data-field="Sucursal" data-sortable="true">Oficina</th>
+                                                <th data-field="Cargo" data-sortable="true">Cargo</th>
+                                                <th data-field="Id" data-formatter="digitalLinkFormatterGalvarino">Acción</th>
+
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
 
     </div>
-    <div class="panel" style="border-radius: 8px">
-
-        <h3 class="panel-title">Datos de Usuarios</h3>
-        <form class="form-horizontal">
-            <div class="panel-body">
-                <div class="panel-body">
-                    <table data-toggle="table"
-                           data-sort-name="id"
-                           data-page-list="[]"
-                           data-page-size="30"
-                           data-search="false"
-                           data-show-pagination-switch="false"
-                           data-pagination="true" id="tblUsuarios" style="font-size: 12px">
-
-                        <thead>
-                            <tr>
-                                <th data-field="Rut" data-sortable="true">Rut Usuario</th>
-                                <th data-field="Nombre" data-sortable="true">Nombre Usuario</th>
-                                <th data-field="Sucursal" data-sortable="true">Oficina</th>
-                                <th data-field="Cargo" data-sortable="true">Cargo</th>
-                                <th data-field="Id" data-formatter="digitalLinkFormatter">Acción</th>
-
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </form>
-    </div>
 </div>
 <!--===================================================-->
 <div class="modal fade" id="modal-usuarios" role="dialog" tabindex="-1" aria-labelledby="modal-usuarios" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-  
+
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="border-radius: 9px;">
             <div class="modal-header" style="background: #337ab7;">
@@ -117,7 +200,7 @@
                             <input type="text" class="form-control" id="txtNombreUsuario" placeholder="Nombre Usuario" tabindex="2">
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label class="control-label">Oficina</label>
                             <select class="form-control" id="ddloficina" name="ddloficina" tabindex="3"></select>
@@ -143,6 +226,67 @@
             <div class="modal-footer">
                 <button data-dismiss="modal" class="btn btn-default" type="button" id="btn_cancelar">Cancelar</button>
                 <button type="button" class="btn btn-success" id="btn-guardar">Guardar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-usuarios-galvarino" role="dialog" tabindex="-1" aria-labelledby="modal-usuarios" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header" style="background: #337ab7;">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" style="color: #f1f1f1;">Datos del Usuario</h4>
+            </div>
+
+
+
+            <!--Modal body-->
+            <div class="modal-body">
+
+                <div id="msjerrorGalvarino">
+                    <br />
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">Rut Usuario</label>
+                            <input type="text" class="form-control es-rut" placeholder="Rut Usuario"  id="txtrutUsuariogalvarino" tabindex="1">
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label class="control-label">Nombre Usuario</label>
+                            <input type="text" class="form-control" id="txtNombreUsuariogalvarino" placeholder="Nombre Usuario" tabindex="2">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Oficina</label>
+                            <select class="form-control" id="ddloficinasgalvarino"  tabindex="3"></select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Perfil</label>
+                            <select class="form-control" id="ddlcargosgalvarino"  tabindex="4"></select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Correo</label>
+                            <input type="email" class="form-control" id="txtCorreogalvarino" placeholder="Correo" tabindex="5">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--Modal footer-->
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button" id="btn_cancelar_galvarino">Cancelar</button>
+                <button type="button" class="btn btn-success" id="btn-guardar-galvarino">Guardar</button>
             </div>
 
         </div>

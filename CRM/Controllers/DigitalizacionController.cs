@@ -69,6 +69,14 @@ namespace CRM.Controllers
             int codOficina = Convert.ToInt32(cookie.Cookies.FirstOrDefault(s => s.Name == "Oficina").Value);
             return DigitalizacionDataAccess.ListaConteoLeadGeneal(tipo, RutEjecutivo);
         }
+        //// [AuthorizationRequired]
+        [HttpGet]
+        [Route("listar-oficina-auditor")]
+        public List<OficinaDerivacionEntity> listaOficinaAuditor()
+        {
+            return DigitalizacionDataAccess.ListarOficinaAuditor();
+
+        }
 
 
         [HttpGet]
@@ -92,8 +100,20 @@ namespace CRM.Controllers
             return digi;
         }
 
+        [HttpGet]
+        [Route("listar-gestion-auditoria")]
+        public DigitalizacionGestionEntity Listar_Gestion_auditoria(long Id)
+        {
+            //DateTime elDiaDesde = Convert.ToDateTime(dia_desde);
+            //DateTime elDiahasta = Convert.ToDateTime(dia_hasta);
+            //string token = ActionContext.Request.Headers.GetValues("Token").First();
+            DigitalizacionGestionEntity digi = DigitalizacionDataAccess.ListaDigitalizacionGestionAuditoria(Id);
 
-      //  [AuthorizationRequired]
+            return digi;
+        }
+
+
+        //  [AuthorizationRequired]
         [HttpGet]
         [Route("listar-digitalizacion")]
         public IEnumerable<DigitalizacionEntity> Lista_lead(long Id, string Rut, string Credito, string Estado, string FechaVentaDesde, string FechaVentaHasta, int Oficina, int Tipo, string Filtro,string Ejecutivo)
@@ -108,7 +128,22 @@ namespace CRM.Controllers
             return digi;
         }
 
-  
+
+        [HttpGet]
+        [Route("listar-digitalizacion-auditor")]
+        public IEnumerable<DigitalizacionEntity> Lista_lead_Auditor(long Id,string FechaVentaDesde, string FechaVentaHasta, int Oficina, int Tipo, string Filtro, string Ejecutivo)
+        {
+            //  string token = ActionContext.Request.Headers.GetValues("Token").First();
+            CookieHeaderValue cookie = Request.Headers.GetCookies("Oficina").FirstOrDefault();
+            DateTime elDiaDesde = Convert.ToDateTime(FechaVentaDesde);
+            DateTime elDiahasta = Convert.ToDateTime(FechaVentaHasta);
+            //string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<DigitalizacionEntity> digi = DigitalizacionDataAccess.ListarAuditorDocInicial( elDiaDesde, elDiahasta, Oficina, Tipo, Filtro, Ejecutivo);
+
+            return digi;
+        }
+
+
 
         //[AuthorizationRequired]
         [HttpPost]
@@ -118,6 +153,25 @@ namespace CRM.Controllers
             try
             {
                 DigitalizacionDataAccess.Ingresar_Digitalizacion(web);
+                return new ResultadoBase() { Estado = "OK", Mensaje = "Datos OK", Objeto = "entrada" };
+            }
+            catch (Exception ex)
+            {
+
+                var x = ex.Message.Split(';');
+                return new ResultadoBase() { Estado = "ERR", Mensaje = x[1], Objeto = x[0] };
+            }
+
+        }
+
+
+        [HttpPost]
+        [Route("guardar-gestion-auditoria")]
+        public ResultadoBase Ingresar_DigitalizacionAuditoria(WebGestionDigitalizacion web)
+        {
+            try
+            {
+                DigitalizacionDataAccess.Ingresar_DigitalizacionAuditoria(web);
                 return new ResultadoBase() { Estado = "OK", Mensaje = "Datos OK", Objeto = "entrada" };
             }
             catch (Exception ex)
@@ -186,6 +240,18 @@ namespace CRM.Controllers
             return digi;
         }
 
+        [HttpGet]
+        [Route("listar-ejecutivo-auditoria")]
+        public IEnumerable<EjecutivoEntity> EjecutivoAuditoria(int Periodo, int CodOficina)
+        {
+            //DateTime elDiaDesde = Convert.ToDateTime(FechaVentaDesde);
+            //DateTime elDiahasta = Convert.ToDateTime(FechaVentaHasta);
+            //string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<EjecutivoEntity> digi = DigitalizacionDataAccess.Listar_Ejecutivo_Asignacion(Periodo, CodOficina);
+
+            return digi;
+        }
+
         //[AuthorizationRequired]
         [HttpPost]
         [Route("guardar-gestion-misreparos")]
@@ -195,7 +261,7 @@ namespace CRM.Controllers
             {
                 CookieHeaderValue cookie = Request.Headers.GetCookies("Oficina").FirstOrDefault();
                 int codOficina = Convert.ToInt32(cookie.Cookies.FirstOrDefault(s => s.Name == "Oficina").Value);
-                DigitalizacionDataAccess.Ingresar_Digitalizacion_Audtoria(web.Id_lead, web.Tipo_Gestion, codOficina, web.RutEjecutivo);
+                DigitalizacionDataAccess.Ingresar_Digitalizacion_Audtoria(web.Id_lead, web.Tipo_Gestion, codOficina, web.RutEjecutivo,web.Auditor);
                 return new ResultadoBase() { Estado = "OK", Mensaje = "Datos OK", Objeto = "entrada" };
             }
             catch (Exception ex)

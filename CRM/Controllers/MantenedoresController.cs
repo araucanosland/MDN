@@ -17,12 +17,25 @@ namespace CRM.Controllers
     {
         //[AuthorizationRequired]
         [HttpGet]
-        [Route("listar-Usuarios")]
-        public IEnumerable<UsuarioEntity> Lista_usuario(string Rut, int Oficina,  string RutEjecutivo)
+        [Route("listar-Usuarios-galvarino")]
+        public IEnumerable<UsuarioEntity> Lista_usuario_galvarino(string Rut,  string RutEjecutivo)
         {
            // string token = ActionContext.Request.Headers.GetValues("Token").First();
             CookieHeaderValue cookie = Request.Headers.GetCookies("Oficina").FirstOrDefault();
        
+            List<UsuarioEntity> usu = MantenedoresDataAccess.ListarUsuariosGalvarino(Rut, RutEjecutivo);
+
+            return usu;
+        }
+
+
+        [HttpGet]
+        [Route("listar-Usuarios")]
+        public IEnumerable<UsuarioEntity> Lista_usuario(string Rut, int Oficina, string RutEjecutivo)
+        {
+            // string token = ActionContext.Request.Headers.GetValues("Token").First();
+            CookieHeaderValue cookie = Request.Headers.GetCookies("Oficina").FirstOrDefault();
+
             List<UsuarioEntity> usu = MantenedoresDataAccess.ListarUsuarios(Rut);
 
             return usu;
@@ -46,7 +59,25 @@ namespace CRM.Controllers
         }
 
 
-        [AuthorizationRequired]
+        [HttpPost]
+        [Route("Eliminar-Usuario-galvarino")]
+        public ResultadoBase EliminarGalvarino(WebIngreso web)
+        {
+            try
+            {
+                MantenedoresDataAccess.EliminarUsuarioGalvarino(web.RutUsuario);
+                return new ResultadoBase() { Estado = "OK", Mensaje = "Datos OK", Objeto = "entrada" };
+            }
+            catch (Exception ex)
+            {
+
+                var x = ex.Message.Split(';');
+                return new ResultadoBase() { Estado = "ERR", Mensaje = x[1], Objeto = x[0] };
+            }
+        }
+
+
+       // [AuthorizationRequired]
         [HttpGet]
         [Route("listar-Cargos")]
         public IEnumerable<CargoEntity> Lista_Cargos()
@@ -60,7 +91,23 @@ namespace CRM.Controllers
         }
 
 
-        [AuthorizationRequired]
+        //[AuthorizationRequired]
+        [HttpGet]
+        [Route("listar-Cargos-galvarino")]
+        public IEnumerable<CargoEntity> Lista_Cargos_galvarino()
+        {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            CookieHeaderValue cookie = Request.Headers.GetCookies("Oficina").FirstOrDefault();
+
+            List<CargoEntity> usu = MantenedoresDataAccess.ListarCargosGalvarino();
+
+            return usu;
+        }
+
+
+
+
+       // [AuthorizationRequired]
         [HttpGet]
         [Route("listar-Oficinas")]
         public List<OficinaDerivacionEntity> listaOficina()
@@ -68,6 +115,13 @@ namespace CRM.Controllers
             return MantenedoresDataAccess.ListarOficina();
         }
 
+        //[AuthorizationRequired]
+        [HttpGet]
+        [Route("listar-Oficinas-galvarino")]
+        public List<OficinaDerivacionEntity> listaOficinagalvarino()
+        {
+            return MantenedoresDataAccess.ListarOficinaGalvarino();
+        }
 
         [HttpPost]
         [Route("Ingreso-Usuario")]
@@ -87,6 +141,22 @@ namespace CRM.Controllers
 
         }
 
+        [HttpPost]
+        [Route("Ingreso-Usuario-Galvarino")]
+        public ResultadoBase IngresoUsuarioGalvarino(WebIngreso web)
+        {
+            try
+            {
+                MantenedoresDataAccess.InsertarUsuarioGalvarino(web);
+                return new ResultadoBase() { Estado = "OK", Mensaje = "Datos OK", Objeto = "entrada" };
+            }
+            catch (Exception ex)
+            {
 
+                var x = ex.Message.Split(';');
+                return new ResultadoBase() { Estado = "ERR", Mensaje = x[1], Objeto = x[0] };
+            }
+
+        }
     }
 }

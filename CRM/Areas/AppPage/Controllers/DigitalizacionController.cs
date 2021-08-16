@@ -9,6 +9,11 @@ namespace CRM.Areas.AppPage.Controllers
     public class DigitalizacionController : Controller
     {
         // GET: AppPage/Digitalizacion
+
+        public ActionResult Prueba()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             return View();
@@ -18,6 +23,14 @@ namespace CRM.Areas.AppPage.Controllers
             return View();
         }
         public ActionResult Gestionlegalizados()
+        {
+            return View();
+        }
+        public ActionResult GestionAuditoria()
+        {
+            return View();
+        }
+        public ActionResult GestionAuditoriaLegalizado()
         {
             return View();
         }
