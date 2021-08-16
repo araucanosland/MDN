@@ -443,6 +443,281 @@ namespace CRM.Business.Data
             };
         }
 
+        public static List<EstadoGestionPensionadoEntity> ListaPensionadosEstadosGestionNull()
+        {
+            Parametros parametros = new Parametros()
+            {
+            };
+            return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_Estado_Gestion_null", parametros, PensionadosEstadosGestion);
+        }
+
+        #region estadogestionid
+        //public static List<EstadoGestionPensionadoEntity> ListaPensionadosEstadosGestion(int id)
+        //{
+        //    Parametros parametros = new Parametros()
+        //    {
+        //        new Parametro("@id",id),
+        //    };
+        //    return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_Estado_Gestion", parametros, PensionadosEstadosGestion);
+        //}
+        #endregion
+
+
+        public static List<EstadoGestionPensionadoEntity> ListaPensionadosSubEstadosGestion(int padre)
+        {
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@Padre",padre),
+            };
+            return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_Sub_Estado_Gestion", parametros, PensionadosEstadosGestion);
+        }
+
+        private static Entity.EstadoGestionPensionadoEntity PensionadosEstadosGestion(DataRow row)
+        {
+            return new Entity.EstadoGestionPensionadoEntity
+            {
+                eges_id = row["id"] != DBNull.Value ? Convert.ToInt32(row["id"]) : 0,
+                eges_nombre = row["nombre"] != DBNull.Value ? row["nombre"].ToString() : string.Empty,
+            };
+        }
+
+
+
+        #region Prioridad
+
+        //public static List<PensionadosUnoPorcientoPrioridadEntity> ListaPensionadosPrioridad(int idprioridad)
+        //{
+        //    Parametros parametros = new Parametros()
+        //    {
+        //        new Parametro("@Idprioridad",idprioridad),
+        //    };
+        //    return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_Prioridad", parametros, PensionadosPrioridad);
+        //}
+
+        //private static Entity.PensionadosUnoPorcientoPrioridadEntity PensionadosPrioridad(DataRow row)
+        //{
+        //    return new Entity.PensionadosUnoPorcientoPrioridadEntity
+        //    {
+        //        Id = row["id"] != DBNull.Value ? Convert.ToInt32(row["id"]) : 0,
+        //        Glosa = row["glosa"] != DBNull.Value ? row["glosa"].ToString() : string.Empty,
+        //        Color = row["color"] != DBNull.Value ? row["color"].ToString() : string.Empty,
+        //    };
+        //}
+
+        #endregion
+
+        #region comunas
+        //public static List<PensionadosUnoPorcientoComunasEntity> ListaPensionadosComunas(int idcomuna)
+        //{
+        //    Parametros parametros = new Parametros()
+        //    {
+        //        new Parametro("@Idcomuna",idcomuna),
+        //    };
+        //    return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_Comunas", parametros, PensionadosComunas);
+        //}
+
+        //private static Entity.PensionadosUnoPorcientoComunasEntity PensionadosComunas(DataRow row)
+        //{
+        //    return new Entity.PensionadosUnoPorcientoComunasEntity
+        //    {
+        //        Id = row["id"] != DBNull.Value ? Convert.ToInt32(row["id"]) : 0,
+        //        Comuna = row["comuna"] != DBNull.Value ? row["comuna"].ToString() : string.Empty,
+        //    };
+        //}
+        #endregion
+
+
+        public static List<PensionadosUnoPorcientoEntity> ListaPensionadosUnoPorciento(string rut, string epp, int estado_id)
+        {
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@RutAfiliado",rut),
+                new Parametro("@Epp",epp),
+                new Parametro("@Estado_id",estado_id),
+            };
+            return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_Lead_Uno_Porciento", parametros, UnoPorciento);
+        }
+
+        #region listarpensionadoid
+        //public static List<PensionadosUnoPorcientoEntity> ListaPensionadosUnoPorcientoId(int id)
+        //{
+        //    Parametros parametros = new Parametros()
+        //    {
+        //        new Parametro("@id",id),
+        //    };
+        //    return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Obtener_Lead", parametros, UnoPorciento);
+        //}
+        #endregion
+
+        private static Entity.PensionadosUnoPorcientoEntity UnoPorciento(DataRow row)
+        {
+            return new Entity.PensionadosUnoPorcientoEntity
+            {
+                Id = row["id"] != DBNull.Value ? Convert.ToInt32(row["id"]) : 0,
+                Rut_Afiliado = row["rut"] != DBNull.Value ? row["rut"].ToString() : string.Empty,
+                Nombre_Afiliado = row["nombre"] != DBNull.Value ? row["nombre"].ToString() : string.Empty,
+                Epp_id = row["epp_id"] != DBNull.Value ? Convert.ToInt32(row["epp_id"]) : 0,
+                Epp_text = row["epp_text"] != DBNull.Value ? row["epp_text"].ToString() : string.Empty,
+                Fecha_Ultima_Pension = row["fechaultimapension"] != DBNull.Value ? Convert.ToDateTime(row["fechaultimapension"]) : new DateTime(1900, 1, 1),
+                Beneficio_id = row["beneficio_id"] != DBNull.Value ? Convert.ToInt32(row["beneficio_id"]) : 0,
+                beneficio_text = row["beneficio_text"] != DBNull.Value ? row["beneficio_text"].ToString() : string.Empty,
+                Fecha_Ultimo_Beneficio = row["fechaultimobeneficio"] != DBNull.Value ? Convert.ToDateTime(row["fechaultimobeneficio"]) : new DateTime(1900, 1, 1),
+                Oficina = row["oficina_id"] != DBNull.Value ? Convert.ToInt32(row["oficina_id"]) : 0,
+                Rut_Ejecutivo = row["ejec_asignado"] != DBNull.Value ? row["ejec_asignado"].ToString() : string.Empty,
+                Periodo = row["periodo"] != DBNull.Value ? Convert.ToInt32(row["periodo"]) : 0,
+
+            };
+        }
+
+        #region actualizalead
+        //public static int ActualizaContactoPensionadoUnoPorciento(PensionadosUnoPorcientoLeadEntity rdata)
+        //{
+        //    Parametros pram = new Parametros
+        //    {
+        //        new Parametro("@ID_ASIGN", rdata.id_Asign),
+        //        new Parametro("@EPPACTUAL",rdata.eppactual),
+        //        new Parametro("@FECHAPENSION", Convert.ToDateTime( rdata.fechapension)),
+        //        new Parametro("@BENEFICIO", rdata.beneficio),
+        //        new Parametro("@FECHABENEFICIO",Convert.ToDateTime( rdata.fechabeneficio)),
+        //    };
+
+        //    return DBHelper.InstanceNegocio.EjecutarProcedimiento("pensionados.Actualiza_Contacto_pensionado_Uno_Porciento", pram);
+        //}
+        #endregion
+
+        #region guardacontacto
+        //public static int GuardaContactoPensionadoUnoPorciento(WebContactoPensionados rdata)
+        //{
+        //    Parametros pram = new Parametros
+        //    {
+        //        new Parametro("@con_contacto_uid", rdata.con_contacto_uid),
+        //        new Parametro("@con_contacto", rdata.con_contacto),
+        //        new Parametro("@con_forma_contacto", rdata.con_forma_contacto),
+        //        new Parametro("@con_no_contacto_fono", rdata.con_no_contacto_fono),
+        //        new Parametro("@con_fecha_cita_contacto", rdata.con_fecha_cita_contacto),
+        //        new Parametro("@con_no_contacto_domicilo", rdata.con_no_contacto_domicilo),
+        //        new Parametro("@con_no_observacion_contacto", rdata.con_no_observacion_contacto),
+        //        new Parametro("@con_ejecutivo_rut", rdata.con_ejecutivo_rut),
+        //        new Parametro("@con_oficina", rdata.con_oficina),
+        //        new Parametro("@estado_gestion", rdata.estado_gestion),
+        //        new Parametro("@rut_pensionado", rdata.rut_pensionado),
+        //    };
+        //    return DBHelper.InstanceNegocio.EjecutarProcedimiento("pensionados.Guardar_Contacto_Pensionado", pram);
+        //}
+        #endregion
+
+
+
+
+        public static List<PensionadosUnoPorcientoEppEntity> ListarEpp(int idepp)
+        {
+            Parametros parametros = new Parametros()
+            {
+                 new Parametro("@Idepp",idepp),
+            };
+            return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_epp", parametros, ListaEpp);
+        }
+
+        private static Entity.PensionadosUnoPorcientoEppEntity ListaEpp(DataRow row)
+        {
+            return new Entity.PensionadosUnoPorcientoEppEntity
+            {
+                Id = row["id"] != DBNull.Value ? Convert.ToInt32(row["id"]) : 0,
+                RazonSocial = row["razonsocial"] != DBNull.Value ? row["razonsocial"].ToString() : string.Empty,
+            };
+        }
+
+        public static List<PensionadosUnoPorcientoBeneficiosEntity> Listar_Beneficios(int idbeneficio)
+        {
+            Parametros parametros = new Parametros()
+            {
+                 new Parametro("@Idbeneficio",idbeneficio),
+            };
+            return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_Beneficios", parametros, ListaBeneficio);
+        }
+
+        private static Entity.PensionadosUnoPorcientoBeneficiosEntity ListaBeneficio(DataRow row)
+        {
+            return new Entity.PensionadosUnoPorcientoBeneficiosEntity
+            {
+                Id = row["id"] != DBNull.Value ? Convert.ToInt32(row["id"]) : 0,
+                Nombre = row["nombre"] != DBNull.Value ? row["nombre"].ToString() : string.Empty,
+            };
+        }
+
+        #region estadogestioncontacto
+        //public static List<UltimoContactoPensionados> ListaEstadoGestionContacto(int id, int oficina)
+        //{
+        //    Parametros parametros = new Parametros()
+        //    {
+        //        new Parametro("@Id",id),
+        //        new Parametro("@Oficina",oficina),
+        //    };
+        //    return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Lista_Estado_Gestion_Contacto", parametros, Gestioncontacto);
+        //}
+
+        //private static Entity.UltimoContactoPensionados Gestioncontacto(DataRow row)
+        //{
+        //    return new Entity.UltimoContactoPensionados
+        //    {
+        //        con_contacto = row["con_contacto"] != DBNull.Value ? row["con_contacto"].ToString() : string.Empty,
+        //        con_forma_contacto = row["con_forma_contacto"] != DBNull.Value ? Convert.ToInt32(row["con_forma_contacto"]) : 0,
+        //        con_no_contacto_fono = row["con_no_contacto_fono"] != DBNull.Value ? Convert.ToInt32(row["con_no_contacto_fono"]) : 0,
+        //        con_no_contacto_domicilo = row["con_no_contacto_domicilo"] != DBNull.Value ? Convert.ToInt32(row["con_no_contacto_domicilo"]) : 0,
+        //        con_no_observacion_contacto = row["con_no_observacion_contacto"] != DBNull.Value ? row["con_no_observacion_contacto"].ToString() : string.Empty,
+        //        nomContatoSi = row["nomContatoSi"] != DBNull.Value ? row["nomContatoSi"].ToString() : string.Empty,
+        //        nomConFono = row["nomConFono"] != DBNull.Value ? row["nomConFono"].ToString() : string.Empty,
+        //        nomConDom = row["nomConDom"] != DBNull.Value ? row["nomConDom"].ToString() : string.Empty,
+        //    };
+        //}
+        #endregion
+
+
+        public static List<WebPensionadosUnoPorcientoGestionEntity> ListaHistorialGestionPensionados(string rut, int periodo)
+        {
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@rut",rut),
+                new Parametro("@periodo",periodo),
+            };
+            return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Lista_Historial_Pensionado", parametros, Gestionhistorial);
+        }
+
+        private static Entity.WebPensionadosUnoPorcientoGestionEntity Gestionhistorial(DataRow row)
+        {
+            return new Entity.WebPensionadosUnoPorcientoGestionEntity
+            {
+                NombreEjecutivo = row["NombreEjecutivo"] != DBNull.Value ? row["NombreEjecutivo"].ToString() : string.Empty,
+                FechaGestion = row["FechaGestion"] != DBNull.Value ? Convert.ToDateTime(row["FechaGestion"]) : new DateTime(1900, 1, 1),
+                Estado = row["Estado"] != DBNull.Value ? row["Estado"].ToString() : string.Empty,
+                SubEstado = row["SubEstado"] != DBNull.Value ? row["SubEstado"].ToString() : string.Empty,
+                Epp = row["Epp"] != DBNull.Value ? row["Epp"].ToString() : string.Empty,
+
+            };
+        }
+        #region estadocontacto
+        //public static List<Entity.EstadoGestionPensionadoEntity> ListaEstadoContactoPensionado()
+        //{
+
+        //    return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_Estado_Contacto_Pensionado", EstadoGestPensionado);
+        //}
+        #endregion
+
+
+        public static int GuardarGestionPensionadoUnoPorciento(PensionadosUnoPorcientoGestionEntity entrada)
+        {
+            Parametros pram = new Parametros
+            {
+                new Parametro("@Id_lead", entrada.Id_lead),
+                new Parametro("@Epp_id",entrada.Epp_id),
+                new Parametro("@Epp_Otro",entrada.Epp_Otro),
+                new Parametro("@Estado_id", entrada.Estado_id),
+                new Parametro("@SubEstado_id", entrada.SubEstado_id),
+                new Parametro("@Periodo",entrada.Periodo),
+                new Parametro("@EjecutivoRut",entrada.EjecutivoRut),
+            };
+            return DBHelper.InstanceNegocio.EjecutarProcedimiento("pensionados.Guardar_Gestion_Pensionado", pram);
+        }
 
     }
 }

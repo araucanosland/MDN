@@ -74,11 +74,13 @@ namespace CRM.Business.Entity
         public string con_contacto { get; set; }
         public int con_forma_contacto { get; set; }
         public int con_no_contacto_fono { get; set; }
+        public string con_fecha_cita_contacto { get; set; }
         public int con_no_contacto_domicilo { get; set; }
         public string con_no_observacion_contacto { get; set; }
         public string con_ejecutivo_rut { get; set; }
         public string con_oficina { get; set; }
         public int estado_gestion { get; set; }
+        public string rut_pensionado { get; set; }
     }
 
     public class WebGestionPensionados
@@ -92,6 +94,7 @@ namespace CRM.Business.Entity
         public string ges_oficina { get; set; }
         public string[] tags_conforme { get; set; }
         public string[] tags_noQuiere { get; set; }
+        public string rut_pensionado { get; set; }
 
     }
 
@@ -224,4 +227,89 @@ namespace CRM.Business.Entity
 
     }
 
+    public class PensionadosUnoPorcientoEntity
+    {
+        public long Id { get; set; }
+        public string Rut_Afiliado { get; set; }
+        public string Nombre_Afiliado { get; set; }
+        public int Epp_id { get; set; }
+        public string Epp_text { get; set; }
+        public DateTime Fecha_Ultima_Pension { get; set; }
+        public int Beneficio_id { get; set; }
+        public string beneficio_text { get; set; }
+        public DateTime Fecha_Ultimo_Beneficio { get; set; }
+        public int Oficina { get; set; }
+        public string Rut_Ejecutivo { get; set; }
+        public int Periodo { get; set; }
+    }
+
+    #region comunas
+    //public class PensionadosUnoPorcientoComunasEntity
+    //{
+    //    public long Id { get; set; }
+    //    public string Comuna { get; set; }
+
+    //}
+    #endregion
+
+
+
+    #region prioridad
+    //public class PensionadosUnoPorcientoPrioridadEntity
+    //{
+    //    public long Id { get; set; }
+    //    public string Glosa { get; set; }
+    //    public string Color { get; set; }
+    //}
+    #endregion
+
+
+
+    public class PensionadosUnoPorcientoEppEntity
+    {
+        public long Id { get; set; }
+        public string RazonSocial { get; set; }
+    }
+
+    public class PensionadosUnoPorcientoBeneficiosEntity
+    {
+        public long Id { get; set; }
+        public string Nombre { get; set; }
+    }
+
+    #region actualizalead
+    //public class PensionadosUnoPorcientoLeadEntity
+    //{
+    //    public int id_Asign { get; set; }
+    //    public int eppactual { get; set; }
+    //    public string fechapension { get; set; }
+    //    public int beneficio { get; set; }
+    //    public string fechabeneficio { get; set; }
+
+    //}
+    #endregion
+
+
+
+    public class PensionadosUnoPorcientoGestionEntity
+    {
+        public int Id_lead { get; set; }
+        public int Epp_id { get; set; }
+        public string Epp_Otro { get; set; }
+        public int Estado_id { get; set; }
+        public int SubEstado_id { get; set; }
+        public int Periodo { get; set; }
+        public string EjecutivoRut { get; set; }
+
+    }
+
+    public class WebPensionadosUnoPorcientoGestionEntity
+    {
+        public string NombreEjecutivo { get; set; }
+        public DateTime FechaGestion { get; set; }
+        public string Estado { get; set; }
+        public string SubEstado { get; set; }
+        public string Epp { get; set; }
+
+    }
 }

@@ -315,6 +315,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformesController.cs" />
     <Compile Include="Controllers\MantenedoresController.cs" />
+    <Compile Include="Controllers\PensionadosController.cs" />
     <Compile Include="Controllers\PerfilEmpresasController.cs" />
     <Compile Include="Controllers\InstaladorController.cs" />
     <Compile Include="Controllers\LicenciasController.cs" />
@@ -437,6 +438,7 @@
     <Content Include="Assets\js.App\src\normalizacion.js" />
     <Content Include="Assets\js.App\src\oferta.js" />
     <Content Include="Assets\js.App\src\pensionados.js" />
+    <Content Include="Assets\js.App\src\PensionadosWeb.js" />
     <Content Include="Assets\js.App\src\pex.js" />
     <Content Include="Assets\js.App\src\portabilidad-ingreso.js" />
     <Content Include="Assets\js.App\src\portabilidad.js" />
@@ -654,6 +656,7 @@
     <Content Include="Areas\AppPage\Views\Digitalizacion\GestionAuditoria.cshtml" />
     <Content Include="Areas\AppPage\Views\Digitalizacion\Prueba.cshtml" />
     <Content Include="Areas\AppPage\Views\Digitalizacion\GestionAuditoriaLegalizado.cshtml" />
+    <Content Include="Areas\AppPage\Views\Pensionados\PensionadoWeb.cshtml" />
     <None Include="Properties\PublishProfiles\CharlyMOTOR.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\Settings.settings">

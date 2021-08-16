@@ -18,5 +18,9 @@ namespace CRM.Areas.AppPage.Controllers
         {
             return View();
         }
+        public ActionResult PensionadoWeb()
+        {
+            return View();
+        }
     }
 }
