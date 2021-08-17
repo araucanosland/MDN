@@ -264,6 +264,11 @@ $(function () {
 
     });
 
+    $("#tab-gestion-pensionado").on("change", function (e) {
+        $('#btn-guardar').prop('disabled', false);
+
+    });
+
 
     $('#btn-btCerrarModal').on("click", function () {
         //metodos.CargaGrilla("", 1, 1);
@@ -275,7 +280,34 @@ $(function () {
         var fechaHoy = new Date();
         var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
         var otroepp = "";
-        if ($("#ModaldllNuevoEpp").val() == '29') {
+        if ($('#ModaldllEstadoGestion').val() == '0') {
+            $.niftyNoty({
+                type: 'warning',
+                message: '<strong>Advertencia, Debe seleccionar Estado</strong>',
+                container: '#msjMantPensionadoContacto',
+                timer: 3000
+            });
+            return false;
+        }
+        if ($('#ModaldllSubEstadoGestion').val() == '0') {
+            $.niftyNoty({
+                type: 'warning',
+                message: '<strong>Advertencia, Debe seleccionar SubEstado</strong>',
+                container: '#msjMantPensionadoContacto',
+                timer: 3000
+            });
+            return false;
+        }
+        if (($("#ModaldllSubEstadoGestion").val() == '101' || $("#ModaldllSubEstadoGestion").val() == '102' || $("#ModaldllSubEstadoGestion").val() == '301' || $("#ModaldllSubEstadoGestion").val() == '302') && $('#ModaldllNuevoEpp').val() == '0') {
+            $.niftyNoty({
+                type: 'warning',
+                message: '<strong>Advertencia, Debe seleccionar Nuevo EPP</strong>',
+                container: '#msjMantPensionadoContacto',
+                timer: 3000
+            });
+            return false;
+        }
+        if ($('#ModaldllNuevoEpp').val() == '29') {
             otroepp = $('#peneppOtro').val();
             if ($("#peneppOtro").val() == "") {
                 $.niftyNoty({
@@ -308,6 +340,7 @@ $(function () {
                     focus: false,
                     timer: 5000
                 });
+                $('#btn-guardar').prop('disabled', true);
                 metodos.CargaHistorialGestPensionados($('#Pen_rut').val());
             }
             else {
@@ -318,8 +351,13 @@ $(function () {
                     timer: 5000
                 });
             }
-
-
+            metodos.CargaGrilla($("#txtRutPen").val(), $("#dllEppPen").val(), $("#dllEstadoGestion").val());
+            $('#penObservacion').val("");
+            $('#ModaldllEstadoGestion').val(0);
+            $('#ModaldllSubEstadoGestion').prop('disabled', true);
+            $('#ModaldllSubEstadoGestion').val('');
+            $('#divnuevoepp').css("display", "none");
+            $('#divotroepp').css("display", "none");
         });
     });
 
@@ -342,24 +380,21 @@ $(function () {
     //***************Modal **********
 
     $('#mdl_data_gestion_pensionado').on('hidden.bs.modal', async (event) => {
-        $('input[name="rbestadoBnf"]').prop('checked', false);
-        $('input[name="rbSubestadoBnf"]').prop('checked', false);
-        $("#dvRbSubEstadoBnf").html("");
-        $('input[type="checkbox"]').prop('checked', false);
-        $('input[type="radio"]').prop('checked', false);
-        $("#txtObservacionBnf").val('');
-        $("#txtSugenrenciaBnf").val('');
-        $("#txtRemMedicoBnf").val('');
-        $("#txtUsoFarmBnf").val('');
-        $("#dllSegmentoBenf").val();
-        $('#dpFechaAniversario').val('');
-        $('#tipo_plan_entel').css('display', 'none')
+ 
+
     });
 
     $('#mdl_data_gestion_pensionado').on('show.bs.modal', async (event) => {
         //*********************************tab datos pensionados******
-    
+
         $("#tabDatosPen").tab('show');
+
+        $('#penObservacion').val("");
+        $('#ModaldllEstadoGestion').val(0);
+        $('#ModaldllSubEstadoGestion').prop('disabled', true);
+        $('#ModaldllSubEstadoGestion').val('');
+        $('#divnuevoepp').css("display", "none");
+        $('#divotroepp').css("display", "none");
         
         $('#pen_beneficio').val($(event.relatedTarget).data('beneficio'));
         $('#pen_epp').val($(event.relatedTarget).data('epp'));

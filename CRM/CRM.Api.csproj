@@ -402,6 +402,7 @@
     <Content Include="Assets\js.App\src\acuerdo_pagos.js" />
     <Content Include="Assets\js.App\src\app.js" />
     <Content Include="Assets\js.App\src\atencion-cliente.js" />
+    <Content Include="Assets\js.App\src\Beneficios-unoporciento.js" />
     <Content Include="Assets\js.App\src\beneficios.js" />
     <Content Include="Assets\js.App\src\BuscadorGrilla.js" />
     <Content Include="Assets\js.App\src\calidad.js" />
