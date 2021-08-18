@@ -4,6 +4,7 @@ function ValidaEmail(email) {
     return regex.test(email);
 }
 
+
 var Fn = {
     validaRut: function (rut) {
         debugger;
@@ -26,12 +27,23 @@ var Fn = {
 }
 
 
+
+function formatFecha(value, row, index) {
+
+
+    if (value != null) {
+        return value.toFecha();
+    }
+
+}
+
+
 function eliminar(rut) {
     bootbox.confirm({
         size: "medium",
         title: "Este Usuario se borrará definitivamente del sistema",
         message: "¿Desea hacerlo?",
-        
+
         buttons: {
             confirm: {
                 label: 'Si, eliminar',
@@ -142,7 +154,7 @@ var metodos = {
             $("#ddloficinasgalvarino").html("");
             $("#ddloficinasgalvarino").append($("<option>").val("0").html("Seleccione").data("id", "0").data("nombre", "Seleccione"));
             $.each(datos, function (i, oficina) {
-              
+
                 $("#ddloficinasgalvarino").append($("<option>").val(oficina.cod_oficina).html(oficina.DescOficina).data("id", oficina.cod_oficina).data("nombre", oficina.DescOficina));
             });
 
@@ -201,7 +213,7 @@ var metodos = {
             $("#ddloficina").html("");
             $("#ddloficina").append($("<option>").val(0).html("Seleccione").data("id", 0).data("nombre", "Seleccione"));
             $.each(datos, function (i, oficina) {
-               $("#ddloficina").append($("<option>").val(oficina.codOficina).html(oficina.DescOficina).data("id", oficina.codOficina).data("nombre", oficina.DescOficina));
+                $("#ddloficina").append($("<option>").val(oficina.codOficina).html(oficina.DescOficina).data("id", oficina.codOficina).data("nombre", oficina.DescOficina));
             });
 
         });
@@ -219,7 +231,7 @@ var metodos = {
     },
     ValiaExsiteUsuario: function (Rut) {
         $.SecGetJSON(BASE_URL + "/motor/api/mantenedores/listar-Usuarios", { Rut: Rut, Oficina: getCookie("Oficina"), RutEjecutivo: getCookie("Rut") }, function (datos) {
-           
+
             if (datos.length > 0) {
                 $.niftyNoty({
                     type: 'danger',
@@ -240,15 +252,43 @@ var metodos = {
                 $("#ddlcargos").prop("disabled", false);
             }
         });
-    }
+    },
+    //****************Metodos Log MDN
+    CargaGrillaLogMDN: function (FechaDesde, FechaHasta, Tipo) {
+        debugger;
+         $("#tblLogMDN").bootstrapTable('refresh', {
+            url: '/motor/api/mantenedores/listar-log-MDN',
+            query: {
+                FechaDesde: FechaDesde,
+                FechaHasta: FechaHasta,
+                Tipo: Tipo
+
+            }
+        });
+    },
+     //****************Metodos Log Galvarino
+    CargaGrillaLogGalvarino: function (FechaDesde, FechaHasta, Tipo) {
+        debugger;
+        $("#tblLogGalvarino").bootstrapTable('refresh', {
+            url: '/motor/api/mantenedores/listar-log-Galvarino',
+            query: {
+                FechaDesde: FechaDesde,
+                FechaHasta: FechaHasta,
+                Tipo: Tipo
+
+            }
+        });
+    },
 }
+
+
 function digitalLinkFormatter(value, row, index) {
 
     let Nombre = row.Nombre.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
     let Cargo = row.Cargo.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
     return `<a class="btn btn-primary mar-lft btn-rounded" title="Datos usuario" data-target="#modal-usuarios" data-toggle="modal" data-Rut=${row.Rut} data-Nombre=${Nombre} data-suc=${row.Cod_Sucursal} data-correo=${row.Correo} data-cargo=${Cargo} data-tipo="editar"><i class="ion-edit btn-rounded"></i></a>
             <a class="btn btn-danger float-right btn-rounded" title="Eliminar" href="javascript:eliminar(${row.Rut.replace('-', '')})"><i class="ion-trash-a"></i></a>
-`;
+            `;
 
 }
 
@@ -277,12 +317,33 @@ $.fn.datepicker.dates['es'] = {
 $(function () {
 
 
+    $('#index-dp-component .input-group.date').datepicker({
+        autoclose: true,
+        format: 'dd-mm-yyyy',
+        language: "es",
+        // daysOfWeekDisabled: [6, 0],
+        todayHighlight: true,
+        //startDate: '-7d'
+    }
+    ).on('changeDate', function (e) {
+        //cargador.CargaDatosTabla($("#fechahoy").val());
+        //cargador.CargaDatosEncabezado($("#fechahoy").val());
+    });
+
     //******************** Load js***************
     metodos.CargaComboOficinas();
     metodos.CargaGrillaListaUsuario($("#txtrut").val().replace(".", "").replace(".", ""));
     metodos.CargaComboCargos();
     metodos.CargacomboOficinaGalavarino();
     metodos.CargaComboCargosGalvarino();
+
+    var hoy = new Date();
+    var d = hoy.getDate().toString().paddingLeft("00") + "-" + (hoy.getMonth() + 1).toString().paddingLeft("00") + "-" + hoy.getFullYear().toString();
+    $("#dt_fecha_log_Mdn_desde").val(d)
+    $("#dt_fecha_log_Mdn_hasta").val(d)
+    $("#dt_fecha_log_galvarino_desde").val(d)
+    $("#dt_fecha_log_galvarino_hasta").val(d)
+
 
     $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 
@@ -299,12 +360,12 @@ $(function () {
 
     //**********************tab Mantenedor Galvarino***************
     $("#txtrutGalvarino").inputmask({ mask: "9[9.999.999]-[9|A]", });
-    
+
     metodos.CargaGrillaGalvarino($("#txtrutGalvarino").val().replace(".", "").replace(".", ""))
 
     $("#txtrutUsuariogalvarino").on("blur", function (e) {
 
-       
+
         if (Fn.validaRut($("#txtrutUsuariogalvarino").val())) {
             debugger;
             e.preventDefault();
@@ -354,7 +415,7 @@ $(function () {
             $("#txtCorreogalvarino").prop("disabled", true)
         }
         if (Tipo_accion == "nuevogalvarino") {
-           
+
             $("#txtrutUsuariogalvarino").focus();
             $("#txtrutUsuariogalvarino").inputmask({ mask: "9[9.999.999]-[9|A]", });
             $("#txtrutUsuariogalvarino").val('');
@@ -373,7 +434,7 @@ $(function () {
     });
 
     $('#btn-guardar-galvarino').on("click", function () {
-        
+
         var mensajes = '';
         if (Tipo_accion == "editar") {
             if ($('#ddloficina').val() == "0") {
@@ -470,8 +531,8 @@ $(function () {
 
     //************************ Tab Mantenedor Motor***************+
     $("#txtrut").inputmask({ mask: "9[9.999.999]-[9|A]", });
-    
-    
+
+
 
     $("#txtrutUsuario").on("blur", function (e) {
 
@@ -496,7 +557,7 @@ $(function () {
             $("#ddloficina").prop("disabled", true);
             $("#ddlcargos").prop("disabled", true);
             return false;
-           
+
         }
     });
 
@@ -608,13 +669,13 @@ $(function () {
     //*************************Modal Usuarios ***********************
 
     $('#modal-usuarios').on('hidden.bs.modal', async (event) => {
-     
+
         metodos.CargaGrillaListaUsuario($("#txtrut").val());
     });
 
 
     $('#modal-usuarios').on('show.bs.modal', async (event) => {
-     
+
 
         Tipo_accion = $(event.relatedTarget).data('tipo')
         if (Tipo_accion == "editar") {
@@ -636,7 +697,7 @@ $(function () {
         if (Tipo_accion == "nuevo") {
             $("#txtrutUsuario").focus();
             //$("#txtrutUsuario").mask('9[9.999.999]-[9|A]')
-            $("#txtrutUsuario").inputmask({ mask: "9[9.999.999]-[9|A]",});
+            $("#txtrutUsuario").inputmask({ mask: "9[9.999.999]-[9|A]", });
             $("#txtrutUsuario").val('');
             $("#txtNombreUsuario").val('');
             $("#ddlcargos").val("Seleccione");
@@ -646,10 +707,37 @@ $(function () {
             $("#txtrutUsuario").prop("disabled", false)
             $("#txtNombreUsuario").prop("disabled", false)
             $("#txtCorreo").prop("disabled", false)
-           
+
         }
 
 
+
+    });
+
+    //************************ MODAL LOG MDN******************************
+
+    $('#btn-buscar-log-mdn').on("click", function () {
+        metodos.CargaGrillaLogMDN($("#dt_fecha_log_Mdn_desde").val(), $("#dt_fecha_log_Mdn_hasta").val(), "Query");
+      
+    });
+
+    $('#exportar-log-mdn').click(function () {
+        
+        location.href = BASE_URL + "/motor/api/mantenedores/exportar-log-MDN?FechaDesde=" + $("#dt_fecha_log_Mdn_desde").val() + "&FechaHasta=" + $("#dt_fecha_log_Mdn_hasta").val() + "&Tipo=EXPORTAR";
+
+    });
+
+
+    $('#btn-buscar-log-galvarino').on("click", function () {
+        debugger;
+        metodos.CargaGrillaLogGalvarino($("#dt_fecha_log_galvarino_desde").val(), $("#dt_fecha_log_galvarino_hasta").val(), "Query");
+
+    });
+
+
+    $('#exportar-log-galvarino').click(function () {
+
+        location.href = BASE_URL + "/motor/api/mantenedores/exportar-log-galvarino?FechaDesde=" + $("#dt_fecha_log_Mdn_desde").val() + "&FechaHasta=" + $("#dt_fecha_log_Mdn_hasta").val() + "&Tipo=EXPORTAR";
 
     });
 

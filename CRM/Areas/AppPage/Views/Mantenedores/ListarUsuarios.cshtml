@@ -53,16 +53,19 @@
                                         </div>
                                     </div>
 
+
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="btn_buscar">BUSCAR</button>
 
-                                            <span class="iconify" data-icon="ant-design:file-add-twotone" data-inline="false"></span>
+
                                         </div>
                                     </div>
+
                                 </div>
                                 <hr />
                                 <button class="btn btn-success btn-rounded btn-labeled ion-plus-round" data-target="#modal-usuarios" data-toggle="modal" data-tipo="nuevo" id="btn_nuevo">Nuevo Usuario</button>
+                                <button class="btn btn-primary btn-rounded" style="margin-left: 500px;" data-target="#modal-Log-MDN" data-toggle="modal" id="btn_log_mdn">Log</button>
 
                             </div>
                         </div>
@@ -127,6 +130,7 @@
                                 </div>
                                 <hr />
                                 <button class="btn btn-success btn-rounded btn-labeled ion-plus-round" data-target="#modal-usuarios-galvarino" data-toggle="modal" data-tipo="nuevogalvarino" id="btn_nuevo_galvarino">Nuevo Usuario</button>
+                                <button class="btn btn-primary btn-rounded" style="margin-left: 500px;" data-target="#modal-Log-galvarino" data-toggle="modal" id="btn_log_galvarino">Log</button>
 
                             </div>
                         </div>
@@ -231,6 +235,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="modal-usuarios-galvarino" role="dialog" tabindex="-1" aria-labelledby="modal-usuarios" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 
     <div class="modal-dialog modal-lg">
@@ -252,7 +257,7 @@
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label class="control-label">Rut Usuario</label>
-                            <input type="text" class="form-control es-rut" placeholder="Rut Usuario"  id="txtrutUsuariogalvarino" tabindex="1">
+                            <input type="text" class="form-control es-rut" placeholder="Rut Usuario" id="txtrutUsuariogalvarino" tabindex="1">
                         </div>
                     </div>
                     <div class="col-sm-5">
@@ -264,13 +269,13 @@
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label class="control-label">Oficina</label>
-                            <select class="form-control" id="ddloficinasgalvarino"  tabindex="3"></select>
+                            <select class="form-control" id="ddloficinasgalvarino" tabindex="3"></select>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label class="control-label">Perfil</label>
-                            <select class="form-control" id="ddlcargosgalvarino"  tabindex="4"></select>
+                            <select class="form-control" id="ddlcargosgalvarino" tabindex="4"></select>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -292,6 +297,196 @@
         </div>
     </div>
 </div>
+
+<!--===================Modal Log MDN================================-->
+<div class="modal fade" id="modal-Log-MDN" role="dialog" tabindex="-1" aria-labelledby="modal-Log-MDN" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header" style="background: #337ab7;">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" style="color: #f1f1f1;">Log Histórico</h4>
+            </div>
+
+
+
+            <!--Modal body-->
+            <div class="modal-body">
+
+                <div id="msjerror">
+                    <br />
+                </div>
+                <div class="panel" style="border-radius: 8px">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha  Hasta</label>
+                                    <div id="index-dp-component">
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control" id="dt_fecha_log_Mdn_desde">
+                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha  Hasta</label>
+                                    <div id="index-dp-component">
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control" id="dt_fecha_log_Mdn_hasta">
+                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <button type="button" class="btn btn-success btn-rounded" style="margin-top: 22px;" id="btn-buscar-log-mdn">Buscar</button>
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="exportar-log-mdn">Exportar</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="panel" style="border-radius: 8px">
+                    <div class="panel-body">
+                        <table data-toggle="table"
+                               data-sort-name="id"
+                               data-page-list="[]"
+                               data-page-size="8"
+                               data-search="false"
+                               data-show-pagination-switch="false"
+                               data-pagination="true" id="tblLogMDN" style="font-size: 12px">
+
+                            <thead>
+                                <tr>
+                                    <th data-field="RutEjecutivo" data-sortable="true">Rut Ejecutivo</th>
+                                    <th data-field="FechaRegistro" data-formatter="formatFecha" data-sortable="true">Fecha Registro</th>
+                                    <th data-field="Accion" data-sortable="true">Acción</th>
+                                    <th data-field="RutUsuario" data-sortable="true">Rut Usuario</th>
+
+
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!--Modal footer-->
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button" id="btn_cancelar">Cerrar</button>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--===================Modal Log Galvarino================================-->
+<div class="modal fade" id="modal-Log-galvarino" role="dialog" tabindex="-1" aria-labelledby="modal-Log-galvarino" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header" style="background: #337ab7;">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" style="color: #f1f1f1;">Log Histórico</h4>
+            </div>
+
+
+
+            <!--Modal body-->
+            <div class="modal-body">
+
+                <div id="msjerror">
+                    <br />
+                </div>
+                <div class="panel" style="border-radius: 8px">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha Hasta</label>
+                                    <div id="index-dp-component">
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control" id="dt_fecha_log_galvarino_desde">
+                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha  Hasta</label>
+                                    <div id="index-dp-component">
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control" id="dt_fecha_log_galvarino_hasta">
+                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <button type="button" class="btn btn-success btn-rounded" style="margin-top: 22px;" id="btn-buscar-log-galvarino">Buscar</button>
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="exportar-log-galvarino">Exportar</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="panel" style="border-radius: 8px">
+                    <div class="panel-body">
+                        <table data-toggle="table"
+                               data-sort-name="id"
+                               data-page-list="[]"
+                               data-page-size="8"
+                               data-search="false"
+                               data-show-pagination-switch="false"
+                               data-pagination="true" id="tblLogGalvarino" style="font-size: 12px">
+
+                            <thead>
+                                <tr>
+                                    <th data-field="RutEjecutivo" data-sortable="true">Rut Ejecutivo</th>
+                                    <th data-field="FechaRegistro" data-formatter="formatFecha" data-sortable="true">Fecha Registro</th>
+                                    <th data-field="Accion" data-sortable="true">Acción</th>
+                                    <th data-field="RutUsuario" data-sortable="true">Rut Usuario</th>
+
+
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!--Modal footer-->
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button" id="btn_cancelar">Cerrar</button>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
 @section script{
     <script src="~/Assets/js/vue.js"></script>
     <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>

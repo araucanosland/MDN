@@ -10,6 +10,20 @@ namespace CRM.Business.Entity
         public string Cargo { get; set; }
         public string Correo { get; set; }
         public string OficinaGalvarino { get; set; }
+        public string RutEjecutivo { get; set; }
+    }
+
+    public class LogMantenedor
+    {
+        public long Id { get; set; }
+        public string RutUsuario { get; set; }
+        public string NombreUsuario { get; set; }
+        public string RutEjecutivo { get; set; }
+        public string NombreEjecutivo { get; set; }
+        public DateTime FechaRegistro { get; set; }
+        public string Accion { get; set; }
+        public string FechaRegistroString { get; set; }
+
     }
 
 

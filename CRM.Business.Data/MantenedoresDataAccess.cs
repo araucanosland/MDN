@@ -10,6 +10,52 @@ namespace CRM.Business.Data
     public class MantenedoresDataAccess
     {
 
+        public static List<LogMantenedor> ListarLogMDN(DateTime FechaDesde, DateTime FechaHasta, string Tipo)
+        {
+            Parametros parametros = new Parametros
+            {
+               new Parametro("@FechaDesde",FechaDesde),
+               new Parametro("@FechaHasta",FechaHasta),
+               new Parametro("@tipoReporte",Tipo),
+            };
+            return DBHelper.InstanceCRM.ObtenerColeccion("dbo.spMotor_Mantenedor_Lista_log_MDN", parametros, ConstructorLog);
+        }
+
+
+        public static List<LogMantenedor> ListarLogGalvarino(DateTime FechaDesde, DateTime FechaHasta, string Tipo)
+        {
+            Parametros parametros = new Parametros
+            {
+               new Parametro("@FechaDesde",FechaDesde),
+               new Parametro("@FechaHasta",FechaHasta),
+               new Parametro("@tipoReporte",Tipo),
+            };
+            return DBHelper.InstanceCRM.ObtenerColeccion("dbo.spMotor_Mantenedor_Lista_log_Galvarino", parametros, ConstructorLog);
+        }
+
+
+        private static LogMantenedor ConstructorLog(DataRow row)
+        {
+            return new LogMantenedor
+            {
+
+                Id = row["Id"] != DBNull.Value ? Convert.ToInt64(row["Id"]) : 0,
+                FechaRegistro = row["FechaRegistro"] != DBNull.Value ? Convert.ToDateTime(row["FechaRegistro"]) : new DateTime(1900, 1, 1),
+                RutEjecutivo = row["RutEjecutivo"] != DBNull.Value ? row["RutEjecutivo"].ToString() : string.Empty,
+                NombreEjecutivo = row["nombreEjecutivo"] != DBNull.Value ? row["nombreEjecutivo"].ToString() : string.Empty,
+                RutUsuario = row["RutUsuario"] != DBNull.Value ? row["RutUsuario"].ToString() : string.Empty,
+                NombreUsuario = row["NombreUsuario"] != DBNull.Value ? row["NombreUsuario"].ToString() : string.Empty,
+                Accion = row["accion"] != DBNull.Value ? row["accion"].ToString() : string.Empty,
+                FechaRegistroString = row["FechaRegistroString"] != DBNull.Value ? row["FechaRegistroString"].ToString() : string.Empty,
+            };
+
+        }
+
+
+
+
+
+
         private static OficinaDerivacionEntity ConstructorOficina(DataRow row)
         {
             return new OficinaDerivacionEntity
@@ -56,6 +102,7 @@ namespace CRM.Business.Data
                 new Parametro("@oficina", web.oficina),
                 new Parametro("@Cargo", web.Cargo),
                 new Parametro("@Correo", web.Correo),
+                new Parametro("@RutEjecutivo", web.RutEjecutivo),
 
             };
 
@@ -74,6 +121,7 @@ namespace CRM.Business.Data
                 new Parametro("@oficina", web.OficinaGalvarino),
                 new Parametro("@Role", web.Cargo),
                 new Parametro("@Correo", web.Correo),
+                new Parametro("@RutEjecutivo", web.RutEjecutivo),
 
             };
 
@@ -82,13 +130,14 @@ namespace CRM.Business.Data
         }
 
 
-        public static long EliminarUsuarioGalvarino(string Rut)
+        public static long EliminarUsuarioGalvarino(string Rut, string RutEjecutivo)
         {
 
 
             Parametros parametros = new Parametros
             {
                 new Parametro("@Rut",Rut),
+                 new Parametro("@RutEjecutivo",RutEjecutivo),
             };
 
             return DBHelper.InstanceCRM.ObtenerEscalar<long>("dbo.spMotor_Mantenedor_Eliminar_Usuario_Galvarino", parametros);
@@ -96,13 +145,14 @@ namespace CRM.Business.Data
         }
 
 
-        public static long EliminarUsuario(string Rut)
+        public static long EliminarUsuario(string Rut, string RutEjecutivo)
         {
 
 
             Parametros parametros = new Parametros
             {
                 new Parametro("@Rut",Rut),
+                new Parametro("@RutEjecutivo",RutEjecutivo)
             };
 
             return DBHelper.InstanceCRM.ObtenerEscalar<long>("dbo.spMotor_Mantenedor_Eliminar_Usuario", parametros);
@@ -166,9 +216,9 @@ namespace CRM.Business.Data
                 Rut = row["identificador"] != DBNull.Value ? row["identificador"].ToString() : string.Empty,
                 Nombre = row["Nombres"] != DBNull.Value ? row["Nombres"].ToString() : string.Empty,
                 Cargo = row["rol"] != DBNull.Value ? row["rol"].ToString() : string.Empty,
-                Correo= row["email"] != DBNull.Value ? row["email"].ToString() : string.Empty,
-                Sucursal= row["oficina"] != DBNull.Value ? row["oficina"].ToString() : string.Empty,
-                Cod_of_galvarino= row["Codificacion"] != DBNull.Value ? row["Codificacion"].ToString() : string.Empty,
+                Correo = row["email"] != DBNull.Value ? row["email"].ToString() : string.Empty,
+                Sucursal = row["oficina"] != DBNull.Value ? row["oficina"].ToString() : string.Empty,
+                Cod_of_galvarino = row["Codificacion"] != DBNull.Value ? row["Codificacion"].ToString() : string.Empty,
             };
 
         }
@@ -182,7 +232,7 @@ namespace CRM.Business.Data
                new Parametro("@Rut",Rut),
                 new Parametro("@Rutejecutivo",RutEjecutivo),
             };
-            return DBHelper.InstanceCRM.ObtenerColeccion("dbo.spMotor_Mantenedor_Lista_usuarios_Galvarino", parametros, ConstructorUsuarioGalvarino);
+            return DBHelper.InstanceCRM.ObtenerColeccion("dbo.spMotor_Mantenedor_Lista_usuarios_Galvarino_open", parametros, ConstructorUsuarioGalvarino);
 
         }
 
