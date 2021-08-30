@@ -95,7 +95,7 @@
 
                                     })
                                 )))
-                debugger;
+               
                 if (e.IdEstadoGestion == '7') {
                     $("#bdy_datos_busqueda_cargas").find("select").attr("disabled", "disabled");
                 }
@@ -806,7 +806,7 @@ $(function () {
 
             var rutAf = $('#hdRutEjec').val().replace(/\./g, '');
             rutAf = rutAf.substring(0, rutAf.indexOf('-'));
-            debugger;
+           
 
             cargaDatosDeContacto(rutAf, '#bdy_datos_contactos');
         }

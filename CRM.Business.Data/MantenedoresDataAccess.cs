@@ -124,9 +124,17 @@ namespace CRM.Business.Data
                 new Parametro("@RutEjecutivo", web.RutEjecutivo),
 
             };
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerEscalar<long>("dbo.spMotor_Mantenedor_Ingreso_Galvarino", parametros);
 
-            return DBHelper.InstanceCRM.ObtenerEscalar<long>("dbo.spMotor_Mantenedor_Ingreso_Galvarino", parametros);
+            }
+            catch (Exception ex )
+            {
 
+                throw ex ;
+            }
+            
         }
 
 

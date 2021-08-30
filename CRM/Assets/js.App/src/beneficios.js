@@ -314,7 +314,7 @@ var appBnfModal = new Vue({
 
             let fechaHoy = new Date();
             let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
-            debugger;
+           
             fetch(`http://${motor_api_server}:4002/beneficios/lista-ultima-gestion/${rut}/${periodo}`, {
                 method: 'GET',
                 mode: 'cors',
@@ -322,7 +322,7 @@ var appBnfModal = new Vue({
             })
                 .then(response => response.json())
                 .then(datos => {
-                    debugger;
+                   
                     $('#dllSegmentoBenf').val(datos[0].segmento);
                     $('#txtRemMedicoBnf').val(datos[0].uso_rem_medico);
                     $('#txtUsoFarmBnf').val(datos[0].uso_farmacia);

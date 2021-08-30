@@ -2,7 +2,7 @@
 var metodos = {
     cargaGestion: function (Id) {
         $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-gestion-auditoria", { Id: Id }, function (response) {
-            debugger;
+           
             $("#AfiliadoRut").val(response.RutAfiliado);
             $("#AfiNombres").val(response.NombreAfiliado)
             $("#folio").val(response.Folio)

@@ -9,6 +9,25 @@ namespace CRM.Business.Data
 {
     public class DigitalizacionDataAccess
     {
+
+        public static List<DigitalizacionEntity> ListaDigitalizacionMc(DateTime FechaVentaDesde, DateTime FechaVentaHasta, string RutEjecutivo,string Oferta)
+        {
+            Parametros parametros = new Parametros()
+            {
+               
+                new Parametro("@FechaVentaDesde", FechaVentaDesde),
+                new Parametro("@FechaVentaHasta", FechaVentaHasta),
+                new Parametro("@RutEjecutivo",RutEjecutivo),
+                 new Parametro("@Oferta",Oferta),
+            };
+
+
+            return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_lead_Mesa_Control", parametros, ConstructorDigitalizacion);
+        }
+
+
+
+
         private static OficinaDerivacionEntity ConstructorOfiDerivacion(DataRow row)
         {
             return new OficinaDerivacionEntity

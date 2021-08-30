@@ -95,7 +95,7 @@
     });
 
     myDropzone.on("addedfile", function (file) {
-       // debugger;
+       //
         if (file.type == 'image/jpeg' || file.type == 'image/jpg') {
             uplodaBtn.prop('disabled', false);
             removeBtn.prop('disabled', false);
@@ -126,6 +126,7 @@
     });
 
     myDropzone.on("error", function (file) {
+       
         $.niftyNoty({
             type: 'warning',
             icon: 'pli-like-2 icon-2x',

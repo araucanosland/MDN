@@ -269,7 +269,7 @@ var appNormalizacionModal = new Vue({
                 });
         },
         obtenerSubEstadosModal(padre) {
-            debugger;
+           
             fetch(`http://${motor_api_server}:4002/normalizacion/estados?padre=${padre}`, {
                 method: 'GET',
                 mode: 'cors',
@@ -315,7 +315,7 @@ var appNormalizacionModal = new Vue({
 
         },
         manejarVisibilidadCalendario() {
-            debugger;
+           
             const sbestado = this.filtrosModal.subEstadosModal.find(est => est.id == this.modelosModal.subEstado);
             this.comportamientos.mostrarProximaGestion = (new RegExp('--compromiso')).test(sbestado.opciones);
         },
@@ -455,7 +455,7 @@ $(function () {
     });
 
     $('#slEstadoModNormalizacion').change(function (e) {
-        debugger;
+       
         e.preventDefault();
         if ($(this).val() == 1) {
             $('#slBasalModNormalizacion').attr("disabled", false);

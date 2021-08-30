@@ -18,6 +18,27 @@ namespace CRM.Controllers
     {
 
 
+        
+        [HttpGet]
+        [Route("listar-digitalizacion-MC")]
+        public IEnumerable<DigitalizacionEntity> Lista_lead_MC(string FechaVentaDesde, string FechaVentaHasta, string RutEjecutivo,string Oferta)
+        {
+            //  string token = ActionContext.Request.Headers.GetValues("Token").First();
+            CookieHeaderValue cookie = Request.Headers.GetCookies("Oficina").FirstOrDefault();
+            DateTime elDiaDesde = Convert.ToDateTime(FechaVentaDesde);
+            DateTime elDiahasta = Convert.ToDateTime(FechaVentaHasta);
+            //string RutAsignacion;
+            //if (RutEjecutivo==null)
+            //    RutAsignacion = "0";
+            //else
+            //    RutAsignacion = RutEjecutivo;
+            //string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<DigitalizacionEntity> digi = DigitalizacionDataAccess.ListaDigitalizacionMc(elDiaDesde, elDiahasta, RutEjecutivo,Oferta);
+
+            return digi;
+        }
+
+
         [HttpGet]
         [Route("listar-digitalizacion-Agente")]
         public IEnumerable<DigitalizacionEntity> Lista_lead_Agente(string RutEjecutivo, string FechaVentaDesde, string FechaVentaHasta, int Oficina, int Tipo, string Filtro)

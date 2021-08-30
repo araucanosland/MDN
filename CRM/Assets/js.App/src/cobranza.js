@@ -36,7 +36,7 @@ var appCobranzaFiltros = new Vue({
     },
     methods: {
         obtenerCausas_cobranza() {
-            debugger;
+           
             fetch(`http://${motor_api_server}:4002/cobranza/causas`, {
                 method: 'GET',
                 mode: 'cors',
@@ -44,7 +44,7 @@ var appCobranzaFiltros = new Vue({
             })
                 .then(response => response.json())
                 .then(causasJSON => {
-                    debugger;
+                   
                     this.filtros.causas = causasJSON;
                 });
         },
@@ -120,7 +120,7 @@ var appCobranzaFiltros = new Vue({
 
         },
         handleEventoClickFiltrarCobranza() {
-            debugger;
+           
             var fechaHoy = new Date();
             var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
 
@@ -345,7 +345,7 @@ var appCobranzaModal = new Vue({
                 });
         },
         handleSubmitcobranza() {
-            debugger;
+           
             let valContact = $('#slEstadoModcobranza').val();
             const formData = {
                 lead: this.dataModal.id,
@@ -364,7 +364,7 @@ var appCobranzaModal = new Vue({
                     'Token': getCookie('Token')
                 }
             }).then(async (response) => {
-                debugger;
+               
                 if (!response.ok) {
                     $.niftyNoty({
                         type: 'danger',
@@ -457,7 +457,7 @@ $(function () {
     });
 
     $('#slEstadoModcobranza').change(function (e) {
-        debugger;
+       
         e.preventDefault();
         if ($(this).val() == 1) {
             $('#slBasalModcobranza').attr("disabled", false);

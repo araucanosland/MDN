@@ -176,7 +176,7 @@ $(function () {
 
             var WebGestionDigitalizacion = {
                 Id_lead: Id_Lead,
-                Id_Estado: -3,
+                Id_Estado: -1,
                 Auditor: 1,
                 RutEjecutivo: getCookie("Rut"),
                 Tipo_Gestion: 2,

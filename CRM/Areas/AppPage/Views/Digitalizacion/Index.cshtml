@@ -50,7 +50,10 @@
                 <a data-toggle="tab" href="#demo-lft-tab-7" aria-expanded="true" id="tab_auditor" class="tab-principal">Documentación Inicial</a>
             </li>
             <li class="">
-                <a data-toggle="tab" href="#demo-lft-tab-8" aria-expanded="true" id="tab_auditor_legalizados" class="tab-principal">Documentación Legalizados</a>
+                <a data-toggle="tab" href="#demo-lft-tab-8" aria-expanded="true" id="tab_auditor_legalizados" class="tab-principal">Documentos Legalizados</a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#demo-lft-tab-9" aria-expanded="true" id="tab_gestion_MC" class="tab-principal">Mesa de Control</a>
             </li>
 
         </ul>
@@ -135,7 +138,7 @@
 
                 </div>
                 <div class="panel" style="border-radius: 8px">
-                   
+
                     <h3 class="panel-title">Digitalizaciones del Día</h3>
                     @*data-url="/motor/api/digitalizacion/listar-digitalizacion"*@
                     <form class="form-horizontal">
@@ -245,7 +248,7 @@
 
                 </div>
                 <div class="panel" style="border-radius: 8px">
-                    
+
                     <h3 class="panel-title">Digitalizaciones del Día</h3>
                     @*data-url="/motor/api/digitalizacion/listar-digitalizacion"*@
                     <form class="form-horizontal">
@@ -972,6 +975,96 @@
                 </div>
             </div>
 
+            @*  ***************************Tab Asignaciom MC Reparos **************************************   *@
+            <div id="demo-lft-tab-9" class="tab-pane fade">
+                <div class="row">
+                    <h1 class="page-header text-overflow">Reparos </h1>
+                    <br />
+                    <div class="panel" style="border-radius: 8px">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Filtros de Búsqueda</h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="row">
+                                      <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label">Oferta</label>
+                                                <input type="text" id="txtOfertaMc" class="form-control" >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label">Fecha Venta Desde</label>
+                                                <div id="index-dp-component">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" id="dt_fecha_asignacion_mc_desde">
+                                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label">Fecha Venta Hasta</label>
+                                                <div id="index-dp-component">
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" id="dt_fecha_asignacion_mc_hasta">
+                                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="btn_buscar_asignacion_mc">BUSCAR</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                    </div>
+
+
+                </div>
+                <div class="panel" style="border-radius: 8px">
+                   
+                    <h3 class="panel-title">Digitalizaciones</h3>
+                    @*data-url="/motor/api/digitalizacion/listar-digitalizacion"*@
+                    <form class="form-horizontal">
+                        <div class="panel-body">
+                            <div class="panel-body">
+                                <table data-toggle="table"
+                                       data-sort-name="id"
+                                       data-page-list="[]"
+                                       data-page-size="30"
+                                       data-search="false"
+                                       data-show-pagination-switch="false"
+                                       data-pagination="true" id="tblDigitalizacionAsignacionMC" style="font-size: 12px">
+
+                                    <thead>
+                                        <tr>
+                                           
+                                            <th data-field="RutAfiliado"  data-sortable="true">Rut Afiliado</th>
+                                            <th data-field="NombreAfiliado" data-sortable="true">Nombre Afiliado</th>
+                                            <th data-field="Oferta" data-sortable="true">N° Oferta</th>
+                                            <th data-field="TipoDescripcion" data-sortable="true">Tipo Documentación</th>
+                                            <th data-field="FechaVenta" data-sortable="true" data-formatter="formatoFecha">Fecha Venta</th>
+                                            <th data-field="EstadoGestion">Estado Gestión</th>
+                                            <th data-field="Id" data-formatter="digitalMisReparosLinkFormatter">Acción</th>
+
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
 
 

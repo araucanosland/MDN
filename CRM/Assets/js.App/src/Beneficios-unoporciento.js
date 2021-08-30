@@ -672,7 +672,7 @@ function cargaDatosDeContactoBnf(rutAf, destino = null) {
                                 var indice = $(this).val();
                                 var valorD = e.ValorDato;
                                 var ofici = getCookie("Oficina");
-                                debugger;
+                               
                                 $.SecGetJSON(BASE_URL + "/motor/api/Contactos/actualiza-indice-contacto", { Indice: indice, RutAfi: rutCont, ValorDato: valorD, Oficina: ofici }, function (datos) {
 
                                     cargaDatosDeContactoBnf(rutCont);

@@ -145,7 +145,7 @@
 
                     }
                     if (e.idGestion == "3") {//Visita a Terreno
-                        debugger;
+                       
                       
                         $("#div_ddltipo").show();
                         $("#div_telefono_contacto_g1").hide();
@@ -279,7 +279,7 @@
                 }
                 if (e.NGestion == 3) {
 
-                    debugger;
+                   
                     $("#ddlregion").prop("disabled", true);
                     $("#comentarios3").prop("disabled", true);
                     $("#comentarios3").val(e.Comentarios);

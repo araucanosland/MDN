@@ -275,14 +275,19 @@ var metodos = {
         });
     },
     CargaGrillaAuditor: function (RutEjecutivo, Oficina, FechaVentaDesde, FechaVentaHasta, Filtro,Tipo) {
-
+       
+        var Of = "";
+        if (Oficina == null)
+            Of = -1
+        else
+            Of = Oficina
         $("#tblDigitalizacionAuditor").bootstrapTable('refresh', {
             url: '/motor/api/digitalizacion/listar-digitalizacion-auditor',
             query: {
                 Id: 0,
                 FechaVentaDesde: FechaVentaDesde,
                 FechaVentaHasta: FechaVentaHasta,
-                Oficina: Oficina,
+                Oficina: Of,
                 Tipo: Tipo,
                 Filtro: Filtro,
                 Ejecutivo: RutEjecutivo
@@ -290,14 +295,18 @@ var metodos = {
         });
     },
     CargaGrillaAuditorLegalizados: function (RutEjecutivo, Oficina, FechaVentaDesde, FechaVentaHasta, Filtro, Tipo) {
-  
+        var Of = "";
+        if (Oficina == null)
+            Of = -1
+        else
+            Of = Oficina
         $("#tblDigitalizacionAuditorLegalizados").bootstrapTable('refresh', {
             url: '/motor/api/digitalizacion/listar-digitalizacion-auditor',
             query: {
                 Id: 0,
                 FechaVentaDesde: FechaVentaDesde,
                 FechaVentaHasta: FechaVentaHasta,
-                Oficina: Oficina,
+                Oficina: Of,
                 Tipo: Tipo,
                 Filtro: Filtro,
                 Ejecutivo: RutEjecutivo
@@ -325,13 +334,13 @@ var metodos = {
     CargaComboOficinaslegalizado: function () {
     
         $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-oficina-auditor", function (response) {
-            debugger;
+           
             if (responseoficinasLegalizado.length == 0) {
-                debugger;
+               
                 $("#ddlOficina_Auditoria_legalizado").html("");
                 $("#ddlOficina_Auditoria_legalizado").append($("<option>").val(-1).html("Seleccione").data("id", -1).data("nombre", "Seleccione"));
                 $.each(response, function (i, oficina) {
-                    debugger;
+                   
                     var selected = (oficina.codOficina == sessionStorage.getItem('ddlOficina_Auditoria_Legalizado'))
                     $("#ddlOficina_Auditoria_legalizado").append($("<option>").val(oficina.codOficina).html(oficina.DescOficina).prop("selected", selected));
                     $("#ddlOficina_Auditoria_legalizado").trigger("change")
@@ -374,6 +383,18 @@ var metodos = {
 
         });
     },
+    CargaGrillaGestionMC: function (FechaVentaDesde, FechaVentaHasta,Oferta) {
+        debugger;
+        $("#tblDigitalizacionAsignacionMC").bootstrapTable('refresh', {
+            url: '/motor/api/digitalizacion/listar-digitalizacion-MC',
+            query: {
+                FechaVentaDesde: FechaVentaDesde,
+                FechaVentaHasta: FechaVentaHasta,
+                RutEjecutivo: getCookie("Rut"),
+                Oferta:Oferta
+            }
+        });
+    },
 }
 
 
@@ -386,7 +407,9 @@ $(function () {
     var result_reparos = [];
     var result_legalizados = [];
     //*********************Validacion de perfiles**************************
-    debugger;
+
+
+   
     if (getCookie('Cargo') == 'Agente' || getCookie('Cargo') == 'Jefe Servicio al Cliente' || getCookie('Cargo') == 'Jefe Plataforma') {
         $('#tab_Agente').css('display', 'block')
         $('#tab_misreparos').css('display', 'none')
@@ -396,7 +419,7 @@ $(function () {
         $('#tab_Agente_Legalizados').css('display', 'block')
         $('#tab_auditor').css('display', 'none')
         $('#tab_auditor_legalizados').css('display', 'none')
-
+        $('#tab_gestion_MC').css('display', 'none')
         $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 
             sessionStorage.setItem('activeTab', $(e.target).attr('href'));
@@ -419,7 +442,7 @@ $(function () {
         $('#tab_Agente_Legalizados').css('display', 'none')
         $('#tab_auditor').css('display', 'block')
         $('#tab_auditor_legalizados').css('display', 'block')
-
+        $('#tab_gestion_MC').css('display', 'none')
         $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 
             sessionStorage.setItem('activeTab', $(e.target).attr('href'));
@@ -429,7 +452,26 @@ $(function () {
 
 
     }
+    else if (getCookie('Oficina') == "881") {
+        $('#tab_Agente').css('display', 'none')
+        $('#tab_misreparos').css('display', 'none')
+        $('#tab_ingreso').css('display', 'none')
+        $('#tab_documentos').css('display', 'none')
+        $('#tab_misreparos_Agente').css('display', 'none')
+        $('#tab_Agente_Legalizados').css('display', 'none')
+        $('#tab_auditor').css('display', 'none')
+        $('#tab_auditor_legalizados').css('display', 'none')
+        $('#tab_gestion_MC').css('display', 'none')
+        $('#tab_gestion_MC').css('display', 'block')
+        $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 
+            sessionStorage.setItem('activeTab', $(e.target).attr('href'));
+        });
+
+        $('#myTab a[href="#demo-lft-tab-9"]').tab('show');
+
+
+    }
 
     else {
         $('#tab_Agente').css('display', 'none')
@@ -439,6 +481,7 @@ $(function () {
         $('#tab_misreparos_Agente').css('display', 'none')
         $('#tab_Agente_Legalizados').css('display', 'none')
         $('#tab_auditor').css('display', 'none')
+        $('#tab_gestion_MC').css('display', 'none')
         $('#tab_auditor_legalizados').css('display', 'none')
         $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 
@@ -452,6 +495,11 @@ $(function () {
 
         }
     }
+
+
+
+
+
 
     //******************************************* Carga JS**************
     var hoy = new Date();
@@ -470,7 +518,8 @@ $(function () {
     $("#dt_fecha_venta_desde_auditor").val(d)
     $("#dt_fecha_venta_hasta_auditor_legalizado").val(d)
     $("#dt_fecha_venta_desde_auditor_legalizado").val(d)
-
+    $("#dt_fecha_asignacion_mc_desde").val(d)
+    $("#dt_fecha_asignacion_mc_hasta").val(d)
     //*************************Modal Ejecutvo Asignacion ***********************
 
     $('#modal_asigna_digitalizacion').on('show.bs.modal', function (event) {
@@ -481,6 +530,14 @@ $(function () {
 
     });
 
+    //*************************  MESA DE CONTROl*********************
+    
+    $('#btn_buscar_asignacion_mc').on("click", function () {
+        metodos.CargaGrillaGestionMC($("#dt_fecha_asignacion_mc_desde").val(), $("#dt_fecha_asignacion_mc_hasta").val(), $("#txtOfertaMc").val())
+
+    });
+  
+    metodos.CargaGrillaGestionMC("01-01-2021", $("#dt_fecha_asignacion_mc_hasta").val(), $("#txtOfertaMc").val())
 
 
     //*****************************Tab documentación Geneal
@@ -612,7 +669,7 @@ $(function () {
 
 
     $('#btn_buscar').on("click", function () {
-        debugger;
+       
         asaignaDatos();
 
         metodos.CargaGrilla(sessionStorage.getItem('txtrut'), sessionStorage.getItem('txtcredito'), sessionStorage.getItem('ddlEstados'), sessionStorage.getItem('dt_fecha_venta_desde'), sessionStorage.getItem('dt_fecha_venta_hasta'), 'Todos');
@@ -673,7 +730,7 @@ $(function () {
 
 
     //***********************Carga Grilla Reparo Agente**************************
-
+    //#region REPOAGENTE
     $('#btnmodalAsignacionEjecutivoReparo').on("click", function () {
         $('#modal_asigna_Reparos').modal('show');
     });
@@ -776,7 +833,7 @@ $(function () {
         })
     });
 
-
+    //#endregion REPOAGENTE
     //******************Combo Ejecutvo*************
     let fechaHoy = new Date();
     let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
@@ -898,6 +955,7 @@ $(function () {
         sessionStorage.setItem('ddlEjecutivo_Auditoria', $("#ddlEjecutivo_Auditoria").val());
         sessionStorage.setItem('dt_fecha_venta_desde_auditor', $("#dt_fecha_venta_desde_auditor").val());
         sessionStorage.setItem('dt_fecha_venta_hasta_auditor', $("#dt_fecha_venta_hasta_auditor").val());
+       
         metodos.CargaGrillaAuditor($("#ddlEjecutivo_Auditoria").val(), $("#ddlOficina_Auditoria").val(), $("#dt_fecha_venta_desde_auditor").val(), $("#dt_fecha_venta_hasta_auditor").val(), 'Filtro','1')
         // metodos.CargaComboejecutvoAuditoria(periodo, $("#ddlOficina_Auditoria").val());
     });
@@ -916,10 +974,12 @@ $(function () {
        
     if (sessionStorage.getItem('dt_fecha_venta_desde_auditor') != null)
         $("#dt_fecha_venta_desde_auditor").val(sessionStorage.getItem('dt_fecha_venta_desde_auditor'));
+    
+
     if (sessionStorage.getItem('dt_fecha_venta_hasta_auditor') != null)
         $("#dt_fecha_venta_hasta_auditor").val(sessionStorage.getItem('dt_fecha_venta_hasta_auditor'));
 
-    metodos.CargaGrillaAuditor(sessionStorage.getItem('ddlEjecutivo_Auditoria'), sessionStorage.getItem('ddlOficina_Auditoria'), sessionStorage.getItem('dt_fecha_venta_desde_auditor'), sessionStorage.getItem('dt_fecha_venta_hasta_auditor'), 'Todos','1')
+    metodos.CargaGrillaAuditor(sessionStorage.getItem('ddlEjecutivo_Auditoria'), sessionStorage.getItem('ddlOficina_Auditoria'), $("#dt_fecha_venta_desde_auditor").val(), $("#dt_fecha_venta_hasta_auditor").val(), 'Todos','1')
 
     $("#ddlOficina_Auditoria").on("change", function (e) {
 
@@ -938,7 +998,7 @@ $(function () {
 
     
     $('#btn_buscar_auditor_legalizado').on("click", function () {
-        debugger;
+       
         if ($("#ddlOficina_Auditoria_legalizado").val() == "-1") {
             $.niftyNoty({
                 type: 'danger',
@@ -958,7 +1018,7 @@ $(function () {
         metodos.CargaGrillaAuditorLegalizados($("#ddlEjecutivo_Auditoria_legalizado").val(), $("#ddlOficina_Auditoria_legalizado").val(), $("#dt_fecha_venta_desde_auditor_legalizado").val(), $("#dt_fecha_venta_hasta_auditor_legalizado").val(), 'Filtro','2')
         // metodos.CargaComboejecutvoAuditoria(periodo, $("#ddlOficina_Auditoria").val());
     });
-    debugger;
+   
     $("#ddlEjecutivo_Auditoria_legalizado").prop("disabled", true);
       metodos.CargaComboOficinaslegalizado();
 
@@ -976,7 +1036,7 @@ $(function () {
         metodos.CargaGrillaAuditorLegalizados(sessionStorage.getItem('ddlEjecutivo_Auditoria_Legalizado'), sessionStorage.getItem('ddlOficina_Auditoria_Legalizado'), sessionStorage.getItem('dt_fecha_venta_desde_auditor_Legalizado'), sessionStorage.getItem('dt_fecha_venta_hasta_auditor_legalizado'), 'Todos', '2')
 
     $("#ddlOficina_Auditoria_legalizado").on("change", function (e) {
-        debugger;
+       
         if ($("#ddlOficina_Auditoria_legalizado").val() == "-1") {
             $("#ddlEjecutivo_Auditoria_legalizado").prop("disabled", true);
             $("#ddlEjecutivo_Auditoria_legalizado").html("")

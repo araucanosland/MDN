@@ -3,7 +3,7 @@
 
 
 function cargaColor(obj) {
-    debugger;
+   
     var objeto = obj.val();
     return "#FF0000";
 }
@@ -14,7 +14,7 @@ $(function () {
 
     $('#buscar-prospecto').click(function () {
         $("#tbody_prospectos").html("");
-        debugger;
+       
         var estados = $('#cmb_estados').val();
         $.SecGetJSON(BASE_URL + "/motor/api/CarteraEmpresas/obtener-incorporaciones", { estado: estados }, function (result) {
 
@@ -161,7 +161,7 @@ $(function () {
 
                 console.log(result);
                 $.each(result, function (i, e) {
-                    debugger;
+                   
                     var $wrapper = (`
                         <tr>
                             <td>${e.RutEmpresa}</td>

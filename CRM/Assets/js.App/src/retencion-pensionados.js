@@ -119,7 +119,7 @@ $(function () {
         }
 
     }
-    debugger;
+   
     var volver = httpGet("side");
     if (typeof volver != "undefined") {
 
@@ -356,7 +356,7 @@ var appRetencionPensionado = new Vue({
 
         },
         obtenerAfiliadoPensionadoWeb(rut) {
-            debugger;
+           
             var oficina = getCookie("Oficina");
             fetch(`http://${motor_api_server}:4002/retencion-pen/retencion-pensionados-web?rut=${rut}&estado_gestion=&oficina=${oficina}`, {
                 method: 'GET',
@@ -374,7 +374,7 @@ var appRetencionPensionado = new Vue({
                         $('#txtEmailretencionweb').val(datos[0].email)
                         $('#txtFonoretencionweb').val(datos[0].telefono)
                         $('#id_lead').val(datos[0].id)
-                        debugger;
+                       
 
                         $("#txtNombreFiltro").val(datos[0].nombre);
                         $("#txtRutFiltro").val(datos[0].rut);
@@ -577,7 +577,7 @@ var appRetencionPensionado = new Vue({
                     icon: 'success',
                     confirmButtonText: 'OK'
                 })
-                debugger;
+               
                 var rut = $("#txtRutPensionadoWeb").val();
                 appRetencionPensionado.cargaMisCasosWeb(rut.substring(0, (rut.length) - 2))
                 appRetencionPensionado.setDefaultsModal()

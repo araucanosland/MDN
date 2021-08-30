@@ -707,7 +707,7 @@ $(function () {
     if (sessionStorage.getItem('menu_principal') == null) {
         
         $.SecGetJSON(BASE_URL + "/motor/api/Auth/menu", function (categorias) {
-            debugger;
+           
 
             if (getCookie("Cargo") == "Auditor LM") {
                 let menu =

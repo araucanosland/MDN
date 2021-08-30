@@ -30,7 +30,7 @@ namespace CRM.Controllers
                                     new Columna("FechaRegistroString", "Fecha Registro"),
                                     new Columna("RutEjecutivo","Rut Ejecutivo"),
                                     new Columna("NombreEjecutivo","Nombre Ejecutivo"),
-                                    new Columna("accion","Tipo Acción"),
+                                    new Columna("Accion","Tipo Acción"),
                                     new Columna("RutUsuario", "Rut Usuario"),
                                     new Columna("NombreUsuario", "Nombre Usuario"),
                          

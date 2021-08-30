@@ -7,7 +7,7 @@ function ValidaEmail(email) {
 
 var Fn = {
     validaRut: function (rut) {
-        debugger;
+       
         var rutCompleto = rut.replace(".", "").replace(".", "");
         if (!/^[0-9]+-[0-9kK]{1}$/.test(rutCompleto))
             return false;
@@ -58,14 +58,14 @@ function eliminar(rut) {
 
             if (result) {
                 var WebUsuarioIngreso = {
-                    RutUsuario: rut,
+                    RutUsuario : rut,
 
                 }
                 $.SecPostJSON(BASE_URL + "/motor/api/mantenedores/Eliminar-Usuario", WebUsuarioIngreso, function (respuesta) {
 
-                    debugger;
+                   
                     if (respuesta.Estado == 'OK') {
-                        debugger;
+                       
                         $.niftyNoty({
                             type: 'success',
                             message: '<strong>Usuario Eliminado Correctamente!!!</strong>',
@@ -113,9 +113,9 @@ function eliminarGalvarino(rut) {
                 }
                 $.SecPostJSON(BASE_URL + "/motor/api/mantenedores/Eliminar-Usuario-Galvarino", WebUsuarioIngreso, function (respuesta) {
 
-                    debugger;
+                   
                     if (respuesta.Estado == 'OK') {
-                        debugger;
+                       
                         $.niftyNoty({
                             type: 'success',
                             message: '<strong>Usuario Eliminado Correctamente!!!</strong>',
@@ -171,7 +171,7 @@ var metodos = {
 
         });
     }, ValidaExsiteUsuarioGalvarino: function (Rut) {
-        debugger;
+       
         $.SecGetJSON(BASE_URL + "/motor/api/mantenedores/listar-Usuarios-galvarino", { Rut: Rut, RutEjecutivo: getCookie("Rut") }, function (datos) {
 
             if (datos.length > 0) {
@@ -189,9 +189,9 @@ var metodos = {
                 return false;
             }
             else {
-                $('#btn-guardar').prop("disabled", false);
-                $("#ddloficina").prop("disabled", false);
-                $("#ddlcargos").prop("disabled", false);
+                $('#btn-guardar-galvarino').prop("disabled", false);
+                $("#ddloficinasgalvarino").prop("disabled", false);
+                $("#ddlcargosgalvarino").prop("disabled", false);
             }
         });
     },
@@ -255,7 +255,7 @@ var metodos = {
     },
     //****************Metodos Log MDN
     CargaGrillaLogMDN: function (FechaDesde, FechaHasta, Tipo) {
-        debugger;
+       
          $("#tblLogMDN").bootstrapTable('refresh', {
             url: '/motor/api/mantenedores/listar-log-MDN',
             query: {
@@ -268,7 +268,7 @@ var metodos = {
     },
      //****************Metodos Log Galvarino
     CargaGrillaLogGalvarino: function (FechaDesde, FechaHasta, Tipo) {
-        debugger;
+       
         $("#tblLogGalvarino").bootstrapTable('refresh', {
             url: '/motor/api/mantenedores/listar-log-Galvarino',
             query: {
@@ -293,7 +293,7 @@ function digitalLinkFormatter(value, row, index) {
 }
 
 function digitalLinkFormatterGalvarino(value, row, index) {
-    debugger;
+   
     let Nombre = row.Nombre.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
     let Cargo = row.Cargo.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
     let Sucursal = row.Sucursal.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
@@ -367,12 +367,12 @@ $(function () {
 
 
         if (Fn.validaRut($("#txtrutUsuariogalvarino").val())) {
-            debugger;
+           
             e.preventDefault();
             metodos.ValidaExsiteUsuarioGalvarino($("#txtrutUsuariogalvarino").val().replace(".", "").replace(".", ""));
         }
         else {
-            debugger;
+           
             e.preventDefault();
             $.niftyNoty({
                 type: 'danger',
@@ -398,7 +398,7 @@ $(function () {
     $('#modal-usuarios-galvarino').on('show.bs.modal', async (event) => {
         Tipo_accion = $(event.relatedTarget).data('tipo')
         if (Tipo_accion == "editarGalvarino") {
-            debugger;
+           
             $("#txtrutUsuariogalvarino").unmask()
             let Rut = $(event.relatedTarget).data('rut')
             let Nombre = $(event.relatedTarget).data('nombre')
@@ -500,7 +500,7 @@ $(function () {
             }
 
         }
-        debugger;
+       
         var WebUsuarioIngreso = {
             RutUsuario: $("#txtrutUsuariogalvarino").val().replace(".", "").replace(".", ""),
             NombreUsuario: $("#txtNombreUsuariogalvarino").val(),
@@ -538,12 +538,12 @@ $(function () {
 
 
         if (Fn.validaRut($("#txtrutUsuario").val())) {
-            debugger;
+           
             e.preventDefault();
             metodos.ValiaExsiteUsuario($("#txtrutUsuario").val().replace(".", "").replace(".", ""));
         }
         else {
-            debugger;
+           
             e.preventDefault();
             $.niftyNoty({
                 type: 'danger',
@@ -729,7 +729,7 @@ $(function () {
 
 
     $('#btn-buscar-log-galvarino').on("click", function () {
-        debugger;
+       
         metodos.CargaGrillaLogGalvarino($("#dt_fecha_log_galvarino_desde").val(), $("#dt_fecha_log_galvarino_hasta").val(), "Query");
 
     });

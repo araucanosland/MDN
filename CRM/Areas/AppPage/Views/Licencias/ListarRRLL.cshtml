@@ -1285,7 +1285,7 @@
 
 
                         if (e.CargaExcel == 'OK' && incStr == true) {
-                            debugger;
+                           
                             Devueltas++;
                         }
                            
@@ -1393,7 +1393,7 @@
 
                     $("#bdy_datos_ExcelRRLL_compin").html("");
                     $.each(result, function (i, e) {
-                        debugger;
+                       
 
                         $("#bdy_datos_ExcelRRLL_compin").append(
                             $("<tr>")
@@ -1855,7 +1855,7 @@
 
 
             $.SecGetJSON(BASE_URL + "/motor/api/Licencias/valida-tab-RRLL", {}, function (response) {
-                debugger;
+               
                 if (response.Objeto == 1) {
                     $("#tab_envioTATA").hide();
                     $("#tab_CargaExcel").hide();

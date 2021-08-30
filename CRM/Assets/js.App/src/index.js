@@ -226,7 +226,7 @@ $(function () {
                 $("#ddltipoDerivacion").html("");
                 $("#ddltipoDerivacion").append($("<option>").val("Seleccione").html("Seleccione").data("id", "Seleccione").data("nombre", "Seleccione"));
                 $.each(response, function (i, oficina) {
-                    debugger;
+                   
                     $("#ddltipoDerivacion").append($("<option>").val(oficina.Descripcion).html(oficina.Descripcion));
 
                 });
@@ -630,7 +630,7 @@ $(function () {
 
     //Evento de Estado maestro Pre Aprobados
     $("#ges_estado").on("change", function () {
-        debugger;
+       
         if ($(this).val() != '') {
             $("#ges_subestado").attr("disabled", false);
             $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-estados-gestion", { tipoCampagna: $(this).data("TipoAsignacion"), padre: $(this).val() }, function (datos) {
@@ -1013,7 +1013,7 @@ $(function () {
 
     //COMERCIAL 
     $('#button').click(function () {
-        debugger;
+       
         $("#tabla_comercial").bootstrapTable('refresh', {
             url: BASE_URL + "/motor/api/Gestion/v3/lista-seguimientos",
             query: {
@@ -1847,9 +1847,9 @@ $(function () {
         });
 
         //COMERCIAL
-        debugger;
+       
         if (tipoCamp === 1 || tipoCamp === 5) {
-            debugger;
+           
             $('#datos-gestion').show();
 
             //Datepicker de Pre Aprobados
