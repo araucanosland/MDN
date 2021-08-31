@@ -73,11 +73,11 @@ namespace CRM.Business.Data
                 new Parametro("@NTrabajador", ingresocartera.nTrabajador),
                 new Parametro("@EsHolding", ingresocartera.esHolding),
                 new Parametro("@Comentarios", ingresocartera.Comentarios),
-
+                new Parametro("@EsVigente", ingresocartera.esVigente),
 
             };
 
-            return DBHelper.InstanceCRM.ObtenerEscalar<long>("carteras.spMotorCarteraAdminIngreso_Guardar", parametros);
+            return DBHelper.InstanceCRM.ObtenerEscalar<long>("carteras.spMotorCarteraAdminIngreso_Guardar_nuevo", parametros);
         }
 
         public static long GuardarAsignacion(string rut,long id)

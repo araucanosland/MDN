@@ -292,6 +292,13 @@ $('#form_registro_anexo').bootstrapValidator({
                 }
             }
         },
+        Matriz: {
+            validators: {
+                notEmpty: {
+                    message: 'Debe seleccionar si es Matriz'
+                }
+            }
+        },
         direccionAnexo: {
             validators: {
                 notEmpty: {
@@ -314,7 +321,8 @@ $('#form_registro_anexo').bootstrapValidator({
         NumTrabajadores: $('#nTrajadores').val(),
         IdComuna: $('#slComuna_multiselect option:selected').val(),
         NombreComuna: $('#slComuna_multiselect option:selected').text(),
-        Direccion: $('#direccionAnexo').val()
+        Direccion: $('#direccionAnexo').val(),
+        EsMatriz:$('#Matriz').val()
     }
     $.SecPostJSON(BASE_URL + "/motor/api/perfil-empresas/ingresa-nuevo-anexo", objeto_envio_anexo, function (datos) {
         $("#form_registro_anexo").bootstrapValidator('resetForm', true);
@@ -363,6 +371,13 @@ $('#form_registro_anexoUp').bootstrapValidator({
                     message: 'Debe ingresar una dirección'
                 }
             }
+        },
+        MatrizActualizar: {
+            validators: {
+                notEmpty: {
+                    message: 'Debe ingresar una si es Matriz'
+                }
+            }
         }
     }
 }).on('success.form.bv', function (e) {
@@ -375,7 +390,8 @@ $('#form_registro_anexoUp').bootstrapValidator({
         NumTrabajadores: $('#nTrajadoresUp').val(),
         IdComuna: $('#slComuna_multiselectUp option:selected').val(),
         NombreComuna: $('#slComuna_multiselectUp option:selected').text(),
-        Direccion: $('#direccionAnexoUp').val()
+        Direccion: $('#direccionAnexoUp').val(),
+        esMatriz: $('#MatrizActualizar').val()
     }
     $.SecPostJSON(BASE_URL + "/motor/api/perfil-empresas/actualiza-nuevo-anexo", objeto_envio_anexoUp, function (datos) {
         $("#form_registro_anexoUp").bootstrapValidator('resetForm', true);
@@ -1130,6 +1146,7 @@ $(function () {
             $('#direccionAnexoUp').val(respuesta.Direccion)
             $('#slComuna_multiselectUp').val(respuesta.IdComuna).trigger('chosen:updated');
             $('#ISeMPup').val(idAnexo)
+            $('#MatrizActualizar').val(respuesta.EsMatriz)
         });
         myDropzone.options.url = "/motor/api/perfil-empresas/carga-afiliados-dropzone/" + idAnexo;
     });

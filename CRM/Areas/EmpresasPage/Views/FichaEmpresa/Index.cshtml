@@ -323,7 +323,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>                              
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -689,6 +689,19 @@
                                         </select>
                                     </div>
                                 </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <div class="form-group" id="fpg">
+                                        <label class="control-label">Es Matriz</label>
+                                        <select class="form-control" id="Matriz" name="Matriz">
+                                            <option value="">Seleccione</option>
+                                            <option value="1">Si</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -710,6 +723,7 @@
             </div>
             <form id="form_registro_anexoUp" action="#" method="post">
                 <div class="panel-body">
+
                     <div class="panel panel-bordered-primary" style="border-color: #e6e6e6;">
                         <div class="panel-body">
                             <input type="text" class="form-control" id="ISeMPup" disabled name="ISeMPup" style="display: none;">
@@ -733,6 +747,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group">
@@ -756,13 +771,26 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Es Matriz</label>
+                                        <select class="form-control" id="MatrizActualizar" name="MatrizActualizar">
+                                            <option value="">Seleccione</option>
+                                            <option value="1">Si</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6" style="margin-top:20px">
                                     <div class="checkbox">
                                         <input id="ckCargaAfi" class="magic-checkbox" type="checkbox" name="ckCargaAfi">
                                         <label for="ckCargaAfi">Cargar archivo con Afiliados</label>
                                     </div>
                                 </div>
                             </div>
+
+                         
+
                             <div id="dzMain" class="dropzone demo-dropzone" style="display:none;">
                                 <div class="dz-default dz-message">
                                     <div class="dz-icon">
@@ -1213,12 +1241,12 @@
                                         <input type="text" class="form-control" id="NumeroLicencia" name="NumeroLicencia">
                                     </div>
 
-                      
-                                        <div class="col-md-3 mar-btm">
-                                            <label class="control-label">Resolución</label>
-                                            <input type="text" class="form-control" id="diaDisponbleAfiLC" name="diaDisponbleAfiLC">
-                                        </div>
-                             
+
+                                    <div class="col-md-3 mar-btm">
+                                        <label class="control-label">Resolución</label>
+                                        <input type="text" class="form-control" id="diaDisponbleAfiLC" name="diaDisponbleAfiLC">
+                                    </div>
+
                                 </div>
 
                                 <div id="divLicPendientes" style="display:none">

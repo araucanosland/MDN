@@ -108,7 +108,7 @@ namespace CRM.Business.Data
         }
 
 
-        public static int InsertaNuevoAnexo(string Token, string RutEmpresa, string NombreEmpresa, string Anexo, int NumTrabajadores, int IdComuna, string NombreComuna, string Direccion)
+        public static int InsertaNuevoAnexo(string Token, string RutEmpresa, string NombreEmpresa, string Anexo, int NumTrabajadores, int IdComuna, string NombreComuna, string Direccion,int esMatriz)
         {
             Parametros parametros = new Parametros
             {
@@ -120,8 +120,9 @@ namespace CRM.Business.Data
                  new Parametro("@IdComuna", IdComuna),
                  new Parametro("@NombreComuna", NombreComuna),
                  new Parametro("@Direccion", Direccion),
+                  new Parametro("@EsMatriz",esMatriz ),
             };
-            return DBHelper.InstanceCRM.EjecutarProcedimiento("carteras.sp_MotorCartera_GuardaAnexo", parametros);
+            return DBHelper.InstanceCRM.EjecutarProcedimiento("carteras.sp_MotorCartera_GuardaAnexo_Nuevo", parametros);
         }
         public static long GuardarAsignacionEmpAnexo(string tipo, string rut, long Id)
         {
@@ -148,7 +149,7 @@ namespace CRM.Business.Data
         }
 
 
-        public static int ActualizaAnexo(int IdEmpresaAnexo, string Anexo, int NumTrabajadores, int IdComuna, string NombreComuna, string Direccion)
+        public static int ActualizaAnexo(int IdEmpresaAnexo, string Anexo, int NumTrabajadores, int IdComuna, string NombreComuna, string Direccion,int esMatriz)
         {
             Parametros parametros = new Parametros
             {
@@ -158,8 +159,9 @@ namespace CRM.Business.Data
                  new Parametro("@IdComuna", IdComuna),
                  new Parametro("@NombreComuna", NombreComuna),
                  new Parametro("@Direccion", Direccion),
+                  new Parametro("@esMatriz", esMatriz),
             };
-            return DBHelper.InstanceCRM.EjecutarProcedimiento("carteras.spMotorCartera_Actualiza_datos_anexo", parametros);
+            return DBHelper.InstanceCRM.EjecutarProcedimiento("carteras.spMotorCartera_Actualiza_datos_anexo_Nuevo", parametros);
         }
 
         public static ContadorAnexoEntity ObtieneContadorAnexo(string RutEmpresa)

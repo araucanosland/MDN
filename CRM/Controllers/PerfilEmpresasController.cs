@@ -66,7 +66,7 @@ namespace CRM.Controllers
         public int NuevoAnexo(AnexoEmpresaEntity ingreso)
         {
             string Token = ActionContext.Request.Headers.GetValues("Token").First();
-            return Business.Data.PerfilEmpresasDataAccess.InsertaNuevoAnexo(Token, ingreso.RutEmpresa, ingreso.NombreEmpresa, ingreso.Anexo, ingreso.NumTrabajadores, ingreso.IdComuna, ingreso.NombreComuna, ingreso.Direccion);
+            return Business.Data.PerfilEmpresasDataAccess.InsertaNuevoAnexo(Token, ingreso.RutEmpresa, ingreso.NombreEmpresa, ingreso.Anexo, ingreso.NumTrabajadores, ingreso.IdComuna, ingreso.NombreComuna, ingreso.Direccion,ingreso.EsMatriz);
         }
 
         [HttpGet]
@@ -136,7 +136,7 @@ namespace CRM.Controllers
         [Route("actualiza-nuevo-anexo")]
         public int ActualizaAnexoEmp(AnexoEmpresaEntity actualiza)
         {
-            return Business.Data.PerfilEmpresasDataAccess.ActualizaAnexo(actualiza.IdEmpresaAnexo, actualiza.Anexo, actualiza.NumTrabajadores, actualiza.IdComuna, actualiza.NombreComuna, actualiza.Direccion);
+            return Business.Data.PerfilEmpresasDataAccess.ActualizaAnexo(actualiza.IdEmpresaAnexo, actualiza.Anexo, actualiza.NumTrabajadores, actualiza.IdComuna, actualiza.NombreComuna, actualiza.Direccion,actualiza.EsMatriz);
         }
 
         [HttpGet]

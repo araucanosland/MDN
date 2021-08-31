@@ -35,7 +35,7 @@ namespace CRM.Business.Entity
         public IEnumerable<string> EjecAsignado { get; set; }
         public int esHolding { get; set; }
         public string Comentarios { get; set; }
-
+        public int  esVigente { get; set; }
         public IngresoCarteraEmpresaAdmin()
         {
             CodIngresoEmpresa = 0;
@@ -45,6 +45,7 @@ namespace CRM.Business.Entity
             EjecAsignado = new List<string>();
             esHolding = 0;
             Comentarios = string.Empty;
+            esVigente = 0;
         }
 
 

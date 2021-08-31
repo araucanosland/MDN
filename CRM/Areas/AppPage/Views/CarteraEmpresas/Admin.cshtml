@@ -145,6 +145,16 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-sm-2">
+                                <div class="form-group" id="fpgdd">
+                                    <label class="control-label">Es Vigente</label>
+                                    <select class="form-control" id="Vigente" name="Vigente">
+                                        <option value="">Seleccione</option>
+                                        <option value="1">Si</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="row esconder" style="text-align: left;">
                             <div class="col-sm-12">
@@ -157,7 +167,7 @@
                         <input type="hidden" id="rutempresa" name="rutempresa" value="" />
                         <input type="hidden" id="nombreempresa" name="nombreempresa" value="" />
                         <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
-                        <button class="btn btn-primary esconder" id="btn_save" type="submit">Guardar</button>
+                        <button class="btn btn-primary esconder" id="btn_save" type="submit">Guardar </button>
                     </form>
 
 
@@ -219,8 +229,8 @@
                         nTrabajador: $("#NTrabajador").val(),
                         esHolding: $("#Holding").val(),
                         Comentarios: $("#empresa_comentarios").val(),
-                        EjecAsignado: []
-
+                        EjecAsignado: [],
+                        esVigente: $("#Vigente").val(),
 
                     }
 
@@ -317,6 +327,13 @@
                             validators: {
                                 notEmpty: {
                                     message: 'Seleccione Holding'
+                                }
+                            }
+                        },
+                        Vigente: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Seleccione Vigente'
                                 }
                             }
                         },
