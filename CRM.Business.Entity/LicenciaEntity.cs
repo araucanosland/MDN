@@ -50,6 +50,7 @@ namespace CRM.Business.Entity
         public int codOficinaCompin { get; set; }
         public string OficinaCompin { get; set; }
         public string cod_oficina { get; set; }
+        public string Zona { get; set; }
     }
 
     public class EstadosLMEntity

@@ -90,7 +90,7 @@
                                         Documentación General
                                     </label>
                                     <hr />
-                                    <div class="row text-center" id="divLiqSueldo">
+                                <div class="row text-center" id="divLiqSueldo">
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label class="h5 control-label">Liq. de sueldo(3) o Pensión(1)</label>
@@ -112,14 +112,26 @@
                                                     <option value="3">No Cumple (Ilegible)</option>
                                                     <option value="4">No Aplica</option>
                                                     <option value="5">No cumple (Incompleto)</option>
-
+                                                    <option value="6">No cumple (Políticas de crédito)</option>
                                                 </select>
                                             </div>
                                         </div>
-
-
+                                        <div class="col-sm-3" id="divLiquidacionObs">
+                                            <div class="form-group">
+                                                <select class="form-control" id="ddlLiquidacionObs" style="border-radius:6px">
+                                                    <option value="0">Seleccione...</option>
+                                                    <option value="1">No Aplica</option>
+                                                    <option value="2">Ya Corregido</option>
+                                                    <option value="3">Adjunto en Set Comercial</option>
+                                                    <option value="4">Adjunto en Set Legal</option>
+                                                    <option value="5">Excepción Comité</option>
+                                                    <option value="6">Excepción Agente</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                      
                                     </div>
-                                    <div class="row text-center" id="divcuotas">
+                                <div class="row text-center" id="divcuotas">
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label class="h5 control-label">Informe Cuotas(1)</label>
@@ -141,13 +153,25 @@
                                                     <option value="3">No Cumple (Ilegible)</option>
                                                     <option value="4">No Aplica</option>
                                                     <option value="5">No cumple (Incompleto)</option>
-
+                                                    <option value="6">No cumple (Políticas de crédito)</option>
                                                 </select>
                                             </div>
                                         </div>
-
+                                        <div class="col-sm-3" id="divinformecuotasObs">
+                                            <div class="form-group">
+                                                <select class="form-control" id="ddlinformecuotasObs" style="border-radius:6px">
+                                                    <option value="0">Seleccione...</option>
+                                                    <option value="1">No Aplica</option>
+                                                    <option value="2">Ya Corregido</option>
+                                                    <option value="3">Adjunto en Set Comercial</option>
+                                                    <option value="4">Adjunto en Set Legal</option>
+                                                    <option value="5">Excepción Comité</option>
+                                                    <option value="6">Excepción Agente</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="row text-center" id="divsolicitud">
+                                <div class="row text-center" id="divsolicitud">
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label class="h5 control-label">Solicitud de crédito (1)</label>
@@ -169,236 +193,346 @@
                                                     <option value="3">No Cumple (Ilegible)</option>
                                                     <option value="4">No Aplica</option>
                                                     <option value="5">No cumple (Incompleto)</option>
-
+                                                    <option value="6">No cumple (Políticas de crédito)</option>
                                                 </select>
                                             </div>
                                         </div>
-
-                                    </div>
-                                    <div class="row text-center" id="divcertificacion">
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-3" id="divsolicitudcreditoObs">
                                             <div class="form-group">
-                                                <label class="h5 control-label">Certificación (1)</label>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="h5 control-label">Falta Mayor</label>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <select class="form-control" id="ddlcertificacion" style="border-radius:6px">
+                                                <select class="form-control" id="ddlsolicitudcreditoObs" style="border-radius:6px">
                                                     <option value="0">Seleccione...</option>
-                                                    <option value="1">Cumple (Está y es Legible)</option>
-                                                    <option value="2">No Cumple (No encontrado)</option>
-                                                    <option value="3">No Cumple (Ilegible)</option>
-                                                    <option value="4">No Aplica</option>
-                                                    <option value="5">No cumple (Incompleto)</option>
-
+                                                    <option value="1">No Aplica</option>
+                                                    <option value="2">Ya Corregido</option>
+                                                    <option value="3">Adjunto en Set Comercial</option>
+                                                    <option value="4">Adjunto en Set Legal</option>
+                                                    <option value="5">Excepción Comité</option>
+                                                    <option value="6">Excepción Agente</option>
                                                 </select>
                                             </div>
                                         </div>
-
                                     </div>
-                                    <div class="row text-center" id="divhojaresumen">
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="h5 control-label">Hoja Resumen de Contrato (3)</label>
+                                <div class="row text-center" id="divcertificacion">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Certificación (1)</label>
 
-                                            </div>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="h5 control-label">Falta Mayor</label>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <select class="form-control" id="ddlhojaresumen" style="border-radius:6px">
-                                                    <option value="0">Seleccione...</option>
-                                                    <option value="1">Cumple (Está y es Legible)</option>
-                                                    <option value="2">No Cumple (No encontrado)</option>
-                                                    <option value="3">No Cumple (Ilegible)</option>
-                                                    <option value="4">No Aplica</option>
-                                                    <option value="5">No cumple (Incompleto)</option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-
                                     </div>
-                                    <div class="row text-center" id="divegreso">
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="h5 control-label">Comprob. Entrega Dinero ó Egreso de transferencia (1)</label>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Falta Mayor</label>
 
-                                            </div>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="h5 control-label">Falta Menor</label>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <select class="form-control" id="ddlcomprobante" style="border-radius:6px">
-                                                    <option value="0">Seleccione...</option>
-                                                    <option value="1">Cumple (Está y es Legible)</option>
-                                                    <option value="2">No Cumple (No encontrado)</option>
-                                                    <option value="3">No Cumple (Ilegible)</option>
-                                                    <option value="4">No Aplica</option>
-                                                    <option value="5">No cumple (Incompleto)</option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-
                                     </div>
-                                    <div class="row text-center" id="divdigitalizacion">
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="h5 control-label">Check List Digitalización</label>
-
-                                            </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlcertificacion" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">Cumple (Está y es Legible)</option>
+                                                <option value="2">No Cumple (No encontrado)</option>
+                                                <option value="3">No Cumple (Ilegible)</option>
+                                                <option value="4">No Aplica</option>
+                                                <option value="5">No cumple (Incompleto)</option>
+                                                <option value="6">No cumple (Políticas de crédito)</option>
+                                            </select>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="h5 control-label">Falta Menor</label>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <select class="form-control" id="ddlcheckdigitalizacion" style="border-radius:6px">
-                                                    <option value="0">Seleccione...</option>
-                                                    <option value="1">Cumple (Está y es Legible)</option>
-                                                    <option value="2">No Cumple (No encontrado)</option>
-                                                    <option value="3">No Cumple (Ilegible)</option>
-                                                    <option value="4">No Aplica</option>
-                                                    <option value="5">No cumple (Incompleto)</option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-
                                     </div>
-                                    <div class="row text-center" id="divinformacion">
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="h5 control-label">Información Aval (1)</label>
-
-                                            </div>
+                                    <div class="col-sm-3" id="divcertificacionObs">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlcertificacionObs" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">No Aplica</option>
+                                                <option value="2">Ya Corregido</option>
+                                                <option value="3">Adjunto en Set Comercial</option>
+                                                <option value="4">Adjunto en Set Legal</option>
+                                                <option value="5">Excepción Comité</option>
+                                                <option value="6">Excepción Agente</option>
+                                            </select>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="h5 control-label">Falta Menor</label>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <select class="form-control" id="ddlInformacionval" style="border-radius:6px">
-                                                    <option value="0">Seleccione...</option>
-                                                    <option value="1">Cumple (Está y es Legible)</option>
-                                                    <option value="2">No Cumple (No encontrado)</option>
-                                                    <option value="3">No Cumple (Ilegible)</option>
-                                                    <option value="4">No Aplica</option>
-                                                    <option value="5">No cumple (Incompleto)</option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-
                                     </div>
-                                    <div class="row text-center" id="divafecto">
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="h5 control-label">Anexo afectos al 15% (1)</label>
+                                </div>
+                                <div class="row text-center" id="divhojaresumen">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Hoja Resumen de Contrato (3)</label>
 
-                                            </div>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="h5 control-label">Falta Media</label>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <select class="form-control" id="ddlafecto15" style="border-radius:6px">
-                                                    <option value="0">Seleccione...</option>
-                                                    <option value="1">Cumple (Está y es Legible)</option>
-                                                    <option value="2">No Cumple (No encontrado)</option>
-                                                    <option value="3">No Cumple (Ilegible)</option>
-                                                    <option value="4">No Aplica</option>
-                                                    <option value="5">No cumple (Incompleto)</option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-
                                     </div>
-                                    <div class="row text-center" id="divsdesgravamen">
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="h5 control-label">Revisión seguro desgravamen (1)</label>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Falta Mayor</label>
 
-                                            </div>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="h5 control-label">Falta Media</label>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <select class="form-control" id="ddlsegurodesgravamen" style="border-radius:6px">
-                                                    <option value="0">Seleccione...</option>
-                                                    <option value="1">Cumple (Está y es Legible)</option>
-                                                    <option value="2">No Cumple (No encontrado)</option>
-                                                    <option value="3">No Cumple (Ilegible)</option>
-                                                    <option value="4">No Aplica</option>
-                                                    <option value="5">No cumple (Incompleto)</option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-
                                     </div>
-                                    <div class="row text-center" id="divscesantia">
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="h5 control-label">Revisión seguro cesantía (voluntario) (1)</label>
-
-                                            </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlhojaresumen" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">Cumple (Está y es Legible)</option>
+                                                <option value="2">No Cumple (No encontrado)</option>
+                                                <option value="3">No Cumple (Ilegible)</option>
+                                                <option value="4">No Aplica</option>
+                                                <option value="5">No cumple (Incompleto)</option>
+                                                <option value="6">No cumple (Políticas de crédito)</option>
+                                            </select>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <label class="h5 control-label">Falta Menor</label>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                                <select class="form-control" id="ddlsegurocesantia" style="border-radius:6px">
-                                                    <option value="0">Seleccione...</option>
-                                                    <option value="1">Cumple (Está y es Legible)</option>
-                                                    <option value="2">No Cumple (No encontrado)</option>
-                                                    <option value="3">No Cumple (Ilegible)</option>
-                                                    <option value="4">No Aplica</option>
-                                                    <option value="5">No cumple (Incompleto)</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
                                     </div>
-                                    <div class="row text-center">
+                                    <div class="col-sm-3" id="divhojaresumenObs">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlhojaresumenObs" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">No Aplica</option>
+                                                <option value="2">Ya Corregido</option>
+                                                <option value="3">Adjunto en Set Comercial</option>
+                                                <option value="4">Adjunto en Set Legal</option>
+                                                <option value="5">Excepción Comité</option>
+                                                <option value="6">Excepción Agente</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row text-center" id="divegreso">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Comprob. Entrega Dinero </label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Falta Menor</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlcomprobante" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">Cumple (Está y es Legible)</option>
+                                                <option value="2">No Cumple (No encontrado)</option>
+                                                <option value="3">No Cumple (Ilegible)</option>
+                                                <option value="4">No Aplica</option>
+                                                <option value="5">No cumple (Incompleto)</option>
+                                                <option value="6">No cumple (Políticas de crédito)</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3" id="divcomprobanteObs">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlcomprobanteObs" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">No Aplica</option>
+                                                <option value="2">Ya Corregido</option>
+                                                <option value="3">Adjunto en Set Comercial</option>
+                                                <option value="4">Adjunto en Set Legal</option>
+                                                <option value="5">Excepción Comité</option>
+                                                <option value="6">Excepción Agente</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row text-center" id="divdigitalizacion">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Check List Digitalización</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Falta Menor</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlcheckdigitalizacion" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">Cumple (Está y es Legible)</option>
+                                                <option value="2">No Cumple (No encontrado)</option>
+                                                <option value="3">No Cumple (Ilegible)</option>
+                                                <option value="4">No Aplica</option>
+                                                <option value="5">No cumple (Incompleto)</option>
+                                                <option value="6">No cumple (Políticas de crédito)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3" id="divcheckdigitalizacionObs">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlcheckdigitalizacionObs" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">No Aplica</option>
+                                                <option value="2">Ya Corregido</option>
+                                                <option value="3">Adjunto en Set Comercial</option>
+                                                <option value="4">Adjunto en Set Legal</option>
+                                                <option value="5">Excepción Comité</option>
+                                                <option value="6">Excepción Agente</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row text-center" id="divinformacion">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Información Aval (1)</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Falta Menor</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlInformacionval" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">Cumple (Está y es Legible)</option>
+                                                <option value="2">No Cumple (No encontrado)</option>
+                                                <option value="3">No Cumple (Ilegible)</option>
+                                                <option value="4">No Aplica</option>
+                                                <option value="5">No cumple (Incompleto)</option>
+                                                <option value="6">No cumple (Políticas de crédito)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3" id="divInformacionvalObs">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlInformacionvalObs" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">No Aplica</option>
+                                                <option value="2">Ya Corregido</option>
+                                                <option value="3">Adjunto en Set Comercial</option>
+                                                <option value="4">Adjunto en Set Legal</option>
+                                                <option value="5">Excepción Comité</option>
+                                                <option value="6">Excepción Agente</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row text-center" id="divafecto">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Anexo afectos al 15% (1)</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Falta Media</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlafecto15" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">Cumple (Está y es Legible)</option>
+                                                <option value="2">No Cumple (No encontrado)</option>
+                                                <option value="3">No Cumple (Ilegible)</option>
+                                                <option value="4">No Aplica</option>
+                                                <option value="5">No cumple (Incompleto)</option>
+                                                <option value="6">No cumple (Políticas de crédito)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3" id="divafecto15Obs">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlafecto15Obs" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">No Aplica</option>
+                                                <option value="2">Ya Corregido</option>
+                                                <option value="3">Adjunto en Set Comercial</option>
+                                                <option value="4">Adjunto en Set Legal</option>
+                                                <option value="5">Excepción Comité</option>
+                                                <option value="6">Excepción Agente</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row text-center" id="divsdesgravamen">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Revisión seguro desgravamen (1)</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Falta Media</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlsegurodesgravamen" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">Cumple (Está y es Legible)</option>
+                                                <option value="2">No Cumple (No encontrado)</option>
+                                                <option value="3">No Cumple (Ilegible)</option>
+                                                <option value="4">No Aplica</option>
+                                                <option value="5">No cumple (Incompleto)</option>
+                                                <option value="6">No cumple (Políticas de crédito)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3" id="divsegurodesgravamenObs">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlsegurodesgravamenObs" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">No Aplica</option>
+                                                <option value="2">Ya Corregido</option>
+                                                <option value="3">Adjunto en Set Comercial</option>
+                                                <option value="4">Adjunto en Set Legal</option>
+                                                <option value="5">Excepción Comité</option>
+                                                <option value="6">Excepción Agente</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row text-center" id="divscesantia">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Revisión seguro cesantía (voluntario) (1)</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="h5 control-label">Falta Menor</label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlsegurocesantia" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">Cumple (Está y es Legible)</option>
+                                                <option value="2">No Cumple (No encontrado)</option>
+                                                <option value="3">No Cumple (Ilegible)</option>
+                                                <option value="4">No Aplica</option>
+                                                <option value="5">No cumple (Incompleto)</option>
+                                                <option value="6">No cumple (Políticas de crédito)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3" id="divsegurocesantiaObs">
+                                        <div class="form-group">
+                                            <select class="form-control" id="ddlsegurocesantiaObs" style="border-radius:6px">
+                                                <option value="0">Seleccione...</option>
+                                                <option value="1">No Aplica</option>
+                                                <option value="2">Ya Corregido</option>
+                                                <option value="3">Adjunto en Set Comercial</option>
+                                                <option value="4">Adjunto en Set Legal</option>
+                                                <option value="5">Excepción Comité</option>
+                                                <option value="6">Excepción Agente</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row text-center">
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label class="h5 control-label">Estado</label>

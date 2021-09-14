@@ -2,7 +2,7 @@
 var metodos = {
     cargaGestion: function (Id) {
         $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-gestion", { Id: Id }, function (response) {
-           
+            debugger;
             $("#AfiliadoRut").val(response.RutAfiliado);
             $("#AfiNombres").val(response.NombreAfiliado)
             $("#folio").val(response.Folio)
@@ -29,7 +29,132 @@ var metodos = {
                 $("#lblEstado").text("Reparado").css("color", "red")
             }
             var Audit = httpGet("aud");
+            debugger;
 
+            if (Audit == "none") {
+
+                if (response.Id_Estado == 0) { //Sin gestión
+                    $("#divLiquidacionObs").css("display", "none");
+                    $("#divinformecuotasObs").css("display", "none");
+                    $("#divsolicitudcreditoObs").css("display", "none");
+                    $("#divcertificacionObs").css("display", "none");
+                    $("#divhojaresumenObs").css("display", "none");
+                    $("#divcomprobanteObs").css("display", "none");
+                    $("#divcheckdigitalizacionObs").css("display", "none");
+                    $("#divInformacionvalObs").css("display", "none");
+                    $("#divafecto15Obs").css("display", "none");
+                    $("#divsegurodesgravamenObs").css("display", "none");
+                    $("#divsegurocesantiaObs").css("display", "none");
+                }
+                if (response.Id_Estado == -1) { // Corregido
+                    $("#divLiquidacionObs").css("display", "block")
+                    $("#ddlLiquidacionObs").prop("disabled", true)
+                    $("#ddlLiquidacionObs").val(response.ObsLiquidacionSueldo)
+
+                    $("#divinformecuotasObs").css("display", "block");
+                    $("#ddlinformecuotasObs").prop("disabled", true)
+                    $("#ddlinformecuotasObs").val(response.ObsInformeCuotas)
+
+                    $("#divsolicitudcreditoObs").css("display", "block");
+                    $("#ddlsolicitudcreditoObs").prop("disabled", true)
+                    $("#ddlsolicitudcreditoObs").val(response.ObsSolicitudCredito)
+
+                    $("#divcertificacionObs").css("display", "block");
+                    $("#ddlcertificacionObs").prop("disabled", true)
+                    $("#ddlcertificacionObs").val(response.ObsCertificacion)
+
+                    $("#divhojaresumenObs").css("display", "block");
+                    $("#ddlhojaresumenObs").prop("disabled", true)
+                    $("#ddlhojaresumenObs").val(response.ObsHojaResumen)
+
+                    $("#divcomprobanteObs").css("display", "block");
+                    $("#ddlcomprobanteObs").prop("disabled", true);
+                    $("#ddlcomprobanteObs").val(response.ObsCompobanteDinero)
+
+                    $("#divcheckdigitalizacionObs").css("display", "block");
+                    $("#ddlcheckdigitalizacionObs").prop("disabled", true);
+                    $("#ddlcheckdigitalizacionObs").val(response.ObsCheckListDigitalizacion)
+
+
+                    $("#divInformacionvalObs").css("display", "block");
+                    $("#ddlInformacionvalObs").prop("disabled", true);
+                    $("#ddlInformacionvalObs").val(response.ObsInformacionAval)
+
+                    $("#divafecto15Obs").css("display", "block");
+                    $("#ddlafecto15Obs").prop("disabled", true);
+                    $("#ddlafecto15Obs").val(response.ObsAfecto15)
+
+                    $("#divsegurodesgravamenObs").css("display", "block");
+                    $("#ddlsegurodesgravamenObs").prop("disabled", true);
+                    $("#ddlsegurodesgravamenObs").val(response.ObsSeguroDesgravamen)
+
+                    $("#divsegurocesantiaObs").css("display", "block");
+                    $("#ddlsegurocesantiaObs").prop("disabled", true);
+                    $("#ddlsegurocesantiaObs").val(response.ObsSeguroCesantia)
+
+                }
+
+                if (response.Id_Estado == 1) { // Aprobado
+                    $("#divLiquidacionObs").css("display", "block")
+                    $("#ddlLiquidacionObs").prop("disabled", true)
+                    $("#ddlLiquidacion").prop("disabled", true)
+                    $("#ddlLiquidacionObs").val(response.ObsLiquidacionSueldo)
+
+                    $("#divinformecuotasObs").css("display", "block");
+                    $("#ddlinformecuotasObs").prop("disabled", true)
+                    $("#ddlinformecuotasObs").val(response.ObsInformeCuotas)
+                    $("#ddlinformecuotas").prop("disabled", true)
+
+                    $("#divsolicitudcreditoObs").css("display", "block");
+                    $("#ddlsolicitudcreditoObs").prop("disabled", true)
+                    $("#ddlsolicitudcreditoObs").val(response.ObsSolicitudCredito)
+                    $("#ddlsolicitudcredito").prop("disabled", true)
+
+                    $("#divcertificacionObs").css("display", "block");
+                    $("#ddlcertificacionObs").prop("disabled", true)
+                    $("#ddlcertificacionObs").val(response.ObsCertificacion)
+                    $("#ddlcertificacion").prop("disabled", true)
+
+                    $("#divhojaresumenObs").css("display", "block");
+                    $("#ddlhojaresumenObs").prop("disabled", true)
+                    $("#ddlhojaresumenObs").val(response.ObsHojaResumen)
+                    $("#ddlhojaresumen").prop("disabled", true)
+
+                    $("#divcomprobanteObs").css("display", "block");
+                    $("#ddlcomprobanteObs").prop("disabled", true);
+                    $("#ddlcomprobanteObs").val(response.ObsCompobanteDinero)
+                    $("#ddlcomprobante").prop("disabled", true);
+
+                    $("#divcheckdigitalizacionObs").css("display", "block");
+                    $("#ddlcheckdigitalizacionObs").prop("disabled", true);
+                    $("#ddlcheckdigitalizacionObs").val(response.ObsCheckListDigitalizacion)
+                    $("#ddlcheckdigitalizacion").prop("disabled", true);
+
+
+                    $("#divInformacionvalObs").css("display", "block");
+                    $("#ddlInformacionvalObs").prop("disabled", true);
+                    $("#ddlInformacionvalObs").val(response.ObsInformacionAval)
+                    $("#ddlInformacionval").prop("disabled", true);
+
+                    $("#divafecto15Obs").css("display", "block");
+                    $("#ddlafecto15Obs").prop("disabled", true);
+                    $("#ddlafecto15Obs").val(response.ObsAfecto15)
+                    $("#ddlafecto15").prop("disabled", true);
+
+                    $("#divsegurodesgravamenObs").css("display", "block");
+                    $("#ddlsegurodesgravamenObs").prop("disabled", true);
+                    $("#ddlsegurodesgravamenObs").val(response.ObsSeguroDesgravamen)
+                    $("#ddlsegurodesgravamen").prop("disabled", true);
+
+                    $("#divsegurocesantiaObs").css("display", "block");
+                    $("#ddlsegurocesantiaObs").prop("disabled", true);
+                    $("#ddlsegurocesantiaObs").val(response.ObsSeguroCesantia)
+                    $("#ddlsegurocesantia").prop("disabled", true);
+
+
+                    $('#btn-guardar').css('display', 'none')
+                }
+            }
 
            
             if (Audit == "4ud1t") {
@@ -73,11 +198,322 @@ var metodos = {
                 if ($('#ddlsegurocesantia').val() == 1 || $('#ddlsegurocesantia').val() == 4 ) {
                     $('#divscesantia').hide();
                 }
+                
+                $("#ddlLiquidacionObs").val(response.ObsLiquidacionSueldo)
+                $("#ddlinformecuotasObs").val(response.ObsInformeCuotas)
+                $("#ddlsolicitudcreditoObs").val(response.ObsSolicitudCredito)
+                $("#ddlcertificacionObs").val(response.ObsCertificacion)
+                $("#ddlhojaresumenObs").val(response.ObsHojaResumen)
+                $("#ddlcomprobanteObs").val(response.ObsCompobanteDinero)
+                $("#ddlcheckdigitalizacionObs").val(response.ObsCheckListDigitalizacion)
+                $("#ddlInformacionvalObs").val(response.ObsInformacionAval)
+                $("#ddlafecto15Obs").val(response.ObsAfecto15)
+                $("#ddlsegurodesgravamenObs").val(response.ObsSeguroDesgravamen)
+                $("#ddlsegurocesantiaObs").val(response.ObsSeguroCesantia)
 
             }
 
+           
+
+            if (Audit == "3sp3c1l1st4") {
+
+                if (Auditor == 2) {
+                    $("#OficinaAuditora").val("División Riesgo Crédito")
+                }
 
 
+                if (response.EstadoGestion == "Sin gestión") { //Sin gestión
+                    $("#divLiquidacionObs").css("display", "none");
+                    $("#divinformecuotasObs").css("display", "none");
+                    $("#divsolicitudcreditoObs").css("display", "none");
+                    $("#divcertificacionObs").css("display", "none");
+                    $("#divhojaresumenObs").css("display", "none");
+                    $("#divcomprobanteObs").css("display", "none");
+                    $("#divcheckdigitalizacionObs").css("display", "none");
+                    $("#divInformacionvalObs").css("display", "none");
+                    $("#divafecto15Obs").css("display", "none");
+                    $("#divsegurodesgravamenObs").css("display", "none");
+                    $("#divsegurocesantiaObs").css("display", "none");
+                    $('#ddlLiquidacion').prop("disabled", true);
+                    $('#ddlinformecuotas').prop("disabled", true);
+                    $('#ddlsolicitudcredito').prop("disabled", true);
+                    $('#ddlcertificacion').prop("disabled", true);
+                    $('#ddlhojaresumen').prop("disabled", true);
+                    $('#ddlcomprobante').prop("disabled", true);
+                    $('#ddlcheckdigitalizacion').prop("disabled", true);
+                    $('#ddlInformacionval').prop("disabled", true);
+                    $('#ddlafecto15').prop("disabled", true);
+                    $('#ddlsegurodesgravamen').prop("disabled", true);
+                    $('#ddlsegurocesantia').prop("disabled", true);
+                    $("#ddlsegurocesantiaObs").prop("disabled", true);
+                }
+
+
+                if (response.EstadoGestion == "Reparado") {
+                    $("#divLiquidacionObs").css("display", "none")
+                    $("#ddlLiquidacionObs").prop("disabled", true)
+                    $("#ddlLiquidacionObs").val(response.ObsLiquidacionSueldo)
+
+                    $("#divinformecuotasObs").css("display", "none");
+                    $("#ddlinformecuotasObs").prop("disabled", true)
+                    $("#ddlinformecuotasObs").val(response.ObsInformeCuotas)
+
+                    $("#divsolicitudcreditoObs").css("display", "none");
+                    $("#ddlsolicitudcreditoObs").prop("disabled", true)
+                    $("#ddlsolicitudcreditoObs").val(response.ObsSolicitudCredito)
+
+                    $("#divcertificacionObs").css("display", "none");
+                    $("#ddlcertificacionObs").prop("disabled", true)
+                    $("#ddlcertificacionObs").val(response.ObsCertificacion)
+
+                    $("#divhojaresumenObs").css("display", "none");
+                    $("#ddlhojaresumenObs").prop("disabled", true)
+                    $("#ddlhojaresumenObs").val(response.ObsHojaResumen)
+
+                    $("#divcomprobanteObs").css("display", "none");
+                    $("#ddlcomprobanteObs").prop("disabled", true);
+                    $("#ddlcomprobanteObs").val(response.ObsCompobanteDinero)
+
+                    $("#divcheckdigitalizacionObs").css("display", "none");
+                    $("#ddlcheckdigitalizacionObs").prop("disabled", true);
+                    $("#ddlcheckdigitalizacionObs").val(response.ObsCheckListDigitalizacion)
+
+
+                    $("#divInformacionvalObs").css("display", "none");
+                    $("#ddlInformacionvalObs").prop("disabled", true);
+                    $("#ddlInformacionvalObs").val(response.ObsInformacionAval)
+
+                    $("#divafecto15Obs").css("display", "none");
+                    $("#ddlafecto15Obs").prop("disabled", true);
+                    $("#ddlafecto15Obs").val(response.ObsAfecto15)
+
+                    $("#divsegurodesgravamenObs").css("display", "none");
+                    $("#ddlsegurodesgravamenObs").prop("disabled", true);
+                    $("#ddlsegurodesgravamenObs").val(response.ObsSeguroDesgravamen)
+
+                    $("#divsegurocesantiaObs").css("display", "none");
+                    $("#ddlsegurocesantiaObs").prop("disabled", true);
+                    $("#ddlsegurocesantiaObs").val(response.ObsSeguroCesantia)
+
+                    $('#ddlLiquidacion').prop("disabled", true);
+                    $('#ddlinformecuotas').prop("disabled", true);
+                    $('#ddlsolicitudcredito').prop("disabled", true);
+                    $('#ddlcertificacion').prop("disabled", true);
+                    $('#ddlhojaresumen').prop("disabled", true);
+                    $('#ddlcomprobante').prop("disabled", true);
+                    $('#ddlcheckdigitalizacion').prop("disabled", true);
+                    $('#ddlInformacionval').prop("disabled", true);
+                    $('#ddlafecto15').prop("disabled", true);
+                    $('#ddlsegurodesgravamen').prop("disabled", true);
+                    $('#ddlsegurocesantia').prop("disabled", true);
+                    $("#ddlsegurocesantiaObs").prop("disabled", true);
+
+                    if ($('#ddlLiquidacion').val() == 1 || $('#ddlLiquidacion').val() == 4) {
+                        $("#divLiqSueldo").hide();
+                    }
+                    if ($('#ddlinformecuotas').val() == 1 || $('#ddlinformecuotas').val() == 4) {
+                        $("#divcuotas").hide();
+                    }
+                    if ($('#ddlsolicitudcredito').val() == 1 || $('#ddlsolicitudcredito').val() == 4) {
+                        $("#divsolicitud").hide();
+                    }
+                    if ($('#ddlcertificacion').val() == 1 || $('#ddlcertificacion').val() == 4) {
+                        $("#divcertificacion").hide();
+                    }
+                    if ($('#ddlhojaresumen').val() == 1 || $('#ddlhojaresumen').val() == 4) {
+                        $("#divhojaresumen").hide();
+                    }
+                    if ($('#ddlcomprobante').val() == 1 || $('#ddlcomprobante').val() == 4) {
+                        $("#divegreso").hide();
+                    }
+                    if ($('#ddlcheckdigitalizacion').val() == 1 || $('#ddlcheckdigitalizacion').val() == 4) {
+                        $("#divdigitalizacion").hide();
+                    }
+                    if ($('#ddlInformacionval').val() == 1 || $('#ddlInformacionval').val() == 4) {
+                        $('#divinformacion').hide();
+                    }
+                    if ($('#ddlafecto15').val() == 1 || $('#ddlafecto15').val() == 4) {
+                        $('#divafecto').hide();
+                    }
+                    if ($('#ddlsegurodesgravamen').val() == 1 || $('#ddlsegurodesgravamen').val() == 4) {
+                        $('#divsdesgravamen').hide();
+                    }
+
+                    if ($('#ddlsegurocesantia').val() == 1 || $('#ddlsegurocesantia').val() == 4) {
+                        $('#divscesantia').hide();
+                    }
+
+
+
+                }
+
+
+                if (response.EstadoGestion == "Corregido") {
+                    $("#divLiquidacionObs").css("display", "none")
+                    $("#ddlLiquidacionObs").prop("disabled", true)
+                    $("#ddlLiquidacionObs").val(response.ObsLiquidacionSueldo)
+
+                    $("#divinformecuotasObs").css("display", "none");
+                    $("#ddlinformecuotasObs").prop("disabled", true)
+                    $("#ddlinformecuotasObs").val(response.ObsInformeCuotas)
+
+                    $("#divsolicitudcreditoObs").css("display", "none");
+                    $("#ddlsolicitudcreditoObs").prop("disabled", true)
+                    $("#ddlsolicitudcreditoObs").val(response.ObsSolicitudCredito)
+
+                    $("#divcertificacionObs").css("display", "none");
+                    $("#ddlcertificacionObs").prop("disabled", true)
+                    $("#ddlcertificacionObs").val(response.ObsCertificacion)
+
+                    $("#divhojaresumenObs").css("display", "none");
+                    $("#ddlhojaresumenObs").prop("disabled", true)
+                    $("#ddlhojaresumenObs").val(response.ObsHojaResumen)
+
+                    $("#divcomprobanteObs").css("display", "none");
+                    $("#ddlcomprobanteObs").prop("disabled", true);
+                    $("#ddlcomprobanteObs").val(response.ObsCompobanteDinero)
+
+                    $("#divcheckdigitalizacionObs").css("display", "none");
+                    $("#ddlcheckdigitalizacionObs").prop("disabled", true);
+                    $("#ddlcheckdigitalizacionObs").val(response.ObsCheckListDigitalizacion)
+
+
+                    $("#divInformacionvalObs").css("display", "none");
+                    $("#ddlInformacionvalObs").prop("disabled", true);
+                    $("#ddlInformacionvalObs").val(response.ObsInformacionAval)
+
+                    $("#divafecto15Obs").css("display", "none");
+                    $("#ddlafecto15Obs").prop("disabled", true);
+                    $("#ddlafecto15Obs").val(response.ObsAfecto15)
+
+                    $("#divsegurodesgravamenObs").css("display", "none");
+                    $("#ddlsegurodesgravamenObs").prop("disabled", true);
+                    $("#ddlsegurodesgravamenObs").val(response.ObsSeguroDesgravamen)
+
+                    $("#divsegurocesantiaObs").css("display", "none");
+                    $("#ddlsegurocesantiaObs").prop("disabled", true);
+                    $("#ddlsegurocesantiaObs").val(response.ObsSeguroCesantia)
+
+                    $('#ddlLiquidacion').prop("disabled", true);
+                    $('#ddlinformecuotas').prop("disabled", true);
+                    $('#ddlsolicitudcredito').prop("disabled", true);
+                    $('#ddlcertificacion').prop("disabled", true);
+                    $('#ddlhojaresumen').prop("disabled", true);
+                    $('#ddlcomprobante').prop("disabled", true);
+                    $('#ddlcheckdigitalizacion').prop("disabled", true);
+                    $('#ddlInformacionval').prop("disabled", true);
+                    $('#ddlafecto15').prop("disabled", true);
+                    $('#ddlsegurodesgravamen').prop("disabled", true);
+                    $('#ddlsegurocesantia').prop("disabled", true);
+                    $("#ddlsegurocesantiaObs").prop("disabled", true);
+
+                    if ($('#ddlLiquidacion').val() == 1 || $('#ddlLiquidacion').val() == 4) {
+                        $("#divLiqSueldo").hide();
+                    }
+                    if ($('#ddlinformecuotas').val() == 1 || $('#ddlinformecuotas').val() == 4) {
+                        $("#divcuotas").hide();
+                    }
+                    if ($('#ddlsolicitudcredito').val() == 1 || $('#ddlsolicitudcredito').val() == 4) {
+                        $("#divsolicitud").hide();
+                    }
+                    if ($('#ddlcertificacion').val() == 1 || $('#ddlcertificacion').val() == 4) {
+                        $("#divcertificacion").hide();
+                    }
+                    if ($('#ddlhojaresumen').val() == 1 || $('#ddlhojaresumen').val() == 4) {
+                        $("#divhojaresumen").hide();
+                    }
+                    if ($('#ddlcomprobante').val() == 1 || $('#ddlcomprobante').val() == 4) {
+                        $("#divegreso").hide();
+                    }
+                    if ($('#ddlcheckdigitalizacion').val() == 1 || $('#ddlcheckdigitalizacion').val() == 4) {
+                        $("#divdigitalizacion").hide();
+                    }
+                    if ($('#ddlInformacionval').val() == 1 || $('#ddlInformacionval').val() == 4) {
+                        $('#divinformacion').hide();
+                    }
+                    if ($('#ddlafecto15').val() == 1 || $('#ddlafecto15').val() == 4) {
+                        $('#divafecto').hide();
+                    }
+                    if ($('#ddlsegurodesgravamen').val() == 1 || $('#ddlsegurodesgravamen').val() == 4) {
+                        $('#divsdesgravamen').hide();
+                    }
+
+                    if ($('#ddlsegurocesantia').val() == 1 || $('#ddlsegurocesantia').val() == 4) {
+                        $('#divscesantia').hide();
+                    }
+
+
+
+                }
+
+                if (response.EstadoGestion == "Aprobado") {
+                    { // Aprobado
+                        $("#divLiquidacionObs").css("display", "block")
+                        $("#ddlLiquidacionObs").prop("disabled", true)
+                        $("#ddlLiquidacion").prop("disabled", true)
+                        $("#ddlLiquidacionObs").val(response.ObsLiquidacionSueldo)
+
+                        $("#divinformecuotasObs").css("display", "block");
+                        $("#ddlinformecuotasObs").prop("disabled", true)
+                        $("#ddlinformecuotasObs").val(response.ObsInformeCuotas)
+                        $("#ddlinformecuotas").prop("disabled", true)
+
+                        $("#divsolicitudcreditoObs").css("display", "block");
+                        $("#ddlsolicitudcreditoObs").prop("disabled", true)
+                        $("#ddlsolicitudcreditoObs").val(response.ObsSolicitudCredito)
+                        $("#ddlsolicitudcredito").prop("disabled", true)
+
+                        $("#divcertificacionObs").css("display", "block");
+                        $("#ddlcertificacionObs").prop("disabled", true)
+                        $("#ddlcertificacionObs").val(response.ObsCertificacion)
+                        $("#ddlcertificacion").prop("disabled", true)
+
+                        $("#divhojaresumenObs").css("display", "block");
+                        $("#ddlhojaresumenObs").prop("disabled", true)
+                        $("#ddlhojaresumenObs").val(response.ObsHojaResumen)
+                        $("#ddlhojaresumen").prop("disabled", true)
+
+                        $("#divcomprobanteObs").css("display", "block");
+                        $("#ddlcomprobanteObs").prop("disabled", true);
+                        $("#ddlcomprobanteObs").val(response.ObsCompobanteDinero)
+                        $("#ddlcomprobante").prop("disabled", true);
+
+                        $("#divcheckdigitalizacionObs").css("display", "block");
+                        $("#ddlcheckdigitalizacionObs").prop("disabled", true);
+                        $("#ddlcheckdigitalizacionObs").val(response.ObsCheckListDigitalizacion)
+                        $("#ddlcheckdigitalizacion").prop("disabled", true);
+
+
+                        $("#divInformacionvalObs").css("display", "block");
+                        $("#ddlInformacionvalObs").prop("disabled", true);
+                        $("#ddlInformacionvalObs").val(response.ObsInformacionAval)
+                        $("#ddlInformacionval").prop("disabled", true);
+
+                        $("#divafecto15Obs").css("display", "block");
+                        $("#ddlafecto15Obs").prop("disabled", true);
+                        $("#ddlafecto15Obs").val(response.ObsAfecto15)
+                        $("#ddlafecto15").prop("disabled", true);
+
+                        $("#divsegurodesgravamenObs").css("display", "block");
+                        $("#ddlsegurodesgravamenObs").prop("disabled", true);
+                        $("#ddlsegurodesgravamenObs").val(response.ObsSeguroDesgravamen)
+                        $("#ddlsegurodesgravamen").prop("disabled", true);
+
+                        $("#divsegurocesantiaObs").css("display", "block");
+                        $("#ddlsegurocesantiaObs").prop("disabled", true);
+                        $("#ddlsegurocesantiaObs").val(response.ObsSeguroCesantia)
+                        $("#ddlsegurocesantia").prop("disabled", true);
+
+
+
+                    }
+                    $('#btn-guardar').css('display', 'none')
+                }
+
+
+                $('#btn-guardar').css('display', 'none')
+
+            }
         })
 
     }
@@ -238,7 +674,7 @@ $(function () {
             if ($('#ddlLiquidacion').val() == "0" || $("#ddlsolicitudcredito").val() == "0" || $("#ddlcertificacion").val() == "0" || $("#ddlhojaresumen").val() == "0" || $("#ddlcomprobante").val() == "0" || $("#ddlcheckdigitalizacion").val() == "0" || $("#ddlInformacionval").val() == "0" || $("#ddlafecto15").val() == "0" || $("#ddlsegurodesgravamen").val() == "0" || $("#ddlsegurocesantia").val() == "0") {
                 $.niftyNoty({
                     type: 'danger',
-                    message: '<strong>Error </strong> <li>Debe seleccionar estado de documento</l>i',
+                    message: '<strong>Error </strong> <li>Debe seleccionar todos los estados de documentos</l>i',
                     container: 'floating',
                     timer: 5000
                 });
@@ -261,10 +697,12 @@ $(function () {
                 InformacionAval: $("#ddlInformacionval").val(),
                 Afecto15: $("#ddlafecto15").val(),
                 SeguroDesgravamen: $("#ddlsegurodesgravamen").val(),
-                SeguroCesantia: $("#ddlsegurocesantia").val()
+                SeguroCesantia: $("#ddlsegurocesantia").val(),
+
+
             }
             $.SecPostJSON(BASE_URL + "/motor/api/digitalizacion/guardar-gestion", WebGestionDigitalizacion, function (respuesta) {
-
+             
                 if (respuesta.estado = 'OK') {
                     $.niftyNoty({
                         type: 'success',
@@ -305,7 +743,20 @@ $(function () {
                 InformacionAval: $("#ddlInformacionval").val(),
                 Afecto15: $("#ddlafecto15").val(),
                 SeguroDesgravamen: $("#ddlsegurodesgravamen").val(),
-                SeguroCesantia: $("#ddlsegurocesantia").val()
+                SeguroCesantia: $("#ddlsegurocesantia").val(),
+                ObsLiquidacionSueldo: $("#ddlLiquidacionObs").val(),
+                ObsInformeCuotas: $("#ddlinformecuotasObs").val(),
+                ObsSolicitudCredito: $("#ddlsolicitudcreditov").val(),
+                ObsCertificacion: $("#ddlcertificacionObs").val(),
+                ObsHojaResumen: $("#ddlhojaresumenObs").val(),
+                ObsCompobanteDinero: $("#ddlcomprobanteObs").val(),
+                ObsCheckListDigitalizacion: $("#ddlcheckdigitalizacionObs").val(),
+                ObsInformacionAval: $("#ddlInformacionvalObs").val(),
+                ObsAfecto15: $("#ddlafecto15v").val(),
+                ObsSeguroDesgravamen: $("#ddlsegurodesgravamenObs").val(),
+                ObsSeguroCesantia: $("#ddlsegurocesantiaObs").val(),
+                ObsPagare: $("#ddlPagareObs").val(),
+                ObsCI: $("#ddlCIObs").val(),
             }
            
             $.SecPostJSON(BASE_URL + "/motor/api/digitalizacion/guardar-gestion-misreparos", WebGestionDigitalizacion, function (respuesta) {

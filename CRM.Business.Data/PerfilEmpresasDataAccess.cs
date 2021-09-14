@@ -12,23 +12,25 @@ namespace CRM.Business.Data
 {
     public static class PerfilEmpresasDataAccess
     {
-        public static List<CarteraEmpresasEntity> ObtieneCarteraEmp(string token)
+        public static List<CarteraEmpresasEntity> ObtieneCarteraEmp(string token,int Afiliado)
         {
             Parametros pram = new Parametros
             {
                 new Parametro("@Token", token),
+                new Parametro("@Afiliado", Afiliado),
             };
-            return DBHelper.InstanceCRM.ObtenerColeccion("carteras.spMotorCartera_ListaCarteraEjecutivo", pram, ListaCarteraEmpresa);
+            return DBHelper.InstanceCRM.ObtenerColeccion("carteras.spMotorCartera_ListaCarteraEjecutivo_Nuevo", pram, ListaCarteraEmpresa);
         }
 
 
-        public static List<CarteraEmpresasEntity> ObtieneCarteraAgen(string token)
+        public static List<CarteraEmpresasEntity> ObtieneCarteraAgen(string token,int Afiliado)
         {
             Parametros pram = new Parametros
             {
                 new Parametro("@Token", token),
+                new Parametro("@Afiliado", Afiliado),
             };
-            return DBHelper.InstanceCRM.ObtenerColeccion("carteras.spMotorCartera_ListaCarteraAgente", pram, ListaCarteraEmpresaAgente);
+            return DBHelper.InstanceCRM.ObtenerColeccion("carteras.spMotorCartera_ListaCarteraAgente_Nuevo", pram, ListaCarteraEmpresaAgente);
         }
 
         public static Entity.GestionEmpresasEntity ObtienePerfilEmp(string RutEmpresa)

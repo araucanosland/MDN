@@ -7,6 +7,8 @@
 <link href="~/Assets/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/fullcalendar/nifty-skin/fullcalendar-nifty.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+<!--Switchery [ OPTIONAL ]-->
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
 
 <h1 id="titulo">Cartera Empresas</h1>
 <div id="page-content">
@@ -39,6 +41,17 @@
                     <div class="tab-content">
                         <div id="demo-lft-tab-1" class="tab-pane fade ">
                             <div class="panel-body">
+                                <div class="filtros col-lg-12">
+
+                                    <div class="form-group col-lg-3">
+                                        <label class="control-label">Empresas Afiliadas</label>
+                                        <div class="">
+                                            No.  <input class="js-switch" type="checkbox" id="chkAfiliado" name="chkAfiliado" checked /> Si.
+                                        </div>
+                                    </div>
+
+
+                                </div>
                                 <table id="tabla" class="table table-bordered table-hover toggle-circle table-striped">
                                     <thead>
                                         <tr>
@@ -1069,7 +1082,7 @@
     <script src="~/Assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
     <script src="~/Assets/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js"></script>
     <script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
-
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
     <script src="~/Assets/js.App/src/contactabilidad-empresa.js?g=@Guid.NewGuid().ToString()"></script>
 
     <script type="text/javascript">
@@ -1094,6 +1107,20 @@
         var alertaGestion = 0;
 
         $(function () {
+
+            //------Switch ------------------
+            var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+            elems.forEach(function (html) {
+                var switchery = new Switchery(html);
+            });
+
+            $("#chkAfiliado").on("change", function (e) {
+                debugger;
+                    cargador.CargaDatosCateraAgente();
+             
+
+            });
+
 
             $("#titulo").css('font-size', '27px').css('color', '#b3b3b3').css('margin-left', '20px')
             $('[data-toggle="popover"]').popover();
@@ -1134,7 +1161,8 @@
                     //console.log("deberia esconderse")
                     $(".sergio-esconder").hide();
                 }
-                $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtener-cartera-agente", function (menus) {
+                var chkAfiliado = $('#chkAfiliado').is(':checked') ? '1' : '0';
+                $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtener-cartera-agente", { Afiliado: chkAfiliado }, function (menus) {
                     var iterador = ""
                     $.each(menus, function (i, e) {
                         var NomHolding = ""

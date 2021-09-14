@@ -19,6 +19,13 @@ function digitalLinkFormatterauditoriaLegalizado(value, row, index) {
     return `<a class="btn btn-primary mar-lft btn-rounded" title="Seguimiento" href="/motor/App/digitalizacion/GestionAuditoriaLegalizado?ci=${row.Id}&aud=none"><i class="ion-search btn-rounded"></i></a>`;
 }
 
+function digitalLinkFormatterEspecialista(value, row, index) {
+     if (row.Tipo == 1)// mostrar Legalizados
+         return `<a class="btn btn-primary mar-lft btn-rounded" title="Seguimiento" href="/motor/App/digitalizacion/Gestion?ci=${row.Id}&aud=3sp3c1l1st4"><i class="ion-search btn-rounded"></i></a>`;
+    else
+         return `<a class="btn btn-primary mar-lft btn-rounded" title="Seguimiento" href="/motor/App/digitalizacion/gestionlegalizados?ci=${row.Id}&aud=3sp3c1l1st4"><i class="ion-search btn-rounded"></i></a>`;
+
+   }
 
 
 function digitalMisReparosLinkFormatter(value, row, index) {
@@ -96,7 +103,7 @@ var metodos = {
             }
         });
     },
-    CargaGrillaAsginacionMisReparos: function (FechaVentaDesde, FechaVentaHasta, Filtro, Ejecutivo, Tipo) {
+    CargaGrillaAsginacionMisReparos: function (FechaVentaDesde, FechaVentaHasta, Filtro, Ejecutivo, Tipo, Rut, Credito, Oferta, Estado, tipo) {
 
         $("#tblDigitalizacionAsignacion").bootstrapTable('refresh', {
             url: '/motor/api/digitalizacion/listar-digitalizacion-Agente',
@@ -107,12 +114,15 @@ var metodos = {
                 Oficina: getCookie("Oficina"),
                 Tipo: Tipo,
                 Filtro: Filtro,
-
+                Rut: Rut,
+                Credito: Credito,
+                Oferta: Oferta,
+                Estado: Estado
             }
         });
 
     },
-    CargaGrillaAsginacion: function (FechaVentaDesde, FechaVentaHasta, Filtro, Ejecutivo, Tipo) {
+    CargaGrillaAsginacion: function (FechaVentaDesde, FechaVentaHasta, Filtro, Ejecutivo, Tipo, Rut, Credito, Oferta, Estado, tipo) {
 
         $("#tblDigitalizacionAsignacion").bootstrapTable('refresh', {
             url: '/motor/api/digitalizacion/listar-digitalizacion-Agente',
@@ -123,17 +133,21 @@ var metodos = {
                 Oficina: getCookie("Oficina"),
                 Tipo: Tipo,
                 Filtro: Filtro,
+                Rut: Rut,
+                Credito: Credito,
+                Oferta: Oferta,
+                Estado: Estado
 
             }
         });
-        $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-digitalizacion-Agente", { RutEjecutivo: Ejecutivo, FechaVentaDesde: FechaVentaDesde, FechaVentaHasta: FechaVentaHasta, Oficina: getCookie("Oficina"), Tipo: Tipo, Filtro: Filtro }, function (response) {
+        $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-digitalizacion-Agente", { RutEjecutivo: Ejecutivo, FechaVentaDesde: FechaVentaDesde, FechaVentaHasta: FechaVentaHasta, Oficina: getCookie("Oficina"), Tipo: Tipo, Filtro: Filtro, Rut: $("#txtrutagenteDI").val(), Credito: $("#txtcreditoagenteDI").val(), Oferta: $("#txtofertaagenteDI").val(), Estado: $("#ddlEstadosagenteDI").val() }, function (response) {
 
             $("#conteoAgenteDigit").text(response.length);
 
         });
 
     },
-    CargaGrillaAsginacionLeaglizacion: function (FechaVentaDesde, FechaVentaHasta, Filtro, Ejecutivo, Tipo) {
+    CargaGrillaAsginacionLeaglizacion: function (FechaVentaDesde, FechaVentaHasta, Filtro, Ejecutivo, Tipo, Rut, Credito, Oferta, Estado, tipo) {
 
         $("#tblDigitalizacionAsignacionLegalizado").bootstrapTable('refresh', {
             url: '/motor/api/digitalizacion/listar-digitalizacion-Agente',
@@ -144,17 +158,21 @@ var metodos = {
                 Oficina: getCookie("Oficina"),
                 Tipo: Tipo,
                 Filtro: Filtro,
+                Rut: Rut,
+                Credito: Credito,
+                Oferta: Oferta,
+                Estado: Estado
 
             }
         });
-        $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-digitalizacion-Agente", { RutEjecutivo: Ejecutivo, FechaVentaDesde: FechaVentaDesde, FechaVentaHasta: FechaVentaHasta, Oficina: getCookie("Oficina"), Tipo: Tipo, Filtro: Filtro }, function (response) {
+        $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-digitalizacion-Agente", { RutEjecutivo: Ejecutivo, FechaVentaDesde: FechaVentaDesde, FechaVentaHasta: FechaVentaHasta, Oficina: getCookie("Oficina"), Tipo: Tipo, Filtro: Filtro, Rut: $("#txtrutagenteDL").val(), Credito: $("#txtcreditoagenteDL").val(), Oferta: $("#txtofertaagenteDL").val(), Estado: $("#ddlEstadosagenteDL").val() }, function (response) {
 
             $("#conteoAgenteLegalizadoDigit").text(response.length);
 
         });
 
     },
-    CargaGrillaReparoAgente: function (FechaVentaDesde, FechaVentaHasta, Filtro, Ejecutivo, Tipo) {
+    CargaGrillaReparoAgente: function (FechaVentaDesde, FechaVentaHasta, Filtro, Ejecutivo, Tipo, Rut, Credito, Oferta, Estado) {
 
         $("#tblDigitalizacionAsignacionReparo").bootstrapTable('refresh', {
             url: '/motor/api/digitalizacion/listar-digitalizacion-Reparo-Agente',
@@ -165,10 +183,13 @@ var metodos = {
                 Oficina: getCookie("Oficina"),
                 Tipo: Tipo,
                 Filtro: Filtro,
-
+                Rut: Rut,
+                Credito: Credito,
+                Oferta: Oferta,
+                Estado: Estado
             }
         });
-        $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-digitalizacion-Reparo-Agente", { RutEjecutivo: Ejecutivo, FechaVentaDesde: FechaVentaDesde, FechaVentaHasta: FechaVentaHasta, Oficina: getCookie("Oficina"), Tipo: Tipo, Filtro: Filtro }, function (response) {
+        $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-digitalizacion-Reparo-Agente", { RutEjecutivo: Ejecutivo, FechaVentaDesde: FechaVentaDesde, FechaVentaHasta: FechaVentaHasta, Oficina: getCookie("Oficina"), Tipo: Tipo, Filtro: Filtro, Rut: $("#txtrutagenteRep").val(), Credito: $("#txtcreditoagenteRep").val(), Oferta: $("#txtofertaagenteRep").val(), Estado: $("#ddlEstadosagenteRep").val() }, function (response) {
 
             $("#conteoAgenteReparo").text(response.length);
 
@@ -274,8 +295,8 @@ var metodos = {
 
         });
     },
-    CargaGrillaAuditor: function (RutEjecutivo, Oficina, FechaVentaDesde, FechaVentaHasta, Filtro,Tipo) {
-       
+    CargaGrillaAuditor: function (RutEjecutivo, Oficina, FechaVentaDesde, FechaVentaHasta, Filtro, Tipo) {
+
         var Of = "";
         if (Oficina == null)
             Of = -1
@@ -316,7 +337,7 @@ var metodos = {
     CargaComboOficinas: function () {
 
         $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-oficina-auditor", function (response) {
-          
+
             if (responseoficinas.length == 0) {
                 $("#ddlOficina_Auditoria").html("");
                 $("#ddlOficina_Auditoria").append($("<option>").val(-1).html("Seleccione").data("id", -1).data("nombre", "Seleccione"));
@@ -326,21 +347,21 @@ var metodos = {
                     $("#ddlOficina_Auditoria").trigger("change")
                 });
 
-               
+
                 responseoficinas = response;
             }
         });
     },
     CargaComboOficinaslegalizado: function () {
-    
+
         $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-oficina-auditor", function (response) {
-           
+
             if (responseoficinasLegalizado.length == 0) {
-               
+
                 $("#ddlOficina_Auditoria_legalizado").html("");
                 $("#ddlOficina_Auditoria_legalizado").append($("<option>").val(-1).html("Seleccione").data("id", -1).data("nombre", "Seleccione"));
                 $.each(response, function (i, oficina) {
-                   
+
                     var selected = (oficina.codOficina == sessionStorage.getItem('ddlOficina_Auditoria_Legalizado'))
                     $("#ddlOficina_Auditoria_legalizado").append($("<option>").val(oficina.codOficina).html(oficina.DescOficina).prop("selected", selected));
                     $("#ddlOficina_Auditoria_legalizado").trigger("change")
@@ -359,7 +380,7 @@ var metodos = {
             $("#ddlEjecutivo_Auditoria").append($("<option>").val("-1").html("Todos").data("rut", "-1").data("nombre", "Todos"));
 
             $.each(response, function (i, datos) {
-               
+
                 var selected = (datos.Rut == sessionStorage.getItem('ddlEjecutivo_Auditoria'))
 
                 $("#ddlEjecutivo_Auditoria").append($("<option>").val(datos.Rut).html(datos.Nombre).data("rut", datos.Rut).data("nombre", datos.Nombre).prop("selected", selected));
@@ -375,7 +396,7 @@ var metodos = {
             $("#ddlEjecutivo_Auditoria_legalizado").append($("<option>").val("-1").html("Todos").data("rut", "-1").data("nombre", "Todos"));
 
             $.each(response, function (i, datos) {
-          
+
                 var selected = (datos.Rut == sessionStorage.getItem('ddlEjecutivo_Auditoria_legalizado'))
 
                 $("#ddlEjecutivo_Auditoria_legalizado").append($("<option>").val(datos.Rut).html(datos.Nombre).data("rut", datos.Rut).data("nombre", datos.Nombre).prop("selected", selected));
@@ -383,18 +404,128 @@ var metodos = {
 
         });
     },
-    CargaGrillaGestionMC: function (FechaVentaDesde, FechaVentaHasta,Oferta) {
-        debugger;
+    CargaGrillaGestionMC: function (FechaVentaDesde, FechaVentaHasta, Oferta) {
+     
         $("#tblDigitalizacionAsignacionMC").bootstrapTable('refresh', {
             url: '/motor/api/digitalizacion/listar-digitalizacion-MC',
             query: {
                 FechaVentaDesde: FechaVentaDesde,
                 FechaVentaHasta: FechaVentaHasta,
                 RutEjecutivo: getCookie("Rut"),
-                Oferta:Oferta
+                Oferta: Oferta
             }
         });
     },
+    CargarcomboZona: function () {
+        $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-zona", function (response) {
+
+
+            $("#ddlZonaEspecialista").html("");
+            $("#ddlZonaEspecialista").append($("<option>").val(-1).html("Seleccione").data("id", "Seleccione").data("nombre", "Seleccione"));
+            $("#ddlZonaEspecialistaPagadora").html("");
+            $("#ddlZonaEspecialistaPagadora").append($("<option>").val(-1).html("Seleccione").data("id", "Seleccione").data("nombre", "Seleccione"));
+            $("#ddlZonaEspecialistaCurse").html("");
+            $("#ddlZonaEspecialistaCurse").append($("<option>").val(-1).html("Seleccione").data("id", "Seleccione").data("nombre", "Seleccione"));
+
+            $.each(response, function (i, oficina) {
+
+                $("#ddlZonaEspecialista").append($("<option>").val(oficina.Zona).html(oficina.Zona));
+                $("#ddlZonaEspecialistaPagadora").append($("<option>").val(oficina.Zona).html(oficina.Zona));
+                $("#ddlZonaEspecialistaCurse").append($("<option>").val(oficina.Zona).html(oficina.Zona));
+            });
+
+            responseoficinas = response;
+
+        });
+    },
+    CargarComboOficinaZona: function (Zona) {
+        $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-oficina-zona", { Zona: Zona }, function (response) {
+           
+            $("#ddllOficinaEspecialista").html("");
+            $("#ddllOficinaEspecialista").append($("<option>").val(-1).html("Todos").data("id", -1).data("nombre", "Todos"));
+            
+            $.each(response, function (i, oficina) {
+               // var selected = (oficina.codOficina == sessionStorage.getItem('ddlOficina_Auditoria'))
+                $("#ddllOficinaEspecialista").append($("<option>").val(oficina.codOficina).html(oficina.DescOficina));
+
+
+            });
+           
+            //if (sessionStorage.getItem('ddlZonaEspecialista') != null)
+            //    $("#ddlZonaEspecialista").val(sessionStorage.getItem('ddlZonaEspecialista'));
+
+           // $("#ddlZonaEspecialista").trigger("change")
+            responseoficinas = response;
+
+
+        });
+    },
+    CargarComboOficinaZonaPagadora: function (Zona) {
+        $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-oficina-zona", { Zona: Zona }, function (response) {
+
+            $("#ddllOficinaEspecialistaPagadora").html("");
+            $("#ddllOficinaEspecialistaPagadora").append($("<option>").val(-1).html("Todos").data("id", -1).data("nombre", "Todos"));
+
+            $.each(response, function (i, oficina) {
+                // var selected = (oficina.codOficina == sessionStorage.getItem('ddlOficina_Auditoria'))
+                $("#ddllOficinaEspecialistaPagadora").append($("<option>").val(oficina.codOficina).html(oficina.DescOficina));
+
+
+            });
+
+            //if (sessionStorage.getItem('ddlZonaEspecialista') != null)
+            //    $("#ddlZonaEspecialista").val(sessionStorage.getItem('ddlZonaEspecialista'));
+
+            // $("#ddlZonaEspecialista").trigger("change")
+            responseoficinas = response;
+
+
+        });
+    },
+    CargarComboOficinaZonaCurse: function (Zona) {
+        $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-oficina-zona", { Zona: Zona }, function (response) {
+
+            $("#ddllOficinaEspecialistaCurse").html("");
+            $("#ddllOficinaEspecialistaCurse").append($("<option>").val(-1).html("Todos").data("id", -1).data("nombre", "Todos"));
+
+            $.each(response, function (i, oficina) {
+                // var selected = (oficina.codOficina == sessionStorage.getItem('ddlOficina_Auditoria'))
+                $("#ddllOficinaEspecialistaCurse").append($("<option>").val(oficina.codOficina).html(oficina.DescOficina));
+
+
+            });
+
+            //if (sessionStorage.getItem('ddlZonaEspecialista') != null)
+            //    $("#ddlZonaEspecialista").val(sessionStorage.getItem('ddlZonaEspecialista'));
+
+            // $("#ddlZonaEspecialista").trigger("change")
+            responseoficinas = response;
+
+
+        });
+    },
+    CargaGrillaEspecialista: function (OficinaAuditora, Oferta, Estado, FechaVentaDesde, FechaVentaHasta, Tipo, Rut, ZonaAuditora,OficinaCurse,ZonaCurse,OficinaPagadora,ZonaPagadora) {
+       
+        $("#tblDigitalizacionAsignacionEspecialista").bootstrapTable('refresh', {
+            url: '/motor/api/digitalizacion/listar-Lead-Especialista',
+            query: {
+                CodOficina: OficinaAuditora,
+                Oferta: Oferta,
+                Estado: Estado,
+                FechaDesde: FechaVentaDesde,
+                FechaHasta: FechaVentaHasta,
+                tipo: Tipo,
+                rut: Rut,
+                Zona: ZonaAuditora,
+                OficinaCurse: OficinaCurse,
+                ZonaCurse: ZonaCurse,
+                OficinaPagadora: OficinaPagadora,
+                ZonaPagadora: ZonaPagadora
+
+            }
+        });
+    },
+
 }
 
 
@@ -409,7 +540,7 @@ $(function () {
     //*********************Validacion de perfiles**************************
 
 
-   
+
     if (getCookie('Cargo') == 'Agente' || getCookie('Cargo') == 'Jefe Servicio al Cliente' || getCookie('Cargo') == 'Jefe Plataforma') {
         $('#tab_Agente').css('display', 'block')
         $('#tab_misreparos').css('display', 'none')
@@ -420,6 +551,7 @@ $(function () {
         $('#tab_auditor').css('display', 'none')
         $('#tab_auditor_legalizados').css('display', 'none')
         $('#tab_gestion_MC').css('display', 'none')
+        $('#tab_gestion_Especialistas').css('display', 'none')
         $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 
             sessionStorage.setItem('activeTab', $(e.target).attr('href'));
@@ -433,6 +565,26 @@ $(function () {
         }
 
     }
+    else if (getCookie('Oficina') == "457") {
+        $('#tab_Agente').css('display', 'none')
+        $('#tab_misreparos').css('display', 'none')
+        $('#tab_ingreso').css('display', 'none')
+        $('#tab_documentos').css('display', 'none')
+        $('#tab_misreparos_Agente').css('display', 'none')
+        $('#tab_Agente_Legalizados').css('display', 'none')
+        $('#tab_auditor').css('display', 'none')
+        $('#tab_auditor_legalizados').css('display', 'none')
+        $('#tab_gestion_MC').css('display', 'none')
+        $('#tab_gestion_Especialistas').css('display', 'block')
+        $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+
+            sessionStorage.setItem('activeTab', $(e.target).attr('href'));
+        });
+
+        $('#myTab a[href="#demo-lft-tab-10"]').tab('show');
+
+
+    }
     else if (getCookie('Oficina') == "888") {
         $('#tab_Agente').css('display', 'none')
         $('#tab_misreparos').css('display', 'none')
@@ -443,6 +595,7 @@ $(function () {
         $('#tab_auditor').css('display', 'block')
         $('#tab_auditor_legalizados').css('display', 'block')
         $('#tab_gestion_MC').css('display', 'none')
+        $('#tab_gestion_Especialistas').css('display', 'none')
         $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 
             sessionStorage.setItem('activeTab', $(e.target).attr('href'));
@@ -463,6 +616,8 @@ $(function () {
         $('#tab_auditor_legalizados').css('display', 'none')
         $('#tab_gestion_MC').css('display', 'none')
         $('#tab_gestion_MC').css('display', 'block')
+        $('#tab_gestion_Especialistas').css('display', 'none')
+
         $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 
             sessionStorage.setItem('activeTab', $(e.target).attr('href'));
@@ -483,6 +638,7 @@ $(function () {
         $('#tab_auditor').css('display', 'none')
         $('#tab_gestion_MC').css('display', 'none')
         $('#tab_auditor_legalizados').css('display', 'none')
+        $('#tab_gestion_Especialistas').css('display', 'none')
         $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 
             sessionStorage.setItem('activeTab', $(e.target).attr('href'));
@@ -520,6 +676,9 @@ $(function () {
     $("#dt_fecha_venta_desde_auditor_legalizado").val(d)
     $("#dt_fecha_asignacion_mc_desde").val(d)
     $("#dt_fecha_asignacion_mc_hasta").val(d)
+
+    $("#dt_fecha_asignacion_especialista_desde").val(d)
+    $("#dt_fecha_asignacion_especialista_hasta").val(d)
     //*************************Modal Ejecutvo Asignacion ***********************
 
     $('#modal_asigna_digitalizacion').on('show.bs.modal', function (event) {
@@ -531,15 +690,15 @@ $(function () {
     });
 
     //*************************  MESA DE CONTROl*********************
-    
-    $('#btn_buscar_asignacion_mc').on("click", function () {
-        metodos.CargaGrillaGestionMC($("#dt_fecha_asignacion_mc_desde").val(), $("#dt_fecha_asignacion_mc_hasta").val(), $("#txtOfertaMc").val())
+    if (getCookie('Oficina') == "881") {
+        $('#btn_buscar_asignacion_mc').on("click", function () {
+            metodos.CargaGrillaGestionMC($("#dt_fecha_asignacion_mc_desde").val(), $("#dt_fecha_asignacion_mc_hasta").val(), $("#txtOfertaMc").val())
 
-    });
-  
-    metodos.CargaGrillaGestionMC("01-01-2021", $("#dt_fecha_asignacion_mc_hasta").val(), $("#txtOfertaMc").val())
+        });
 
+        metodos.CargaGrillaGestionMC("01-01-2021", $("#dt_fecha_asignacion_mc_hasta").val(), $("#txtOfertaMc").val())
 
+    }
     //*****************************Tab documentación Geneal
 
     if (sessionStorage.getItem('txtrut') != null)
@@ -669,12 +828,12 @@ $(function () {
 
 
     $('#btn_buscar').on("click", function () {
-       
+
         asaignaDatos();
 
         metodos.CargaGrilla(sessionStorage.getItem('txtrut'), sessionStorage.getItem('txtcredito'), sessionStorage.getItem('ddlEstados'), sessionStorage.getItem('dt_fecha_venta_desde'), sessionStorage.getItem('dt_fecha_venta_hasta'), 'Todos');
         metodos.CargaGrillaConteoGestonGeneral(1);
-        
+
 
 
 
@@ -709,28 +868,28 @@ $(function () {
 
     $('#btn_buscar_asignacion').on("click", function () {
 
-        metodos.CargaGrillaAsginacion($("#dt_fecha_asignacion_desde").val(), $("#dt_fecha_asignacion_hasta").val(), 'Filtro', $("#ddlejecutivoAsignacion").val(), 1)
+        metodos.CargaGrillaAsginacion($("#dt_fecha_asignacion_desde").val(), $("#dt_fecha_asignacion_hasta").val(), 'Filtro', $("#ddlejecutivoAsignacion").val(), 1, $("#txtrutagenteDI").val(), $("#txtcreditoagenteDI").val(), $("#txtofertaagenteDI").val(), $("#ddlEstadosagenteDI").val(), 3)
         asaignaDatos();
     });
     asaignaDatos();
-
-    metodos.CargaGrillaAsginacion('01-01-2021', $("#dt_fecha_asignacion_hasta").val(), 'Filtro', $("#ddlejecutivoAsignacion").val(), 1)
+   
+    metodos.CargaGrillaAsginacion('01-01-2021', $("#dt_fecha_asignacion_hasta").val(), 'Filtro', $("#ddlejecutivoAsignacion").val(), 1, $("#ddlejecutivoAsignacion").val(), 1, $("#txtrutagenteDI").val(), $("#txtcreditoagenteDI").val(), $("#txtofertaagenteDI").val(), $("#ddlEstadosagenteDI").val(), 1)
 
 
     $('#btn_buscar_asignacionLegalizado').on("click", function () {
 
-        metodos.CargaGrillaAsginacionLeaglizacion($("#dt_fecha_asignacion_desdeLegalizado").val(), $("#dt_fecha_asignacion_hastaLegalizado").val(), 'Filtro', $("#ddlejecutivoAsignacionLegalizado").val(), 2)
+        metodos.CargaGrillaAsginacionLeaglizacion($("#dt_fecha_asignacion_desdeLegalizado").val(), $("#dt_fecha_asignacion_hastaLegalizado").val(), 'Filtro', $("#ddlejecutivoAsignacionLegalizado").val(), 2, $("#txtrutagenteDL").val(), $("#txtcreditoagenteDL").val(), $("#txtofertaagenteDL").val(), $("#ddlEstadosagenteDL").val())
         asaignaDatos();
     });
     asaignaDatos();
 
-    metodos.CargaGrillaAsginacionLeaglizacion('01-01-2021', $("#dt_fecha_asignacion_hastaLegalizado").val(), 'Filtro', $("#ddlejecutivoAsignacionLegalizado").val(), 2)
+    metodos.CargaGrillaAsginacionLeaglizacion('01-01-2021', $("#dt_fecha_asignacion_hastaLegalizado").val(), 'Filtro', $("#ddlejecutivoAsignacionLegalizado").val(), 2, $("#txtrutagenteDL").val(), $("#txtcreditoagenteDL").val(), $("#txtofertaagenteDL").val(), $("#ddlEstadosagenteDL").val(), 5)
 
 
 
 
     //***********************Carga Grilla Reparo Agente**************************
-    //#region REPOAGENTE
+
     $('#btnmodalAsignacionEjecutivoReparo').on("click", function () {
         $('#modal_asigna_Reparos').modal('show');
     });
@@ -738,12 +897,12 @@ $(function () {
 
     $('#btn_buscar_asignacion_reparo').on("click", function () {
 
-        metodos.CargaGrillaReparoAgente($("#dt_fecha_asignacion_reparo_desde").val(), $("#dt_fecha_asignacion_reparo_hasta").val(), 'Filtro', $("#ddlejecutivoAsignacionReparo").val(), $("#ddlTipo_asignacionReparo").val())
+        metodos.CargaGrillaReparoAgente($("#dt_fecha_asignacion_reparo_desde").val(), $("#dt_fecha_asignacion_reparo_hasta").val(), 'Filtro', $("#ddlejecutivoAsignacionReparo").val(), $("#ddlTipo_asignacionReparo").val(), $("#txtrutagenteRep").val(), $("#txtcreditoagenteRep").val(), $("#txtofertaagenteRep").val(), $("#ddlEstadosagenteRep").val())
         asaignaDatos();
     });
     asaignaDatos();
 
-    metodos.CargaGrillaReparoAgente('01-01-2021', $("#dt_fecha_asignacion_reparo_hasta").val(), 'Filtro', $("#ddlejecutivoAsignacionReparo").val(), $("#ddlTipo_asignacionReparo").val())
+    metodos.CargaGrillaReparoAgente('01-01-2021', $("#dt_fecha_asignacion_reparo_hasta").val(), 'Filtro', $("#ddlejecutivoAsignacionReparo").val(), $("#ddlTipo_asignacionReparo").val(), $("#txtrutagenteRep").val(), $("#txtcreditoagenteRep").val(), $("#txtofertaagenteRep").val(), $("#ddlEstadosagenteRep").val())
 
 
 
@@ -815,7 +974,7 @@ $(function () {
                     // $('#modal_asigna_Reparos').modal('hide');
 
 
-                    metodos.CargaGrillaReparoAgente($("#dt_fecha_asignacion_reparo_desde").val(), $("#dt_fecha_asignacion_reparo_hasta").val(), 'Filtro', $("#ddlejecutivoAsignacionReparo").val(), $("#ddlTipo_asignacionReparo").val())
+                    metodos.CargaGrillaReparoAgente($("#dt_fecha_asignacion_reparo_desde").val(), $("#dt_fecha_asignacion_reparo_hasta").val(), 'Filtro', $("#ddlejecutivoAsignacionReparo").val(), $("#ddlTipo_asignacionReparo").val(), $("#txtrutagenteRep").val(), $("#txtcreditoagenteRep").val(), $("#txtofertaagenteRep").val(), $("#ddlEstadosagenteRep").val())
 
                     $.niftyNoty({
                         type: 'success',
@@ -833,7 +992,6 @@ $(function () {
         })
     });
 
-    //#endregion REPOAGENTE
     //******************Combo Ejecutvo*************
     let fechaHoy = new Date();
     let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
@@ -867,7 +1025,7 @@ $(function () {
 
                 if (respuesta.estado = 'OK') {
 
-                    metodos.CargaGrillaAsginacion("01-01-2021", sessionStorage.getItem('dt_fecha_asignacion_hasta'), 'Filtro', sessionStorage.getItem('ddlejecutivoAsignacion'), (sessionStorage.getItem('ddlTipo_asignacion')));
+                    metodos.CargaGrillaAsginacion("01-01-2021", sessionStorage.getItem('dt_fecha_asignacion_hasta'), 'Filtro', sessionStorage.getItem('ddlejecutivoAsignacion'), (sessionStorage.getItem('ddlTipo_asignacion')), $("#txtrutagenteDI").val(), $("#txtcreditoagenteDI").val(), $("#txtofertaagenteDI").val(), $("#ddlEstadosagenteDI").val(), 2);
 
                     if (result['length'] - 1 == i + 1) {
 
@@ -915,7 +1073,7 @@ $(function () {
 
                 if (respuesta.estado = 'OK') {
 
-                    metodos.CargaGrillaAsginacionLeaglizacion("01-01-2021", $("#dt_fecha_asignacion_hastaLegalizado").val(), 'Filtro', $("#ddlejecutivoAsignacionLegalizado").val(), 2)
+                    metodos.CargaGrillaAsginacionLeaglizacion("01-01-2021", $("#dt_fecha_asignacion_hastaLegalizado").val(), 'Filtro', $("#ddlejecutivoAsignacionLegalizado").val(), 2, $("#txtrutagenteDL").val(), $("#txtcreditoagenteDL").val(), $("#txtofertaagenteDL").val(), $("#ddlEstadosagenteDL").val(), 6)
 
 
                     $.niftyNoty({
@@ -938,7 +1096,7 @@ $(function () {
     //***************************** Auditor documentacion Inicial***************
 
     $('#btn_buscar_auditor').on("click", function () {
-  
+
         if ($("#ddlOficina_Auditoria").val() == "-1") {
             $.niftyNoty({
                 type: 'danger',
@@ -955,8 +1113,8 @@ $(function () {
         sessionStorage.setItem('ddlEjecutivo_Auditoria', $("#ddlEjecutivo_Auditoria").val());
         sessionStorage.setItem('dt_fecha_venta_desde_auditor', $("#dt_fecha_venta_desde_auditor").val());
         sessionStorage.setItem('dt_fecha_venta_hasta_auditor', $("#dt_fecha_venta_hasta_auditor").val());
-       
-        metodos.CargaGrillaAuditor($("#ddlEjecutivo_Auditoria").val(), $("#ddlOficina_Auditoria").val(), $("#dt_fecha_venta_desde_auditor").val(), $("#dt_fecha_venta_hasta_auditor").val(), 'Filtro','1')
+
+        metodos.CargaGrillaAuditor($("#ddlEjecutivo_Auditoria").val(), $("#ddlOficina_Auditoria").val(), $("#dt_fecha_venta_desde_auditor").val(), $("#dt_fecha_venta_hasta_auditor").val(), 'Filtro', '1')
         // metodos.CargaComboejecutvoAuditoria(periodo, $("#ddlOficina_Auditoria").val());
     });
 
@@ -966,20 +1124,20 @@ $(function () {
     $("#ddlEjecutivo_Auditoria").prop("disabled", true);
     metodos.CargaComboOficinas();
 
-    
+
     if (sessionStorage.getItem('ddlEjecutivo_Auditoria') != null) {
         $("#ddlEjecutivo_Auditoria").val(sessionStorage.getItem('ddlEjecutivo_Auditoria'));
         $("#ddlEjecutivo_Auditoria").trigger("change")
     }
-       
+
     if (sessionStorage.getItem('dt_fecha_venta_desde_auditor') != null)
         $("#dt_fecha_venta_desde_auditor").val(sessionStorage.getItem('dt_fecha_venta_desde_auditor'));
-    
+
 
     if (sessionStorage.getItem('dt_fecha_venta_hasta_auditor') != null)
         $("#dt_fecha_venta_hasta_auditor").val(sessionStorage.getItem('dt_fecha_venta_hasta_auditor'));
 
-    metodos.CargaGrillaAuditor(sessionStorage.getItem('ddlEjecutivo_Auditoria'), sessionStorage.getItem('ddlOficina_Auditoria'), $("#dt_fecha_venta_desde_auditor").val(), $("#dt_fecha_venta_hasta_auditor").val(), 'Todos','1')
+    metodos.CargaGrillaAuditor(sessionStorage.getItem('ddlEjecutivo_Auditoria'), sessionStorage.getItem('ddlOficina_Auditoria'), $("#dt_fecha_venta_desde_auditor").val(), $("#dt_fecha_venta_hasta_auditor").val(), 'Todos', '1')
 
     $("#ddlOficina_Auditoria").on("change", function (e) {
 
@@ -996,9 +1154,9 @@ $(function () {
 
     //*********************Auditoria Documentos legalizados Set Varibales ********************************************
 
-    
+
     $('#btn_buscar_auditor_legalizado').on("click", function () {
-       
+
         if ($("#ddlOficina_Auditoria_legalizado").val() == "-1") {
             $.niftyNoty({
                 type: 'danger',
@@ -1015,12 +1173,12 @@ $(function () {
         sessionStorage.setItem('ddlEjecutivo_Auditoria_Legalizado', $("#ddlEjecutivo_Auditoria_legalizado").val());
         sessionStorage.setItem('dt_fecha_venta_desde_auditor_Legalizado', $("#dt_fecha_venta_desde_auditor_legalizado").val());
         sessionStorage.setItem('dt_fecha_venta_hasta_auditor_legalizado', $("#dt_fecha_venta_hasta_auditor_legalizado").val());
-        metodos.CargaGrillaAuditorLegalizados($("#ddlEjecutivo_Auditoria_legalizado").val(), $("#ddlOficina_Auditoria_legalizado").val(), $("#dt_fecha_venta_desde_auditor_legalizado").val(), $("#dt_fecha_venta_hasta_auditor_legalizado").val(), 'Filtro','2')
+        metodos.CargaGrillaAuditorLegalizados($("#ddlEjecutivo_Auditoria_legalizado").val(), $("#ddlOficina_Auditoria_legalizado").val(), $("#dt_fecha_venta_desde_auditor_legalizado").val(), $("#dt_fecha_venta_hasta_auditor_legalizado").val(), 'Filtro', '2')
         // metodos.CargaComboejecutvoAuditoria(periodo, $("#ddlOficina_Auditoria").val());
     });
-   
+
     $("#ddlEjecutivo_Auditoria_legalizado").prop("disabled", true);
-      metodos.CargaComboOficinaslegalizado();
+    metodos.CargaComboOficinaslegalizado();
 
 
     if (sessionStorage.getItem('ddlEjecutivo_Auditoria_Legalizado') != null) {
@@ -1032,11 +1190,11 @@ $(function () {
         $("#dt_fecha_venta_desde_auditor_legalizado").val(sessionStorage.getItem('dt_fecha_venta_desde_auditor_Legalizado'));
     if (sessionStorage.getItem('dt_fecha_venta_hasta_auditor_legalizado') != null)
         $("#dt_fecha_venta_hasta_auditor_legalizado").val(sessionStorage.getItem('dt_fecha_venta_hasta_auditor_legalizado'));
-    if (sessionStorage.getItem('ddlEjecutivo_Auditoria_Legalizado')!=null)
+    if (sessionStorage.getItem('ddlEjecutivo_Auditoria_Legalizado') != null)
         metodos.CargaGrillaAuditorLegalizados(sessionStorage.getItem('ddlEjecutivo_Auditoria_Legalizado'), sessionStorage.getItem('ddlOficina_Auditoria_Legalizado'), sessionStorage.getItem('dt_fecha_venta_desde_auditor_Legalizado'), sessionStorage.getItem('dt_fecha_venta_hasta_auditor_legalizado'), 'Todos', '2')
 
     $("#ddlOficina_Auditoria_legalizado").on("change", function (e) {
-       
+
         if ($("#ddlOficina_Auditoria_legalizado").val() == "-1") {
             $("#ddlEjecutivo_Auditoria_legalizado").prop("disabled", true);
             $("#ddlEjecutivo_Auditoria_legalizado").html("")
@@ -1045,6 +1203,171 @@ $(function () {
             metodos.CargaComboejecutvoAuditoriaLegalizado(periodo, $("#ddlOficina_Auditoria_legalizado").val());
             $("#ddlEjecutivo_Auditoria_legalizado").prop("disabled", false);
         }
+
+    });
+
+
+
+
+    //*************************Tab Especialista***********************
+    if (getCookie('Oficina') == "457") {
+
+
+
+
+        if (sessionStorage.getItem('ddllOficinaEspecialista') != null)
+            $("#ddllOficinaEspecialista").val(sessionStorage.getItem('ddllOficinaEspecialista'));
+
+        if (sessionStorage.getItem('txtOfertaMcEspecialista') != null)
+            $("#txtOfertaMcEspecialista").val(sessionStorage.getItem('txtOfertaMcEspecialista'));
+
+        if (sessionStorage.getItem('ddlEstadosEspecialista') != null)
+            $("#ddlEstadosEspecialista").val(sessionStorage.getItem('ddlEstadosEspecialista'));
+
+        if (sessionStorage.getItem('dt_fecha_asignacion_especialista_desde') != null)
+            $("#dt_fecha_asignacion_especialista_desde").val(sessionStorage.getItem('dt_fecha_asignacion_especialista_desde'));
+
+        if (sessionStorage.getItem('dt_fecha_asignacion_especialista_hasta') != null)
+            $("#dt_fecha_asignacion_especialista_hasta").val(sessionStorage.getItem('dt_fecha_asignacion_especialista_hasta'));
+
+
+        if (sessionStorage.getItem('ddltipoDocEspecialista') != null)
+            $("#ddltipoDocEspecialista").val(sessionStorage.getItem('ddltipoDocEspecialista'));
+
+
+        if (sessionStorage.getItem('txtrutAfilEspecialista') != null)
+            $("#txtrutAfilEspecialista").val(sessionStorage.getItem('txtrutAfilEspecialista'));
+
+        if (sessionStorage.getItem('ddlZonaEspecialistaCurse') != null)
+            $("#ddlZonaEspecialistaCurse").val(sessionStorage.getItem('ddlZonaEspecialistaCurse'));
+        
+        if (sessionStorage.getItem('ddllOficinaEspecialistaCurse') != null)
+            $("#ddllOficinaEspecialistaCurse").val(sessionStorage.getItem('ddllOficinaEspecialistaCurse'));
+        
+        if (sessionStorage.getItem('ddlZonaEspecialistaPagadora') != null)
+            $("#ddlZonaEspecialistaPagadora").val(sessionStorage.getItem('ddlZonaEspecialistaPagadora'));
+
+        if (sessionStorage.getItem('ddllOficinaEspecialistaPagadora') != null)
+            $("#ddllOficinaEspecialistaPagadora").val(sessionStorage.getItem('ddllOficinaEspecialistaPagadora'));
+
+        metodos.CargarcomboZona();
+
+        $("#ddlZonaEspecialista").on("change", function (e) {
+          
+            if ($("#ddlZonaEspecialista").val() == "-1") {
+                $("#ddllOficinaEspecialista").prop("disabled", true);
+                $("#ddllOficinaEspecialista").html("")
+            }
+            else {
+                metodos.CargarComboOficinaZona($("#ddlZonaEspecialista").val());
+                $("#ddllOficinaEspecialista").prop("disabled", false);
+            }
+
+        });
+        $("#ddlZonaEspecialistaCurse").on("change", function (e) {
+
+            if ($("#ddlZonaEspecialistaCurse").val() == "-1") {
+                $("#ddllOficinaEspecialistaCurse").prop("disabled", true);
+                $("#ddllOficinaEspecialistaCurse").html("")
+            }
+            else {
+                metodos.CargarComboOficinaZonaCurse($("#ddlZonaEspecialistaCurse").val());
+                $("#ddllOficinaEspecialistaCurse").prop("disabled", false);
+            }
+
+        });
+        $("#ddlZonaEspecialistaPagadora").on("change", function (e) {
+
+            if ($("#ddlZonaEspecialistaPagadora").val() == "-1") {
+                $("#ddllOficinaEspecialistaPagadora").prop("disabled", true);
+                $("#ddllOficinaEspecialistaPagadora").html("")
+            }
+            else {
+                metodos.CargarComboOficinaZonaPagadora($("#ddlZonaEspecialistaPagadora").val());
+                $("#ddllOficinaEspecialistaPagadora").prop("disabled", false);
+            }
+
+        });
+    }
+
+
+    $('#btn_buscar_asignacion_especialista').on("click", function () {
+       
+        //if ($("#ddlZonaEspecialista").val() == "-1") {
+        //    $.niftyNoty({
+        //        type: 'danger',
+        //        message: '<strong>Error !!!</strong><li> Debe seleccionar Zona</li> ',
+        //        container: 'floating',
+        //        timer: 3000
+        //    });
+        //    return false;
+        //}
+       
+        sessionStorage.setItem('ddllOficinaEspecialista', $("#ddllOficinaEspecialista").val());
+        sessionStorage.setItem('txtOfertaMcEspecialista', $("#txtOfertaMcEspecialista").val());
+        sessionStorage.setItem('ddlEstadosEspecialista', $("#ddlEstadosEspecialista").val());
+        sessionStorage.setItem('dt_fecha_asignacion_especialista_desde', $("#dt_fecha_asignacion_especialista_desde").val());
+        sessionStorage.setItem('dt_fecha_asignacion_especialista_hasta', $("#dt_fecha_asignacion_especialista_hasta").val());
+        sessionStorage.setItem('ddltipoDocEspecialista', $("#ddltipoDocEspecialista").val());
+        sessionStorage.setItem('txtrutAfilEspecialista', $("#txtrutAfilEspecialista").val());
+        sessionStorage.setItem('ddlZonaEspecialista', $("#ddlZonaEspecialista").val());
+        sessionStorage.setItem('ddlZonaEspecialistaCurse', $("#ddlZonaEspecialistaCurse").val());
+        sessionStorage.setItem('ddllOficinaEspecialistaCurse', $("#ddllOficinaEspecialistaCurse").val());
+        sessionStorage.setItem('ddlZonaEspecialistaPagadora', $("#ddlZonaEspecialistaPagadora").val());
+        sessionStorage.setItem('ddllOficinaEspecialistaPagadora', $("#ddllOficinaEspecialistaPagadora").val());
+
+       
+        var Oficina;
+        var OficinaCurse;
+        var OficinaPagadora;
+        if ($("#ddllOficinaEspecialista").val() == null)
+            Oficina = "-1"
+        else
+            Oficina = $("#ddllOficinaEspecialista").val()
+
+        if ($("#ddllOficinaEspecialistaCurse").val() == null)
+            OficinaCurse = "-1"
+        else
+            OficinaCurse = $("#ddllOficinaEspecialistaCurse").val()
+
+
+        if ($("#ddllOficinaEspecialistaPagadora").val() == null)
+            OficinaPagadora = "-1"
+        else
+            OficinaPagadora = $("#ddllOficinaEspecialistaPagadora").val()
+
+        sessionStorage.setItem('Oficina', Oficina);
+        sessionStorage.setItem('OficinaCurse', OficinaCurse);
+        sessionStorage.setItem('OficinaPagadora', OficinaPagadora);
+
+        metodos.CargaGrillaEspecialista(Oficina, $("#txtOfertaMcEspecialista").val(), $("#ddlEstadosEspecialista").val(), $("#dt_fecha_asignacion_especialista_desde").val(), $("#dt_fecha_asignacion_especialista_hasta").val(), $("#ddltipoDocEspecialista").val(), $("#txtrutAfilEspecialista").val(), $("#ddlZonaEspecialista").val(), OficinaCurse, $("#ddlZonaEspecialistaCurse").val(), OficinaPagadora, $("#ddlZonaEspecialistaPagadora").val())
+    });
+
+    metodos.CargaGrillaEspecialista(sessionStorage.getItem("Oficina"), sessionStorage.getItem("txtOfertaMcEspecialista"), sessionStorage.getItem("ddlEstadosEspecialista"), sessionStorage.getItem("dt_fecha_asignacion_especialista_desde"), sessionStorage.getItem("dt_fecha_asignacion_especialista_hasta"), sessionStorage.getItem("ddltipoDocEspecialista"), sessionStorage.getItem("txtrutAfilEspecialista"), sessionStorage.getItem("ddlZonaEspecialista"), sessionStorage.getItem("OficinaCurse"), sessionStorage.getItem("ddlZonaEspecialistaCurse"), sessionStorage.getItem("OficinaPagadora"), sessionStorage.getItem("ddlZonaEspecialistaPagadora"))
+
+   
+    $('#btn-exportar-especialistas').click(function () {
+        var Oficina;
+        var OficinaCurse;
+        var OficinaPagadora;
+        if ($("#ddllOficinaEspecialista").val() == null)
+            Oficina = "-1"
+        else
+            Oficina = $("#ddllOficinaEspecialista").val()
+
+        if ($("#ddllOficinaEspecialistaCurse").val() == null)
+            OficinaCurse = "-1"
+        else
+            OficinaCurse = $("#ddllOficinaEspecialistaCurse").val()
+
+
+        if ($("#ddllOficinaEspecialistaPagadora").val() == null)
+            OficinaPagadora = "-1"
+        else
+            OficinaPagadora = $("#ddllOficinaEspecialistaPagadora").val()
+
+
+        location.href = BASE_URL + "/motor/api/digitalizacion/exportar-especialistas?CodOficina=" + Oficina + "&Oferta=" + $("#txtOfertaMcEspecialista").val() + "&Estado=" + $("#ddlEstadosEspecialista").val() + "&FechaDesde=" + $("#dt_fecha_asignacion_especialista_desde").val() + "&FechaHasta=" + $("#dt_fecha_asignacion_especialista_hasta").val() + "&tipo=" + $("#ddltipoDocEspecialista").val() + "&rut=" + $("#txtrutAfilEspecialista").val() + "&zona=" + $("#ddlZonaEspecialista").val() + "&OficinaCurse=" + OficinaCurse + "&ZonaCurse=" + $("#ddlZonaEspecialistaCurse").val() + "&OficinaPagadora=" + OficinaPagadora + "&ZonaPagadora=" + $("#ddlZonaEspecialistaPagadora").val()+" ";
 
     });
 

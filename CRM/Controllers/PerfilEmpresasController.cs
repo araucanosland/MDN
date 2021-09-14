@@ -24,18 +24,18 @@ namespace CRM.Controllers
         //[AuthorizationRequired]
         [HttpGet]
         [Route("obtener-cartera-empresa")]
-        public ICollection<CarteraEmpresasEntity> ObtenerCarteraEmpresa()
+        public ICollection<CarteraEmpresasEntity> ObtenerCarteraEmpresa(int Afiliado)
         {
             string token = ActionContext.Request.Headers.GetValues("Token").First();
-            return PerfilEmpresasDataAccess.ObtieneCarteraEmp(token);
+            return PerfilEmpresasDataAccess.ObtieneCarteraEmp(token,Afiliado);
         }
 
         [HttpGet]
         [Route("obtener-cartera-agente")]
-        public ICollection<CarteraEmpresasEntity> ObtenerCarteraAgente()
+        public ICollection<CarteraEmpresasEntity> ObtenerCarteraAgente(int Afiliado)
         {
             string token = ActionContext.Request.Headers.GetValues("Token").First();
-            return PerfilEmpresasDataAccess.ObtieneCarteraAgen(token);
+            return PerfilEmpresasDataAccess.ObtieneCarteraAgen(token,Afiliado);
         }
 
         [HttpGet]

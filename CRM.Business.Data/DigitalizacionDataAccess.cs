@@ -10,11 +10,124 @@ namespace CRM.Business.Data
     public class DigitalizacionDataAccess
     {
 
-        public static List<DigitalizacionEntity> ListaDigitalizacionMc(DateTime FechaVentaDesde, DateTime FechaVentaHasta, string RutEjecutivo,string Oferta)
+        public static List<DigitalizacionEntity> ListaLeadEspecialista(int  CodOficina, string Oferta, string Estado, DateTime FechaDesde, DateTime FechaHasta, int tipo, string rut, string Zona, int OficinaCurse, string ZonaCurse, int OficinaPagadora, string ZonaPagadora)
         {
             Parametros parametros = new Parametros()
             {
+
+                new Parametro("@CodOficina", CodOficina),
+                new Parametro("@Oferta", Oferta),
+                new Parametro("@Estado",Estado),
+                new Parametro("@FechaDesde",FechaDesde),
+                new Parametro("@FechaHasta",FechaHasta),
+                new Parametro("@tipo",tipo),
+                new Parametro("@rut",rut),
+                new Parametro("@Zona",Zona),
+                new Parametro("@OficinaCurse",OficinaCurse),
+                new Parametro("@ZonaCurse",ZonaCurse),
+                new Parametro("@OficinaPagadora",OficinaPagadora),
+                new Parametro("@ZonaPagadora",ZonaPagadora)
+            };
+
+            return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_lead_Especialista", parametros, ConstructorEspecialista);
+        }
+
+
+        public static List<DigitalizacionEntityXLS> ListaLeadEspecialistaxls(int CodOficina, string Oferta, string Estado, DateTime FechaDesde, DateTime FechaHasta, int tipo, string rut, string Zona, int OficinaCurse, string ZonaCurse, int OficinaPagadora, string ZonaPagadora)
+        {
+            Parametros parametros = new Parametros()
+            {
+
+                new Parametro("@CodOficina", CodOficina),
+                new Parametro("@Oferta", Oferta),
+                new Parametro("@Estado",Estado),
+                new Parametro("@FechaDesde",FechaDesde),
+                new Parametro("@FechaHasta",FechaHasta),
+                new Parametro("@tipo",tipo),
+                new Parametro("@rut",rut),
+                new Parametro("@Zona",Zona),
+                new Parametro("@OficinaCurse",OficinaCurse),
+                new Parametro("@ZonaCurse",ZonaCurse),
+                new Parametro("@OficinaPagadora",OficinaPagadora),
+                new Parametro("@ZonaPagadora",ZonaPagadora)
+            };
+
+
+
+
+            return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_lead_Especialista_xls", parametros, ConstructorEspecialistaXLS);
+        }
+
+        private static DigitalizacionEntity ConstructorEspecialista(DataRow row)
+        {
+
+            return new DigitalizacionEntity
+            {
+                Id = row["Id"] != DBNull.Value ? Convert.ToInt64(row["Id"]) : 0,
+                RutAfiliado = row["RutAfiliado"] != DBNull.Value ? row["RutAfiliado"].ToString() : string.Empty,
+                NombreAfiliado = row["NombreAfiliado"] != DBNull.Value ? row["NombreAfiliado"].ToString() : string.Empty,
+                Oferta = row["Oferta"] != DBNull.Value ? row["Oferta"].ToString() : string.Empty,
+                Folio = row["Folio"] != DBNull.Value ? row["Folio"].ToString() : string.Empty,
+                EstadoGestion = row["EstadoGestion"] != DBNull.Value ? row["EstadoGestion"].ToString() : string.Empty,
+                FechaVenta = row["FechaVenta"] != DBNull.Value ? Convert.ToDateTime(row["FechaVenta"]) : new DateTime(1900, 1, 1),
+                Tipo = row["Tipo"] != DBNull.Value ? Convert.ToInt32(row["Tipo"].ToString()) : 0,
+                Oficina = row["Oficina"] != DBNull.Value ? Convert.ToInt32(row["Oficina"].ToString()) : 0,
+                RutEjecutivo = row["RutEjecutivo"] != DBNull.Value ? row["RutEjecutivo"].ToString() : string.Empty,
+                FechaRegistro = row["FechaRegistro"] != DBNull.Value ? Convert.ToDateTime(row["FechaRegistro"]) : new DateTime(1900, 1, 1),
+                TipoDescripcion = row["TipoDocumento"] != DBNull.Value ? row["TipoDocumento"].ToString() : string.Empty,
+                FechaVentaString = row["FechaVentaString"] != DBNull.Value ? row["FechaVentaString"].ToString() : string.Empty,
+                FechaGestionString = row["FechaGestionString"] != DBNull.Value ? row["FechaGestionString"].ToString() : string.Empty,
+                NombreEjecutivo= row["NombreEjecutivo"] != DBNull.Value ? row["NombreEjecutivo"].ToString() : string.Empty,
+                zona= row["zona"] != DBNull.Value ? row["zona"].ToString() : string.Empty,
                
+                TipoDocumento = row["TipoDocumento"] != DBNull.Value ? row["TipoDocumento"].ToString() : string.Empty,
+                descripcionOficinaPagadora = row["OficinaPagadora"] != DBNull.Value ? row["OficinaPagadora"].ToString() : string.Empty,
+                descripcionOficinaCurse = row["OficinaCurse"] != DBNull.Value ? row["OficinaCurse"].ToString() : string.Empty,
+                descripcionOficinaAuditora = row["OficinaAuditora"] != DBNull.Value ? row["OficinaAuditora"].ToString() : string.Empty,
+
+            };
+
+
+        }
+
+        private static DigitalizacionEntityXLS ConstructorEspecialistaXLS(DataRow row)
+        {
+
+            return new DigitalizacionEntityXLS
+            {
+                RutAfiliado = row["RutAfiliado"] != DBNull.Value ? row["RutAfiliado"].ToString() : string.Empty,
+                NombreAfiliado = row["NombreAfiliado"] != DBNull.Value ? row["NombreAfiliado"].ToString() : string.Empty,
+                Oferta = row["Oferta"] != DBNull.Value ? row["Oferta"].ToString() : string.Empty,
+                Folio = row["Folio"] != DBNull.Value ? row["Folio"].ToString() : string.Empty,
+                EstadoGestion = row["EstadoGestion"] != DBNull.Value ? row["EstadoGestion"].ToString() : string.Empty,
+                RutEjecutivo = row["RutEjecutivo"] != DBNull.Value ? row["RutEjecutivo"].ToString() : string.Empty,
+                FechaVentaString = row["FechaVentaString"] != DBNull.Value ? row["FechaVentaString"].ToString() : string.Empty,
+                FechaGestionString = row["FechaGestionString"] != DBNull.Value ? row["FechaGestionString"].ToString() : string.Empty,
+                nombreEjecutivoAsignado = row["nombreEjecutivoAsignado"] != DBNull.Value ? row["nombreEjecutivoAsignado"].ToString() : string.Empty,
+                TipoDocumento = row["TipoDocumento"] != DBNull.Value ? row["TipoDocumento"].ToString() : string.Empty,
+                nombreEjecutivoGestion = row["nombreEjecutivoGestion"] != DBNull.Value ? row["nombreEjecutivoGestion"].ToString() : string.Empty,
+                descripcionOficinaPagadora = row["OficinaPagadora"] != DBNull.Value ? row["OficinaPagadora"].ToString() : string.Empty,
+                descripcionOficinaCurse = row["OficinaCurse"] != DBNull.Value ? row["OficinaCurse"].ToString() : string.Empty,
+                descripcionOficinaAuditora = row["OficinaAuditora"] != DBNull.Value ? row["OficinaAuditora"].ToString() : string.Empty,
+                descripcionZonaOficinaPagadora = row["ZonaPagadora"] != DBNull.Value ? row["ZonaPagadora"].ToString() : string.Empty,
+                descripcionZonaOficinaCurse = row["ZonaCurse"] != DBNull.Value ? row["ZonaCurse"].ToString() : string.Empty,
+                descripcionZonaOficinaAuditora = row["ZonaAuditora"] != DBNull.Value ? row["ZonaAuditora"].ToString() : string.Empty,
+                Responsable = row["Responsable"] != DBNull.Value ? row["Responsable"].ToString() : string.Empty,
+
+
+
+            };
+
+
+        }
+
+
+
+        public static List<DigitalizacionEntity> ListaDigitalizacionMc(DateTime FechaVentaDesde, DateTime FechaVentaHasta, string RutEjecutivo, string Oferta)
+        {
+            Parametros parametros = new Parametros()
+            {
+
                 new Parametro("@FechaVentaDesde", FechaVentaDesde),
                 new Parametro("@FechaVentaHasta", FechaVentaHasta),
                 new Parametro("@RutEjecutivo",RutEjecutivo),
@@ -26,7 +139,14 @@ namespace CRM.Business.Data
         }
 
 
+        private static OficinaDerivacionEntity ConstructorZona(DataRow row)
+        {
+            return new OficinaDerivacionEntity
+            {
 
+                Zona = row["zona"] != DBNull.Value ? row["zona"].ToString() : string.Empty,
+            };
+        }
 
         private static OficinaDerivacionEntity ConstructorOfiDerivacion(DataRow row)
         {
@@ -44,7 +164,24 @@ namespace CRM.Business.Data
             return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_Oficina_auditoria", ConstructorOfiDerivacion);
         }
 
-    
+        public static List<OficinaDerivacionEntity> ListarOficinaZona(string Zona)
+        {
+            Parametros parametros = new Parametros
+            {
+               new Parametro("@Zona",Zona),
+
+            };
+            //return DBHelper.InstanceReportes.ObtenerColeccion("negocios.spReporte_ListaPeriodos", ConstructorEntidad);
+            return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_Oficina_Especialista", parametros, ConstructorOfiDerivacion);
+        }
+
+        public static List<OficinaDerivacionEntity> ListarZona()
+        {
+            //return DBHelper.InstanceReportes.ObtenerColeccion("negocios.spReporte_ListaPeriodos", ConstructorEntidad);
+            return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_Zona", ConstructorZona);
+        }
+
+
 
         public static long ListaConteoMisReparos(int CodOficina, string RutEjecutivo, string Reparo)
         {
@@ -191,7 +328,7 @@ namespace CRM.Business.Data
         }
 
 
-        public static List<DigitalizacionEntity> ListaDigitalizacionAgente(string RutEjecutivo, DateTime FechaVentaDesde, DateTime FechaVentaHasta, int Oficina, int Tipo, string Filtro)
+        public static List<DigitalizacionEntity> ListaDigitalizacionAgente(string RutEjecutivo, DateTime FechaVentaDesde, DateTime FechaVentaHasta, int Oficina, int Tipo, string Filtro,string Rut, string Credito, string Oferta, string Estado)
         {
             Parametros parametros = new Parametros()
             {
@@ -200,11 +337,17 @@ namespace CRM.Business.Data
                 new Parametro("@FechaVentaHasta", FechaVentaHasta),
                 new Parametro("@CodOficina", Oficina),
                 new Parametro("@Tipo", Tipo),
-                new Parametro("@Filtro", Filtro)
+                new Parametro("@Filtro", Filtro),
+                new Parametro("@Rut",Rut), 
+                new Parametro("@Credito",Credito),
+                new Parametro("@Oferta",Oferta),
+                new Parametro("@Estado",Estado)
+
+
             };
 
 
-            return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_lead_Agente", parametros, ConstructorDigitalizacionAgente);
+            return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_lead_Agente_Nuevo", parametros, ConstructorDigitalizacionAgente);
         }
 
 
@@ -415,7 +558,7 @@ namespace CRM.Business.Data
             };
 
 
-            return DBHelper.InstanceNegocio.ObtenerEntidad("digit.Listar_gestion", parametros, ConstructorDigitalizacionGestion);
+            return DBHelper.InstanceNegocio.ObtenerEntidad("digit.Listar_gestion_Nuevo", parametros, ConstructorDigitalizacionGestion);
         }
 
 
@@ -453,13 +596,28 @@ namespace CRM.Business.Data
                 Cedula = row["RevisionCI"] != DBNull.Value ? Convert.ToInt32(row["RevisionCI"].ToString()) : 0,
                 OficinaPagadora = row["OficinaPagadora"] != DBNull.Value ? row["OficinaPagadora"].ToString() : string.Empty,
                 OficinaVenta = row["OficinaVenta"] != DBNull.Value ? row["OficinaVenta"].ToString() : string.Empty,
-                OficinaAuditora = row["OficinaAuditora"] != DBNull.Value ? row["OficinaAuditora"].ToString() : string.Empty
+                OficinaAuditora = row["OficinaAuditora"] != DBNull.Value ? row["OficinaAuditora"].ToString() : string.Empty,
+                ObsLiquidacionSueldo = row["ObsLiquidacionSueldo"] != DBNull.Value ? Convert.ToInt32(row["ObsLiquidacionSueldo"].ToString()) : 0,
+                ObsInformeCuotas = row["ObsInformeCuotas"] != DBNull.Value ? Convert.ToInt32(row["ObsInformeCuotas"].ToString()) : 0,
+                ObsSolicitudCredito = row["ObsSolicitudCredito"] != DBNull.Value ? Convert.ToInt32(row["ObsSolicitudCredito"].ToString()) : 0,
+                ObsCertificacion = row["ObsCertificacion"] != DBNull.Value ? Convert.ToInt32(row["ObsCertificacion"].ToString()) : 0,
+                ObsHojaResumen = row["ObsHojaResumen"] != DBNull.Value ? Convert.ToInt32(row["ObsHojaResumen"].ToString()) : 0,
+                ObsCompobanteDinero = row["ObsCompobanteDinero"] != DBNull.Value ? Convert.ToInt32(row["ObsCompobanteDinero"].ToString()) : 0,
+                ObsCheckListDigitalizacion = row["ObsCheckListDigitalizacion"] != DBNull.Value ? Convert.ToInt32(row["ObsCheckListDigitalizacion"].ToString()) : 0,
+                ObsInformacionAval = row["ObsInformacionAval"] != DBNull.Value ? Convert.ToInt32(row["ObsInformacionAval"].ToString()) : 0,
+                ObsAfecto15 = row["ObsAfecto15"] != DBNull.Value ? Convert.ToInt32(row["ObsAfecto15"].ToString()) : 0,
+                ObsSeguroDesgravamen = row["ObsSeguroDesgravamen"] != DBNull.Value ? Convert.ToInt32(row["ObsSeguroDesgravamen"].ToString()) : 0,
+                ObsSeguroCesantia = row["ObsSeguroCesantia"] != DBNull.Value ? Convert.ToInt32(row["ObsSeguroCesantia"].ToString()) : 0,
+                ObsPagare= row["ObsPagare"] != DBNull.Value ? Convert.ToInt32(row["ObsPagare"].ToString()) : 0,
+                ObsCI = row["ObsCI"] != DBNull.Value ? Convert.ToInt32(row["ObsCI"].ToString()) : 0,
+                Zona = row["Zona"] != DBNull.Value ? row["Zona"].ToString() : string.Empty,
+
             };
 
 
         }
 
-        public static List<DigitalizacionEntity> ListaDigitalizacionReparoAgente(string RutEjecutivo, DateTime FechaVentaDesde, DateTime FechaVentaHasta, int Oficina, int Tipo, string Filtro)
+        public static List<DigitalizacionEntity> ListaDigitalizacionReparoAgente(string RutEjecutivo, DateTime FechaVentaDesde, DateTime FechaVentaHasta, int Oficina, int Tipo, string Filtro, string Rut, string Credito, string Oferta, string Estado)
         {
             Parametros parametros = new Parametros()
             {
@@ -468,11 +626,15 @@ namespace CRM.Business.Data
                 new Parametro("@FechaVentaHasta", FechaVentaHasta),
                 new Parametro("@CodOficina", Oficina),
                 new Parametro("@Tipo", Tipo),
-                new Parametro("@Filtro", Filtro)
+                new Parametro("@Filtro", Filtro),
+                new Parametro("@Rut",Rut),
+                new Parametro("@Credito",Credito),
+                new Parametro("@Oferta",Oferta),
+                new Parametro("@Estado",Estado)
             };
 
 
-            return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_Reparos_Agente", parametros, ConstructorDigitalizacionAgente);
+            return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_Reparos_Agente_Nuevo", parametros, ConstructorDigitalizacionAgente);
         }
 
         public static List<DigitalizacionEntity> ListaDigitalizacionMisReparos(long Id, string Rut, string Credito, int Oficina, string RutEjecutivo, string Reparo)
@@ -491,7 +653,7 @@ namespace CRM.Business.Data
             return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_lead_MisReparos", parametros, ConstructorDigitalizacion);
         }
 
-        public static long Ingresar_Digitalizacion_Audtoria(long Id, int Tipo, int CodOficina, string RutEjecutivo,int auditor)
+        public static long Ingresar_Digitalizacion_Audtoria(long Id, int Tipo, int CodOficina, string RutEjecutivo, int auditor)
         {
 
 
@@ -503,19 +665,37 @@ namespace CRM.Business.Data
                 new Parametro("@RutEjecutivo",RutEjecutivo),
                  new Parametro("@Auditor",auditor)
             };
-            try
-            {
-                return DBHelper.InstanceNegocio.ObtenerEscalar<long>("digit.Ingresar_Lead_Gestion_MisReparos", parametros);
 
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
-
+            return DBHelper.InstanceNegocio.ObtenerEscalar<long>("digit.Ingresar_Lead_Gestion_MisReparos", parametros);
         }
+
+        public static long Ingresar_Digitalizacion_Observaciones(WebGestionDigitalizacion web)
+        {
+
+
+            Parametros parametros = new Parametros
+            {
+              new Parametro("@Id_gestion", web.Id_Gestion),
+              new Parametro("@ObsLiquidacionSueldo", web.ObsLiquidacionSueldo),
+              new Parametro("@ObsInformeCuotas", web.ObsInformeCuotas),
+              new Parametro("@ObsSolicitudCredito", web.ObsSolicitudCredito),
+              new Parametro("@ObsCertificacion", web.ObsCertificacion),
+              new Parametro("@ObsHojaResumen", web.ObsHojaResumen),
+              new Parametro("@ObsCompobanteDinero", web.ObsCompobanteDinero),
+              new Parametro("@ObsCheckListDigitalizacion", web.ObsCheckListDigitalizacion),
+              new Parametro("@ObsInformacionAval", web.ObsInformacionAval),
+              new Parametro("@ObsAfecto15", web.ObsAfecto15),
+              new Parametro("@ObsSeguroDesgravamen", web.ObsSeguroDesgravamen),
+              new Parametro("@ObsSeguroCesantia", web.ObsSeguroCesantia),
+              new Parametro("@ObsPagare", web.ObsPagare),
+              new Parametro("@ObsCI", web.ObsCI)
+
+
+            };
+
+            return DBHelper.InstanceNegocio.ObtenerEscalar<long>("digit.Ingresar_Lead_Gestion_Obervaciones", parametros);
+        }
+
 
     }
 }
