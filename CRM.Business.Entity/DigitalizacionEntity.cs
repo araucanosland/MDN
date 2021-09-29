@@ -28,7 +28,7 @@ namespace CRM.Business.Entity
         public int Oficina { get; set; }
         public int RutAfiliado { get; set; }
         public int Cargo { get; set; }
-        public int TipoEjecutivo { get; set; }
+        public string TipoEjecutivo { get; set; }
         public int ObsLiquidacionSueldo { get; set; }
         public int ObsInformeCuotas { get; set; }
         public int ObsSolicitudCredito { get; set; }

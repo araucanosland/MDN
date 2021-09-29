@@ -10,23 +10,77 @@ namespace CRM.Business.Data
     public class DigitalizacionDataAccess
     {
 
-        public static List<DigitalizacionEntity> ListaLeadEspecialista(int  CodOficina, string Oferta, string Estado, DateTime FechaDesde, DateTime FechaHasta, int tipo, string rut, string Zona, int OficinaCurse, string ZonaCurse, int OficinaPagadora, string ZonaPagadora)
+        public static List<DigitalizacionEntity> ListaLeadEspecialista(string  CodOficina, string Oferta, string Estado, DateTime FechaDesde, DateTime FechaHasta, string tipo, string rut, string Zona, string OficinaCurse, string ZonaCurse, string OficinaPagadora, string ZonaPagadora)
         {
+            int CodOficina_aux;
+            int tipo_aux;
+            int OficinaCurse_aux;
+            int OficinaPagadora_aux;
+            string Zona_aux;
+            string Zona_pagadora_aux;
+            string Zona_curse_aux;
+            string Estado_aux;
+
+
+            if (ZonaCurse == null)
+                Zona_curse_aux = "-2";
+            else
+                Zona_curse_aux = ZonaCurse;
+
+            if (ZonaPagadora == null)
+                Zona_pagadora_aux = "-2";
+            else
+                Zona_pagadora_aux = ZonaPagadora;
+
+            if (Zona == null)
+                Zona_aux = "-2";
+            else
+                Zona_aux = Zona;
+
+
+
+            if (Estado == null)
+                Estado_aux = "-2";
+            else
+                Estado_aux = Estado;
+
+            if (OficinaPagadora == null)
+                OficinaPagadora_aux = -1;
+            else
+                OficinaPagadora_aux = int.Parse(OficinaPagadora);
+
+            if (OficinaCurse == null)
+                OficinaCurse_aux = -1;
+            else
+                OficinaCurse_aux = int.Parse(OficinaCurse);
+
+
+            if (tipo == null)
+                tipo_aux = -1;
+            else
+                tipo_aux = int.Parse(tipo);
+
+            if (CodOficina == null)
+                CodOficina_aux = -1;
+            else
+                CodOficina_aux = int.Parse(CodOficina);
+
+
             Parametros parametros = new Parametros()
             {
 
-                new Parametro("@CodOficina", CodOficina),
+                new Parametro("@CodOficina", CodOficina_aux),
                 new Parametro("@Oferta", Oferta),
-                new Parametro("@Estado",Estado),
+                new Parametro("@Estado",Estado_aux),
                 new Parametro("@FechaDesde",FechaDesde),
                 new Parametro("@FechaHasta",FechaHasta),
-                new Parametro("@tipo",tipo),
+                new Parametro("@tipo",tipo_aux),
                 new Parametro("@rut",rut),
-                new Parametro("@Zona",Zona),
-                new Parametro("@OficinaCurse",OficinaCurse),
-                new Parametro("@ZonaCurse",ZonaCurse),
-                new Parametro("@OficinaPagadora",OficinaPagadora),
-                new Parametro("@ZonaPagadora",ZonaPagadora)
+                new Parametro("@Zona",Zona_aux),
+                new Parametro("@OficinaCurse",OficinaCurse_aux),
+                new Parametro("@ZonaCurse",Zona_curse_aux),
+                new Parametro("@OficinaPagadora",OficinaPagadora_aux),
+                new Parametro("@ZonaPagadora",Zona_pagadora_aux)
             };
 
             return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_lead_Especialista", parametros, ConstructorEspecialista);

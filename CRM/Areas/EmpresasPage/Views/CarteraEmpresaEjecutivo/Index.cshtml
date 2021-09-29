@@ -12,8 +12,6 @@
 <link href="~/Assets/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/fullcalendar/nifty-skin/fullcalendar-nifty.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
-<!--Switchery [ OPTIONAL ]-->
-<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
 
 <h1 id="titulo">Cartera Empresas Asignadas</h1>
 <div id="page-content">
@@ -30,7 +28,7 @@
                                 <a data-toggle="tab" href="#demo-lft-tab-1" aria-expanded="false" id="tab_Empresas" style="font-weight: bold;">Empresas Asignadas</a>
                             </li>
                             <li class="">
-                                <a data-toggle="tab" href="#demo-lft-tab-3" aria-expanded="false" id="tab_Contactabilidad" style="font-weight: bold;">Contactabilidad</a>
+                                <a data-toggle="tab" href="#demo-lft-tab-4" aria-expanded="false" id="tab_Contactabilidad" style="font-weight: bold;">Contactabilidad</a>
                             </li>
                         </ul>
                     </div>
@@ -40,17 +38,6 @@
                     <div class="tab-content">
                         <div id="demo-lft-tab-1" class="tab-pane fade ">
                             <div class="panel-body">
-                                <div class="filtros col-lg-12">
-
-                                    <div class="form-group col-lg-3">
-                                        <label class="control-label">Empresas Afiliadas</label>
-                                        <div class="">
-                                            No.  <input class="js-switch" type="checkbox" id="chkAfiliado" name="chkAfiliado" checked /> Si.
-                                        </div>
-                                    </div>
-
-
-                                </div>
                                 <table id="tablatree" class="table table-bordered table-hover toggle-circle table-striped">
                                     <thead>
                                         <tr>
@@ -104,7 +91,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="demo-lft-tab-3" class="tab-pane fade">
+                        <div id="demo-lft-tab-4" class="tab-pane fade">
                             @Html.Partial("../Contactabilidad/index")
                         </div>
 
@@ -960,7 +947,7 @@
     <script src="~/Assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
     <script src="~/Assets/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js"></script>
     <script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
-        <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+
     <script src="~/Assets/js.App/src/contactabilidad-empresa.js?g=@Guid.NewGuid().ToString()"></script>
 
     <script type="text/javascript">
@@ -980,10 +967,7 @@
         var cargador = {
             CargaDatosCateraAgente: function () {
                 $("#bdy_datos").html("");
-                var chkAfiliado = $('#chkAfiliado').is(':checked') ? '1' : '0';
-                $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtener-cartera-empresa", { Afiliado: chkAfiliado },function (menus) {
-                    debugger;
-                    if (menus.length > 0) {}
+                $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtener-cartera-empresa", function (menus) {
                     $.each(menus, function (i, e) {
 
                         console.log({ mgn: 'showing ID', e });
@@ -1019,15 +1003,15 @@
                                 )
                         }
                     });
-                   
+
                     $("#tablatree").bootstrapTable({
                         striped: true,
-                        pagination: false,
+                        pagination: true,
                         pageSize: 20,
                         pageList: [],
                         search: true,
                         showColumns: false,
-                        showRefresh: true,
+                        showRefresh: false,
                         sortable: true,
 
                     });
@@ -1220,21 +1204,6 @@
         }
 
         $(function () {
-
-
-            //------Switch ------------------
-            var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
-            elems.forEach(function (html) {
-                var switchery = new Switchery(html);
-            });
-
-            $("#chkAfiliado").on("change", function (e) {
-                debugger;
-                cargador.CargaDatosCateraAgente();
-
-
-            });
-
 
             $("#titulo").css('font-size', '22px').css('color', '#b3b3b3').css('margin-left', '20px')
             $('#ckCargaAfi').on('change', function () {
@@ -2033,77 +2002,77 @@
 
 
 
-        $('#demo-lg-modal-updateAnexo').on('show.bs.modal', function (event) {
-            var Anexo = $(event.relatedTarget);
-            var idAnexo = Anexo.data('idanexo')
-            $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-datos-anexo", {
-                IdEmpresa: idAnexo
-            }, function (respuesta) {
+    $('#demo-lg-modal-updateAnexo').on('show.bs.modal', function (event) {
+        var Anexo = $(event.relatedTarget);
+        var idAnexo = Anexo.data('idanexo')
+        $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-datos-anexo", {
+            IdEmpresa: idAnexo
+        }, function (respuesta) {
 
 
-                $("#txRutEmpUp").val(respuesta.RutEmpresa)
-                $("#slEmperesa_multiselectUp").val(respuesta.NombreEmpresa)
-                $('#anexoUp').val(respuesta.Anexo)
-                $('#nTrajadoresUp').val(respuesta.NumTrabajadores)
-                $('#direccionAnexoUp').val(respuesta.Direccion)
-                $('#slComuna_multiselectUp').val(respuesta.IdComuna).trigger('chosen:updated');
-                $('#ISeMPup').val(idAnexo)
-            });
-
+            $("#txRutEmpUp").val(respuesta.RutEmpresa)
+            $("#slEmperesa_multiselectUp").val(respuesta.NombreEmpresa)
+            $('#anexoUp').val(respuesta.Anexo)
+            $('#nTrajadoresUp').val(respuesta.NumTrabajadores)
+            $('#direccionAnexoUp').val(respuesta.Direccion)
+            $('#slComuna_multiselectUp').val(respuesta.IdComuna).trigger('chosen:updated');
+            $('#ISeMPup').val(idAnexo)
         });
+        
+    });
 
 
         $('#form_registro_anexoUp').bootstrapValidator({
-            excluded: [':disabled', ':not(:visible)'],
-            feedbackIcons: [],
-            fields: {
-                nTrajadoresUp: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Debe ingresar N° trabajadores'
-                        }
-                    }
-                },
-                slComuna_multiselectUp: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Debe seleccionar una comuna'
-                        }
-                    }
-                },
-                direccionAnexoUp: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Debe ingresar una dirección'
-                        }
-                    }
+    excluded: [':disabled', ':not(:visible)'],
+    feedbackIcons: [],
+    fields: {
+        nTrajadoresUp: {
+            validators: {
+                notEmpty: {
+                    message: 'Debe ingresar N° trabajadores'
                 }
             }
-        }).on('success.form.bv', function (e) {
-            e.preventDefault();
-            var $form = $(e.target);
-            var idcomuna = 0;
-            var objeto_envio_anexoUp = {
-                IdEmpresaAnexo: $('#ISeMPup').val(),
-                Anexo: $('#anexoUp').val(),
-                NumTrabajadores: $('#nTrajadoresUp').val(),
-                IdComuna: $('#slComuna_multiselectUp option:selected').val(),
-                NombreComuna: $('#slComuna_multiselectUp option:selected').text(),
-                Direccion: $('#direccionAnexoUp').val()
+        },
+        slComuna_multiselectUp: {
+            validators: {
+                notEmpty: {
+                    message: 'Debe seleccionar una comuna'
+                }
             }
-            $.SecPostJSON(BASE_URL + "/motor/api/perfil-empresas/actualiza-nuevo-anexo", objeto_envio_anexoUp, function (datos) {
-                $("#form_registro_anexoUp").bootstrapValidator('resetForm', true);
-                $('#demo-lg-modal-updateAnexo').modal('hide');
-                $.niftyNoty({
-                    type: 'success',
-                    icon: 'pli-like-2 icon-2x',
-                    message: 'Punto de Atención Actualizado Correctamente.',
-                    container: 'floating',
-                    timer: 5000
-                });
-
-            });
+        },
+        direccionAnexoUp: {
+            validators: {
+                notEmpty: {
+                    message: 'Debe ingresar una dirección'
+                }
+            }
+        }
+    }
+}).on('success.form.bv', function (e) {
+    e.preventDefault();
+    var $form = $(e.target);
+    var idcomuna = 0;
+    var objeto_envio_anexoUp = {
+        IdEmpresaAnexo: $('#ISeMPup').val(),
+        Anexo: $('#anexoUp').val(),
+        NumTrabajadores: $('#nTrajadoresUp').val(),
+        IdComuna: $('#slComuna_multiselectUp option:selected').val(),
+        NombreComuna: $('#slComuna_multiselectUp option:selected').text(),
+        Direccion: $('#direccionAnexoUp').val()
+    }
+    $.SecPostJSON(BASE_URL + "/motor/api/perfil-empresas/actualiza-nuevo-anexo", objeto_envio_anexoUp, function (datos) {
+        $("#form_registro_anexoUp").bootstrapValidator('resetForm', true);
+        $('#demo-lg-modal-updateAnexo').modal('hide');
+        $.niftyNoty({
+            type: 'success',
+            icon: 'pli-like-2 icon-2x',
+            message: 'Punto de Atención Actualizado Correctamente.',
+            container: 'floating',
+            timer: 5000
         });
+       
+    });
+});
 
 
     </script>

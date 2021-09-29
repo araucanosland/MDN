@@ -69,10 +69,20 @@ namespace CRM.Controllers
 
         [HttpGet]
         [Route("listar-Lead-Especialista")]
-        public List<DigitalizacionEntity> ListaLeadEspecialista(int CodOficina, string Oferta, string Estado, string FechaDesde, string FechaHasta, int tipo, string rut, string Zona, int OficinaCurse, string ZonaCurse, int OficinaPagadora, string ZonaPagadora)
+        public List<DigitalizacionEntity> ListaLeadEspecialista(string CodOficina, string Oferta, string Estado, string FechaDesde, string FechaHasta, string tipo, string rut, string Zona, string OficinaCurse, string ZonaCurse, string OficinaPagadora, string ZonaPagadora)
         {
-            DateTime elDiaDesde = Convert.ToDateTime(FechaDesde);
-            DateTime elDiahasta = Convert.ToDateTime(FechaHasta);
+            DateTime elDiaDesde;
+            DateTime elDiahasta;
+           if (FechaDesde==null)
+              elDiaDesde= Convert.ToDateTime((DateTime.Now.ToString("dd/MM/yyyy")));
+           else
+                elDiaDesde = Convert.ToDateTime(FechaDesde);
+
+            if (FechaHasta == null)
+                elDiahasta = Convert.ToDateTime((DateTime.Now.ToString("dd/MM/yyyy")));
+            else
+                elDiahasta = Convert.ToDateTime(FechaHasta);
+           
             return DigitalizacionDataAccess.ListaLeadEspecialista(CodOficina, Oferta, Estado, elDiaDesde, elDiahasta, tipo, rut, Zona, OficinaCurse, ZonaCurse, OficinaPagadora, ZonaPagadora);
 
         }

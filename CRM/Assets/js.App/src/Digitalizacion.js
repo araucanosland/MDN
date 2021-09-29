@@ -505,7 +505,7 @@ var metodos = {
         });
     },
     CargaGrillaEspecialista: function (OficinaAuditora, Oferta, Estado, FechaVentaDesde, FechaVentaHasta, Tipo, Rut, ZonaAuditora,OficinaCurse,ZonaCurse,OficinaPagadora,ZonaPagadora) {
-       
+
         $("#tblDigitalizacionAsignacionEspecialista").bootstrapTable('refresh', {
             url: '/motor/api/digitalizacion/listar-Lead-Especialista',
             query: {
@@ -873,7 +873,7 @@ $(function () {
     });
     asaignaDatos();
    
-    metodos.CargaGrillaAsginacion('01-01-2021', $("#dt_fecha_asignacion_hasta").val(), 'Filtro', $("#ddlejecutivoAsignacion").val(), 1, $("#ddlejecutivoAsignacion").val(), 1, $("#txtrutagenteDI").val(), $("#txtcreditoagenteDI").val(), $("#txtofertaagenteDI").val(), $("#ddlEstadosagenteDI").val(), 1)
+    metodos.CargaGrillaAsginacion('01-01-2021', $("#dt_fecha_asignacion_hasta").val(), 'Todos', $("#ddlejecutivoAsignacion").val(), 1, $("#ddlejecutivoAsignacion").val(), 1, $("#txtrutagenteDI").val(), $("#txtcreditoagenteDI").val(), $("#txtofertaagenteDI").val(), $("#ddlEstadosagenteDI").val(), 1)
 
 
     $('#btn_buscar_asignacionLegalizado').on("click", function () {
@@ -1021,6 +1021,7 @@ $(function () {
                 Cargo: getCookie("Cargo"),
                 TipoEjecutivo: 'EjecutivoAsignado'
             }
+            debugger;
             $.SecPostJSON(BASE_URL + "/motor/api/digitalizacion/Actualizar-Gestion-Ejecutivo", WebGestionDigitalizacion, function (respuesta) {
 
                 if (respuesta.estado = 'OK') {
