@@ -967,7 +967,8 @@
         var cargador = {
             CargaDatosCateraAgente: function () {
                 $("#bdy_datos").html("");
-                $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtener-cartera-empresa", function (menus) {
+                debugger;
+                $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtener-cartera-empresa-todos", function (menus) {
                     $.each(menus, function (i, e) {
 
                         console.log({ mgn: 'showing ID', e });

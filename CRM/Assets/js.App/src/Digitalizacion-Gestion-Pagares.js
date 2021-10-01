@@ -2,7 +2,7 @@
 var metodos = {
     cargaGestion: function (Id) {
         $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-gestion", { Id: Id }, function (response) {
-            debugger;
+          
             $("#AfiliadoRut").val(response.RutAfiliado);
             $("#AfiNombres").val(response.NombreAfiliado)
             $("#folio").val(response.Folio)
@@ -21,7 +21,7 @@ var metodos = {
             }
 
             var Audit = httpGet("aud");
-            debugger;
+           
             if (Audit == "none") {
                 if (response.Id_Estado == 0) { //Sin gestión
                     $("#divddlPagareObs").css("display", "none");
@@ -67,7 +67,7 @@ var metodos = {
                 }
 
                 $("#divZonaOficinaPagadora").css("display", "block")
-                debugger;
+              
                 $("#ZonaOficinaPagadora").val(response.Zona);
 
                 if ($('#ddPagare').val() == 1 || $('#ddPagare').val() == 4) {
@@ -555,7 +555,7 @@ $(function () {
                 ObsPagare: $("#ddlPagareObs").val(),
                 ObsCI: $("#ddlcedulaObs").val(),
             }
-            debugger;
+       
             $.SecPostJSON(BASE_URL + "/motor/api/digitalizacion/guardar-gestion-misreparos", WebGestionDigitalizacion, function (respuesta) {
 
                 if (respuesta.estado = 'OK') {

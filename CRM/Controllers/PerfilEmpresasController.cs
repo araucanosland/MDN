@@ -31,6 +31,15 @@ namespace CRM.Controllers
         }
 
         [HttpGet]
+        [Route("obtener-cartera-empresa-todos")]
+        public ICollection<CarteraEmpresasEntity> ObtenerCarteraEmpresa()
+        {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            return PerfilEmpresasDataAccess.ObtieneCarteraEmpTodos(token);
+        }
+
+
+        [HttpGet]
         [Route("obtener-cartera-agente")]
         public ICollection<CarteraEmpresasEntity> ObtenerCarteraAgente(int Afiliado)
         {

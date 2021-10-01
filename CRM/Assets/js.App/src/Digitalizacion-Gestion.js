@@ -2,7 +2,7 @@
 var metodos = {
     cargaGestion: function (Id) {
         $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-gestion", { Id: Id }, function (response) {
-            debugger;
+        
             $("#AfiliadoRut").val(response.RutAfiliado);
             $("#AfiNombres").val(response.NombreAfiliado)
             $("#folio").val(response.Folio)
@@ -29,7 +29,7 @@ var metodos = {
                 $("#lblEstado").text("Reparado").css("color", "red")
             }
             var Audit = httpGet("aud");
-            debugger;
+           
 
             if (Audit == "none") {
 

@@ -29,7 +29,7 @@ var appSeguroContactabilidadFiltros = new Vue({
     methods: {
 
         obtenerCompania() {
-            debugger;
+           
             let codigo_sucursal_asociada = getCookie('Oficina')
             fetch(`http://${motor_api_server}:4002/compania/lista-compania/${codigo_sucursal_asociada}`, {
                 method: 'GET',
@@ -39,11 +39,11 @@ var appSeguroContactabilidadFiltros = new Vue({
                 .then(response => response.json())
         
                 .then(companiaJSON => {
-                    debugger;
+                    
                     let a = companiaJSON;
                     this.filtros.companias = companiaJSON;
                 }).then(x => {
-                    debugger;
+                   
                     $('#dllNombreEmpresa').chosen({ width: '100%' });
                     $("#dllNombreEmpresa").chosen().change(function (e) {
                         appSeguroContactabilidadFiltros.eventoCambiaEstado($(e.target).val());

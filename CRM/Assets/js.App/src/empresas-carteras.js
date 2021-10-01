@@ -26,7 +26,7 @@ var cargador = {
     CargaDatosCateraAgente: function () {
         $("#bdy_datos").html("");
         var chkAfiliado = $('#chkAfiliado').is(':checked') ? '1' : '0';
-        debugger;
+
             $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtener-cartera-agente", { Afiliado:chkAfiliado}, function (menus) {
             var iterador = ""
             $.each(menus, function (i, e) {

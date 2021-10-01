@@ -1021,7 +1021,7 @@ $(function () {
                 Cargo: getCookie("Cargo"),
                 TipoEjecutivo: 'EjecutivoAsignado'
             }
-            debugger;
+       
             $.SecPostJSON(BASE_URL + "/motor/api/digitalizacion/Actualizar-Gestion-Ejecutivo", WebGestionDigitalizacion, function (respuesta) {
 
                 if (respuesta.estado = 'OK') {
