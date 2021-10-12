@@ -2708,15 +2708,12 @@ var appPensionadosProspectos = new Vue({
                 marca: 'prospecto',
                 periodo: periodo,
             };
-
-            fetch(`http://${motor_api_server}:4002/pensionados/busca-prospecto/${rut_}`, {
-                method: 'GET',
-                mode: 'cors',
-                cache: 'default'
-            })
-                .then(response => response.json())
-                .then(datos => {
-                    if (datos.length > 0) {
+            debugger;
+            $.SecGetJSON(BASE_URL + "/motor/api/pensionados/busca_prospecto", { rut: rut_, periodo: periodo }, function (response) {
+                debugger;
+               /* $.each(response, function (i, datos) {*/
+                    if (response.id != 0) {
+                        debugger;
                         $(Swal.fire({
                             title: 'Pensionado ya existe en campaña',
                             icon: 'error',
@@ -2753,7 +2750,54 @@ var appPensionadosProspectos = new Vue({
                             $('#slEjePorsp').val('');
                         });
                     }
-                })
+                /*});*/
+            });
+
+            //fetch(`http://${motor_api_server}:4002/pensionados/busca-prospecto/${rut_}`, {
+            //    method: 'GET',
+            //    mode: 'cors',
+            //    cache: 'default'
+            //})
+            //    .then(response => response.json())
+            //    .then(datos => {
+            //        if (datos.length > 0) {
+            //            $(Swal.fire({
+            //                title: 'Pensionado ya existe en campaña',
+            //                icon: 'error',
+            //                confirmButtonText: 'OK'
+            //            }));
+            //            return false;
+            //        }
+            //        else {
+            //            fetch(`http://${motor_api_server}:4002/pensionados/guarda-prospecto`, {
+            //                method: 'POST',
+            //                body: JSON.stringify(formData),
+            //                headers: {
+            //                    'Content-Type': 'application/json',
+            //                    'Token': getCookie('Token')
+            //                }
+            //            }).then(async (response) => {
+            //                if (!response.ok) {
+            //                    $(Swal.fire({
+            //                        title: 'Error al guardar pensionado',
+            //                        icon: 'error',
+            //                        confirmButtonText: 'OK'
+            //                    }));
+            //                    return false;
+            //                }
+            //                Swal.fire({
+            //                    title: 'Se ingreso correctamente!',
+            //                    icon: 'success',
+            //                    confirmButtonText: 'OK'
+            //                })
+            //                $('#txtRutPorsp').val('');
+            //                $('#txtNombrePorsp').val('');
+            //                $('#txtCelularPorsp').val('');
+            //                $('#slComunaPorsp').val('');
+            //                $('#slEjePorsp').val('');
+            //            });
+            //        }
+            //    })
         },
     }
 });

@@ -721,5 +721,25 @@ namespace CRM.Business.Data
             return DBHelper.InstanceNegocio.EjecutarProcedimiento("pensionados.Guardar_Gestion_Pensionado", pram);
         }
 
+        public static LeadPensionados Busca_Prospecto(string rut, int periodo)
+        {
+            Parametros parametros = new Parametros()
+            {
+                new Parametro("@rut",rut),
+                new Parametro("@periodo",periodo),
+            };
+            return DBHelper.InstanceNegocio.ObtenerEntidad("pensionados.Busca_Prospectos", parametros, gestionprospecto);
+
+        }
+        private static Entity.LeadPensionados gestionprospecto(DataRow row)
+        {
+            return new Entity.LeadPensionados
+            {
+                id = row["id"] != DBNull.Value ? Convert.ToInt32(row["id"]) : 0,
+                rut = row["rut"] != DBNull.Value ? row["rut"].ToString() : string.Empty,
+                prioridad = row["prioridad"] != DBNull.Value ? Convert.ToInt32(row["prioridad"]) : 0,
+            };
+        }
+        
     }
 }

@@ -204,6 +204,14 @@ namespace CRM.Controllers
             List<PensionadosUnoPorcientoBeneficiosEntity> beneficio = PensionadosDataAccess.Listar_Beneficios(idbeneficio);
             return beneficio;
         }
+
+        [HttpGet]
+        [Route("busca_prospecto")]
+        public LeadPensionados Busca_Prospecto(string rut, int periodo)
+        {
+            LeadPensionados prospecto = PensionadosDataAccess.Busca_Prospecto(rut, periodo);
+            return prospecto;
+        }
         
 
     }

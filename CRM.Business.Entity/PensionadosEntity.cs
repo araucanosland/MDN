@@ -314,4 +314,25 @@ namespace CRM.Business.Entity
         public string Epp { get; set; }
 
     }
+
+    public class LeadPensionados
+    {
+        public int id { get; set; }
+        public string rut { get; set; }
+        public int prioridad { get; set; }
+        public string comuna { get; set; }
+        public string celular { get; set; }
+        public string fonoParticular { get; set; }
+        public string ejecutivoAsignado { get; set; }
+        public int oficina { get; set; }
+        public string direccion { get; set; }
+        public int numeroDireccion { get; set; }
+        public string correo { get; set; }
+        public string codigo { get; set; }
+        public string region { get; set; }
+        public string nombre { get; set; }
+        public int estadoGestion { get; set; }
+        public string marca { get; set; }
+        public int periodo { get; set; }
+    }
 }
