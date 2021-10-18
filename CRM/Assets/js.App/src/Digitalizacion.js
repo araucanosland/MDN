@@ -1026,24 +1026,23 @@ $(function () {
 
                 if (respuesta.estado = 'OK') {
 
-                    metodos.CargaGrillaAsginacion("01-01-2021", sessionStorage.getItem('dt_fecha_asignacion_hasta'), 'Filtro', sessionStorage.getItem('ddlejecutivoAsignacion'), (sessionStorage.getItem('ddlTipo_asignacion')), $("#txtrutagenteDI").val(), $("#txtcreditoagenteDI").val(), $("#txtofertaagenteDI").val(), $("#ddlEstadosagenteDI").val(), 2);
-
-                    if (result['length'] - 1 == i + 1) {
-
-                        $.niftyNoty({
-                            type: 'success',
-                            message: '<strong>Exito<strong><li>Ejecutivo Asignado Correctamente</li>',
-                            container: '#panelejecutivo',
-                            timer: 3000
-                        });
-
-                    }
+                    metodos.CargaGrillaAsginacion("01-01-2021", sessionStorage.getItem('dt_fecha_asignacion_hasta'), 'Filtro', $("#ddlejecutivoAsignacion").val(), 1, $("#txtrutagenteDI").val(), $("#txtcreditoagenteDI").val(), $("#txtofertaagenteDI").val(), $("#ddlEstadosagenteDI").val(), 2);
+                    debugger;
+                    
 
                 }
 
             })
 
         })
+        $("#modal_asigna_digitalizacion").modal('hide');
+        $.niftyNoty({
+            type: 'success',
+            message: '<strong>Exito<strong><li>Ejecutivo Asignado Correctamente</li>',
+            container: 'floating',
+            timer: 3000
+        });
+
     });
 
     //*********************************** Agente Digitalizacion Legles
@@ -1070,26 +1069,26 @@ $(function () {
                 Cargo: getCookie("Cargo"),
                 TipoEjecutivo: 'EjecutivoAsignado'
             }
+            debugger;
             $.SecPostJSON(BASE_URL + "/motor/api/digitalizacion/Actualizar-Gestion-Ejecutivo", WebGestionDigitalizacion, function (respuesta) {
-
+                debugger;
                 if (respuesta.estado = 'OK') {
-
+                 
                     metodos.CargaGrillaAsginacionLeaglizacion("01-01-2021", $("#dt_fecha_asignacion_hastaLegalizado").val(), 'Filtro', $("#ddlejecutivoAsignacionLegalizado").val(), 2, $("#txtrutagenteDL").val(), $("#txtcreditoagenteDL").val(), $("#txtofertaagenteDL").val(), $("#ddlEstadosagenteDL").val(), 6)
 
-
-                    $.niftyNoty({
-                        type: 'success',
-                        message: '<strong>Exito<strong><li>Ejecutivo Asignado Correctamente</li>',
-                        container: '#panelejecutivoLegallizacion',
-                        timer: 3000
-                    });
-
-
+               
                 }
 
             })
 
         })
+        $("#modal_asigna_digitalizacion_Legalizacion").modal('hide');
+        $.niftyNoty({
+            type: 'success',
+            message: '<strong>Exito<strong><li>Ejecutivo Asignado Correctamente</li>',
+            container: 'floating',
+            timer: 3000
+        });
     });
 
 

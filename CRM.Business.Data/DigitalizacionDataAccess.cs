@@ -10,7 +10,7 @@ namespace CRM.Business.Data
     public class DigitalizacionDataAccess
     {
 
-        public static List<DigitalizacionEntity> ListaLeadEspecialista(string  CodOficina, string Oferta, string Estado, DateTime FechaDesde, DateTime FechaHasta, string tipo, string rut, string Zona, string OficinaCurse, string ZonaCurse, string OficinaPagadora, string ZonaPagadora)
+        public static List<DigitalizacionEntity> ListaLeadEspecialista(string CodOficina, string Oferta, string Estado, DateTime FechaDesde, DateTime FechaHasta, string tipo, string rut, string Zona, string OficinaCurse, string ZonaCurse, string OficinaPagadora, string ZonaPagadora)
         {
             int CodOficina_aux;
             int tipo_aux;
@@ -131,9 +131,9 @@ namespace CRM.Business.Data
                 TipoDescripcion = row["TipoDocumento"] != DBNull.Value ? row["TipoDocumento"].ToString() : string.Empty,
                 FechaVentaString = row["FechaVentaString"] != DBNull.Value ? row["FechaVentaString"].ToString() : string.Empty,
                 FechaGestionString = row["FechaGestionString"] != DBNull.Value ? row["FechaGestionString"].ToString() : string.Empty,
-                NombreEjecutivo= row["NombreEjecutivo"] != DBNull.Value ? row["NombreEjecutivo"].ToString() : string.Empty,
-                zona= row["zona"] != DBNull.Value ? row["zona"].ToString() : string.Empty,
-               
+                NombreEjecutivo = row["NombreEjecutivo"] != DBNull.Value ? row["NombreEjecutivo"].ToString() : string.Empty,
+                zona = row["zona"] != DBNull.Value ? row["zona"].ToString() : string.Empty,
+
                 TipoDocumento = row["TipoDocumento"] != DBNull.Value ? row["TipoDocumento"].ToString() : string.Empty,
                 descripcionOficinaPagadora = row["OficinaPagadora"] != DBNull.Value ? row["OficinaPagadora"].ToString() : string.Empty,
                 descripcionOficinaCurse = row["OficinaCurse"] != DBNull.Value ? row["OficinaCurse"].ToString() : string.Empty,
@@ -382,7 +382,7 @@ namespace CRM.Business.Data
         }
 
 
-        public static List<DigitalizacionEntity> ListaDigitalizacionAgente(string RutEjecutivo, DateTime FechaVentaDesde, DateTime FechaVentaHasta, int Oficina, int Tipo, string Filtro,string Rut, string Credito, string Oferta, string Estado)
+        public static List<DigitalizacionEntity> ListaDigitalizacionAgente(string RutEjecutivo, DateTime FechaVentaDesde, DateTime FechaVentaHasta, int Oficina, int Tipo, string Filtro, string Rut, string Credito, string Oferta, string Estado)
         {
             Parametros parametros = new Parametros()
             {
@@ -392,16 +392,23 @@ namespace CRM.Business.Data
                 new Parametro("@CodOficina", Oficina),
                 new Parametro("@Tipo", Tipo),
                 new Parametro("@Filtro", Filtro),
-                new Parametro("@Rut",Rut), 
+                new Parametro("@Rut",Rut),
                 new Parametro("@Credito",Credito),
                 new Parametro("@Oferta",Oferta),
                 new Parametro("@Estado",Estado)
 
 
             };
+            try
+            {
+                return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_lead_Agente_Nuevo", parametros, ConstructorDigitalizacionAgente);
+            }
+            catch (Exception ex)
+            {
 
+                throw ex;
+            }
 
-            return DBHelper.InstanceNegocio.ObtenerColeccion("digit.Listar_lead_Agente_Nuevo", parametros, ConstructorDigitalizacionAgente);
         }
 
 
@@ -430,25 +437,33 @@ namespace CRM.Business.Data
 
         private static DigitalizacionEntity ConstructorDigitalizacionAgente(DataRow row)
         {
-
-            return new DigitalizacionEntity
+            try
             {
-                Id = row["Id"] != DBNull.Value ? Convert.ToInt64(row["Id"]) : 0,
-                RutAfiliado = row["RutAfiliado"] != DBNull.Value ? row["RutAfiliado"].ToString() : string.Empty,
-                NombreAfiliado = row["NombreAfiliado"] != DBNull.Value ? row["NombreAfiliado"].ToString() : string.Empty,
-                Oferta = row["Oferta"] != DBNull.Value ? row["Oferta"].ToString() : string.Empty,
-                Folio = row["Folio"] != DBNull.Value ? row["Folio"].ToString() : string.Empty,
-                EstadoGestion = row["EstadoGestion"] != DBNull.Value ? row["EstadoGestion"].ToString() : string.Empty,
-                FechaVenta = row["FechaVenta"] != DBNull.Value ? Convert.ToDateTime(row["FechaVenta"]) : new DateTime(1900, 1, 1),
-                Tipo = row["Tipo"] != DBNull.Value ? Convert.ToInt32(row["Tipo"].ToString()) : 0,
-                Oficina = row["Oficina"] != DBNull.Value ? Convert.ToInt32(row["Oficina"].ToString()) : 0,
-                RutEjecutivo = row["RutEjecutivo"] != DBNull.Value ? row["RutEjecutivo"].ToString() : string.Empty,
-                FechaRegistro = row["FechaRegistro"] != DBNull.Value ? Convert.ToDateTime(row["FechaRegistro"]) : new DateTime(1900, 1, 1),
-                TipoDescripcion = row["TipoDocumento"] != DBNull.Value ? row["TipoDocumento"].ToString() : string.Empty,
-                RutejecutivoAgente = row["RutEjecutivoAsignacion"] != DBNull.Value ? row["RutEjecutivoAsignacion"].ToString() : string.Empty,
-                NombreEjecutivo = row["NombreEjecutivo"] != DBNull.Value ? row["NombreEjecutivo"].ToString() : string.Empty,
+                return new DigitalizacionEntity
+                {
+                    Id = row["Id"] != DBNull.Value ? Convert.ToInt64(row["Id"]) : 0,
+                    RutAfiliado = row["RutAfiliado"] != DBNull.Value ? row["RutAfiliado"].ToString() : string.Empty,
+                    NombreAfiliado = row["NombreAfiliado"] != DBNull.Value ? row["NombreAfiliado"].ToString() : string.Empty,
+                    Oferta = row["Oferta"] != DBNull.Value ? row["Oferta"].ToString() : string.Empty,
+                    Folio = row["Folio"] != DBNull.Value ? row["Folio"].ToString() : string.Empty,
+                    EstadoGestion = row["EstadoGestion"] != DBNull.Value ? row["EstadoGestion"].ToString() : string.Empty,
+                    FechaVenta = row["FechaVenta"] != DBNull.Value ? Convert.ToDateTime(row["FechaVenta"]) : new DateTime(1900, 1, 1),
+                    Tipo = row["Tipo"] != DBNull.Value ? Convert.ToInt32(row["Tipo"].ToString()) : 0,
+                    Oficina = row["Oficina"] != DBNull.Value ? Convert.ToInt32(row["Oficina"].ToString()) : 0,
+                    RutEjecutivo = row["RutEjecutivo"] != DBNull.Value ? row["RutEjecutivo"].ToString() : string.Empty,
+                    FechaRegistro = row["FechaRegistro"] != DBNull.Value ? Convert.ToDateTime(row["FechaRegistro"]) : new DateTime(1900, 1, 1),
+                    TipoDescripcion = row["TipoDocumento"] != DBNull.Value ? row["TipoDocumento"].ToString() : string.Empty,
+                    RutejecutivoAgente = row["RutEjecutivoAsignacion"] != DBNull.Value ? row["RutEjecutivoAsignacion"].ToString() : string.Empty,
+                    NombreEjecutivo = row["NombreEjecutivo"] != DBNull.Value ? row["NombreEjecutivo"].ToString() : string.Empty,
 
-            };
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw ex ;
+            }
+            
 
 
         }
@@ -662,7 +677,7 @@ namespace CRM.Business.Data
                 ObsAfecto15 = row["ObsAfecto15"] != DBNull.Value ? Convert.ToInt32(row["ObsAfecto15"].ToString()) : 0,
                 ObsSeguroDesgravamen = row["ObsSeguroDesgravamen"] != DBNull.Value ? Convert.ToInt32(row["ObsSeguroDesgravamen"].ToString()) : 0,
                 ObsSeguroCesantia = row["ObsSeguroCesantia"] != DBNull.Value ? Convert.ToInt32(row["ObsSeguroCesantia"].ToString()) : 0,
-                ObsPagare= row["ObsPagare"] != DBNull.Value ? Convert.ToInt32(row["ObsPagare"].ToString()) : 0,
+                ObsPagare = row["ObsPagare"] != DBNull.Value ? Convert.ToInt32(row["ObsPagare"].ToString()) : 0,
                 ObsCI = row["ObsCI"] != DBNull.Value ? Convert.ToInt32(row["ObsCI"].ToString()) : 0,
                 Zona = row["Zona"] != DBNull.Value ? row["Zona"].ToString() : string.Empty,
 
