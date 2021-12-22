@@ -8,7 +8,7 @@
 <link href="~/Assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
-
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/fullcalendar/nifty-skin/fullcalendar-nifty.min.css" rel="stylesheet">
 
@@ -130,6 +130,9 @@
                             </li>
                             <li class="">
                                 <a data-toggle="tab" href="#demo-lft-tab-5" aria-expanded="false" id="tab_Licencias" style="font-weight: bold;">Licencias Medicas</a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#demo-lft-tab-6" aria-expanded="false" id="tab_VidaSana" style="font-weight: bold;">Vida Sana</a>
                             </li>
 
                         </ul>
@@ -321,6 +324,52 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!---Vida Sana-->
+                        <div id="demo-lft-tab-6" class="tab-pane fade">
+                            <div class="panel-body">
+                                <div class="panel panel-bordered-primary" style="border-color: #e6e6e6; border-radius: 5px;">
+                                    <div class="panel-body" >
+                                        <div class="row">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title" style="font-size: 14px;">Gestión Vida Sana</h3>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="btn-gestion-VidaSana">Agregar Gestión</button>
+                                                </div>
+                                            </div>
+
+                                            <table id="demo-foo-filtering_Vidasana" class="table table-bordered table-hover toggle-circle" data-page-size="20">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-toggle="true">Fecha Gestión</th>
+                                                        <th data-toggle="true">Etapa</th>
+                                                        <th data-hide="phone">Resultado</th>
+                                                        <th data-hide="phone">Próxima Gestión</th>
+                                                        <th data-hide="phone" style="width:40%;">Observaciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="bdy_datos_vidasana"></tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="10">
+                                                            <div class="text-left">
+                                                                <label id="cantLMindex" class="control-label" style="display:none"></label>
+                                                            </div>
+                                                            <div class="text-right">
+                                                                <ul class="pagination"></ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+
                                         </div>
                                     </div>
                                 </div>
@@ -789,7 +838,7 @@
                                 </div>
                             </div>
 
-                         
+
 
                             <div id="dzMain" class="dropzone demo-dropzone" style="display:none;">
                                 <div class="dz-default dz-message">
@@ -1312,6 +1361,65 @@
     </div>
 </div>
 
+
+
+
+
+@*MODAL DE VIDA SANA*@
+<div id="modal-Vida-sana" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-hidden="true">
+    <input type="hidden" id="hdnIdPadre" />
+    <input type="hidden" id="hdnpopup" />
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title"><i class="demo-psi-building icon-lg" style="margin-left: 10px;"></i> Etapa  <label id="lbletapaActual">    </label> </h4>
+            </div>
+            <form id="form_registro">
+                <div class="panel-body" id="pnlBodyVidaSana">
+
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Estado Gestión</label>
+                            <select class="form-control" id="ddlsubEstados" name="ddlsubEstados"></select>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3" id="divproxgestion" style="display:none">
+                        <div class="form-group">
+                            <label class="control-label">Fecha Próxima Gestión</label>
+                            <div id="index-dp-component">
+                                <div class="input-group date">
+                                    <input type="text" class="form-control" id="dt_fecha_prox_gestion" name="dt_fecha_prox_gestion">
+                                    <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row mar-top docs-obervacion">
+                        <div class="col-md-12">
+                            <label for="comentarios">Comentarios</label>
+                            <textarea id="Obervaciones" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                    <button type="button" class="btn btn-primary" id="bt_guardargestion_Vidasana">Guardar</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
 <style>
 
     #overlay {
@@ -1340,9 +1448,11 @@
     }
 </style>
 @section script{
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
 
     <script src="~/Assets/js.App/ficha-empresa.min.js"></script>
-    <script src="~/Assets/js.App/src/ficha-empresa.js"></script>
+    <script src="~/Assets/js.App/src/ficha-empresa.js?g=@Guid.NewGuid().ToString()"></script>
 
 }
 

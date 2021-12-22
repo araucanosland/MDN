@@ -16,6 +16,7 @@ namespace CRM.Areas.AppPage.Controllers
         }
         public ActionResult Index()
         {
+
             return View();
         }
         public ActionResult Gestion()

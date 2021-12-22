@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CRM.Business.Entity
 {
@@ -93,8 +89,27 @@ namespace CRM.Business.Entity
         public string Direccion { get; set; }
         public int TotalAsignados { get; set; }
         public int EsMatriz { get; set; }
-        
+
     }
+
+    public class GestionVidaSana
+    {
+        public int IdEmpresAnexo { get; set; }
+        public DateTime FechaGestion { get; set; }
+        public int IdEtapa { get; set; }
+        public int IdSubEtapa { get; set; }
+        public string ProxGestion { get; set; }
+        public string Observaciones { get; set; }
+        public string RutEjecutivo { get; set; }
+        public int PadreId { get; set; }
+        public int Agendar { get; set; }
+        public int ProxEtapa { get; set; }
+        public string DescripcionEstado { get; set; }
+        public string NombrePadre { get; set; }
+        public string Descripcionsubestado { get; set; }
+        public DateTime ProxGestionDt { get; set; }
+    }
+
 
     public class AsignacionAnexoEmpresa
     {

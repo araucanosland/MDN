@@ -1,3 +1,143 @@
+
+$.fn.datepicker.dates['es'] = {
+    days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+    daysShort: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
+    daysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"],
+    months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+    monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+    today: "Hoy",
+    clear: "Borrar",
+    format: "dd/mm/yyyy",
+    titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+    weekStart: 1
+};
+
+
+var metodos = {
+
+    CargaGrillaVidaSana: function (IdEmpresaAnexo) {
+       
+        $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtener-gestion-vidaSana", { IdEmpresaAnexo: IdEmpresaAnexo }, function (response) {
+            $("#bdy_datos_vidasana").html("");
+            $("#cantLMindex").html('');
+            var total = 0;
+
+            $.each(response, function (i, e) {
+                debugger;
+                var $wrapper = (`<tr>
+                <td>${e.FechaGestion.toFecha()}</td>
+                <td>${e.DescripcionEstado}</td>
+                <td>${e.Descripcionsubestado}</td>`);
+                if (e.ProxGestionDt == '1900-01-01T00:00:00') {
+                    $wrapper = $wrapper + (`<td></td>`);
+                } else {
+                    $wrapper = $wrapper + (`<td>${e.ProxGestionDt.toFecha()}</td>`);
+                }
+                $wrapper = $wrapper + (`
+                
+                <td>${e.Observaciones}</td>
+                    </tr>            `);
+
+                $("#bdy_datos_vidasana").append($wrapper);
+                total++;
+
+            });
+            $("#cantLMindex").html("Cantidad de Registros " + total);
+            $("#cantLMindex").show();
+        });
+    },
+    ObtieneObjetoVidaSana: function (IdEmpresaAnexo) {
+       
+        $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtener-gestion-vidaSana", { IdEmpresaAnexo: IdEmpresaAnexo }, function (response) {
+
+          
+            
+            if (response.length == 0)//no existen datos 
+            {
+
+                $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtener-estadogestion-vidaSanaID", { idestado: 1 }, function (response) {
+                   
+                    $("#lbletapaActual").text(response[0].NombrePadre);
+                    $("#hdnIdPadre").val(response[0].PadreId);
+                    $("#ddlsubEstados").html("");
+
+                    $.each(response, function (i, estado) {
+
+                        $("#ddlsubEstados").append($("<option>").val(estado.IdEtapa).html(estado.DescripcionEstado));
+
+                    });
+                });
+            }
+            else
+            {
+                
+                var max = response.length-1;
+                if (response[0].ProxEtapa == 1) {
+                    $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtener-estadogestion-vidaSanaID", { idestado: 1 }, function (response) {
+
+                        $("#lbletapaActual").text(response[0].NombrePadre);
+                        $("#hdnIdPadre").val(response[0].PadreId);
+                      
+                            $("#ddlsubEstados").html("");
+
+                            $.each(response, function (i, estado) {
+
+                                $("#ddlsubEstados").append($("<option>").val(estado.IdEtapa).html(estado.DescripcionEstado));
+
+                            });
+                           
+                        
+                    });
+                }
+
+                if (response[0].ProxEtapa == 2) {
+                    $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtener-estadogestion-vidaSanaID", { idestado: 2 }, function (response) {
+
+                        $("#lbletapaActual").text(response[0].NombrePadre);
+                        $("#hdnIdPadre").val(response[0].PadreId);
+
+                        $("#ddlsubEstados").html("");
+
+                        $.each(response, function (i, estado) {
+
+                            $("#ddlsubEstados").append($("<option>").val(estado.IdEtapa).html(estado.DescripcionEstado));
+
+                        });
+
+
+                    });
+                }
+                if (response[0].ProxEtapa == 3) {
+                    $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtener-estadogestion-vidaSanaID", { idestado: 3 }, function (response) {
+
+                        $("#lbletapaActual").text(response[0].NombrePadre);
+                        $("#hdnIdPadre").val(response[0].PadreId);
+
+                        $("#ddlsubEstados").html("");
+
+                        $.each(response, function (i, estado) {
+
+                            $("#ddlsubEstados").append($("<option>").val(estado.IdEtapa).html(estado.DescripcionEstado));
+
+                        });
+
+
+                    });
+                }
+
+
+
+
+            }
+
+        });
+    }
+
+
+}
+
+
+
 var rutE = httpGet('rutEmp');
 var valida = httpGet('validador');
 var ID = httpGet('Id');
@@ -65,6 +205,7 @@ $(function () {
     $('#dateTimeDiaria').timepicker();
     $('#dateTimeSemanal').timepicker();
     $('#dateTimeMensual').timepicker();
+
     $('#demo-dp-component .input-group.date').datepicker({
         format: "dd-mm-yyyy",
         autoclose: true,
@@ -72,7 +213,71 @@ $(function () {
     }).datepicker("setDate", new Date());
 });
 
+//---------------------Tab Vida Sana
+var hoy = new Date();
+var d = hoy.getDate().toString().paddingLeft("00") + "-" + (hoy.getMonth() + 1).toString().paddingLeft("00") + "-" + hoy.getFullYear().toString();
+$("#dt_fecha_prox_gestion").val(d)
 
+metodos.CargaGrillaVidaSana(idEmpresa);
+
+$("#btn-gestion-VidaSana").on("click", function () {
+    $('#divproxgestion').css("display", "none");
+    $('#Obervaciones').val('');
+   
+    metodos.ObtieneObjetoVidaSana(idEmpresa);
+    $('#modal-Vida-sana').modal('show');
+});
+
+
+$('#ddlsubEstados').on('change', function (event) {
+    if ($('#ddlsubEstados').val() == 13 || $('#ddlsubEstados').val() == 22) {
+        $('#divproxgestion').css("display", "block");
+    }
+    else {
+        $('#divproxgestion').css("display", "none");
+    }
+});
+$("#bt_guardargestion_Vidasana").on("click", function () {
+
+    var GestionVidaSana = {
+        IdEmpresAnexo: idEmpresa
+        , IdEtapa: $("#hdnIdPadre").val()
+        , IdSubEtapa: $('#ddlsubEstados').val()
+        , ProxGestion: $('#dt_fecha_prox_gestion').val()
+        , Observaciones: $('#Obervaciones').val()
+        , RutEjecutivo: getCookie("Rut")
+
+    }
+   
+    $.SecPostJSON(BASE_URL + "/motor/api/perfil-empresas/guardar-gestion-vidaSana", GestionVidaSana, function (respuesta) {
+
+        if (respuesta.estado = 'OK') {
+            $.niftyNoty({
+                type: 'success',
+                container: '#pnlBodyVidaSana',
+                html: '<strong>Correcto</strong><li>Datos Guardados Correctamente!!!</li>',
+                focus: false,
+                timer: 5000
+            });
+            metodos.CargaGrillaVidaSana(idEmpresa);
+        }
+        else {
+            $.niftyNoty({
+                type: 'danger',
+                message: '<strong>Error al guardar </strong>',
+                container: '#pnlBodyVidaSana',
+                timer: 5000
+            });
+        }
+
+
+    });
+
+});
+
+
+
+//-----------------------------------
 
 var rutEmpresa = 0;
 if (rutE != "" && rutE != 'undefined' && rutE != null) {
@@ -322,7 +527,7 @@ $('#form_registro_anexo').bootstrapValidator({
         IdComuna: $('#slComuna_multiselect option:selected').val(),
         NombreComuna: $('#slComuna_multiselect option:selected').text(),
         Direccion: $('#direccionAnexo').val(),
-        EsMatriz:$('#Matriz').val()
+        EsMatriz: $('#Matriz').val()
     }
     $.SecPostJSON(BASE_URL + "/motor/api/perfil-empresas/ingresa-nuevo-anexo", objeto_envio_anexo, function (datos) {
         $("#form_registro_anexo").bootstrapValidator('resetForm', true);
@@ -832,7 +1037,7 @@ var cargador = {
                 //
                 //    elim = "";
                 //}
-                
+
 
                 $("#tbdyAnexo")
                     .append(
@@ -1138,7 +1343,7 @@ $(function () {
         }, function (respuesta) {
 
 
-            
+
             $("#txRutEmpUp").val(respuesta.RutEmpresa)
             $("#slEmperesa_multiselectUp").val(respuesta.NombreEmpresa)
             $('#anexoUp').val(respuesta.Anexo)
@@ -1851,4 +2056,11 @@ $('#modal-licencia_medica').on('show.bs.modal', function (event) {
         $("#divLicPendientes").css('display', 'block');
         $("#divLicDisponible").css('display', 'none');
     }
+});
+$('#index-dp-component .input-group.date').datepicker({
+    autoclose: true,
+    format: 'dd-mm-yyyy',
+    language: "es",
+     todayHighlight: true,
+  
 });

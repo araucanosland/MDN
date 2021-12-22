@@ -21,6 +21,48 @@ namespace CRM.Controllers
     [RoutePrefix("api/perfil-empresas")]
     public class PerfilEmpresasController : ApiController
     {
+        [AuthorizationRequired]
+        [HttpPost]
+        [Route("guardar-gestion-vidaSana")]
+        public ResultadoBase GuardarGestionVidaSana(GestionVidaSana gestionVidaSana)
+        {
+            try
+            {
+                DateTime ProxGesDt = new DateTime();
+                if (gestionVidaSana.ProxGestion==null)
+                    ProxGesDt = Convert.ToDateTime("01-01-1900");
+                else
+                    ProxGesDt = Convert.ToDateTime(gestionVidaSana.ProxGestion);
+                gestionVidaSana.ProxGestionDt = ProxGesDt;
+                PerfilEmpresasDataAccess.IngresoGestionVidaSana(gestionVidaSana);
+                return new ResultadoBase() { Estado = "OK", Mensaje = "Se creo gestión Correctamente" };
+            }
+            catch (Exception ex)
+            {
+                return new ResultadoBase() { Estado = "ERR", Mensaje = "Error al gestionar: " + ex.Message, Objeto = ex };
+            }
+        }
+
+        [HttpGet]
+        [Route("obtener-gestion-vidaSana")]
+        public ICollection<GestionVidaSana> ObtenerGestionVidaSana(int idEmpresaAnexo)
+        {
+            
+            return PerfilEmpresasDataAccess.ObtenerGestionVidaSana(idEmpresaAnexo);
+        }
+
+        [HttpGet]
+        [Route("obtener-estadogestion-vidaSanaID")]
+        public List<GestionVidaSana> ObtenerEstadoGestionVidaSanaID(int idestado)
+        {
+
+            return PerfilEmpresasDataAccess.ObtenerEstadoGestionVidaSanaID(idestado);
+        }
+
+
+
+
+
         //[AuthorizationRequired]
         [HttpGet]
         [Route("obtener-cartera-empresa")]

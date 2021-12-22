@@ -1,8 +1,9 @@
 ﻿window.Auditor = ""
+window.EstadoEsp = ""
 var metodos = {
     cargaGestion: function (Id) {
         $.SecGetJSON(BASE_URL + "/motor/api/digitalizacion/listar-gestion", { Id: Id }, function (response) {
-          
+
             $("#AfiliadoRut").val(response.RutAfiliado);
             $("#AfiNombres").val(response.NombreAfiliado)
             $("#folio").val(response.Folio)
@@ -21,7 +22,7 @@ var metodos = {
             }
 
             var Audit = httpGet("aud");
-           
+
             if (Audit == "none") {
                 if (response.Id_Estado == 0) { //Sin gestión
                     $("#divddlPagareObs").css("display", "none");
@@ -67,7 +68,7 @@ var metodos = {
                 }
 
                 $("#divZonaOficinaPagadora").css("display", "block")
-              
+
                 $("#ZonaOficinaPagadora").val(response.Zona);
 
                 if ($('#ddPagare').val() == 1 || $('#ddPagare').val() == 4) {
@@ -76,22 +77,28 @@ var metodos = {
                 if ($('#ddlcedula').val() == 1 || $('#ddlcedula').val() == 4) {
                     $("#divCI").hide();
                 }
-               
+
                 $("#ddlPagareObs").val(response.ObsPagare)
                 $("#ddlcedulaObs").val(response.ObsCI)
             }
 
             if (Audit == "3sp3c1l1st4") {
-                $("#ddPagare").prop("disabled", true)
-                $("#ddlcedula").prop("disabled", true)
+                debugger;
+                $("#ddPagare").prop("disabled", false)
+                $("#ddlcedula").prop("disabled", false)
+                $("#ddlPagareObs").css("display", "none");
+                $("#ddlcedulaObs").css("display", "none");
                 $("#ddlPagareObs").prop("disabled", true)
                 $("#ddlcedulaObs").prop("disabled", true)
+                $("#ddlcedulaObs").val(response.ObsCI);
+                $("#ddlPagareObs").val(response.ObsPagare);
                 if (Auditor == 2) {
                     $("#OficinaAuditora").val("División Riesgo Crédito")
                 }
 
 
                 if (response.EstadoGestion == "Sin gestión") { //Sin gestión
+                    EstadoEsp = "Sin gestión";
                     $("#divLiquidacionObs").css("display", "none");
                     $("#divinformecuotasObs").css("display", "none");
                     $("#divsolicitudcreditoObs").css("display", "none");
@@ -119,6 +126,7 @@ var metodos = {
 
 
                 if (response.EstadoGestion == "Reparado") {
+                    EstadoEsp = "Reparado";
                     $("#divLiquidacionObs").css("display", "none")
                     $("#ddlLiquidacionObs").prop("disabled", true)
                     $("#ddlLiquidacionObs").val(response.ObsLiquidacionSueldo)
@@ -218,6 +226,18 @@ var metodos = {
 
 
                 if (response.EstadoGestion == "Corregido") {
+                    EstadoEsp = "Corregido";
+
+
+                    $("#ddPagare").prop("disabled", false)
+                    $("#ddlcedula").prop("disabled", false)
+                    $("#ddlPagareObs").css("display", "block");
+                    $("#ddlcedulaObs").css("display", "block");
+                    $("#ddlPagareObs").prop("disabled", true)
+                    $("#ddlcedulaObs").prop("disabled", true)
+
+
+
                     $("#divLiquidacionObs").css("display", "none")
                     $("#ddlLiquidacionObs").prop("disabled", true)
                     $("#ddlLiquidacionObs").val(response.ObsLiquidacionSueldo)
@@ -317,6 +337,7 @@ var metodos = {
 
                 if (response.EstadoGestion == "Aprobado") {
                     { // Aprobado
+                        EstadoEsp = "Aprobado";
                         $("#divLiquidacionObs").css("display", "block")
                         $("#ddlLiquidacionObs").prop("disabled", true)
                         $("#ddlLiquidacion").prop("disabled", true)
@@ -376,11 +397,11 @@ var metodos = {
 
 
                     }
-                    $('#btn-guardar').css('display', 'none')
+                    //   $('#btn-guardar').css('display', 'none')
                 }
 
 
-                $('#btn-guardar').css('display', 'none')
+                //  $('#btn-guardar').css('display', 'none')
 
             }
 
@@ -555,7 +576,7 @@ $(function () {
                 ObsPagare: $("#ddlPagareObs").val(),
                 ObsCI: $("#ddlcedulaObs").val(),
             }
-       
+
             $.SecPostJSON(BASE_URL + "/motor/api/digitalizacion/guardar-gestion-misreparos", WebGestionDigitalizacion, function (respuesta) {
 
                 if (respuesta.estado = 'OK') {
@@ -568,6 +589,61 @@ $(function () {
                         onHidden: function () {
                             location.href = '/motor/App/Digitalizacion';
                         }
+                    });
+                }
+                else {
+                    $.niftyNoty({
+                        type: 'danger',
+                        message: '<strong>Error al guardar </strong>',
+                        container: 'floating',
+                        timer: 5000
+                    });
+                }
+
+
+            });
+
+        }
+
+        if (Audit == "3sp3c1l1st4") {
+            debugger;
+
+            if ($('#ddPagare').val() == "0" || $("#ddlcedula").val() == "0") {
+                $.niftyNoty({
+                    type: 'danger',
+                    message: '<strong>Error </strong> <li>Debe seleccionar estado de documento</l>i',
+                    container: 'floating',
+                    timer: 5000
+                });
+                return false;
+            }
+            var gestion = "";
+            if ($("#lblEstado").text() == "Aprobado") {
+                gestion = 1;
+            }
+            else {
+                gestion = -1;
+            }
+            var WebGestionDigitalizacion = {
+                Id_lead: Id_Lead,
+                Id_Estado: estadoAprobado,
+                Auditor: 1,
+                RutEjecutivo: getCookie("Rut"),
+                Tipo_Gestion: gestion,
+                Pagare: $("#ddPagare").val(),
+                Cedula: $("#ddlcedula").val(),
+
+            }
+
+            $.SecPostJSON(BASE_URL + "/motor/api/digitalizacion/guardar-gestion-pagare", WebGestionDigitalizacion, function (respuesta) {
+
+                if (respuesta.estado = 'OK') {
+                    $.niftyNoty({
+                        type: 'success',
+                        container: 'floating',
+                        html: '<strong>Correcto</strong><li>Datos Guardados Correctamente!!!</li>',
+                        focus: false,
+                        timer: 5000
                     });
                 }
                 else {

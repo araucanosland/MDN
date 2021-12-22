@@ -1,18 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CRM.Business.Entity;
-using System.Data;
-using CDK.Data;
+﻿using CDK.Data;
 using CDK.Integration;
+using CRM.Business.Entity;
+using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace CRM.Business.Data
 {
     public static class PerfilEmpresasDataAccess
     {
 
+        public static List<GestionVidaSana> ObtenerEstadoGestionVidaSanaID(int idestado)
+        {
+            Parametros pram = new Parametros
+            {
+
+                new Parametro("@id_estado", idestado),
+            };
+            return DBHelper.InstanceCRM.ObtenerColeccion("carteras.spMotorCartera_VidaSana_ListarEstadosGestionID", pram, ListarEstadoGestionVidaSana);
+        }
+
+        public static ICollection<GestionVidaSana> ObtenerGestionVidaSana(int idEmpresaAnexo)
+        {
+            Parametros pram = new Parametros
+            {
+
+                new Parametro("@IdEmpresAnexo", idEmpresaAnexo),
+            };
+            return DBHelper.InstanceCRM.ObtenerColeccion("carteras.spMotorCartera_VidaSana_ListarGestion", pram, ListarGestionVidaSana);
+        }
+
+        public static int IngresoGestionVidaSana(GestionVidaSana gestionVidaSana)
+        {
+            Parametros pram = new Parametros
+            {
+             new Parametro("@IdEmpresAnexo",gestionVidaSana.IdEmpresAnexo),
+             new Parametro("@IdEtapa",gestionVidaSana.IdEtapa),
+             new Parametro("@IdSubEtapa",gestionVidaSana.IdSubEtapa),
+             new Parametro("@ProxGestion",gestionVidaSana.ProxGestionDt),
+             new Parametro("@Observaciones",gestionVidaSana.Observaciones),
+             new Parametro("@RutEjecutivo",gestionVidaSana.RutEjecutivo)
+            };
+            return DBHelper.InstanceCRM.ObtenerEscalar<int>("carteras.spMotorCartera_VidaSana_IngresarGestion", pram);
+        }
 
         public static List<CarteraEmpresasEntity> ObtieneCarteraEmpTodos(string token)
         {
@@ -24,7 +54,7 @@ namespace CRM.Business.Data
         }
 
 
-        public static List<CarteraEmpresasEntity> ObtieneCarteraEmp(string token,int Afiliado)
+        public static List<CarteraEmpresasEntity> ObtieneCarteraEmp(string token, int Afiliado)
         {
             Parametros pram = new Parametros
             {
@@ -35,7 +65,7 @@ namespace CRM.Business.Data
         }
 
 
-        public static List<CarteraEmpresasEntity> ObtieneCarteraAgen(string token,int Afiliado)
+        public static List<CarteraEmpresasEntity> ObtieneCarteraAgen(string token, int Afiliado)
         {
             Parametros pram = new Parametros
             {
@@ -122,7 +152,7 @@ namespace CRM.Business.Data
         }
 
 
-        public static int InsertaNuevoAnexo(string Token, string RutEmpresa, string NombreEmpresa, string Anexo, int NumTrabajadores, int IdComuna, string NombreComuna, string Direccion,int esMatriz)
+        public static int InsertaNuevoAnexo(string Token, string RutEmpresa, string NombreEmpresa, string Anexo, int NumTrabajadores, int IdComuna, string NombreComuna, string Direccion, int esMatriz)
         {
             Parametros parametros = new Parametros
             {
@@ -163,7 +193,7 @@ namespace CRM.Business.Data
         }
 
 
-        public static int ActualizaAnexo(int IdEmpresaAnexo, string Anexo, int NumTrabajadores, int IdComuna, string NombreComuna, string Direccion,int esMatriz)
+        public static int ActualizaAnexo(int IdEmpresaAnexo, string Anexo, int NumTrabajadores, int IdComuna, string NombreComuna, string Direccion, int esMatriz)
         {
             Parametros parametros = new Parametros
             {
@@ -574,7 +604,7 @@ namespace CRM.Business.Data
             return DBHelper.InstanceCRM.ObtenerEntidad("carteras.spMotorCartera_Lista_Detalle_Mantencion_Gestion_idGestion", prm, ListaMantGestionDetalle);
 
         }
-        
+
         public static List<AfiliadoOficinaEntity> ObtieneAfiliadoSuc(string RutEmpresa)
         {
             Parametro prm = new Parametro("@RUT_EMPRESA", RutEmpresa);
@@ -942,6 +972,37 @@ namespace CRM.Business.Data
             };
         }
 
+
+
+        private static GestionVidaSana ListarGestionVidaSana(DataRow row)
+        {
+            return new GestionVidaSana
+            {
+                IdEmpresAnexo = row["IdEmpresAnexo"] != DBNull.Value ? Convert.ToInt32(row["IdEmpresAnexo"]) : 0,
+                FechaGestion = row["FechaGestion"] != DBNull.Value ? Convert.ToDateTime(row["FechaGestion"]) : DateTime.MinValue,
+                IdEtapa = row["IdEtapa"] != DBNull.Value ? Convert.ToInt32(row["IdEtapa"]) : 0,
+                IdSubEtapa = row["IdSubEtapa"] != DBNull.Value ? Convert.ToInt32(row["IdSubEtapa"]) : 0,
+                ProxGestionDt = row["ProxGestion"] != DBNull.Value ? Convert.ToDateTime(row["ProxGestion"]) : DateTime.MinValue,
+                Observaciones = row["Observaciones"] != DBNull.Value ? row["Observaciones"].ToString() : string.Empty,
+                RutEjecutivo = row["RutEjecutivo"] != DBNull.Value ? row["RutEjecutivo"].ToString() : string.Empty,
+                Descripcionsubestado= row["Descripcion_subestado"] != DBNull.Value ? row["Descripcion_subestado"].ToString() : string.Empty,
+                DescripcionEstado = row["Descripcion_Estado"] != DBNull.Value ? row["Descripcion_Estado"].ToString() : string.Empty,
+                ProxEtapa = row["ProxEtapa"] != DBNull.Value ? Convert.ToInt32(row["ProxEtapa"]) : 0,
+            };
+        }
+
+        private static GestionVidaSana ListarEstadoGestionVidaSana(DataRow row)
+        {
+            return new GestionVidaSana
+            {
+                IdEtapa = row["IdEtapa"] != DBNull.Value ? Convert.ToInt32(row["IdEtapa"]) : 0,
+                DescripcionEstado = row["Descripcion_Estado"] != DBNull.Value ? row["Descripcion_Estado"].ToString() : string.Empty,
+                PadreId = row["PadreId"] != DBNull.Value ? Convert.ToInt32(row["PadreId"]) : 0,
+                Agendar = row["Agendar"] != DBNull.Value ? Convert.ToInt32(row["Agendar"]) : 0,
+                ProxEtapa = row["PadreId"] != DBNull.Value ? Convert.ToInt32(row["ProxEtapa"]) : 0,
+                NombrePadre = row["NombrePadre"] != DBNull.Value ? row["NombrePadre"].ToString() : string.Empty,
+            };
+        }
 
 
     }

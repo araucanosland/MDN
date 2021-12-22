@@ -420,6 +420,7 @@
     <Content Include="Assets\js.App\src\Digitalizacion.js" />
     <Content Include="Assets\js.App\src\distribucion-wapp.js" />
     <Content Include="Assets\js.App\src\dotacion-asignable.js" />
+    <Content Include="Assets\js.App\src\Empresa-VidaSana.js" />
     <Content Include="Assets\js.App\src\empresas.incorporaciones.prospectos-visados.reasignacion.js" />
     <Content Include="Assets\js.App\src\empresas.incorporaciones.prospectos-visados.js" />
     <Content Include="Assets\js.App\src\empresas-carteras.js" />

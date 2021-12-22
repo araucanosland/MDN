@@ -286,7 +286,7 @@ namespace CRM.Controllers
             {
 
                 var x = ex.Message.Split(';');
-                return new ResultadoBase() { Estado = "ERR", Mensaje = x[1], Objeto = x[0] };
+                return new ResultadoBase() { Estado = "ERR", Mensaje = x[1], Objeto = x[0]};
             }
 
         }
