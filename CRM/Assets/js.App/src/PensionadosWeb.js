@@ -81,14 +81,15 @@ $.fn.datepicker.dates['es'] = {
 
 var metodos = {
 
-    CargaGrilla: function (rut, epp, estado) {
+    CargaGrilla: function (rut, epp, estado, rutEjecutivo) {
 
         $("#tblAsigPen").bootstrapTable('refresh', {
             url: '/motor/api/pensionados/listar-pensionados_uno_Porciento',
             query: {
                 rut: rut,
                 epp: epp,
-                estado_id: estado
+                estado_id: estado,
+                rutEjecutivo: rutEjecutivo
             }
         });
     },
@@ -224,7 +225,7 @@ $(function () {
     $('#btn_buscar_pensionado').on("click", function () {
 
 
-        metodos.CargaGrilla($("#txtRutPen").val(), $("#dllEppPen").val(), $("#dllEstadoGestion").val());
+        metodos.CargaGrilla($("#txtRutPen").val(), $("#dllEppPen").val(), $("#dllEstadoGestion").val(), getCookie('Rut'));
 
     });
 
@@ -342,6 +343,8 @@ $(function () {
                 });
                 $('#btn-guardar').prop('disabled', true);
                 metodos.CargaHistorialGestPensionados($('#Pen_rut').val());
+                metodos.CargaGrilla($("#txtRutPen").val(), $("#dllEppPen").val(), $("#dllEstadoGestion").val(), getCookie('Rut'));
+
             }
             else {
                 $.niftyNoty({
@@ -351,8 +354,7 @@ $(function () {
                     timer: 5000
                 });
             }
-            metodos.CargaGrilla($("#txtRutPen").val(), $("#dllEppPen").val(), $("#dllEstadoGestion").val());
-            $('#penObservacion').val("");
+                $('#penObservacion').val("");
             $('#ModaldllEstadoGestion').val(0);
             $('#ModaldllSubEstadoGestion').prop('disabled', true);
             $('#ModaldllSubEstadoGestion').val('');

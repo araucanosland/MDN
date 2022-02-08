@@ -527,15 +527,16 @@ namespace CRM.Business.Data
         #endregion
 
 
-        public static List<PensionadosUnoPorcientoEntity> ListaPensionadosUnoPorciento(string rut, string epp, int estado_id)
+        public static List<PensionadosUnoPorcientoEntity> ListaPensionadosUnoPorciento(string rut, string epp, int estado_id,string rutEjecutivo)
         {
             Parametros parametros = new Parametros()
             {
                 new Parametro("@RutAfiliado",rut),
                 new Parametro("@Epp",epp),
                 new Parametro("@Estado_id",estado_id),
+                new Parametro("@rutEjecutivo",rutEjecutivo),
             };
-            return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_Lead_Uno_Porciento", parametros, UnoPorciento);
+            return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_Lead_Uno_Porciento_byRut", parametros, UnoPorciento);
         }
 
         #region listarpensionadoid

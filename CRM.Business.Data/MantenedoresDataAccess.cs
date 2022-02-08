@@ -129,26 +129,34 @@ namespace CRM.Business.Data
                 return DBHelper.InstanceCRM.ObtenerEscalar<long>("dbo.spMotor_Mantenedor_Ingreso_Galvarino", parametros);
 
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
 
-                throw ex ;
+                throw ex;
             }
-            
+
         }
 
 
         public static long EliminarUsuarioGalvarino(string Rut, string RutEjecutivo)
         {
 
-
-            Parametros parametros = new Parametros
+            try
+            {
+                Parametros parametros = new Parametros
             {
                 new Parametro("@Rut",Rut),
                  new Parametro("@RutEjecutivo",RutEjecutivo),
             };
 
-            return DBHelper.InstanceCRM.ObtenerEscalar<long>("dbo.spMotor_Mantenedor_Eliminar_Usuario_Galvarino", parametros);
+                return DBHelper.InstanceCRM.ObtenerEscalar<long>("dbo.spMotor_Mantenedor_Eliminar_Usuario_Galvarino", parametros);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
 
         }
 

@@ -97,9 +97,9 @@ namespace CRM.Controllers
 
         [HttpGet]
         [Route("listar-pensionados_uno_Porciento")]
-        public IEnumerable<PensionadosUnoPorcientoEntity> Listar_Lead(string rut,string epp,int estado_id)
+        public IEnumerable<PensionadosUnoPorcientoEntity> Listar_Lead(string rut,string epp,int estado_id,string rutEjecutivo)
         {
-            List<PensionadosUnoPorcientoEntity> pensio = PensionadosDataAccess.ListaPensionadosUnoPorciento(rut,epp,estado_id);
+            List<PensionadosUnoPorcientoEntity> pensio = PensionadosDataAccess.ListaPensionadosUnoPorciento(rut,epp,estado_id, rutEjecutivo);
             return pensio;
         }
 

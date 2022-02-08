@@ -16,6 +16,10 @@ namespace CRM.Controllers
     [RoutePrefix("api/Gestion")]
     public class GestionController : ApiController
     {
+        
+
+
+
 
         [AuthorizationRequired]
         [HttpGet]

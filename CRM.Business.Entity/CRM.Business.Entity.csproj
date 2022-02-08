@@ -113,6 +113,7 @@
     <Compile Include="LicenciasLMTimeLine.cs" />
     <Compile Include="Log\LogcalculadoraEntity.cs" />
     <Compile Include="Maestros\EmpresasEntity.cs" />
+    <Compile Include="NormalizacionEntity.cs" />
     <Compile Include="NoticiaEntity.cs" />
     <Compile Include="NotificacionAsignacionEntity.cs" />
     <Compile Include="NuberespuestasEntity.cs" />

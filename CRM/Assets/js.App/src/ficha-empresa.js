@@ -23,7 +23,7 @@ var metodos = {
             var total = 0;
 
             $.each(response, function (i, e) {
-                debugger;
+              
                 var $wrapper = (`<tr>
                 <td>${e.FechaGestion.toFecha()}</td>
                 <td>${e.DescripcionEstado}</td>
@@ -47,7 +47,7 @@ var metodos = {
         });
     },
     ObtieneObjetoVidaSana: function (IdEmpresaAnexo) {
-       
+        debugger;
         $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtener-gestion-vidaSana", { IdEmpresaAnexo: IdEmpresaAnexo }, function (response) {
 
           
@@ -142,6 +142,8 @@ var rutE = httpGet('rutEmp');
 var valida = httpGet('validador');
 var ID = httpGet('Id');
 var idEmpresa = httpGet('rutEmpA');
+var rutEmpA = httpGet('rutEmpA');
+
 var RutEmpAnexo = httpGet('rutEmAnexo');
 var IJ = httpGet('IJ');
 var result = [];
@@ -214,17 +216,26 @@ $(function () {
 });
 
 //---------------------Tab Vida Sana
+
+var IDEmpresaVidaSana = 0;
+
+if (rutEmpA == "0") {
+    IDEmpresaVidaSana = ID;
+
+} else {
+    IDEmpresaVidaSana = rutEmpA;
+}
 var hoy = new Date();
 var d = hoy.getDate().toString().paddingLeft("00") + "-" + (hoy.getMonth() + 1).toString().paddingLeft("00") + "-" + hoy.getFullYear().toString();
 $("#dt_fecha_prox_gestion").val(d)
 
-metodos.CargaGrillaVidaSana(idEmpresa);
+metodos.CargaGrillaVidaSana(IDEmpresaVidaSana);
 
 $("#btn-gestion-VidaSana").on("click", function () {
     $('#divproxgestion').css("display", "none");
     $('#Obervaciones').val('');
    
-    metodos.ObtieneObjetoVidaSana(idEmpresa);
+    metodos.ObtieneObjetoVidaSana(IDEmpresaVidaSana);
     $('#modal-Vida-sana').modal('show');
 });
 
@@ -240,7 +251,7 @@ $('#ddlsubEstados').on('change', function (event) {
 $("#bt_guardargestion_Vidasana").on("click", function () {
 
     var GestionVidaSana = {
-        IdEmpresAnexo: idEmpresa
+        IdEmpresAnexo: IDEmpresaVidaSana
         , IdEtapa: $("#hdnIdPadre").val()
         , IdSubEtapa: $('#ddlsubEstados').val()
         , ProxGestion: $('#dt_fecha_prox_gestion').val()
@@ -259,7 +270,7 @@ $("#bt_guardargestion_Vidasana").on("click", function () {
                 focus: false,
                 timer: 5000
             });
-            metodos.CargaGrillaVidaSana(idEmpresa);
+            metodos.CargaGrillaVidaSana(IDEmpresaVidaSana);
         }
         else {
             $.niftyNoty({
