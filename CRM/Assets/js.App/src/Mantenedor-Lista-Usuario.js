@@ -109,8 +109,9 @@ function eliminarGalvarino(rut) {
             if (result) {
                 var WebUsuarioIngreso = {
                     RutUsuario: rut,
-
+                    RutEjecutivo: getCookie("Rut")
                 }
+               
                 $.SecPostJSON(BASE_URL + "/motor/api/mantenedores/Eliminar-Usuario-Galvarino", WebUsuarioIngreso, function (respuesta) {
 
                    
@@ -293,7 +294,7 @@ function digitalLinkFormatter(value, row, index) {
 }
 
 function digitalLinkFormatterGalvarino(value, row, index) {
-   
+
     let Nombre = row.Nombre.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
     let Cargo = row.Cargo.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
     let Sucursal = row.Sucursal.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")

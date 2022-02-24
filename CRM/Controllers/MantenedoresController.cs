@@ -176,7 +176,7 @@ namespace CRM.Controllers
                 CookieHeaderValue cookie = Request.Headers.GetCookies("Rut").FirstOrDefault();
                 string Rutejecutivo = cookie.Cookies.FirstOrDefault(s => s.Name == "Rut").Value;
                 web.RutEjecutivo = Rutejecutivo;
-                MantenedoresDataAccess.EliminarUsuarioGalvarino(web.RutUsuario,web.RutEjecutivo);
+                MantenedoresDataAccess.EliminarUsuarioGalvarino(web.RutUsuario, Rutejecutivo);
                 return new ResultadoBase() { Estado = "OK", Mensaje = "Datos OK", Objeto = "entrada" };
             }
             catch (Exception ex)

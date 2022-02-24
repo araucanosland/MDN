@@ -767,7 +767,21 @@ $(function () {
             </li>`
                 $("#mainnav-menu").html(menu);
             }
+            else if (getCookie("Cargo") == "Adm. Contenido") {
 
+                let menu =
+                    `<li class="list-header">Mantenedor Banner</li>
+                
+                <li>
+                <a href="/motor/App/Mantenedores/index">
+                    <i class="ion-clipboard"></i>
+                    <span class="menu-title">Banner</span>
+                    <i class="arrow"></i>
+                </a>
+                
+            </li>`
+                $("#mainnav-menu").html(menu);
+            }
 
             else {
                 sessionStorage.setItem('menu_principal', JSON.stringify(categorias));
