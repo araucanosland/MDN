@@ -671,13 +671,28 @@ namespace CRM.Controllers
                                                                                     AgendaCita.FechaInico, AgendaCita.FechaFin, AgendaCita.HoraInicio, AgendaCita.HoraFin, AgendaCita.TipoVisita );
         }
 
+
+
+        [AuthorizationRequired]
+        [HttpPost]
+        [Route("actualiza-cita-agenda-empresa-frecuente")]
+        public int ActualizaCitaAgendaEmpFrecuente(AgendaEmpresaEntity AgendaCita)
+        {
+            string Token = ActionContext.Request.Headers.GetValues("Token").First();
+            return Business.Data.PerfilEmpresasDataAccess.ActulizaCitaAgendaFrecuente(Token, AgendaCita.RutEmpresa, AgendaCita.Glosa,
+                                                                                    AgendaCita.FechaInico, AgendaCita.FechaFin, AgendaCita.HoraInicio, AgendaCita.HoraFin, AgendaCita.TipoVisita,
+                                                                                    AgendaCita.IdRegistro,AgendaCita.Frecuencia,AgendaCita.Dias,AgendaCita.DiasSucede
+                                                                                    );
+        }
+
         [AuthorizationRequired]
         [HttpPost]
         [Route("elimina-cita-agenda-empresa")]
         public int EliminaCitaAgendaEmp(AgendaEmpresaEntity AgendaCita)
         {
             string Token = ActionContext.Request.Headers.GetValues("Token").First();
-            return Business.Data.PerfilEmpresasDataAccess.EliminaCitaAgenda(Token, AgendaCita.IdAgenda, AgendaCita.IdRegistro, AgendaCita.RutEmpresa);
+            DateTime fecha_inicio = Convert.ToDateTime(AgendaCita.FechaInicio);
+            return Business.Data.PerfilEmpresasDataAccess.EliminaCitaAgenda(Token, AgendaCita.IdAgenda, AgendaCita.IdRegistro, AgendaCita.RutEmpresa, fecha_inicio);
         }
 
         [AuthorizationRequired]

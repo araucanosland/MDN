@@ -462,7 +462,32 @@ namespace CRM.Business.Data
             return DBHelper.InstanceCRM.EjecutarProcedimiento("carteras.spMotorCartera_Actualiza_Cita_Agenda_Empresa", parametros);
         }
 
-        public static int EliminaCitaAgenda(string Token, int IdAgenda, int IdRegistro, string RutEmpresa)
+        public static int ActulizaCitaAgendaFrecuente(string Token, string RutEmpresa, string Glosa,
+                                                        DateTime FechaInico, DateTime FechaFin,
+                                                        string HoraInicio, string HoraFin, string TipoVisita,
+                                                        int IdRegistro,string Frecuencia,string Dias,int DiasSucede)
+        {
+            Parametros parametros = new Parametros
+            {
+                new Parametro("@TOKEN", Token),
+                new Parametro("@ID_REGISTRO", IdRegistro),
+                new Parametro("@RUT_EMPRESA", RutEmpresa),
+                new Parametro("@GLOSA", Glosa),
+                new Parametro("@FECHA_INICO", FechaInico),
+                new Parametro("@FECHA_FIN", FechaFin),
+                new Parametro("@HORA_INICIO", HoraInicio),
+                new Parametro("@HORA_FIN", HoraFin),
+                new Parametro("@FRECUENCIA", Frecuencia),
+                new Parametro("@DIAS", Dias),
+                new Parametro("@TIPO_VISITA", TipoVisita),
+                new Parametro("@DIA_SUCEDE", DiasSucede),
+
+            };
+            return DBHelper.InstanceCRM.EjecutarProcedimiento("carteras.spMotorCartera_Actualiza_Cita_Agenda_Empresa_Frecuente", parametros);
+        }
+
+
+        public static int EliminaCitaAgenda(string Token, int IdAgenda, int IdRegistro, string RutEmpresa,DateTime FechaInicio)
         {
             Parametros parametros = new Parametros
             {
@@ -470,8 +495,9 @@ namespace CRM.Business.Data
                 new Parametro("@ID_AGENDA", IdAgenda),
                 new Parametro("@ID_REGISTRO", IdRegistro),
                 new Parametro("@RUT_EMPRESA", RutEmpresa),
+                new Parametro("@FECHA_INICIO", FechaInicio),
             };
-            return DBHelper.InstanceCRM.EjecutarProcedimiento("carteras.spMotorCartera_Elimina_Cita_Agenda_Empresa", parametros);
+            return DBHelper.InstanceCRM.EjecutarProcedimiento("carteras.spMotorCartera_Elimina_Cita_Agenda_Empresa_Nuevo", parametros);
         }
 
 

@@ -39,6 +39,7 @@ function formatFecha(value, row, index) {
 
 
 function eliminar(rut) {
+  
     bootbox.confirm({
         size: "medium",
         title: "Este Usuario se borrará definitivamente del sistema",
@@ -287,9 +288,10 @@ function digitalLinkFormatter(value, row, index) {
 
     let Nombre = row.Nombre.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
     let Cargo = row.Cargo.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
+    let RutFormato = row.Rut.replace('-', '').replace('K','');
     return `<a class="btn btn-primary mar-lft btn-rounded" title="Datos usuario" data-target="#modal-usuarios" data-toggle="modal" data-Rut=${row.Rut} data-Nombre=${Nombre} data-suc=${row.Cod_Sucursal} data-correo=${row.Correo} data-cargo=${Cargo} data-tipo="editar"><i class="ion-edit btn-rounded"></i></a>
-            <a class="btn btn-danger float-right btn-rounded" title="Eliminar" href="javascript:eliminar(${row.Rut.replace('-', '')})"><i class="ion-trash-a"></i></a>
-            `;
+            <a class="btn btn-danger float-right btn-rounded" title="Eliminar" href="javascript:eliminar(${RutFormato})"><i class="ion-trash-a"></i></a>
+        `;
 
 }
 
@@ -298,9 +300,10 @@ function digitalLinkFormatterGalvarino(value, row, index) {
     let Nombre = row.Nombre.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
     let Cargo = row.Cargo.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
     let Sucursal = row.Sucursal.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
+    let RutFormato = row.Rut.replace('-', '').replace('K', '');
     return `<a class="btn btn-primary mar-lft btn-rounded" title="Datos usuario" data-target="#modal-usuarios-galvarino" data-toggle="modal" data-Rut=${row.Rut} data-Nombre=${Nombre} data-suc=${row.Cod_of_galvarino} data-correo=${row.Correo} data-cargo=${Cargo} data-tipo="editarGalvarino"><i class="ion-edit btn-rounded"></i></a>
-            <a class="btn btn-danger float-right btn-rounded" title="Eliminar" href="javascript:eliminarGalvarino(${row.Rut.replace('-', '')})"><i class="ion-trash-a"></i></a>
-`;
+            <a class="btn btn-danger float-right btn-rounded" title="Eliminar" href="javascript:eliminarGalvarino(${RutFormato})"><i class="ion-trash-a"></i></a>
+            `;
 }
 
 $.fn.datepicker.dates['es'] = {

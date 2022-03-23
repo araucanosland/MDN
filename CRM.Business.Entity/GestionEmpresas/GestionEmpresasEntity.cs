@@ -235,7 +235,7 @@ namespace CRM.Business.Entity
         public int CodOficina { get; set; }
         public int IdAnexo { get; set; }
         public int NCitas { get; set; }
-
+        public string FechaInicio { get; set; }
     }
 
     public class RegionEmpresaEntity
