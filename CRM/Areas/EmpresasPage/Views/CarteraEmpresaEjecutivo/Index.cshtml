@@ -1071,7 +1071,7 @@
 
                         $("#btCita_update").data("idagenda", event.IdAgenda).data("idregistro", event.IdRegistro).data("rutempresa", event.RutEmpresa)
                         $("#btCita_elimina").data("idregistro", event.IdRegistro).data("idagenda", event.IdAgenda).data("rutempresa", event.RutEmpresa)
-                        $("#btCita_elimina").data("idRegistro", event.IdRegistro);
+                        //$("#btCita_elimina").data("idRegistro", event.IdRegistro);
                         $("#btCita_update_frecuente").data("idagenda", event.IdAgenda).data("idregistro", event.IdRegistro).data("rutempresa", event.RutEmpresa)
 
                         $('#slTipoVisita_update').prop("disabled", true);
@@ -1616,6 +1616,18 @@
                         label: "Eliminar Cita Frecuente",
                         className: "btn-danger",
                         callback: function () {
+                            debugger;
+                            if ($("#btCita_elimina").data("idregistro") == "0") {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: '#pnl_mensajes',
+                                    title: 'Error al eliminar cita',
+                                    message: 'CITA NO TIENE ASOCIADO UNA EMPRESA, INFORMAR AL ADMINISTRADOR!...',
+                                    closeBtn: false,
+                                    timer: 5000,
+                                });
+                                return false;
+                            }
                             var objeto_envio_agenda_empresa_eliminar = {
                                 IdAgenda: 0,
                                 IdRegistro: $("#btCita_elimina").data("idregistro"),
