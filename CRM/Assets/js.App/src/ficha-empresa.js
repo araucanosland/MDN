@@ -12,7 +12,35 @@ $.fn.datepicker.dates['es'] = {
     weekStart: 1
 };
 
+function LimpiarUpdateCitas() {
+    $("#form_registro_agendaEmpresa_update").bootstrapValidator('resetForm', true);
+    $('#demo-calendar').fullCalendar('refetchEvents');
+    $("#slFrecuencia_update").attr("disabled", true);
+    $("#divSemanal_update").attr("disabled", true);
+    $("#checkbox-lunes_update").attr("disabled", true);
+    $("#checkbox-lunes_update").prop("checked", false);
+    $("#checkbox-martes_update").attr("disabled", true);
+    $("#checkbox_martes_update").prop("checked", false);
+    $("#checkbox-miercoles_update").attr("disabled", true);
+    $("#miercoles_update").prop("checked", false);
+    $("#checkbox-jueves_update").attr("disabled", true);
+    $("#checkbox-jueves_update").prop("checked", false);
+    $("#checkbox-viernes_update").attr("disabled", true);
+    $("#checkbox-viernes_update").prop("checked", false);
+    $('#btCita_update_frecuente').hide();
+    $('#btCita_update_cancelar').hide();
+    $('#slTipoVisita_update').prop("disabled", true);
+    $('#txtObsCita_update').prop("disabled", true);
+    $('#txtFechacita_update').prop("disabled", true);
+    $('#slComienzaDia_update').prop("disabled", true);
+    $('#slSucedeDia_update').prop("disabled", true);
+    $('#slDuracionDia_update').prop("disabled", true);
+    $("#btCita_update_cita").css('display', 'none');
 
+    $("#btCita_update").show();
+    $("#btCita_elimina").show();
+    // $('#demo-lg-modal-agenda_update').modal('hide');
+}
 var metodos = {
 
     CargaGrillaVidaSana: function (IdEmpresaAnexo) {
@@ -1147,7 +1175,7 @@ var cargador = {
             selectHelper: true,
             editable: false,
             eventClick: function (event) {
-
+                debugger;
                 $('#txtFechacita_update').val(event.start._i.toFecha())
                 $('#slTipoVisita_update').val(event.TipoVisita)
                 $('#txtObsCita_update').val(event.Glosa)
@@ -1158,26 +1186,46 @@ var cargador = {
                 $('#txtHoraFin_update').val(event.HoraFin)
                 $('#nomEmpCita').html(' Cita de Empresa:  ' + event.NombreEmpresa)
 
-                $("#btCita_update").data("idagenda", event.IdAgenda).data("idregistro", event.IdRegistro)
-                $("#btCita_elimina").data("idregistro", event.IdRegistro).data("idagenda", event.IdAgenda)
+                $("#btCita_update").data("idagenda", event.IdAgenda).data("idregistro", event.IdRegistro).data("rutempresa", event.RutEmpresa)
+                $("#btCita_elimina").data("idregistro", event.IdRegistro).data("idagenda", event.IdAgenda).data("rutempresa", event.RutEmpresa)
+                $("#btCita_elimina").data("idRegistro", event.IdRegistro);
+                $("#btCita_update_frecuente").data("idagenda", event.IdAgenda).data("idregistro", event.IdRegistro).data("rutempresa", event.RutEmpresa)
+
+                $('#slTipoVisita_update').prop("disabled", true);
+                $('#txtObsCita_update').prop("disabled", true);
+                $('#txtFechacita_update').prop("disabled", true);
+                $('#slComienzaDia_update').prop("disabled", true);
+                $('#slSucedeDia_update').prop("disabled", true);
+                $('#slDuracionDia_update').prop("disabled", true);
+                $('#slDiasMensual_update').prop("disabled", true);
+
+
+
 
                 if (event.Frecuencia == 'Diaria') {
                     $("#divMensual_update").css('display', 'none')
                     $("#divSemanal_update").css('display', 'none')
                     $("#divDiario_update").css('display', 'block')
-                } else if (event.Frecuencia == 'Semanal') {
+                }
+                else if (event.Frecuencia == 'Semanal') {
                     $("#divDiario_update").css('display', 'none')
                     $("#divMensual_update").css('display', 'none')
                     $("#divSemanal_update").css('display', 'block')
-                } else if (event.Frecuencia == 'Quincenal') {
+                }
+                else if (event.Frecuencia == 'Quincenal') {
                     $("#divDiario_update").css('display', 'none')
                     $("#divMensual_update").css('display', 'none')
                     $("#divSemanal_update").css('display', 'block')
-                } else if (event.Frecuencia == 'Mensual') {
+                }
+                else if (event.Frecuencia == 'Mensual') {
                     $("#divDiario_update").css('display', 'none')
                     $("#divSemanal_update").css('display', 'none')
                     $("#divMensual_update").css('display', 'block')
                 }
+
+                //cargador.CargaDatosEntrevista();
+                //cargador.CargaDatosGestionMan();
+                /*cargador.AfiliadoOficina(event.RutEmpresa);*/
                 $('#demo-lg-modal-agenda_update').modal('show');
 
                 return false;
@@ -1951,32 +1999,11 @@ $('#form_registro_agendaEmpresa_update').bootstrapValidator({
         results = "Null"
     }
 
-    var objeto_envio_agenda_empresa_update = {
-        IdAgenda: $("#btCita_update").data("idagenda"),
-        RutEmpresa: rutEmpresa,
-        Glosa: $('#txtObsCita_update').val(),
-        FechaInico: $('#txtFechacita_update').val().toFecha() + ' ' + $('#slComienzaDia_update').val(),
-        FechaFin: $('#txtFechacita_update').val().toFecha() + ' ' + $('#txtHoraFin_update').val(),
-        HoraInicio: $('#slComienzaDia_update').val(),
-        HoraFin: $('#txtHoraFin_update').val(),
-        TipoVisita: $('#slTipoVisita_update').val(),
-    }
-    $.SecPostJSON(BASE_URL + "/motor/api/perfil-empresas/actualiza-cita-agenda-empresa", objeto_envio_agenda_empresa_update, function (datos) {
-        $("#form_registro_agendaEmpresa_update").bootstrapValidator('resetForm', true);
-        $('#demo-lg-modal-agenda_update').modal('hide');
-        $.niftyNoty({
-            type: 'success',
-            icon: 'pli-like-2 icon-2x',
-            message: 'SE MODIFICO LA CITA DEL DIA CORRECTAMENTE !.',
-            container: 'floating',
-            timer: 5000
-        });
-        $('#demo-calendar').fullCalendar('refetchEvents');
-    });
+   
 });
-
+//--------------------------Eliminar Cita
 $('#btCita_elimina').on('click', function () {
-
+    debugger;
     var rutEmpresa = 0;
     if (rutE != "" && rutE != 'undefined' && rutE != null) {
         rutEmpresa = rutE;
@@ -1996,6 +2023,7 @@ $('#btCita_elimina').on('click', function () {
                         IdAgenda: $("#btCita_elimina").data("idagenda"),
                         IdRegistro: 0,
                         RutEmpresa: rutEmpresa,
+                        FechaInicio: $("#txtFechacita_update").val()
                     }
                     $.SecPostJSON(BASE_URL + "/motor/api/perfil-empresas/elimina-cita-agenda-empresa", objeto_envio_agenda_empresa_eliminar, function (datos) {
                         $("#form_registro_agendaEmpresa_update").bootstrapValidator('resetForm', true);
@@ -2020,6 +2048,7 @@ $('#btCita_elimina').on('click', function () {
                         IdAgenda: 0,
                         IdRegistro: $("#btCita_elimina").data("idregistro"),
                         RutEmpresa: rutEmpresa,
+                        FechaInicio: $("#txtFechacita_update").val()
                     }
                     $.SecPostJSON(BASE_URL + "/motor/api/perfil-empresas/elimina-cita-agenda-empresa", objeto_envio_agenda_empresa_eliminar, function (datos) {
                         $("#form_registro_agendaEmpresa_update").bootstrapValidator('resetForm', true);
@@ -2041,6 +2070,414 @@ $('#btCita_elimina').on('click', function () {
             }
         }
     })
+});
+
+ //---------------------------Pop up de Seleciona de tipó de acutlizacion de Citas (Frecuente o Seleccionada)
+$('#btCita_update').on('click', function () {
+    bootbox.dialog({
+        message: "<h1 class='page-header text-overflow pad-btm'>Puede modificar la cita del dia o la cita frecuente !</h1>",
+        title: "MODIFICAR CITA",
+        buttons: {
+            success: {
+                label: "Modificar Cita del Dia",
+                className: "btn-success",
+                callback: function () {
+                    $("#slFrecuencia_update").attr("disabled", true);
+                    $("#divSemanal_update").attr("disabled", true);
+                    $("#checkbox-lunes_update").attr("disabled", true);
+                    $("#checkbox-martes_update").attr("disabled", true);
+                    $("#checkbox-miercoles_update").attr("disabled", true);
+                    $("#checkbox-jueves_update").attr("disabled", true);
+                    $("#checkbox-viernes_update").attr("disabled", true);
+                    $('#btCita_update_frecuente').css('display', 'none');
+                    $('#btCita_update_cancelar').show();
+                    $("#btCita_update").css('display', 'none');
+                    $("#btCita_elimina").css('display', 'none');
+                    $("#btCita_update_cita").show();
+                    $('#slTipoVisita_update').prop("disabled", false);
+                    $('#txtObsCita_update').prop("disabled", false);
+                    $('#txtFechacita_update').prop("disabled", true);
+                    $('#slComienzaDia_update').prop("disabled", false);
+                    $('#slSucedeDia_update').prop("disabled", true);
+                    $('#slDuracionDia_update').prop("disabled", false);
+                    $('#slDiasMensual_update').prop("disabled", true);
+
+
+
+                }
+            },
+
+            danger: {
+                label: "Modificar Cita Frecuente",
+                className: "btn-danger",
+                callback: function () {
+
+                    $("#slFrecuencia_update").attr("disabled", false);
+                    $("#divSemanal_update").attr("disabled", false);
+                    $("#checkbox-lunes_update").attr("disabled", false);
+                    $("#checkbox-martes_update").attr("disabled", false);
+                    $("#checkbox-miercoles_update").attr("disabled", false);
+                    $("#checkbox-jueves_update").attr("disabled", false);
+                    $("#checkbox-viernes_update").attr("disabled", false);
+                    $('#btCita_update_frecuente').show();
+                    $('#btCita_update_cancelar').show();
+                    $("#btCita_update").css('display', 'none');
+                    $("#btCita_elimina").css('display', 'none');
+                    $("#btCita_update_cita").css('display', 'none');
+                    $('#slTipoVisita_update').prop("disabled", false);
+                    $('#txtObsCita_update').prop("disabled", false);
+                    $('#txtFechacita_update').prop("disabled", true);
+                    $('#slComienzaDia_update').prop("disabled", false);
+                    $('#slSucedeDia_update').prop("disabled", false);
+                    $('#slDuracionDia_update').prop("disabled", false);
+                    $('#slDiasMensual_update').prop("disabled", false);
+
+                }
+            },
+            main: {
+                label: "Cancelar",
+                className: "btn-primary",
+            }
+        }
+    })
+});
+
+//-----------------------se Actualiza Citas Frecuentes (citas concurrentes segun ingreso)
+$("#btCita_update_frecuente").click(function (e) {
+
+    e.preventDefault();
+    var rutEmpresa = 0;
+    if (rutE != "" && rutE != 'undefined' && rutE != null) {
+        rutEmpresa = rutE;
+    } else {
+        rutEmpresa = RutEmpAnexo
+    }
+    var $form = $(e.target);
+    var results = new Array();
+    results.length = 0;
+    var i = 0;
+    if ($('#slFrecuencia_update').val() == 'Semanal' || $('#slFrecuencia_update').val() == 'Quincenal') {
+        $("input[name='groupCkeckDias_update[]']:checked").each(function () {
+            results[i] = '"' + $(this).val() + '"'
+            i++
+        });
+        results = '[' + results + ']'
+    }
+    else if ($('#slFrecuencia_update').val() == 'Mensual') {
+        results = $('#slDiasMensual_update').val()
+    }
+    else if ($('#slFrecuencia_update').val() == 'Diaria') {
+        results = "Null"
+    }
+
+
+    if ($('#slTipoVisita_update').val() == "") {
+        return false;
+    }
+
+    if ($('#txtObsCita_update').val() == "") {
+        return false;
+    }
+
+
+    if ($('#slFrecuencia_update').val() == "") {
+        $.niftyNoty({
+            type: 'danger',
+            message: '<strong>Error</strong><li>Debe seleccionar una frecuencia</li>',
+            container: '#pnl_mensajes',
+            timer: 3000
+        });
+        $('#slFrecuencia_update').focus();
+        return false;
+    }
+
+    if ($('#slFrecuencia_update').val() == "Semanal" || $('#slFrecuencia_update').val() == "Quinsenal") {
+        if ($('#checkbox-lunes_update').prop('checked') == false && $('#checkbox-martes_update').prop('checked') == false && $('#checkbox-miercoles_update').prop('checked') == false && $('#checkbox-jueves_update').prop('checked') == false && $('#checkbox-viernes_update').prop('checked') == false) {
+            $.niftyNoty({
+                type: 'danger',
+                message: '<strong>Error</strong><li>Debe seleccionar al menos un día de visita</li>',
+                container: '#pnl_mensajes',
+                timer: 3000
+            });
+
+            return false;
+        }
+
+        if ($('#slComienzaDia_update').val() == "") {
+            $.niftyNoty({
+                type: 'danger',
+                message: '<strong>Error</strong><li>Debe seleccionar hora de comienzo cita</li>',
+                container: '#pnl_mensajes',
+                timer: 3000
+            });
+            $('#slComienzaDia_update').focus();
+            return false;
+        }
+
+
+    }
+    else if ($('#slFrecuencia_update').val() == "Mensual") {
+
+
+        if ($('#slDiasMensual_update').val() == "" || $('#slDiasMensual_update').val() == null) {
+            $.niftyNoty({
+                type: 'danger',
+                message: '<strong>Error</strong><li>Debe seleccionar día de comienzo cita</li>',
+                container: '#pnl_mensajes',
+                timer: 3000
+            });
+            $('#slDiasMensual_update').focus();
+            return false;
+        }
+        if ($('#slComienzaDia_update').val() == "") {
+            $.niftyNoty({
+                type: 'danger',
+                message: '<strong>Error</strong><li>Debe seleccionar hora de comienzo cita</li>',
+                container: '#pnl_mensajes',
+                timer: 3000
+            });
+            $('#slComienzaDia_update').focus();
+            return false;
+        }
+    }
+    else {
+
+
+        if ($('#slSucedeDia_update').val() == "") {
+            $.niftyNoty({
+                type: 'danger',
+                message: '<strong>Error</strong><li>Debe seleccionar repetición día</li>',
+                container: '#pnl_mensajes',
+                timer: 3000
+            });
+            $('#slSucedeDia_update').focus();
+            return false;
+        }
+        if ($('#slComienzaDia_update').val() == "") {
+            $.niftyNoty({
+                type: 'danger',
+                message: '<strong>Error</strong><li>Debe seleccionar hora de comienzo cita</li>',
+                container: '#pnl_mensajes',
+                timer: 3000
+            });
+            $('#slComienzaDia_update').focus();
+            return false;
+        }
+    }
+
+    var objeto_envio_agenda_empresa = {
+        IdAgenda: $("#btCita_update_frecuente").data("idagenda"),
+        RutEmpresa: rutEmpresa,
+        IdRegistro: $("#btCita_update_frecuente").data("idregistro"),
+        NombreEmpresa: $('#slEmpresaAgendasIng_update option:selected').text(),
+        Glosa: $('#txtObsCita_update').val(),
+        FechaInico: $('#txtFechacita_update').val().toFecha() + ' ' + $('#slComienzaDia_update').val(),
+        FechaFin: $('#txtFechacita_update').val().toFecha() + ' ' + $('#txtHoraFin_update').val(),
+        HoraInicio: $('#slComienzaDia_update').val(),
+        HoraFin: $('#txtHoraFin_update').val(),
+        Frecuencia: $('#slFrecuencia_update').val(),
+        Dias: results,
+        TipoVisita: $('#slTipoVisita_update').val(),
+        //IdAnexo: $('#slEmpresaAgendasIng_update option:selected').data('idanexo'),
+        DiasSucede: $('#slSucedeDia_update').val(),
+    }
+
+    $.SecPostJSON(BASE_URL + "/motor/api/perfil-empresas/actualiza-cita-agenda-empresa-frecuente", objeto_envio_agenda_empresa, function (datos) {
+
+        $("#form_registro_agendaEmpresa_update").bootstrapValidator('resetForm', true);
+        $('#demo-lg-modal-agenda_update').modal('hide');
+
+        $('#demo-calendar').fullCalendar('refetchEvents');
+        $("#slFrecuencia_update").attr("disabled", true);
+        $("#divSemanal_update").attr("disabled", true);
+        $("#checkbox-lunes_update").attr("disabled", true);
+        $("#checkbox").prop("checked", false);
+        $("#checkbox-martes_update").attr("disabled", true);
+        $("#martes_update").prop("checked", false);
+        $("#checkbox-miercoles_update").attr("disabled", true);
+        $("#miercoles_update").prop("checked", false);
+        $("#checkbox-jueves_update").attr("disabled", true);
+        $("#checkbox-jueves_update").prop("checked", false);
+        $("#checkbox-viernes_update").attr("disabled", true);
+        $("#checkbox-viernes_update").prop("checked", false);
+        $('#btCita_update_frecuente').hide();
+        $('#btCita_update_cancelar').hide();
+
+        $("#btCita_update").show();
+        $("#btCita_elimina").show();
+        $.niftyNoty({
+            type: 'success',
+            icon: 'pli-like-2 icon-2x',
+            message: 'SE MODIFICO LA CITA DEL DIA CORRECTAMENTE !.',
+            container: 'floating',
+            timer: 5000
+        });
+
+    });
+
+});
+
+//--------------------------boton que cancela y vuelve a priemra pantalla del popup
+$("#btCita_update_cancelar").click(function (e) {
+    LimpiarUpdateCitas();
+});
+
+//-----------------------se Actualiza la cita selecicionada---
+$("#btCita_update_cita").click(function (e) {
+    e.preventDefault();
+    var rutEmpresa = 0;
+    if (rutE != "" && rutE != 'undefined' && rutE != null) {
+        rutEmpresa = rutE;
+    } else {
+        rutEmpresa = RutEmpAnexo
+    }
+    var $form = $(e.target);
+    var results = new Array();
+    results.length = 0;
+    var i = 0;
+    if ($('#slFrecuencia_update').val() == 'Semanal' || $('#slFrecuencia_update').val() == 'Quincenal') {
+        $("input[name='groupCkeckDias_update[]']:checked").each(function () {
+            results[i] = '"' + $(this).val() + '"'
+            i++
+        });
+        results = '[' + results + ']'
+    }
+    else if ($('#slFrecuencia_update').val() == 'Mensual') {
+        results = $('#slDiasMensual_update').val()
+    }
+    else if ($('#slFrecuencia_update').val() == 'Diaria') {
+        results = "Null"
+    }
+
+
+
+
+    if ($('#slTipoVisita_update').val() == "") {
+        return false;
+    }
+
+    if ($('#txtObsCita_update').val() == "") {
+        return false;
+    }
+
+
+    if ($('#slFrecuencia_update').val() == "") {
+        $.niftyNoty({
+            type: 'danger',
+            message: '<strong>Error</strong><li>Debe seleccionar una frecuencia</li>',
+            container: '#pnl_mensajes',
+            timer: 3000
+        });
+        $('#slFrecuencia_update').focus();
+        return false;
+    }
+    if ($('#slFrecuencia_update').prop("enabled") == false) {
+
+
+        if ($('#slFrecuencia_update').val() == "Semanal" || $('#slFrecuencia_update').val() == "Quinsenal") {
+            if ($('#checkbox-lunes_update').prop('checked') == false && $('#checkbox-martes_update').prop('checked') == false && $('#checkbox-miercoles_update').prop('checked') == false && $('#checkbox-jueves_update').prop('checked') == false && $('#checkbox-viernes_update').prop('checked') == false) {
+                $.niftyNoty({
+                    type: 'danger',
+                    message: '<strong>Error</strong><li>Debe seleccionar al menos un día de visita</li>',
+                    container: '#pnl_mensajes',
+                    timer: 3000
+                });
+
+                return false;
+            }
+
+            if ($('#slComienzaDia_update').val() == "") {
+                $.niftyNoty({
+                    type: 'danger',
+                    message: '<strong>Error</strong><li>Debe seleccionar hora de comienzo cita</li>',
+                    container: '#pnl_mensajes',
+                    timer: 3000
+                });
+                $('#slComienzaDia_update').focus();
+                return false;
+            }
+
+
+        }
+        else if ($('#slFrecuencia_update').val() == "Mensual") {
+
+
+            if ($('#slDiasMensual_update').val() == "" || $('#slDiasMensual_update').val() == null) {
+                $.niftyNoty({
+                    type: 'danger',
+                    message: '<strong>Error</strong><li>Debe seleccionar día de comienzo cita</li>',
+                    container: '#pnl_mensajes',
+                    timer: 3000
+                });
+                $('#slDiasMensual_update').focus();
+                return false;
+            }
+            if ($('#slComienzaDia_update').val() == "") {
+                $.niftyNoty({
+                    type: 'danger',
+                    message: '<strong>Error</strong><li>Debe seleccionar hora de comienzo cita</li>',
+                    container: '#pnl_mensajes',
+                    timer: 3000
+                });
+                $('#slComienzaDia_update').focus();
+                return false;
+            }
+        }
+        else {
+
+
+            if ($('#slSucedeDia_update').val() == "") {
+                $.niftyNoty({
+                    type: 'danger',
+                    message: '<strong>Error</strong><li>Debe seleccionar repetición día</li>',
+                    container: '#pnl_mensajes',
+                    timer: 3000
+                });
+                $('#slSucedeDia_update').focus();
+                return false;
+            }
+            if ($('#slComienzaDia_update').val() == "") {
+                $.niftyNoty({
+                    type: 'danger',
+                    message: '<strong>Error</strong><li>Debe seleccionar hora de comienzo cita</li>',
+                    container: '#pnl_mensajes',
+                    timer: 3000
+                });
+                $('#slComienzaDia_update').focus();
+                return false;
+            }
+        }
+    }
+    var objeto_envio_agenda_empresa_update = {
+        IdAgenda: $("#btCita_update").data("idagenda"),
+        RutEmpresa: rutEmpresa,
+        Glosa: $('#txtObsCita_update').val(),
+        FechaInico: $('#txtFechacita_update').val().toFecha() + ' ' + $('#slComienzaDia_update').val(),
+        FechaFin: $('#txtFechacita_update').val().toFecha() + ' ' + $('#txtHoraFin_update').val(),
+        HoraInicio: $('#slComienzaDia_update').val(),
+        HoraFin: $('#txtHoraFin_update').val(),
+        TipoVisita: $('#slTipoVisita_update').val(),
+    }
+    $.SecPostJSON(BASE_URL + "/motor/api/perfil-empresas/actualiza-cita-agenda-empresa", objeto_envio_agenda_empresa_update, function (datos) {
+        $("#form_registro_agendaEmpresa_update").bootstrapValidator('resetForm', true);
+        $('#demo-lg-modal-agenda_update').modal('hide');
+        $.niftyNoty({
+            type: 'success',
+            icon: 'pli-like-2 icon-2x',
+            message: 'SE MODIFICO LA CITA DEL DIA CORRECTAMENTE !.',
+            container: 'floating',
+            timer: 5000
+        });
+        $('#demo-calendar').fullCalendar('refetchEvents');
+    });
+
+
+});
+
+//----------------------Cerrar modal update Citas----
+
+$('#demo-lg-modal-agenda_update').on('hide.bs.modal', function (event) {
+    LimpiarUpdateCitas();
 });
 
 //Temporal tabla licencia medica
