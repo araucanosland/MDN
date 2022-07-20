@@ -1,0 +1,399 @@
+﻿@{
+    ViewBag.Title = "CampanaDiplomado";
+}
+
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+<div id="page-content">
+    <div class="tab-base">
+        <div class="tab-content">
+            <div class="row">
+                <h1 class="page-header text-overflow">Campaña Diplomado </h1>
+                <br />
+                <div class="panel" style="border-radius: 8px">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Filtros de Búsqueda</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-3 text-xs-center">
+                                <div class="form-group">
+                                    <label class="control-label">Rut Empresa</label>
+                                    <input type="text" class="form-control" id="txtRutEmp" placeholder="Rut Empresa.." tabindex="1">
+                                </div>
+                            </div>
+                            <div class="col-sm-3 text-xs-center">
+                                <div class="form-group">
+                                    <label class="control-label">Nombre Empresa</label>
+                                    @* <select id="dllEppPen" class="form-control" tabindex="3"></select>*@
+                                    <input type="text" class="form-control" id="txtNomEmp" placeholder="Nombre Empresa.." tabindex="1">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3 text-xs-center">
+                                <div class="form-group">
+                                    <label class="control-label">Nombre Punto</label>
+                                    @* <select id="dllEstadoGestion" class="form-control" tabindex="4"></select>*@
+                                    <input type="text" class="form-control" id="txtNomPun" placeholder="Nombre Punto.." tabindex="1">
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    @* <button class="btn btn-default" data-target="#modal-mdl_data_gestion_diplomado" data-toggle="modal"><i class="glyphicon glyphicon-barcode"></i></button>*@
+                                    @*<button class="btn btn-danger" type="submit" v-on:click="mdl_data_gestion_diplomado">GUARDAR</button>*@
+                                    <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="btn_buscar_cargadiplomado">BUSCAR</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel" style="border-radius: 8px">
+                    <h3 class="panel-title">Contactos</h3>
+                    <form class="form-horizontal">
+                        <div class="panel-body">
+                            <table data-toggle="table"
+                                   data-sort-name="Id"
+                                   data-page-list="[]"
+                                   data-page-size="30"
+                                   data-search="false"
+                                   data-show-pagination-switch="false"
+                                   data-pagination="true" id="tblcampdiplomado" style="font-size: 12px">
+                                <thead>
+                                    <tr>
+                                        <th data-field="Id" data-sortable="true" data-formatter="idFormatter">ID</th>
+                                        <th data-field="Rut_Empresa" data-sortable="true">Rut Empresa</th>
+                                        <th data-field="Nombre_Empresa" data-sortable="true">Nombre Empresa</th>
+                                        <th data-field="Nombre_Punto" data-sortable="true">Nombre Punto</th>
+                                        <th data-field="Oficina" data-sortable="true">Oficina</th>
+                                        <th data-field="Fecha_Ingreso" data-formatter="formatoFecha" data-sortable="true">Fecha Ingreso</th>
+                                        <th data-field="Estado_Encuesta" data-sortable="true">Estado Encuesta</th>
+                                        <th data-field="SubEstado" data-sortable="true">sub estado</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mdl_data_gestion_diplomado" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 7px;">
+            <div class="modal-header">
+                <button id="btCerrarModal" type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-6">
+                    <div class="panel" style="border-radius: 6px; border: 1px solid #dad3d3;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Información Contacto</h3>
+                        </div>
+                        <div class="panel-body">
+
+                            <form>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Rut Empresa</label>
+                                            <input class="form-control" id="mdl_Rut_Empresa" type="text" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="form-group">
+                                            <label class="control-label">Nombre Empresa</label>
+                                            <input class="form-control" id="mdl_Nombre_Empresa" type="text" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Nombre Punto</label>
+                                            <input class="form-control" id="mdl_Nombre_Punto" type="text" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Oficina</label>
+                                            <input class="form-control" id="mdl_Oficina" type="text" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Zona</label>
+                                            <input class="form-control" id="mdl_Zona" type="text" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h4 class="panel-title">Contacto</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">Estamento</label>
+                                            <input class="form-control" id="mdl_Estamento" type="text" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">Cargo</label>
+                                            <input class="form-control" id="mdl_Cargo" type="text" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Nombre</label>
+                                            <input class="form-control" id="mdl_Nombre" type="text" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Fono</label>
+                                            <input class="form-control" id="mdl_Fono" type="text" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="form-group">
+                                            <label class="control-label">Mail</label>
+                                            <input class="form-control" id="mdl_Mail" type="text" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h4 class="panel-title">Resolutor</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">Estamento</label>
+                                            <input class="form-control" id="mdl_Estamento_R" type="text" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">Cargo</label>
+                                            <input class="form-control" id="mdl_Cargo_R" type="text" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Nombre</label>
+                                            <input class="form-control" id="mdl_Nombre_R" type="text" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Fono</label>
+                                            <input class="form-control" id="mdl_Fono_R" type="text" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="form-group">
+                                            <label class="control-label">Mail</label>
+                                            <input class="form-control" id="mdl_Mail_R" type="text" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" id="contactollamado">
+                                    <div class="col-sm-8">
+                                        <div class="form-group">
+                                            <label class="control-label">Contacto realizado por llamado</label>
+                                            <select class="form-control" id="mdl_llamado" name="mdl_llamado">
+                                                <option value="0">Seleccione</option>
+                                                <option value="SI">SI</option>
+                                                <option value="NO">NO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" id="estadogestion">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label segmento_texto">Estado Gestión</label>
+                                            <select class="form-control" id="ModaldllEstadoGestion"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label class="control-label segmento_texto">Sub Estado Gestión</label>
+                                            <select class="form-control" id="ModaldllSubEstadoGestion" disabled></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="msj"></div>
+                                @*<button class="btn btn-primary " id="btn_Guardar">Guardar</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="cerrar">Cerrar</button>*@
+                                <input class="form-control" id="txtId" type="text" style="display:none">
+                                <input class="form-control" id="rutejecutivo" type="text" style="display:none">
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" id="btn_Guardar">Guardar</button>
+                            <button type="button" class="btn btn-primary" style="right" data-dismiss="modal" id="cerrar">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel" style="border-radius: 6px; border: 1px solid #dad3d3;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Script</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form>
+                                <div class="row" id="scriptresolutor" style="display:none">
+                                    <sub>BENEFICIO DIPLOMADO EN GESTIÓN DE EMPRESAS – UNIVERSIDAD ANDRÉS BELLO</sub>
+                                    <p> </p>
+                                    <div id="Hoja1" style="display:none">
+                                        <p>
+                                            EJEC – Buenos días/Tardes, mi nombre es
+                                        </p>
+                                        <input class="form-control" id="ejecutivo_r" type="text">
+                                        <p>
+                                            llamo de Caja de Compensación, La Araucana, ¿hablo con la Sra./Sr.
+                                        </p>
+                                        <input class="form-control" id="nombre_r" type="text">
+                                        <p>
+                                            AFIL – Esperar respuesta y seguir
+                                        </p>
+                                        <p>
+                                            EJEC – Lo/la llamo porque queremos agradecer su participación en la encuesta del “Estudio Capacitación Caja La Araucana” que se realizó en marzo de este año. La información que arrojó este estudio fue relevante para la generación de un nuevo beneficio, a la medida de sus intereses y que consiste en un Diplomado en Gestión de Empresas con 6 menciones a elección, relevantes para el desarrollo de trabajadores y el aumento de productividad de la empresa. Este es un diplomado Online, impartido por la Universidad Andrés Bello y su duración es de 4 meses aproximadamente (180 horas).
+                                        </p>
+                                        <p>
+                                            (Sólo si pregunta las menciones)
+                                        </p>
+                                        <p>
+                                            * Habilidades Gerenciales * Gestión Integral *Gestión Comercial y Ventas *Gestión Logística *Gestión Contable *Gestión de Personas
+                                        </p>
+                                        <p>
+                                            El valor especial para nuestras empresas afiliadas es de $792.000 y se financia con franquicia tributaria. Por ejemplo si tiene trabajadores con rentas imponibles menores a $1.440.000 aproximadamente, es 100% franquiciable, cumpliendo los requisitos de aprobación y asistencia.
+                                        </p>
+                                    </div>
+                                    <div id="Hoja2" style="display:none">
+                                        <p>
+                                            (Registrar información en motor)
+                                            -	Cuál es su Mail de contacto
+                                            -	Su Teléfono
+                                            -	Su Cargo en La Empresa
+                                        </p>
+                                        <p>
+                                            Muchas Gracias. Cuénteme ¿le gustaría que la OTIC del Comercio con quien estamos en alianza, se contacte para que lo asesoren respecto del diplomado, inscripción y más información en general?
+                                        </p>
+                                        <p>
+                                            A modo de información si está en otra Otic igual puede optar al beneficio a través de la Otic del Comercio ya sea sólo por este programa o bien suscribirse a ésta de manera indefinida.
+                                        </p>
+                                        <p>
+                                            (Registrar opción en motor)
+                                        </p>
+                                        <p>
+                                            No: Muchas gracias por su tiempo y le recuerdo que ingrese a nuestra web y nos siga en redes sociales para que se entere de todos nuestros beneficios. Que tenga buen día/tarde.
+                                        </p>
+                                        <p>
+                                            Si: Excelente, un ejecutivo La Otic del Comercio se contactará a la brevedad para asesorarlos. Muchas gracias por su tiempo y disposición.  Que tenga buen día/tarde.
+                                        </p>
+                                    </div>
+                                    @*<button class="btn btn-primary esconder" id="btn_Anterior">Hoja 1</button>
+                                        <button class="btn btn-primary esconder" id="btn_Siguiente">Hoja 2</button>*@
+
+                                </div>
+                                <div class="row" id="scripttrabajador" style="display:none">
+                                    <sub>BENEFICIO DIPLOMADO EN GESTIÓN DE EMPRESAS – UNIVERSIDAD ANDRÉS BELLO</sub>
+                                    <p> </p>
+                                    <div id="Hoja3" style="display:none">
+                                        <p>
+                                            EJEC – Buenos días/Tardes, mi nombre es
+                                        </p>
+                                        <input class="form-control" id="ejecutivo_t" type="text">
+                                        <p>
+                                            llamo de Caja de Compensación, La Araucana, ¿hablo con la Sra./Sr.
+                                        </p>
+                                        <input class="form-control" id="nombre_t" type="text">
+                                        <p>
+                                            AFIL – Esperar respuesta y seguir
+                                        </p>
+                                        <p>
+                                            EJEC – Lo/la llamo porque queremos agradecer su participación en la encuesta del “Estudio Capacitación Caja La Araucana” que se realizó en marzo de este año. La información que arrojó este estudio fue relevante para la generación de un nuevo beneficio, a la medida de sus intereses y que consiste en un  Diplomado en Gestión de Empresas con 6 menciones a elección para el desarrollo de trabajadores y el aumento de productividad de la empresa. Este es un diplomado Online, impartido por la Universidad Andrés Bello, tiene una duración de 4 meses aproximadamente (180 horas) y se financia con franquicia tributaria.
+                                        </p>
+                                        <p>
+                                            (Sólo si pregunta las menciones)
+                                        </p>
+                                        <p>
+                                            * Habilidades Gerenciales * Gestión Integral *Gestión Comercial y Ventas *Gestión Logística *Gestión Contable *Gestión de Personas
+                                        </p>
+                                        <p>
+                                            Agradecería si nos puede dar información de la persona que toma la decisión de aprobar una capacitación y el uso de franquicia en su empresa. Necesitamos esta información para apoyar y contactar a la persona indicada  y contarle esta información beneficiosa para el desarrollo de sus trabajadores.
+                                        </p>
+                                    </div>
+                                    <div id="Hoja4" style="display:none">
+                                        <p>
+                                            Datos del tomador de decisión:
+                                        </p>
+                                        <p>
+                                            (Registrar información en motor)
+                                            -	Nombre de contacto
+                                            -	Mail de contacto
+                                            -	Teléfono
+                                            -	Cargo que ocupa en la Empresa
+
+                                        </p>
+                                        <p>
+                                            Muchas gracias. Con esto podemos dar a conocer este beneficio y luego la Otic del Comercio, con quien estamos en alianza, se contactará para asesorar a usted y su empresa  respecto del diplomado, financiamiento, valor, inscripción y más.
+                                        </p>
+                                        <p>
+                                            Agradezco su tiempo y por su tiempo le recuerdo que ingrese a nuestra web y nos siga en redes sociales para que se entere de los nuevos beneficios que vamos poniendo a su disposición. Que tenga buen día/tarde.
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </form>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary esconder" id="btn_Anterior_t">Hoja 1</button>
+                            <button class="btn btn-primary esconder" id="btn_Siguiente_t">Hoja 2</button>
+                            <button class="btn btn-primary esconder" id="btn_Anterior">Hoja 1</button>
+                            <button class="btn btn-primary esconder" id="btn_Siguiente">Hoja 2</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
+    <script src="~/Assets/js.App/src/CampanaDiplomado.js?g=@Guid.NewGuid().ToString()"></script>
+    @*<script src="~/Assets/js.App/src/beneficios-unoporciento.js?g=@Guid.NewGuid().ToString()"></script>*@
+
+}

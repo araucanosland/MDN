@@ -26,7 +26,10 @@ var Fn = {
     }
 }
 
+function eliminarMDN(asdasdasd) {
+    debugger;
 
+}
 
 function formatFecha(value, row, index) {
 
@@ -39,7 +42,7 @@ function formatFecha(value, row, index) {
 
 
 function eliminar(rut) {
-  
+    debugger;
     bootbox.confirm({
         size: "medium",
         title: "Este Usuario se borrará definitivamente del sistema",
@@ -58,6 +61,7 @@ function eliminar(rut) {
         callback: function (result) {
 
             if (result) {
+               
                 var WebUsuarioIngreso = {
                     RutUsuario : rut,
 
@@ -285,12 +289,14 @@ var metodos = {
 
 
 function digitalLinkFormatter(value, row, index) {
-
+   
     let Nombre = row.Nombre.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
     let Cargo = row.Cargo.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
-    let RutFormato = row.Rut.replace('-', '').replace('K','');
+    let RutFormato = row.Rut.replace('-', '').replace('K', '').replace('k', '');
+
+    
     return `<a class="btn btn-primary mar-lft btn-rounded" title="Datos usuario" data-target="#modal-usuarios" data-toggle="modal" data-Rut=${row.Rut} data-Nombre=${Nombre} data-suc=${row.Cod_Sucursal} data-correo=${row.Correo} data-cargo=${Cargo} data-tipo="editar"><i class="ion-edit btn-rounded"></i></a>
-            <a class="btn btn-danger float-right btn-rounded" title="Eliminar" href="javascript:eliminar(${RutFormato})"><i class="ion-trash-a"></i></a>
+            <a class="btn btn-danger float-right btn-rounded" title="Eliminar" href="javascript:eliminarMDN(${RutFormato})"><i class="ion-trash-a"></i></a>
         `;
 
 }
@@ -300,7 +306,7 @@ function digitalLinkFormatterGalvarino(value, row, index) {
     let Nombre = row.Nombre.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
     let Cargo = row.Cargo.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
     let Sucursal = row.Sucursal.replace(" ", "%").replace(" ", "%").replace(" ", "%").replace(" ", "%")
-    let RutFormato = row.Rut.replace('-', '').replace('K', '');
+    let RutFormato = row.Rut.replace('-', '').replace('K', '').replace('k', '');
     return `<a class="btn btn-primary mar-lft btn-rounded" title="Datos usuario" data-target="#modal-usuarios-galvarino" data-toggle="modal" data-Rut=${row.Rut} data-Nombre=${Nombre} data-suc=${row.Cod_of_galvarino} data-correo=${row.Correo} data-cargo=${Cargo} data-tipo="editarGalvarino"><i class="ion-edit btn-rounded"></i></a>
             <a class="btn btn-danger float-right btn-rounded" title="Eliminar" href="javascript:eliminarGalvarino(${RutFormato})"><i class="ion-trash-a"></i></a>
             `;
@@ -319,6 +325,10 @@ $.fn.datepicker.dates['es'] = {
     weekStart: 1
 };
 $(function () {
+
+
+   
+
 
 
     $('#index-dp-component .input-group.date').datepicker({

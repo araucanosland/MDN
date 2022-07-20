@@ -10,10 +10,7 @@ namespace CRM.Areas.AppPage.Controllers
     {
         // GET: AppPage/Digitalizacion
 
-        public ActionResult Prueba()
-        {
-            return View();
-        }
+      
         public ActionResult Index()
         {
 

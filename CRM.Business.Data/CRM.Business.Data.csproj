@@ -48,6 +48,7 @@
     <Compile Include="AsignacionDataAccess.cs" />
     <Compile Include="AusenciaDataAccess.cs" />
     <Compile Include="BaseCampagnaDataAccess.cs" />
+    <Compile Include="CampanaDiplomadoDataAccess.cs" />
     <Compile Include="CargasFamiliaresDataAccess.cs" />
     <Compile Include="CarteraEmpresaDataAccess.cs" />
     <Compile Include="CarteraFFVVDataAccess.cs" />

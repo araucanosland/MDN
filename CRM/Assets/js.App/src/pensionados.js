@@ -968,6 +968,7 @@ var appPensionadosModal = new Vue({
 
         },
         ModalCargaRBContactoSI() {
+          
             $("#dvRbMedioSi").html("");
             // $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-estado-gestion-pensionados", { Padre: 6 }, function (datos) {
             fetch(`http://${motor_api_server}:4002/pensionados/lista-estado-gestion/6`, {
@@ -977,11 +978,15 @@ var appPensionadosModal = new Vue({
             })
                 .then(response => response.json())
                 .then(datos => {
+                    debugger;
                     $.each(datos, function (i, e) {
-                        var lb = $('<label>').prop('for', `contacto-rd-${e.id}`).text(e.nombre);
-                        var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'rbContactoSIMedio', id: `contacto-rd-${e.id}` }).val(e.id)
-                        var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
-                        $("#dvRbMedioSi").append(dv)
+                        if (e.id != "602" && e.id != "603" && e.id != "604" && e.id != "605" && e.id != "606") {
+                            var lb = $('<label>').prop('for', `contacto-rd-${e.id}`).text(e.nombre);
+                            var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'rbContactoSIMedio', id: `contacto-rd-${e.id}` }).val(e.id)
+                            var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
+                            $("#dvRbMedioSi").append(dv)
+                        }
+                       
                     });
                 });
 
@@ -1247,6 +1252,7 @@ var appPensionadosModal = new Vue({
                         }
                         else if (respuesta[0].ges_estado_gst == 3) {
                             setTimeout(function () {
+                               
                                 $("#contacto-rdInteres-" + respuesta[0].ges_estado_gst).prop('checked', true);
                                 $("#contacto-rdInteres-" + respuesta[0].ges_estado_gst).trigger("click");
                                 $('#divInteresNoInteresado').css('display', 'none');
@@ -1350,11 +1356,69 @@ var appPensionadosModal = new Vue({
                 .then(respuesta => {
                     if (respuesta.length > 0) {
                         if (respuesta[0].con_contacto == 'SI') {
+                            debugger;
                             //render.ModalCargaRBContactoSI();
                             $('#lbTitulo').html(respuesta[0].nomContatoSi);
                             $("#rdkContactoNO").prop('checked', false);
                             $("#rdkContactoSi").prop('checked', true);
+
+                            if (respuesta[0].con_forma_contacto == "601" || respuesta[0].con_forma_contacto == "602" || respuesta[0].con_forma_contacto == "603" || respuesta[0].con_forma_contacto == "604" || respuesta[0].con_forma_contacto == "605" || respuesta[0].con_forma_contacto == "606") {
+                                $("#dvRbMedioSi").html("");
+                                // $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-estado-gestion-pensionados", { Padre: 6 }, function (datos) {
+                                fetch(`http://${motor_api_server}:4002/pensionados/lista-estado-gestion/6`, {
+                                    method: 'GET',
+                                    mode: 'cors',
+                                    cache: 'default'
+                                })
+                                    .then(response => response.json())
+                                    .then(datos => {
+                                        debugger;
+                                        $.each(datos, function (i, e) {
+                                            if (e.id == "601"|| e.id == "602" || e.id == "603" || e.id == "604" || e.id == "605" || e.id == "606" ) {
+                                                var lb = $('<label>').prop('for', `contacto-rd-${e.id}`).text(e.nombre);
+                                                var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'rbContactoSIMedio', id: `contacto-rd-${e.id}` }).val(e.id)
+                                                var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
+                                                $("#dvRbMedioSi").append(dv)
+                                            }
+                                           
+                                        });
+                                        $("#contacto-rd-" + respuesta[0].con_forma_contacto).prop('checked', true);
+                                    });
+                               
+                                
+                            }
+                            else {
+                                $("#dvRbMedioSi").html("");
+                                // $.SecGetJSON(BASE_URL + "/motor/api/Gestion/lista-estado-gestion-pensionados", { Padre: 6 }, function (datos) {
+                                fetch(`http://${motor_api_server}:4002/pensionados/lista-estado-gestion/6`, {
+                                    method: 'GET',
+                                    mode: 'cors',
+                                    cache: 'default'
+                                })
+                                    .then(response => response.json())
+                                    .then(datos => {
+                                        debugger;
+                                        $.each(datos, function (i, e) {
+                                            debugger;
+                                            if ( e.id != "602" && e.id != "603" && e.id != "604" && e.id != "605" && e.id != "606") {
+                                                var lb = $('<label>').prop('for', `contacto-rd-${e.id}`).text(e.nombre);
+                                                var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'rbContactoSIMedio', id: `contacto-rd-${e.id}` }).val(e.id)
+                                                var dv = $('<div>').addClass('radio').css('margin-top', '-2px').append(inp).append(lb)
+                                                $("#dvRbMedioSi").append(dv)
+                                            }
+
+                                        });
+                                        $("#contacto-rd-" + respuesta[0].con_forma_contacto).prop('checked', true);
+                                    });
+
+                            }
+                            
+                            
+                           
+                           
+                           
                             $("#contacto-rd-" + respuesta[0].con_forma_contacto).prop('checked', true);
+
                             $('#txtObservacionContacto').val(respuesta[0].con_no_observacion_contacto)
                             $('#btn_contacto').attr('disabled', true);
                             $('#btn_contacto').attr('disabled', false);
@@ -2708,12 +2772,12 @@ var appPensionadosProspectos = new Vue({
                 marca: 'prospecto',
                 periodo: periodo,
             };
-            debugger;
+           
             $.SecGetJSON(BASE_URL + "/motor/api/pensionados/busca_prospecto", { rut: rut_, periodo: periodo }, function (response) {
-                debugger;
+               
                /* $.each(response, function (i, datos) {*/
                     if (response.id != 0) {
-                        debugger;
+                       
                         $(Swal.fire({
                             title: 'Pensionado ya existe en campaña',
                             icon: 'error',
