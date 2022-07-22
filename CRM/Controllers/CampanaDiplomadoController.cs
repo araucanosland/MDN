@@ -27,7 +27,9 @@ namespace CRM.Controllers
         [Route("listar_campana_diplomado")]
         public IEnumerable<CampanaDiplomadoEntity> Listar_Lead(string rut, string nombreempresa, string nombrepunto)
         {
-            List<CampanaDiplomadoEntity> diplo = CampanaDiplomadoDataAccess.ListaCampanaDiplomado(rut, nombreempresa, nombrepunto);
+            CookieHeaderValue cookie = Request.Headers.GetCookies("Oficina").FirstOrDefault();
+            int codOficina = Convert.ToInt32(cookie.Cookies.FirstOrDefault(s => s.Name == "Oficina").Value);            
+            List<CampanaDiplomadoEntity> diplo = CampanaDiplomadoDataAccess.ListaCampanaDiplomado(rut, nombreempresa, nombrepunto, codOficina);
             return diplo;
         }
 

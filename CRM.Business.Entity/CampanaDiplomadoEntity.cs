@@ -23,6 +23,11 @@ namespace CRM.Business.Entity
         public DateTime Fecha_Ingreso { get; set; }
         public string Estado_Encuesta { get; set; }
         public string SubEstado { get; set; }
+        public string Estamento_r { get; set; }
+        public string Cargo_r { get; set; }
+        public string Nombre_r { get; set; }
+        public long Fono_r { get; set; }
+        public string Mail_r { get; set; }
 
     }
 

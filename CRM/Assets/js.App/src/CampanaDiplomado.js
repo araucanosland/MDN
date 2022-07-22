@@ -1,6 +1,9 @@
 ﻿window.cluster_;
 window.rutEjecutivo;
 window.NOMBRE_Resolutor;
+window.encuesta_;
+window.sestado_;
+window.ClusterActual_;
 var metodos = {
     CargaCookie: function () {
       
@@ -53,7 +56,7 @@ function formatoFecha(value, row, index) {
 
 function idFormatter(value, row, index) {
 
-    return `<a href="${value}" class="btn-link" data-id="${value}" data-cluster="${row.Cluster}" data-rut="${row.Rut_Empresa}" data-empresa="${row.Nombre_Empresa}" data-punto="${row.Nombre_Punto}" data-oficina="${row.Oficina}" data-zona="${row.Zona}" data-estamento="${row.Estamento}" data-cargo="${row.Cargo}" data-nombre="${row.Nombre_Contacto}" data-fono="${row.Fono}" data-mail="${row.Mail}" data-toggle="modal" data-target="#mdl_data_gestion_diplomado" data-backdrop="static" data-keyboard="false"  >${value}</a>`;
+    return `<a href="${value}" class="btn-link" data-id="${value}" data-sestado="${row.SubEstado}" data-encuesta="${row.Estado_Encuesta}" data-cluster="${row.Cluster}" data-rut="${row.Rut_Empresa}" data-empresa="${row.Nombre_Empresa}" data-punto="${row.Nombre_Punto}" data-oficina="${row.Oficina}" data-zona="${row.Zona}" data-estamento="${row.Estamento}" data-cargo="${row.Cargo}" data-nombre="${row.Nombre_Contacto}" data-fono="${row.Fono}" data-mail="${row.Mail}" data-cargor="${row.Cargo_r}" data-nombrer="${row.Nombre_r}" data-fonor="${row.Fono_r}" data-mailr="${row.Mail_r}" data-toggle="modal" data-target="#mdl_data_gestion_diplomado" data-backdrop="static" data-keyboard="false"  >${value}</a>`;
 }
 
 $(function () {
@@ -94,7 +97,8 @@ $(function () {
 
     $('#mdl_data_gestion_diplomado').on('show.bs.modal', async (event) => {
 
-        $('#mdl_Estamento_R').val("");
+        $('#mdl_llamado').val("0");
+        //$('#mdl_Estamento_R').val("");
         $('#mdl_Cargo_R').val("");
         $('#mdl_Nombre_R').val("");
         $('#mdl_Fono_R').val("");
@@ -120,19 +124,26 @@ $(function () {
         $('#mdl_Estamento').val($(event.relatedTarget).data('estamento'));
         $('#mdl_Cargo').val($(event.relatedTarget).data('cargo'));
         $('#mdl_Nombre').val($(event.relatedTarget).data('nombre'));
-        //var NOMBRE_Resolutor = $(event.relatedTarget).data('nombre');
         $('#mdl_Fono').val($(event.relatedTarget).data('fono'));
         $('#mdl_Mail').val($(event.relatedTarget).data('mail'));
 
         cluster_ = $(event.relatedTarget).data('cluster').replace(/\s+/g, '');
+        encuesta_ = $(event.relatedTarget).data('encuesta').replace(/\s+/g, '');
+        sestado_ = $(event.relatedTarget).data('sestado');
+
         $('#tab_script1').css("display", "none");
         $('#tab_script2').css("display", "none");
 
-        $('#mdl_Estamento_R').prop('disabled', false);
+        //$('#mdl_Estamento_R').prop('disabled', false);
         $('#mdl_Cargo_R').prop('disabled', false);
         $('#mdl_Nombre_R').prop('disabled', false);
         $('#mdl_Fono_R').prop('disabled', false);
         $('#mdl_Mail_R').prop('disabled', false);
+
+        $('#nombre_t').prop('disabled', true);
+        $('#ejecutivo_t').prop('disabled', true);
+        $('#nombre_r').prop('disabled', true);
+        $('#ejecutivo_r').prop('disabled', true);
 
         if (cluster_ == "Trabajador") {
             $('#nombre_t').val($(event.relatedTarget).data('nombre'));
@@ -142,140 +153,170 @@ $(function () {
             $("#scripttrabajador").css("display", "block");
             $("#Hoja3").css("display", "block");
             $("#Hoja4").css("display", "none");
-            $("#btn_Anterior").css("display", "none");
-            $("#btn_Siguiente").css("display", "none");
-            //$("#tab_script2").tab('show');
-            //$('#tab_script2').css("display", "block");
-            //$('#tab_script1').prop('disabled', true);
+            $("#btn_Anterior_t").css("visibility", "visible");
+            $("#btn_Siguiente_t").css("visibility", "visible");
+            $("#btn_Anterior").css("visibility", "hidden");
+            $("#btn_Siguiente").css("visibility", "hidden");
+            debugger;
+            //$('#mdl_Estamento_R').val($(event.relatedTarget).data('estar'));
+            $('#mdl_Cargo_R').val($(event.relatedTarget).data('cargor'));
+            $('#mdl_Nombre_R').val($(event.relatedTarget).data('nombrer'));
+            $('#mdl_Fono_R').val($(event.relatedTarget).data('fonor'));
+            $('#mdl_Mail_R').val($(event.relatedTarget).data('mailr'));
+            
+            if (sestado_ == "Llamar a Resolutor") {
+                $('#nombre_r').val($('#mdl_Nombre_R').val());
+                $('#ejecutivo_r').val(rutEjecutivo);
+                $("#contactollamado").css("display", "block");
+                $("#scriptresolutor").css("display", "block");
+                $("#scripttrabajador").css("display", "none");
+                $("#Hoja1").css("display", "block");
+                $("#Hoja2").css("display", "none");
+                $("#btn_Anterior").css("visibility", "visible");
+                $("#btn_Siguiente").css("visibility", "visible");
+                $("#btn_Anterior_t").css("visibility", "hidden");
+                $("#btn_Siguiente_t").css("visibility", "hidden");
+                metodos.CargaEstadoGestion();
+                metodos.CargaSubEstadoGestion(0);
+            }
+
 
             //guardar datos resolutor
         }
         else { //resolutor
-            $('#nombre_r').val($(event.relatedTarget).data('nombre'));
+
             $('#ejecutivo_r').val(rutEjecutivo);
             $("#contactollamado").css("display", "block");
             $("#scriptresolutor").css("display", "block");
             $("#scripttrabajador").css("display", "none");
             $("#Hoja1").css("display", "block");
             $("#Hoja2").css("display", "none");
-            $("#btn_Anterior_t").css("display", "none");
-            $("#btn_Siguiente_t").css("display", "none");
+            $("#btn_Anterior").css("visibility", "visible");
+            $("#btn_Siguiente").css("visibility", "visible");
+            $("#btn_Anterior_t").css("visibility", "hidden");
+            $("#btn_Siguiente_t").css("visibility", "hidden");
             //$("#tab_script1").tab('show');
             //$('#tab_script1').css("display", "block");
-            $('#mdl_Estamento_R').val($(event.relatedTarget).data('estamento'));
-            $('#mdl_Cargo_R').val($(event.relatedTarget).data('cargo'));
-            $('#mdl_Nombre_R').val($(event.relatedTarget).data('nombre'));
-            $('#mdl_Fono_R').val($(event.relatedTarget).data('fono'));
-            $('#mdl_Mail_R').val($(event.relatedTarget).data('mail'));
+
+            
+            if (encuesta_ == '') {
+                debugger;
+                $('#nombre_r').val($(event.relatedTarget).data('nombre'));
+                //$('#mdl_Estamento_R').val($(event.relatedTarget).data('estamento'));
+                $('#mdl_Cargo_R').val($(event.relatedTarget).data('cargo'));
+                $('#mdl_Nombre_R').val($(event.relatedTarget).data('nombre'));
+                $('#mdl_Fono_R').val($(event.relatedTarget).data('fono'));
+                $('#mdl_Mail_R').val($(event.relatedTarget).data('mail'));
+            }
+            else {
+                $('#nombre_r').val($(event.relatedTarget).data('nombrer'));
+                //$('#mdl_Estamento_R').val($(event.relatedTarget).data('estar'));
+                $('#mdl_Cargo_R').val($(event.relatedTarget).data('cargor'));
+                $('#mdl_Nombre_R').val($(event.relatedTarget).data('nombrer'));
+                $('#mdl_Fono_R').val($(event.relatedTarget).data('fonor'));
+                $('#mdl_Mail_R').val($(event.relatedTarget).data('mailr'));
+            }           
+
         }
     });
 
     $('#btn_Guardar').on("click", function () {
 
-        if ($('#mdl_Estamento_R').val() == '') {
-            $.niftyNoty({
-                type: 'warning',
-                message: '<strong>Advertencia, Debe ingresar Estamento Resolutor</strong>',
-                container: '#msj',
-                timer: 3000
-            });
-            $("#mdl_Estamento_R").focus();
-            return false;
-        }
+        //if ($('#mdl_Estamento_R').val() == '') {
+        //    $.niftyNoty({
+        //        type: 'warning',
+        //        message: '<strong>Advertencia, Debe ingresar Estamento Resolutor</strong>',
+        //        container: '#msj',
+        //        timer: 3000
+        //    });
+        //    $("#mdl_Estamento_R").focus();
+        //    return false;
+        //}
 
-        if ($('#mdl_Cargo_R').val() == '') {
-            $.niftyNoty({
-                type: 'warning',
-                message: '<strong>Advertencia, Debe ingresar Cargo Resolutor</strong>',
-                container: '#msj',
-                timer: 3000
-            });
-            $("#mdl_Cargo_R").focus();
-            return false;
-        }
-
-        if ($('#mdl_Nombre_R').val() == '') {
-            $.niftyNoty({
-                type: 'warning',
-                message: '<strong>Advertencia, Debe ingresar Nombre Resolutor</strong>',
-                container: '#msj',
-                timer: 3000
-            });
-            $("#mdl_Nombre_R").focus();
-            return false;
-        }
-
-        if ($('#mdl_Fono_R').val() == '') {
-            $.niftyNoty({
-                type: 'warning',
-                message: '<strong>Advertencia, Debe ingresar Fono Resolutor</strong>',
-                container: '#msj',
-                timer: 3000
-            });
-            $("#mdl_Fono_R").focus();
-            return false;
-        }
-
-        if (isNaN($('#mdl_Fono_R').val())) {
-            $.niftyNoty({
-                type: 'warning',
-                message: '<strong>Advertencia, Formato de Fono Resolutor no válido</strong>',
-                container: '#msj',
-                timer: 3000
-            });
-            $("#mdl_Fono_R").focus();
-            return false;
-        }
-
-        if ($('#mdl_Fono_R').val() != '') {
-            if ($('#mdl_Fono_R').val().length != 9) {
+        if (($('#ModaldllSubEstadoGestion').val() == '100') || ($('#ModaldllEstadoGestion').val() == '3')) {
+            if ($('#mdl_Cargo_R').val() == '') {
                 $.niftyNoty({
                     type: 'warning',
-                    message: '<strong>Advertencia, Largo de Fono Resolutor no válido</strong>',
+                    message: '<strong>Advertencia, Debe ingresar Cargo Resolutor</strong>',
                     container: '#msj',
                     timer: 3000
                 });
-                $('#mdl_Fono_R').focus();
+                $("#mdl_Cargo_R").focus();
                 return false;
             }
-        }
 
-        if ($('#mdl_Mail_R').val() == '') {
-            $.niftyNoty({
-                type: 'warning',
-                message: '<strong>Advertencia, Debe ingresar Mail</strong>',
-                container: '#msj',
-                timer: 3000
-            });
-            $("#mdl_Mail_R").focus();
-            return false;
-        }
-
-        if ($('#mdl_Mail_R').val() != '') {
-            var regex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
-            if (!regex.test($('#mdl_Mail_R').val().trim())) {
+            if ($('#mdl_Nombre_R').val() == '') {
                 $.niftyNoty({
                     type: 'warning',
-                    message: '<strong>Formato de Email no válido, favor revisar</strong>',
+                    message: '<strong>Advertencia, Debe ingresar Nombre Resolutor</strong>',
+                    container: '#msj',
+                    timer: 3000
+                });
+                $("#mdl_Nombre_R").focus();
+                return false;
+            }
+
+            if ($('#mdl_Fono_R').val() == '') {
+                $.niftyNoty({
+                    type: 'warning',
+                    message: '<strong>Advertencia, Debe ingresar Fono Resolutor</strong>',
+                    container: '#msj',
+                    timer: 3000
+                });
+                $("#mdl_Fono_R").focus();
+                return false;
+            }
+
+            if (isNaN($('#mdl_Fono_R').val())) {
+                $.niftyNoty({
+                    type: 'warning',
+                    message: '<strong>Advertencia, Formato de Fono Resolutor no válido</strong>',
+                    container: '#msj',
+                    timer: 3000
+                });
+                $("#mdl_Fono_R").focus();
+                return false;
+            }
+
+            if ($('#mdl_Fono_R').val() != '') {
+                if ($('#mdl_Fono_R').val().length != 9) {
+                    $.niftyNoty({
+                        type: 'warning',
+                        message: '<strong>Advertencia, Largo de Fono Resolutor no válido</strong>',
+                        container: '#msj',
+                        timer: 3000
+                    });
+                    $('#mdl_Fono_R').focus();
+                    return false;
+                }
+            }
+
+            if ($('#mdl_Mail_R').val() == '') {
+                $.niftyNoty({
+                    type: 'warning',
+                    message: '<strong>Advertencia, Debe ingresar Mail</strong>',
                     container: '#msj',
                     timer: 3000
                 });
                 $("#mdl_Mail_R").focus();
                 return false;
             }
-        }
 
-        if (cluster_ == "Resolutor") {
-            if ($('#mdl_llamado').val() == '0') {
-                $.niftyNoty({
-                    type: 'warning',
-                    message: '<strong>Advertencia, Debe seleccionar Contacto realizado</strong>',
-                    container: '#msj',
-                    timer: 3000
-                });
-                return false;
+            if ($('#mdl_Mail_R').val() != '') {
+                var regex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+                if (!regex.test($('#mdl_Mail_R').val().trim())) {
+                    $.niftyNoty({
+                        type: 'warning',
+                        message: '<strong>Formato de Email no válido, favor revisar</strong>',
+                        container: '#msj',
+                        timer: 3000
+                    });
+                    $("#mdl_Mail_R").focus();
+                    return false;
+                }
             }
         }
+
         if ($('#ModaldllEstadoGestion').val() == '0') {
             $.niftyNoty({
                 type: 'warning',
@@ -298,6 +339,18 @@ $(function () {
             }
         }
 
+        if ((cluster_ == "Resolutor") && ($('#ModaldllEstadoGestion').val()== '3')) {
+            if ($('#mdl_llamado').val() == '0') {
+                $.niftyNoty({
+                    type: 'warning',
+                    message: '<strong>Advertencia, Debe seleccionar Contactar OTIC</strong>',
+                    container: '#msj',
+                    timer: 3000
+                });
+                return false;
+            }
+        }
+
         debugger;
         var LLamado_ = null;
 
@@ -305,10 +358,11 @@ $(function () {
             LLamado_ = $('#mdl_llamado').val();
         }
 
-
+        var pasaresolutor = $('#ModaldllSubEstadoGestion').val();
+        debugger;
         var webGestion = {
             Id_lead: $('#txtId').val(),
-            Estamento: $('#mdl_Estamento_R').val(),
+            /*Estamento: $('#mdl_Estamento_R').val(),*/
             Cargo: $('#mdl_Cargo_R').val(),
             Nombre: $('#mdl_Nombre_R').val(),
             Fono: $('#mdl_Fono_R').val(),
@@ -317,7 +371,7 @@ $(function () {
             Llamado: LLamado_,
             Estado_id: $('#ModaldllEstadoGestion').val(),
             SubEstado_id: $('#ModaldllSubEstadoGestion').val(),
-            RutEjecutivo: $('#rutejecutivo').val()
+            RutEjecutivo: $('#rutejecutivo').val(),
         }
         debugger;
         $.SecPostJSON(BASE_URL + "/motor/api/campanadiplomado/Guardar_Gestion_Diplomado", webGestion, function (respuesta) {
@@ -329,7 +383,22 @@ $(function () {
                     message: '<strong>Correcto, Datos Guardados Correctamente!!! </strong>',
                     timer: 5000
                 });
-                $('#btn_Guardar').prop('disabled', true);
+                if (pasaresolutor == 100) {
+                    $('#nombre_r').val($('#mdl_Nombre_R').val());
+                    $('#ejecutivo_r').val(rutEjecutivo);
+                    $("#contactollamado").css("display", "block");
+                    $("#scriptresolutor").css("display", "block");
+                    $("#scripttrabajador").css("display", "none");
+                    $("#Hoja1").css("display", "block");
+                    $("#Hoja2").css("display", "none");
+                    $("#btn_Anterior").css("visibility", "visible");
+                    $("#btn_Siguiente").css("visibility", "visible");
+                    $("#btn_Anterior_t").css("visibility", "hidden");
+                    $("#btn_Siguiente_t").css("visibility", "hidden");
+                    metodos.CargaEstadoGestion();
+                    metodos.CargaSubEstadoGestion(0);
+                }
+                /*$('#btn_Guardar').prop('disabled', true);*/
 
             }
             else {
@@ -345,21 +414,25 @@ $(function () {
     });
 
     $('#btn_Anterior').on("click", function () {
+        debugger;
         $("#Hoja1").css("display", "block");
         $("#Hoja2").css("display", "none");
         return false;
     });
     $('#btn_Siguiente').on("click", function () {
+        debugger;
         $("#Hoja1").css("display", "none");
         $("#Hoja2").css("display", "block");
         return false;
     });
     $('#btn_Anterior_t').on("click", function () {
+        debugger;
         $("#Hoja3").css("display", "block");
         $("#Hoja4").css("display", "none");
         return false;
     });
     $('#btn_Siguiente_t').on("click", function () {
+        debugger;
         $("#Hoja3").css("display", "none");
         $("#Hoja4").css("display", "block");
         return false;
