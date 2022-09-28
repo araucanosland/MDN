@@ -12,13 +12,14 @@ namespace CRM.Business.Data
 {
     public static class CampanaDiplomadoDataAccess
     {
-        public static List<CampanaDiplomadoEntity> ListaCampanaDiplomado(string rut, string nombreempresa, string nombrepunto)
+        public static List<CampanaDiplomadoEntity> ListaCampanaDiplomado(string rut, string nombreempresa, string nombrepunto, int oficina)
         {
             Parametros parametros = new Parametros()
             {
                 new Parametro("@RutEmpresa",rut),
                 new Parametro("@NomEmpresa",nombreempresa),
                 new Parametro("@NomPunto",nombrepunto),
+                new Parametro("@Oficina",oficina)
             };
             return DBHelper.InstanceNegocio.ObtenerColeccion("diplomado.Listar_Lead_Diplomado", parametros, CampanaDiplomadoLead);
         }
@@ -40,8 +41,13 @@ namespace CRM.Business.Data
                 Fono = row["Fono"] != DBNull.Value ? Convert.ToInt32(row["Fono"]) : 0,
                 Mail = row["Mail"] != DBNull.Value ? row["Mail"].ToString() : string.Empty,
                 Fecha_Ingreso = row["FechaIngreso"] != DBNull.Value ? Convert.ToDateTime(row["FechaIngreso"]) : new DateTime(1900, 1, 1),
-                Estado_Encuesta = row["egestion"] != DBNull.Value ? row["egestion"].ToString() : row["EstadoEncuesta"].ToString(),
-                SubEstado = row["segestion"] != DBNull.Value ? row["segestion"].ToString() : string.Empty
+                Estado_Encuesta = row["egestion"] != DBNull.Value ? row["egestion"].ToString() : string.Empty,
+                SubEstado = row["segestion"] != DBNull.Value ? row["segestion"].ToString() : string.Empty,
+                Nombre_r = row["Nombre_R"] != DBNull.Value ? row["Nombre_R"].ToString() : string.Empty,
+                Fono_r = row["Fono_R"] != DBNull.Value ? Convert.ToInt32(row["Fono_R"]) : 0,
+                Mail_r = row["Mail_R"] != DBNull.Value ? row["Mail_R"].ToString() : string.Empty,
+                //Estamento_r = row["Estamento_R"] != DBNull.Value ? row["Estamento_R"].ToString() : string.Empty,
+                Cargo_r = row["Cargo_R"] != DBNull.Value ? row["Cargo_R"].ToString() : string.Empty,
             };
         }
 
@@ -76,7 +82,6 @@ namespace CRM.Business.Data
             Parametros param = new Parametros
             {
                 new Parametro("@Id_lead", entrada.Id_lead),
-                new Parametro("@Estamento", entrada.Estamento),
                 new Parametro("@Cargo", entrada.Cargo),
                 new Parametro("@Nombre", entrada.Nombre),
                 new Parametro("@Fono", entrada.Fono),

@@ -74,9 +74,10 @@
                                         <th data-field="Rut_Empresa" data-sortable="true">Rut Empresa</th>
                                         <th data-field="Nombre_Empresa" data-sortable="true">Nombre Empresa</th>
                                         <th data-field="Nombre_Punto" data-sortable="true">Nombre Punto</th>
+                                        <th data-field="Cluster" data-sortable="true">Cluster</th>
                                         <th data-field="Oficina" data-sortable="true">Oficina</th>
                                         <th data-field="Fecha_Ingreso" data-formatter="formatoFecha" data-sortable="true">Fecha Ingreso</th>
-                                        <th data-field="Estado_Encuesta" data-sortable="true">Estado Encuesta</th>
+                                        <th data-field="Estado_Encuesta" data-sortable="true">Estado</th>
                                         <th data-field="SubEstado" data-sortable="true">sub estado</th>
                                     </tr>
                                 </thead>
@@ -179,12 +180,12 @@
                                     <h4 class="panel-title">Resolutor</h4>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-3">
+                                    @*<div class="col-sm-3">
                                         <div class="form-group">
                                             <label class="control-label">Estamento</label>
                                             <input class="form-control" id="mdl_Estamento_R" type="text" disabled>
                                         </div>
-                                    </div>
+                                    </div>*@
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label class="control-label">Cargo</label>
@@ -215,7 +216,7 @@
                                 <div class="row" id="contactollamado">
                                     <div class="col-sm-8">
                                         <div class="form-group">
-                                            <label class="control-label">Contacto realizado por llamado</label>
+                                            <label class="control-label">Quiere ser contactado por OTIC</label>
                                             <select class="form-control" id="mdl_llamado" name="mdl_llamado">
                                                 <option value="0">Seleccione</option>
                                                 <option value="SI">SI</option>
@@ -260,16 +261,16 @@
                             <form>
                                 <div class="row" id="scriptresolutor" style="display:none">
                                     <sub>BENEFICIO DIPLOMADO EN GESTIÓN DE EMPRESAS – UNIVERSIDAD ANDRÉS BELLO</sub>
-                                    <p> </p>
+                                    <p>R </p>
                                     <div id="Hoja1" style="display:none">
                                         <p>
                                             EJEC – Buenos días/Tardes, mi nombre es
                                         </p>
-                                        <input class="form-control" id="ejecutivo_r" type="text">
+                                        <input class="form-control" id="ejecutivo_r" type="text" disabled >
                                         <p>
                                             llamo de Caja de Compensación, La Araucana, ¿hablo con la Sra./Sr.
                                         </p>
-                                        <input class="form-control" id="nombre_r" type="text">
+                                        <input class="form-control" id="nombre_r" type="text" disabled >
                                         <p>
                                             AFIL – Esperar respuesta y seguir
                                         </p>
@@ -280,7 +281,7 @@
                                             (Sólo si pregunta las menciones)
                                         </p>
                                         <p>
-                                            * Habilidades Gerenciales * Gestión Integral *Gestión Comercial y Ventas *Gestión Logística *Gestión Contable *Gestión de Personas
+                                            * Habilidades Gerenciales<br/> * Gestión Integral<br /> * Gestión Comercial y Ventas<br /> * Gestión Logística<br /> * Gestión Contable <br />* Gestión de Personas
                                         </p>
                                         <p>
                                             El valor especial para nuestras empresas afiliadas es de $792.000 y se financia con franquicia tributaria. Por ejemplo si tiene trabajadores con rentas imponibles menores a $1.440.000 aproximadamente, es 100% franquiciable, cumpliendo los requisitos de aprobación y asistencia.
@@ -288,9 +289,12 @@
                                     </div>
                                     <div id="Hoja2" style="display:none">
                                         <p>
-                                            (Registrar información en motor)
-                                            -	Cuál es su Mail de contacto
-                                            -	Su Teléfono
+                                            Queremos aprovechar la instancia para actualizar o confirmar sus datos y luego me indica si está interesado en el programa.
+                                        </p>
+                                        <p>                                            
+                                            (Registrar información en motor)<br />
+                                            -	Cuál es su Mail de contacto<br />
+                                            -	Su Teléfono<br />
                                             -	Su Cargo en La Empresa
                                         </p>
                                         <p>
@@ -315,16 +319,16 @@
                                 </div>
                                 <div class="row" id="scripttrabajador" style="display:none">
                                     <sub>BENEFICIO DIPLOMADO EN GESTIÓN DE EMPRESAS – UNIVERSIDAD ANDRÉS BELLO</sub>
-                                    <p> </p>
+                                    <p>T </p>
                                     <div id="Hoja3" style="display:none">
                                         <p>
                                             EJEC – Buenos días/Tardes, mi nombre es
                                         </p>
-                                        <input class="form-control" id="ejecutivo_t" type="text">
+                                        <input class="form-control" id="ejecutivo_t" type="text" disabled>
                                         <p>
                                             llamo de Caja de Compensación, La Araucana, ¿hablo con la Sra./Sr.
                                         </p>
-                                        <input class="form-control" id="nombre_t" type="text">
+                                        <input class="form-control" id="nombre_t" type="text" disabled>
                                         <p>
                                             AFIL – Esperar respuesta y seguir
                                         </p>
@@ -335,21 +339,22 @@
                                             (Sólo si pregunta las menciones)
                                         </p>
                                         <p>
-                                            * Habilidades Gerenciales * Gestión Integral *Gestión Comercial y Ventas *Gestión Logística *Gestión Contable *Gestión de Personas
+                                            * Habilidades Gerenciales<br /> * Gestión Integral<br /> * Gestión Comercial y Ventas<br /> * Gestión Logística<br /> * Gestión Contable<br /> * Gestión de Personas
                                         </p>
+                                        
+                                    </div>
+                                    <div id="Hoja4" style="display:none">
                                         <p>
                                             Agradecería si nos puede dar información de la persona que toma la decisión de aprobar una capacitación y el uso de franquicia en su empresa. Necesitamos esta información para apoyar y contactar a la persona indicada  y contarle esta información beneficiosa para el desarrollo de sus trabajadores.
                                         </p>
-                                    </div>
-                                    <div id="Hoja4" style="display:none">
                                         <p>
                                             Datos del tomador de decisión:
                                         </p>
                                         <p>
-                                            (Registrar información en motor)
-                                            -	Nombre de contacto
-                                            -	Mail de contacto
-                                            -	Teléfono
+                                            (Registrar información en motor)<br/>
+                                            -	Nombre de contacto<br />
+                                            -	Mail de contacto<br />
+                                            -	Teléfono<br />
                                             -	Cargo que ocupa en la Empresa
 
                                         </p>
