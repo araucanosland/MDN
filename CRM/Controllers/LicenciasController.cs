@@ -138,6 +138,20 @@ namespace CRM.Controllers
             return ingLc;
         }
 
+
+       //[AuthorizationRequired]
+        [HttpGet]
+        [Route("licencia-listar-oficinas")]
+        public IEnumerable<Oficinas> ListarOficinas()
+        {
+
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+           List<Oficinas> oficinas = IngresolicenciaDataAccess.ListarOficinas();
+
+            return oficinas;
+        }
+
+
         [AuthorizationRequired]
         [HttpGet]
         [Route("lista-licencias-devuelta-tata")]

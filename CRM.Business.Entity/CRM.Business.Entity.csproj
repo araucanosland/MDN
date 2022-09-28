@@ -119,6 +119,7 @@
     <Compile Include="NotificacionAsignacionEntity.cs" />
     <Compile Include="NuberespuestasEntity.cs" />
     <Compile Include="DotacionAgenteEntity.cs" />
+    <Compile Include="OficinaEntity.cs" />
     <Compile Include="PensionadosEntity.cs" />
     <Compile Include="PeriodoEntity.cs" />
     <Compile Include="PreferenciaAfiliadoEntity.cs" />

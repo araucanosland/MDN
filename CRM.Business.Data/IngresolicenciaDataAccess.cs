@@ -4,7 +4,6 @@ using CRM.Business.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 
 //------------------------------------------------------------------------------
 // <generado automáticamente>
@@ -916,6 +915,24 @@ namespace CRM.Business.Data
 
 
 
+        public static List<Oficinas> ListarOficinas()
+        {
+
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_listar_Oficinas", ConstructorOficina);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+
+        }
+
+
 
         public static List<Ingresolicencia> ListaLMresponsableCierre(string folio, DateTime diadesde, DateTime diahasta, int codOficina, string responsable, string fechaenviodesde, string fechaenviohasta)
         {
@@ -1792,6 +1809,16 @@ namespace CRM.Business.Data
                 Responsable = row["Responsable"] != DBNull.Value ? row["Responsable"].ToString() : string.Empty,
                 DescripcionEstadoRevision = row["descripcionEstadoRevision"] != DBNull.Value ? row["descripcionEstadoRevision"].ToString() : string.Empty,
                 EstadoActivo = row["EstadoEnviado"] != DBNull.Value ? row["EstadoEnviado"].ToString() : string.Empty
+            };
+        }
+
+
+        private static Oficinas ConstructorOficina(DataRow row)
+        {
+            return new Oficinas
+            {
+                 Cod_Oficina = row["Cod_Oficina"] != DBNull.Value ? Convert.ToInt32(row["Cod_Oficina"]) : 0,
+                Oficina = row["Oficina"] != DBNull.Value ? row["Oficina"].ToString() : string.Empty,
             };
         }
 
