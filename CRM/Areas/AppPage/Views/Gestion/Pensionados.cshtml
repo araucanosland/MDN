@@ -66,7 +66,6 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="col-sm-1 text-xs-center">
                             <div class="form-group">
                                 <label class="control-label">Foco</label>
@@ -75,7 +74,7 @@
                                     <option value="Base Potenciada">Base Potenciada</option>
                                     <option value="Solicitud WEB">Solicitud WEB</option>
                                     <option value="Base Desafiliados">Base Desafiliados</option>
-                                    
+
                                 </select>
                             </div>
                         </div>
@@ -88,7 +87,6 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="col-sm-2 text-xs-center" style="display:none;">
                             <div class="form-group">
                                 <label class="control-label">Sub-Estado Gestion</label>
@@ -114,11 +112,16 @@
                                 </select>
                             </div>
                         </div>
-
+                        <div id="oficina_pensionado" style="display:none;" class="col-sm-2 text-xs-center">
+                            <div class="form-group">
+                                <label class="control-label">Oficina</label>
+                                <select class="form-control" id="ddloatpensionado"></select>
+                            </div>
+                        </div>
                         <div class="col-sm-1 text-xs-center">
                             <div class="form-group">
                                 <label class="control-label"></label>
-                                <button class="btn btn-primary btn-rounded" v-on:click="handleEventoClickFiltrar" style="margin-top: 4px;">Filtrar</button>
+                                <button class="btn btn-primary btn-rounded" v-on:click="handleEventoClickFiltrar" style="margin-top: 20px;">Filtrar</button>
                             </div>
                         </div>
                         <div class="col-sm-5 text-xs-center" style="display:none;">

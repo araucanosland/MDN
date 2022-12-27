@@ -139,10 +139,18 @@ namespace CRM.Business.Data
             };
         }
 
-        public static List<DotacionEntity> ListarEntidades(int periodo)
+        public static List<DotacionEntity> ListarEntidades(int periodo,string cargo,int codOficina)
         {
-            Parametro p = new Parametro("@periodo", periodo);
-            return DBHelper.InstanceCRM.ObtenerColeccion("dbo.spMotor_Dotacion_ListarByPeriodo", p, ConstructorEntidad);
+
+            Parametros p = new Parametros
+            {
+                new Parametro("@periodo", periodo),
+                new Parametro("@cargo", cargo),
+               new Parametro("@codOficina", codOficina),
+                
+            };
+
+            return DBHelper.InstanceCRM.ObtenerColeccion("dbo.spMotor_Dotacion_Cargo_ListarByPeriodo_Agente_T", p, ConstructorEntidad);
         }
 
         public static List<DotacionEntity> ListarEntidadesEspecial(int periodo)

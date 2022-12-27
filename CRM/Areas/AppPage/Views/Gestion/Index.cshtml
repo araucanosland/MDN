@@ -182,8 +182,6 @@
                                         </div>
                                     </div>
 
-
-
                                     <div class="col-sm-2 text-xs-center">
                                         <div class="form-group">
                                             <label class="control-label">Estado</label>
@@ -202,7 +200,6 @@
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="col-sm-1 text-xs-center">
                                         <div class="form-group">
                                             <label class="control-label">Prioridad</label>
@@ -212,7 +209,6 @@
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="col-sm-2 text-xs-center">
                                         <div class="form-group">
                                             <label class="control-label">Estado Cliente</label>
@@ -222,7 +218,6 @@
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="col-sm-2 text-xs-center">
                                         <div class="form-group">
                                             <label class="control-label">Tipo Campaña</label>
@@ -232,7 +227,6 @@
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="col-sm-1 text-xs-center">
                                         <div class="form-group">
                                             <label class="control-label">Derivación</label>
@@ -253,10 +247,21 @@
                                             <option value="PROX5DIAS">Prox. 5 dias</option>
                                         </select>
                                     </div>
+
+                                   
                                 </div>
 
 
+
                                 <div class="row" style="margin-top: 23px;">
+
+                                    <div id="oficina_acuerdopago" style="margin-top: -22px;display:none;" class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Oficina</label>
+                                            <select class="form-control" id="ddloatacuerdopago"></select>
+                                        </div>
+                                    </div>
+
                                     <div class="col-sm-3">
                                         <button id="btn_recuperaciones_acuerdo" class="btn btn-default" v-on:click="handleEventoClickFiltrar">Filtrar</button>
                                     </div>
@@ -264,14 +269,18 @@
                                         <h4>Para visualizar datos debe presionar el botón filtrar.</h4>
                                     </div>
                                 </div>
-                            </div>
 
+
+                              
+
+                            </div>
                             <div class="form-group pull-right" style="margin-top: 10px;">
                                 <button data-target="#demo-lg-modal-search" data-toggle="modal" class="btn btn-primary" type="button">
                                     <i class="pli-search-on-cloud"></i>
                                 </button>
                             </div>
-                            <span class="counter pull-right"></span>
+
+                                       <span class="counter pull-right"></span>
                             <table id="tabla_recuperaciones_acuerdo"
                                    class="table table-bordered table-hover toggle-circle"
                                    data-search="true"
@@ -340,7 +349,6 @@
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="col-sm-2 text-xs-center">
                                         <div class="form-group">
                                             <label class="control-label">Tipo Campaña</label>
@@ -368,9 +376,17 @@
                                             </select>
                                         </div>
                                     </div>
+                                   
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-3">
+                                    <div id="oficina_normalizacion" style="display:none" class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Oficina</label>
+                                            <select class="form-control" id="ddloatnormalizacion">
+                                                                                         </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3" style="margin-top:25px">
                                         <button id="btn_recuperaciones" class="btn btn-default" v-on:click="handleEventoClickFiltrar">Filtrar</button>
                                     </div>
                                     <div class="col-sm-6">
@@ -471,8 +487,16 @@
                                 </div>
 
                                 <div class="row">
+
+                                    <div id="oficina_segurocesantia" style="display:none;" class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Oficina</label>
+                                            <select class="form-control" id="ddloatsrgurocesantia"></select>
+                                        </div>
+                                    </div>
+
                                     <div class="col-sm-3">
-                                        <button class="btn btn-default" v-on:click="handleEventoClickFiltrar">Filtrar</button>
+                                        <button class="btn btn-default" style="margin-top: 25px;" v-on:click="handleEventoClickFiltrar">Filtrar</button>
                                     </div>
                                     <div class="col-sm-6">
                                         <h4>Para visualizar datos debe presionar el botón filtrar.</h4>
@@ -589,9 +613,17 @@
                                         <label class="control-label">Rut</label>
                                         <input id="demo-foo-searchDR" type="text" placeholder="Ej. 11.111.111-1" class="form-control" autocomplete="off">
                                     </div>
+                                    <div id="oficina_derivaciones" style="display:none;" class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Oficina</label>
+                                            <select class="form-control" id="ddloatderivaciones"></select>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-3">
+                                       
                                         <button id="btn_derivaciones" class="btn btn-default">Filtrar</button>
                                     </div>
                                     <div class="col-sm-6">

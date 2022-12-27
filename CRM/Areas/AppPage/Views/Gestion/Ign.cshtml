@@ -2,9 +2,7 @@
 <link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
-
 <div id="page-content">
-
     <div id="contIGN">
         <div class="panel" style="border-radius: 7px;">
             <div class="panel-heading">
@@ -12,7 +10,6 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-
                     <div class="col-sm-3 text-xs-center">
                         <div class="form-group">
                             <label class="control-label">ESTADO</label>
@@ -31,7 +28,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="col-sm-3 text-xs-center">
                         <div class="form-group">
                             <label class="control-label">ESTADO NOMINA</label>
@@ -42,7 +38,18 @@
                         </div>
                     </div>
 
+                   
+                    <div class="col-sm-3 text-xs-center">
+                        <div id="oficina_ign" style="display:none;">
+                            <div class="form-group">
+                                <label class="control-label">Oficina</label>
+                                <select class="form-control" id="ddloatign"></select>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-sm-1 text-xs-center">
+
                         <div class="form-group">
                             <label class="control-label"></label>
                             <button class="btn btn-primary btn-rounded" v-on:click="cargalistaIgn" style="margin-top: 21px;">Filtrar</button>
@@ -51,7 +58,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel" style="border-radius: 7px;">
@@ -65,7 +71,6 @@
                                data-page-size="50"
                                data-search="true"
                                data-pagination="true" id="tblIgn" style="font-size: 10px">
-
                             <thead>
                                 <tr>
                                     <th data-field="rutEmpresa" data-sortable="true" data-formatter="idFormatterMoldalIgn">RUT EMPRESA</th>
@@ -85,7 +90,6 @@
         </div>
     </div>
 </div>
-
 
 <div id="modal_ign" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -107,7 +111,6 @@
                     </ul>
                     <div class="tab-content msjAcuerdo_pago" style="box-shadow: 0 0 0 !important;">
                         <div id="tab-gestion-ign" class="tab-pane fade active in">
-
                             <div class="panel-body">
                                 <form id="form-info-pensionado" action="#" method="post">
                                     <div class="row">
@@ -117,7 +120,6 @@
                                                 <input class="form-control" :value="dataModal.id_lead" id="txtIdIng" type="text" disabled>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label class="control-label">Nombre</label>
@@ -132,38 +134,32 @@
                                                 <input class="form-control" :value="dataModal.rutEmpresa" id="txtRutEmpIng" type="text" disabled>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label class="control-label">Cantidad Nominas</label>
                                                 <input class="form-control" :value="dataModal.nNominas" type="text" disabled>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label class="control-label" id="labelrutempresa">Cantidad Folios</label>
                                                 <input class="form-control" :value="dataModal.folio" type="text" disabled>
                                             </div>
                                         </div>
-
                                     </div>
                                     <div class="row">
-
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label class="control-label" id="labelrutempresa">Monto Nomina</label>
                                                 <input class="form-control" :value=" '$ ' + dataModal.montoNomina" type="text" disabled>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label class="control-label" id="labelrutempresa">Mon. N. Pendiente</label>
                                                 <input class="form-control" :value="'$ ' + dataModal.montoNominaPendiente" type="text" disabled>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label class="control-label" id="labelempresa">IGN Actual</label>
@@ -176,7 +172,6 @@
                                                 <input class="form-control" :value="dataModal.ignAnterior + ' %'" type="text" disabled>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label class="control-label" id="labelempresa">Prom. IGN Ult. 3M</label>
@@ -244,7 +239,6 @@
                                             {{gestion.fechaCompromiso != undefined && gestion.fechaCompromiso !=null ? gestion.fechaCompromiso: '------'}}
                                         </p>
                                         <p class="list-group-item-text">
-
                                             <strong>Estado: </strong>{{gestion.Nestado != undefined && gestion.Nestado != null ? gestion.Nestado.nombreEstado: '------'}}
                                             @* <strong>Sub-Estado: </strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado.nombre: '------'}}*@
                                         </p>

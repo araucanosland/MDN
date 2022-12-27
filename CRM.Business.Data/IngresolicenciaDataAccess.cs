@@ -913,7 +913,33 @@ namespace CRM.Business.Data
 
         }
 
+        public static List<Ingresolicencia> ListaLMresponsableCierre(string folio, DateTime diadesde, DateTime diahasta, int codOficina, string responsable, string fechaenviodesde, string fechaenviohasta)
+        {
+            Parametros parametros = new Parametros
+            {
 
+                new Parametro("@folio_LM", folio),
+                new Parametro("@CodOficina", codOficina),
+                new Parametro("@DiaDesde", diadesde),
+                new Parametro("@DiaHasta", diahasta),
+                new Parametro("@estadoEnviado", responsable),
+                new Parametro("@fechaenviodesde",fechaenviodesde),
+                new Parametro("@fechaenviohasta",fechaenviohasta)
+
+            };
+            try
+            {
+                return DBHelper.InstanceCRM.ObtenerColeccion("licencias.sp_Lic_Ingresolicencia_ListarCierreResponsable_Nuevo_Flujo", parametros, ConstructorResponsableCierreLM);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+
+        }
 
         public static List<Oficinas> ListarOficinas()
         {
@@ -934,7 +960,7 @@ namespace CRM.Business.Data
 
 
 
-        public static List<Ingresolicencia> ListaLMresponsableCierre(string folio, DateTime diadesde, DateTime diahasta, int codOficina, string responsable, string fechaenviodesde, string fechaenviohasta)
+        public static List<Ingresolicencia> ListaLMresponsableCierrexb(string folio, DateTime diadesde, DateTime diahasta, int codOficina, string responsable, string fechaenviodesde, string fechaenviohasta)
         {
             Parametros parametros = new Parametros
             {

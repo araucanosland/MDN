@@ -16,8 +16,18 @@ namespace CRM.Controllers
     [RoutePrefix("api/Gestion")]
     public class GestionController : ApiController
     {
-        
 
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("v3/listar-agente-territorial")]
+        public IEnumerable<OficinasAgenteTerritorialEntity> listaOficinasAgenteTerritorial(int Periodo,string Rut)
+        {
+           
+            List<OficinasAgenteTerritorialEntity> asign = GestionDataAccess.listaOficinasAgenteTerritorial(Periodo,Rut);
+
+            return asign;
+        }
 
 
 
@@ -214,7 +224,7 @@ namespace CRM.Controllers
         [AuthorizationRequired]
         [HttpGet]
         [Route("v3/lista-seguimientos")]
-        public BootstrapTableResult<ContenedorCampaniaList> ListaSeguimientosv3(string TipoDerivacion,int tipoCampagna, int periodo, string estado = "-1", string marca = "", string subestado = "-1", string causaBasal = "-1", string consecuencia = "-1", string prioridad = "", string segmento = "", string tipo = "", string busEmpresa = "", string rut = "", int limit = 30, int offset = 0, string sort = "asc", string order = "", string vencimiento = "")
+        public BootstrapTableResult<ContenedorCampaniaList> ListaSeguimientosv3(string TipoDerivacion,int tipoCampagna, int periodo, string Cargo,string Oficina="",string estado = "-1", string marca = "", string subestado = "-1", string causaBasal = "-1", string consecuencia = "-1", string prioridad = "", string segmento = "", string tipo = "", string busEmpresa = "", string rut = "", int limit = 30, int offset = 0, string sort = "asc", string order = "", string vencimiento = "")
         {
             string token = ActionContext.Request.Headers.GetValues("Token").First();
             List<ContenedorCampaniaList> res = new List<ContenedorCampaniaList>();
@@ -230,7 +240,7 @@ namespace CRM.Controllers
             {
                 int estado_dos = estado == null ? 0 : Convert.ToInt32(estado);
                 int subestado_dos = subestado == null ? 0 : Convert.ToInt32(subestado);
-                res = AsignacionDataAccess.ListarPaginado(TipoDerivacion, periodo, tipoCampagna, token, estado_dos, marca, subestado_dos, prioridad, segmento, tipo, busEmpresa, rut, offset, limit, sort, order, vencimiento);
+                res = AsignacionDataAccess.ListarPaginado(TipoDerivacion, periodo, tipoCampagna, token, estado_dos, marca, subestado_dos, prioridad, segmento, tipo, busEmpresa, rut, offset, limit, sort, order, vencimiento,Cargo,Oficina);
 
 
 
@@ -303,7 +313,7 @@ namespace CRM.Controllers
         [AuthorizationRequired]
         [HttpGet]
         [Route("obtener-seguimiento")]
-        public ResultadoBase ObtenerByAfiliado(int periodo, string afiRut, int tipoCampagna)
+        public ResultadoBase ObtenerByAfiliado(int periodo, string afiRut, int tipoCampagna,string cargo,string rut)
         {
 
             ResultadoBase a = new ResultadoBase();
@@ -311,7 +321,7 @@ namespace CRM.Controllers
             {
                 //string rut_enviar = afiRut.Substring(0, afiRut.IndexOf("-"));
                 BaseCampagna x = new BaseCampagna();
-                List<AsignacionEntity> ordCmp = AsignacionDataAccess.ObtenerByAfiRut(periodo, afiRut);
+                List<AsignacionEntity> ordCmp = AsignacionDataAccess.ObtenerByAfiRut(periodo, afiRut,cargo,rut);
 
                 if (tipoCampagna == 1)
                 {

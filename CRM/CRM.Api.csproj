@@ -635,7 +635,6 @@
     <Content Include="Areas\AppPage\Views\Licencias\ListarAuditoriaLicencia.cshtml" />
     <Content Include="Areas\AppPage\Views\Licencias\VistaCallMultiOficina.cshtml" />
     <Content Include="Areas\AppPage\Views\Licencias\CargaArchivosLM.cshtml" />
-    <Content Include="Areas\AppPage\Views\Licencias\LineaTiempoLM.cshtml" />
     <Content Include="Areas\AppPage\Views\Licencias\ListarRRLL.cshtml" />
     <Content Include="Areas\AppPage\Views\Pensionados\RetencionPensionados.cshtml" />
     <Content Include="Assets\tam\data\tam.json" />
@@ -665,6 +664,7 @@
     <Content Include="Areas\AppPage\Views\Digitalizacion\GestionAuditoriaLegalizado.cshtml" />
     <Content Include="Areas\AppPage\Views\Pensionados\PensionadoWeb.cshtml" />
     <Content Include="Areas\AppPage\Views\CampanaDiplomado\Index.cshtml" />
+    <Content Include="Areas\AppPage\Views\Licencias\Bitacora.cshtml" />
     <None Include="Properties\PublishProfiles\CharlyMOTOR.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\Settings.settings">

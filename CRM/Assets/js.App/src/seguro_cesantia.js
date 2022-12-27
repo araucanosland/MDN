@@ -81,6 +81,8 @@ var appSeguroCesantiaFiltros = new Vue({
                     subEstado: this.modelos.subEstado,
                     listaTrabajo: this.modelos.listatrabajo,
                     oficina: getCookie('Oficina'),
+                    cargo: getCookie('Cargo'),
+                    oficinasAgenteterritotial: $("#ddloatsrgurocesantia").val()
                 }
             });
         },
@@ -285,6 +287,14 @@ var appSeguroCesantiaModal = new Vue({
 });
 
 $(function () {
+
+
+    if (getCookie("Cargo") == "Agente Territorial") {
+        $("#oficina_segurocesantia").css("display", "block");
+
+    }
+
+
     $('#mdl_data_seguro_cesantia').on('show.bs.modal', async (event) => {
 
         const rut = event.relatedTarget != undefined ? $(event.relatedTarget).data('rut') : $('#afi_rut_busc').val();

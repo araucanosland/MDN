@@ -42,6 +42,20 @@ namespace CRM.Business.Data
         }
 
 
+        public static List<OficinasAgenteTerritorialEntity> listaOficinasAgenteTerritorial(int Periodo, string Rut)
+        {
+            Parametros parametros = new Parametros
+            {
+                new Parametro("@rut", Rut),
+                new Parametro("@periodo", Periodo),
+                
+            };
+
+
+            return DBHelper.InstanceCRM.ObtenerColeccion("dbo.spMotor_oficinas_AgenteTerritorial",parametros, EntidadOficinasAgenteTerritorial);
+        }
+
+
 
 
         public static List<GestionEntity> ListarGestion(string AfiliadoRut)
@@ -56,6 +70,17 @@ namespace CRM.Business.Data
             return new TipoAsignacionEntity
             {
                 Descripcion = row["tipoderivacion"] != DBNull.Value ? row["tipoderivacion"].ToString() : string.Empty,
+            };
+        }
+
+
+        private static OficinasAgenteTerritorialEntity EntidadOficinasAgenteTerritorial(DataRow row)
+        {
+            return new OficinasAgenteTerritorialEntity
+            {
+                Cod_Oficina = row["Cod_Oficina"] != DBNull.Value ? Convert.ToInt32(row["Cod_Oficina"]) : 0,
+                Oficina = row["Oficina"] != DBNull.Value ? row["Oficina"].ToString() : string.Empty,
+
             };
         }
 

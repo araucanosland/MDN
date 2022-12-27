@@ -128,14 +128,16 @@ namespace CRM.Business.Data
 
         #region metodos adicionales
 
-        public static List<AsignacionEntity> ObtenerByAfiRut(int Periodo, string AfiliadoRut)
+        public static List<AsignacionEntity> ObtenerByAfiRut(int Periodo, string AfiliadoRut,string cargo,string rut)
         {
             Parametros pram = new Parametros
             {
                 new Parametro("@Periodo", Periodo),
                 new Parametro("@AfiliadoRut",AfiliadoRut.Trim()),
+                new Parametro("@cargo",cargo),
+                 new Parametro("@rut",rut),
             };
-            return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_Asignacion_ObtenerByAfiliado", pram, ConstructorEntidad);
+            return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_Asignacion_ObtenerByAfiliado_At", pram, ConstructorEntidad);
         }
 
         public static AsignacionEntity ObtenerByAfiRutTipo(int Periodo, string AfiliadoRut, int TipoAsig)
@@ -199,7 +201,7 @@ namespace CRM.Business.Data
             return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_Asignacion_ListarByEjecutivo3", pram, ContainerConstructor);
         }
 
-        public static List<ContenedorCampaniaList> ListarPaginado(string TipoDerivacion, int Periodo, int TipoAsignacion, string TokenEjecutivo, int Estado, string Marca, int SubEstado, string Prioridad, string Segmento, string Tipo, string BusEmpresa, string rut, int Offset, int Limit, string Sort, string Orden, string Vencimiento)
+        public static List<ContenedorCampaniaList> ListarPaginado(string TipoDerivacion, int Periodo, int TipoAsignacion, string TokenEjecutivo, int Estado, string Marca, int SubEstado, string Prioridad, string Segmento, string Tipo, string BusEmpresa, string rut, int Offset, int Limit, string Sort, string Orden, string Vencimiento,string Cargo,string Oficina)
         {
             Parametros pram = new Parametros
             {
@@ -223,9 +225,12 @@ namespace CRM.Business.Data
                 new Parametro("@Limit",Limit),
                 new Parametro("@Sort",Sort),
                 new Parametro("@Orden",Orden),
+                new Parametro("@Cargo",Cargo),
+                new Parametro("@Oficina",Oficina),
+
             };
 
-            return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_Asignacion_ListarByEjecutivoPag3", pram, ContainerConstructor);
+            return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_Asignacion_ListarByEjecutivoPag3_AT", pram, ContainerConstructor);
             //MODIFICAR SP DE PAG3 A PAG2  Y COMENTAR INSTACIA ACTUAL DESCOMENTAR AL ANTERIOR.
             //return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_Asignacion_ListarByEjecutivoPag2", pram, ContainerConstructor);
         }

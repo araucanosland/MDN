@@ -7,7 +7,7 @@
 
 $(function () {
 
-    if (getCookie("Cargo") == 'Administrador Sistema' || getCookie("Cargo") == 'Usuario Avanzado' || getCookie("Cargo") == 'Zonal') {
+    if (getCookie("Cargo") == 'Administrador Sistema' || getCookie("Cargo") == 'Usuario Avanzado' || getCookie("Cargo") == 'Zonal' || getCookie("Cargo") == 'Agente Territorial') {
 
 
 

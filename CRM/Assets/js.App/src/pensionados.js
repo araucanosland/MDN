@@ -209,7 +209,7 @@ var appPensionadosFiltros = new Vue({
             else {
                 rut = $('#dllEjecutivo').val();
             }
-
+           
             $("#tblAsigPen").bootstrapTable('refresh', {
                 url: `http://${motor_api_server}:4002/pensionados/leads`,
                 query: {
@@ -222,7 +222,9 @@ var appPensionadosFiltros = new Vue({
                     oficina: getCookie('Oficina'),
                     periodo: periodo,
                     pex: $('#dllMarca').val(),
-                    fecha_compromiso: $('#vencidos_pensionados').val()
+                    fecha_compromiso: $('#vencidos_pensionados').val(),
+                    cargo: getCookie('Cargo'),
+                    oficinasAgenteterritotial: $("#ddloatpensionado").val()
                 }
             });
         },
@@ -1534,9 +1536,12 @@ var appPensionadosModal = new Vue({
 ////////////////////////////////////////////////////////////////////////////////////////
 $(function () {
 
+    if (getCookie("Cargo") == "Agente Territorial") {
 
+        $("#oficina_pensionado").css("display", "block");
+    }
 
-    if (getCookie('Cargo') == 'Agente' || getCookie('Cargo') == 'Jefe Servicio al Cliente' || getCookie('Cargo') == 'Jefe Plataforma') {
+    if (getCookie('Cargo') == 'Agente' || getCookie('Cargo') == 'Agente Territorial'|| getCookie('Cargo') == 'Jefe Servicio al Cliente' || getCookie('Cargo') == 'Jefe Plataforma') {
         $('#divAgente').css('display', 'block')
         $('#mdAsigEjePen').css('display', 'block');
     }

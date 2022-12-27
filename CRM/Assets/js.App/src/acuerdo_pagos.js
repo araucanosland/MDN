@@ -124,9 +124,10 @@ var appAcuerdoPagosFiltros = new Vue({
 
         },
         handleEventoClickFiltrar() {
+            debugger;
             var fechaHoy = new Date();
             var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
-            $("#tabla_recuperaciones_acuerdo").bootstrapTable('refresh', {
+            $("#tabla_recuperaciones_acuerdo").bootstrapTable('refresh', {                
                 url: `http://${motor_api_server}:4002/acuerdopago/leads`,
                 query: {
                     periodo: periodo,
@@ -140,6 +141,8 @@ var appAcuerdoPagosFiltros = new Vue({
                     derivacion: this.modelos.derivacion,
                     fechaCompromiso: $("#vencidos_acuerdo_pago").val(),
                     oficina: getCookie('Oficina'),
+                    cargo: getCookie('Cargo'),
+                    oficinasAgenteterritotial: $("#ddloatacuerdopago").val()
                 }
             });
         },
@@ -158,6 +161,7 @@ function AcuerdoPagoLinkFormatter(value, row, index) {
 }
 
 function AcuerdoPagoNombresFormatter(value, row, index) {
+   
     return value + ' ' + row.afiliado.apellidos;
 }
 
@@ -382,6 +386,14 @@ var appAcuerdoPagoModal = new Vue({
 });
 
 $(function () {
+
+
+    if (getCookie("Cargo") == "Agente Territorial") {
+        $("#oficina_acuerdopago").css("display", "block");
+      
+    }
+
+
     $('#mdl_data_acuerdo_pago').on('show.bs.modal', async (event) => {
 
         const rut = event.relatedTarget != undefined ? $(event.relatedTarget).data('rut') : $('#afi_rut_busc').val();

@@ -1,7 +1,7 @@
 $(function () {
 
 
-    if (getCookie("Cargo") == 'Administrador Sistema' || getCookie("Cargo") == 'Usuario Avanzado' || getCookie("Cargo") == 'Zonal' || getCookie("Cargo") == 'Coordinador Zonal' || getCookie("Rut") == '12825688-1' ) {
+    if (getCookie("Cargo") == 'Administrador Sistema' || getCookie("Cargo") == 'Usuario Avanzado' || getCookie("Cargo") == 'Zonal' || getCookie("Cargo") == 'Agente Territorial' || getCookie("Cargo") == 'Coordinador Zonal' || getCookie("Rut") == '12825688-1' ) {
         $('.no-admin').hide();
         $('.yes-admin').show();
     } else {

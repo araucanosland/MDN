@@ -24,5 +24,13 @@ namespace CRM.Business.Entity
   
     }
 
+    public class OficinasAgenteTerritorialEntity
+    {
+
+        public int Cod_Oficina { get; set; }
+        public string Oficina { get; set; }
+
+    }
+
 
 }

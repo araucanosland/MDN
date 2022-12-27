@@ -137,6 +137,8 @@ var appNormalizacionFiltros = new Vue({
                     tipoCampana: this.modelos.tipoCampana,
                     derivacion: this.modelos.derivacion,
                     oficina: getCookie('Oficina'),
+                    cargo: getCookie('Cargo'),
+                    oficinasAgenteterritotial: $("#ddloatnormalizacion").val()
                 }
             });
         },
@@ -417,6 +419,50 @@ var appNormalizacionModal = new Vue({
 });
 
 $(function () {
+  
+    if (getCookie("Cargo") == "Agente Territorial") {
+               
+        $("#oficina_normalizacion").css("display", "block");
+
+        var fechaHoy = new Date();
+        var Periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
+
+        $.SecGetJSON(BASE_URL + "/motor/api/Gestion/v3/listar-agente-territorial", { Periodo: Periodo, Rut: getCookie("Rut") }, function (response) {
+
+
+            $("#ddloatnormalizacion").html("");
+            $("#ddloatacuerdopago").html("");
+            $("#ddloatsrgurocesantia").html("");
+            $("#ddloatderivaciones").html("");
+            $("#ddloatign").html("");
+            $("#ddloatpensionado").html("");                                
+
+
+            $("#ddloatnormalizacion").append($("<option>").val('').html("Todas").data("id", '').data("nombre", "Todas"));
+            $("#ddloatacuerdopago").append($("<option>").val('').html("Todas").data("id", '').data("nombre", "Todas"));
+            $("#ddloatsrgurocesantia").append($("<option>").val('').html("Todas").data("id", '').data("nombre", "Todas"));
+            $("#ddloatderivaciones").append($("<option>").val('').html("Todas").data("id", '').data("nombre", "Todas"));
+            $("#ddloatign").append($("<option>").val('').html("Todas").data("id", '').data("nombre", "Todas"));
+            $("#ddloatpensionado").append($("<option>").val('').html("Todas").data("id", '').data("nombre", "Todas"));
+         
+            $.each(response, function (i, datos) {
+               
+                $("#ddloatnormalizacion").append($("<option>").val(datos.Cod_Oficina).html(datos.Oficina).data("Cod_Oficina", datos.Cod_Oficina).data("Oficina", datos.Oficina));
+                $("#ddloatacuerdopago").append($("<option>").val(datos.Cod_Oficina).html(datos.Oficina).data("Cod_Oficina", datos.Cod_Oficina).data("Oficina", datos.Oficina));
+                $("#ddloatsrgurocesantia").append($("<option>").val(datos.Cod_Oficina).html(datos.Oficina).data("Cod_Oficina", datos.Cod_Oficina).data("Oficina", datos.Oficina));
+                $("#ddloatderivaciones").append($("<option>").val(datos.Cod_Oficina).html(datos.Oficina).data("Cod_Oficina", datos.Cod_Oficina).data("Oficina", datos.Oficina));
+                $("#ddloatign").append($("<option>").val(datos.Cod_Oficina).html(datos.Oficina).data("Cod_Oficina", datos.Cod_Oficina).data("Oficina", datos.Oficina));
+                $("#ddloatpensionado").append($("<option>").val(datos.Cod_Oficina).html(datos.Oficina).data("Cod_Oficina", datos.Cod_Oficina).data("Oficina", datos.Oficina));
+
+            });
+
+        });
+
+    }
+
+
+
+
 
     $('#mdl_data_normalizacion').on('show.bs.modal', async (event) => {
 

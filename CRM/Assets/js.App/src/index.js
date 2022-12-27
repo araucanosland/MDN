@@ -93,6 +93,16 @@ function cargaDatosDeContacto(rutAf, destino = null) {
 
 $(function () {
 
+    if (getCookie("Cargo") == "Agente Territorial") {
+        $("#oficina_derivaciones").css("display", "block");
+
+    }
+
+
+
+
+
+
     var faIcon = {
         valid: 'fa fa-check-circle fa-lg text-success',
         invalid: 'fa fa-times-circle fa-lg',
@@ -610,7 +620,9 @@ $(function () {
         }
 
         else {
-            $.SecGetJSON(BASE_URL + "/motor/api/Gestion/obtener-seguimiento", { periodo: entorno.Periodo, afiRut: rutAfilado.trim(), tipoCampagna: tpcmp }, function (datos) {
+           
+            var cargo = getCookie("Cargo");
+            $.SecGetJSON(BASE_URL + "/motor/api/Gestion/obtener-seguimiento", { periodo: entorno.Periodo, afiRut: rutAfilado.trim(), tipoCampagna: tpcmp, cargo: getCookie("Cargo"), rut: getCookie("Rut")}, function (datos) {
 
                 if (datos.Estado === "OK") {
                     location.href = BASE_URL + '/motor/App/Gestion/Oferta/' + datos.Objeto.Seguimiento.Periodo.toString() + '/' + rutAfilado + '/' + tpcmp
@@ -806,6 +818,7 @@ $(function () {
     render.ComboTipoAsignacion()
     //DERIVACIONES
     $('#btn_derivaciones').click(function () {
+       
         $("#tabla_derivaciones").bootstrapTable('refresh', {
             url: BASE_URL + "/motor/api/Gestion/v3/lista-seguimientos",
             query: {
@@ -819,6 +832,8 @@ $(function () {
                 tipo: $('#slTipoDR').val(),
                 rut: $('#demo-foo-searchDR').val(),
                 vencimiento: $('#flt_vencidos_dr').val(),
+                cargo: getCookie('Cargo'),
+                oficina: $("#ddloatderivaciones").val()
               
             }
         });
@@ -1013,7 +1028,7 @@ $(function () {
 
     //COMERCIAL 
     $('#button').click(function () {
-       
+        
         $("#tabla_comercial").bootstrapTable('refresh', {
             url: BASE_URL + "/motor/api/Gestion/v3/lista-seguimientos",
             query: {

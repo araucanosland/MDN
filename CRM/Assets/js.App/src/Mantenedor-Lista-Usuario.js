@@ -296,7 +296,7 @@ function digitalLinkFormatter(value, row, index) {
 
     
     return `<a class="btn btn-primary mar-lft btn-rounded" title="Datos usuario" data-target="#modal-usuarios" data-toggle="modal" data-Rut=${row.Rut} data-Nombre=${Nombre} data-suc=${row.Cod_Sucursal} data-correo=${row.Correo} data-cargo=${Cargo} data-tipo="editar"><i class="ion-edit btn-rounded"></i></a>
-            <a class="btn btn-danger float-right btn-rounded" title="Eliminar" href="javascript:eliminarMDN(${RutFormato})"><i class="ion-trash-a"></i></a>
+            <a class="btn btn-danger float-right btn-rounded" title="Eliminar" href="javascript:eliminar(${RutFormato})"><i class="ion-trash-a"></i></a>
         `;
 
 }

@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using CRM.Business.Entity;
 using CRM.Business.Data;
-
+using System.Net.Http.Headers;
 namespace CRM.Controllers
 {
     [RoutePrefix("api/busqueda-dotacion")]
@@ -18,8 +18,11 @@ namespace CRM.Controllers
         public IEnumerable<DotacionEntity> obtenerDotacion()
         {
             DateTime hoy = DateTime.Now;
+            CookieHeaderValue cookie = Request.Headers.GetCookies("Cargo").FirstOrDefault();
+            string cargo = cookie.Cookies.FirstOrDefault(s => s.Name == "Cargo").Value;
+            int codOficina = Convert.ToInt32(cookie.Cookies.FirstOrDefault(s => s.Name == "Oficina").Value);
             int periodo = Convert.ToInt32(hoy.Year.ToString() + hoy.Month.ToString().PadLeft(2,'0'));
-            return DotacionDataAccess.ListarEntidades(periodo);
+            return DotacionDataAccess.ListarEntidades(periodo,cargo, codOficina);
         }
 
         [HttpGet]

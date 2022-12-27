@@ -24,7 +24,7 @@ var appIgn = new Vue({
         cargalistaIgn() {
             var fechaHoy = new Date();
             var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
-
+          
             $("#tblIgn").bootstrapTable('refresh', {
                 url: `http://${motor_api_server}:4002/ign/leads`,
                 query: {
@@ -35,6 +35,8 @@ var appIgn = new Vue({
                     estado: this.modelosP.estadosIgn,
                     subEstado: this.modelosP.subEstadosIgn,
                     estadoNomina: this.modelosP.estadoNominaIgn,
+                    cargo: getCookie('Cargo'),
+                    oficinasAgenteterritotial: $("#ddloatign").val()
                 }
             });
         },
@@ -287,6 +289,12 @@ var appIgnModal = new Vue({
     }
 });
 
+
+
+if (getCookie("Cargo") == "Agente Territorial") {
+    $("#oficina_ign").css("display", "block");
+
+}
 
 
 $('#modal_ign').on('show.bs.modal', async (event) => {
