@@ -436,7 +436,8 @@ $(function () {
             $("#ddloatderivaciones").html("");
             $("#ddloatign").html("");
             $("#ddloatpensionado").html("");                                
-
+            $("#ddloatcomercial").html("");     
+            
 
             $("#ddloatnormalizacion").append($("<option>").val('').html("Todas").data("id", '').data("nombre", "Todas"));
             $("#ddloatacuerdopago").append($("<option>").val('').html("Todas").data("id", '').data("nombre", "Todas"));
@@ -444,7 +445,7 @@ $(function () {
             $("#ddloatderivaciones").append($("<option>").val('').html("Todas").data("id", '').data("nombre", "Todas"));
             $("#ddloatign").append($("<option>").val('').html("Todas").data("id", '').data("nombre", "Todas"));
             $("#ddloatpensionado").append($("<option>").val('').html("Todas").data("id", '').data("nombre", "Todas"));
-         
+            $("#ddloatcomercial").append($("<option>").val('').html("Todas").data("id", '').data("nombre", "Todas"));
             $.each(response, function (i, datos) {
                
                 $("#ddloatnormalizacion").append($("<option>").val(datos.Cod_Oficina).html(datos.Oficina).data("Cod_Oficina", datos.Cod_Oficina).data("Oficina", datos.Oficina));
@@ -453,6 +454,7 @@ $(function () {
                 $("#ddloatderivaciones").append($("<option>").val(datos.Cod_Oficina).html(datos.Oficina).data("Cod_Oficina", datos.Cod_Oficina).data("Oficina", datos.Oficina));
                 $("#ddloatign").append($("<option>").val(datos.Cod_Oficina).html(datos.Oficina).data("Cod_Oficina", datos.Cod_Oficina).data("Oficina", datos.Oficina));
                 $("#ddloatpensionado").append($("<option>").val(datos.Cod_Oficina).html(datos.Oficina).data("Cod_Oficina", datos.Cod_Oficina).data("Oficina", datos.Oficina));
+                $("#ddloatcomercial").append($("<option>").val(datos.Cod_Oficina).html(datos.Oficina).data("Cod_Oficina", datos.Cod_Oficina).data("Oficina", datos.Oficina));
 
             });
 

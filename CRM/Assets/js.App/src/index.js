@@ -95,7 +95,9 @@ $(function () {
 
     if (getCookie("Cargo") == "Agente Territorial") {
         $("#oficina_derivaciones").css("display", "block");
+        $("#oficina_comercial").css("display", "block");
 
+        
     }
 
 
@@ -1028,7 +1030,7 @@ $(function () {
 
     //COMERCIAL 
     $('#button').click(function () {
-        
+        debugger;
         $("#tabla_comercial").bootstrapTable('refresh', {
             url: BASE_URL + "/motor/api/Gestion/v3/lista-seguimientos",
             query: {
@@ -1043,7 +1045,9 @@ $(function () {
                 tipo: $('#slTipo').val(),
                 busEmpresa: $('#demo-chosen-select').val(),
                 rut: $('#demo-foo-search').val(),
-                vencimiento: $('#flt_vencidos').val()
+                vencimiento: $('#flt_vencidos').val(),
+                cargo: getCookie('Cargo'),
+                oficina: $("#ddloatcomercial").val()
             }
         });
         $("#tabla_comercial > tbody").addClass("buscar")

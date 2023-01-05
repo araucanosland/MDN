@@ -78,6 +78,13 @@
                                     </div>
                                 </div>
 
+                                <div id="oficina_reasignacion" style="margin-top: -22px;display:none;" class="col-sm-2 text-xs-center">
+                                    <div class="form-group">
+                                        <label class="control-label">Oficina</label>
+                                        <select class="form-control" id="ddloatreasignacion"></select>
+                                    </div>
+                                </div>
+
                                 <!--Second tab-->
                                 <div id="demo-bv-tab2" class="tab-pane fade">
                                     <div class="form-group">
@@ -271,6 +278,14 @@
 
         $(document).ready(function () {
 
+
+
+            if (getCookie("Cargo") == "Agente Territorial") {
+                $("#oficina_reasignacion").css("display", "block");
+            }
+
+
+
             $('.lista-ejecutivos').chosen({ width: '100%', no_results_text: "No se han encontrado resultados" });
 
 
@@ -463,7 +478,7 @@
 
 
             $("#slTipoCamp").on("change", function () {
-
+                debugger;
                 var tipoCampania = $(this).val() != "" && $(this).val() != "2" && $(this).val() != "5" && $(this).val() != "6" && $(this).val() != "7" ? $(this).val() : 0
                 $.SecGetJSON(BASE_URL + "/motor/api/Gestion/listar-mi-oficina", { tipoCampania }, function (respuesta) {
 
@@ -484,7 +499,7 @@
             });
 
             $("#slEjecutivOrigen").on("change", function () {
-
+                debugger;
                 if ($('#slTipoCamp').val() == 2) {
                     var rutEjecutivo = $(this).val();
                     var fechaHoy = new Date();
