@@ -212,6 +212,7 @@
     <Compile Include="Areas\AppPage\Controllers\CosalController.cs" />
     <Compile Include="Areas\AppPage\Controllers\DigitalizacionController.cs" />
     <Compile Include="Areas\AppPage\Controllers\DistribucionWappController.cs" />
+    <Compile Include="Areas\AppPage\Controllers\EncuestaPensionadosController.cs" />
     <Compile Include="Areas\AppPage\Controllers\MantenedoresController.cs" />
     <Compile Include="Areas\AppPage\Controllers\MedicionCalidadController.cs" />
     <Compile Include="Areas\AppPage\Controllers\PensionadosController.cs" />
@@ -665,6 +666,7 @@
     <Content Include="Areas\AppPage\Views\Pensionados\PensionadoWeb.cshtml" />
     <Content Include="Areas\AppPage\Views\CampanaDiplomado\Index.cshtml" />
     <Content Include="Areas\AppPage\Views\Licencias\Bitacora.cshtml" />
+    <Content Include="Areas\AppPage\Views\EncuestaPensionados\Index.cshtml" />
     <None Include="Properties\PublishProfiles\CharlyMOTOR.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\Settings.settings">
