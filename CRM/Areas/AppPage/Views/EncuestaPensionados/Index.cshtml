@@ -1,17 +1,303 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+    ViewBag.Title = "Encuesta Desafiliación Pensionados";
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<link href="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <div> 
+<div id="page-content">
+
+    <div class="panel" style="border-radius: 7px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">Encuesta Desafiliación Pensionados</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+
+                <div class="col-sm-3 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label">SEGMENTO</label>
+                        <select class="form-control" id="dllSegmentoPex">
+                            <option value="">Seleccione...</option>
+                            <option value="Trabajador">Trabajador</option>
+                            <option value="Pensionado">Pensionado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label">ESTADO</label>
+                        <select class="form-control" v-model="modelos.estados" id="slEstado" v-on:change="eventoCambSubEstadoPex">
+                            <option value="">Seleccione...</option>
+                            <option v-for="EstPex in filtros.estados" :value="EstPex.id">{{EstPex.nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-2 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label">SUB-ESTADO</label>
+                        <select class="form-control" v-model="modelos.subEstados" id="slSubEstado">
+                            <option value="">Seleccione...</option>
+                            <option v-for="subEstadoPex in filtros.subEstados" :value="subEstadoPex.id">{{subEstadoPex.nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3 text-xs-center" id="flt_ejecutivo" style="display:none">
+                    <div class="form-group">
+                        <label class="control-label">EJECUTIVO</label>
+                        <select class="form-control" id="slEjecutivoPex"></select>
+                    </div>
+                </div>
+
+                <div class="col-sm-1 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label"></label>
+                        <button class="btn btn-primary btn-rounded" v-on:click="cargalistaPex" style="margin-top: 21px;">Filtrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel" style="border-radius: 7px;">
+                <div class="panel-body">
+                    <table data-toggle="table"
+                           data-sort-name="id"
+                           data-page-list="[]"
+                           data-page-size="50"
+                           data-search="true"
+                           data-pagination="true" id="tbencuestaPensionados" style="font-size: 11px">
+
+                        <thead>
+                            <tr>
+                                <th data-field="state" data-checkbox="true"></th>
+                                <th data-field="Id" data-sortable="true" data-formatter="idFormatter">Rut</th>
+                                <th data-field="NombrePensionado">Nombre </th>
+                                <th data-field="FechaDesafiliacion" data-sortable="true" data-formatter="formatoFecha">Fecha Desafiliación</th>
+                                <th data-field="CCAFDestino" data-sortable="true">CCAF Destino </th>
+                                <th data-field="DireccionCompleta">Dirección </th>
+                                <th data-field="NombreComuna" data-sortable="true">Comuna</th>
+                                <th data-field="Estado_encuesta" data-sortable="true">ESTADO</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modal_encusta_pensionado" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+
+                <h4 class="modal-title">Encuesta Desafiliación Pensionados</h4>
+            </div>
+            <div id="msjAsigPensionado"></div>
+            <div class="modal-body">
+                <div class="panel">
+                    <div class="eq-height clearfix">
+                        <div class="col-md-12 eq-box-md eq-no-panel">
+
+                            <!-- Form wizard with Validation -->
+                            <!--===================================================-->
+                            <div id="demo-bv-wz">
+                                <div class="wz-heading pad-top">
+
+                                    <!--Nav-->
+                                    <ul class="row wz-step wz-icon-bw wz-nav-off mar-top">
+                                        <li class="col-xs-2">
+                                            <a data-toggle="tab" href="#demo-bv-tab1">
+                                                <span class="text-danger"><i class="demo-pli-male icon-2x"></i></span>
+                                                <p class="text-semibold mar-no">Pregunta 1</p>
+                                            </a>
+                                        </li>
+                                        <li class="col-xs-2">
+                                            <a data-toggle="tab" href="#demo-bv-tab2">
+                                                <span class="text-warning"><i class="demo-pli-male icon-2x"></i></span>
+                                                <p class="text-semibold mar-no">Pregunta 2</p>
+                                            </a>
+                                        </li>
+                                        <li class="col-xs-2">
+                                            <a data-toggle="tab" href="#demo-bv-tab3">
+                                                <span class="text-info"><i class="demo-pli-male icon-2x"></i></span>
+                                                <p class="text-semibold mar-no">Pregunta 3</p>
+                                            </a>
+                                        </li>
+                                        <li class="col-xs-2">
+                                            <a data-toggle="tab" href="#demo-bv-tab5">
+                                                <span class="text-primary"><i class="demo-pli-male icon-2x"></i></span>
+                                                <p class="text-semibold mar-no">Pregunta 4</p>
+                                            </a>
+                                        </li>
+                                        <li class="col-xs-2">
+                                            <a data-toggle="tab" href="#demo-bv-tab4">
+                                                <span class="text-success"><i class="pli-home icon-2x"></i></span>
+                                                <p class="text-semibold mar-no">Confirmar Término</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+
+                                <!--progress bar-->
+                                <div class="progress progress-xs">
+                                    <div class="progress-bar progress-bar-primary"></div>
+                                </div>
+
+
+                                <!--Form-->
+                                <form id="demo-bv-wz-form" class="form-horizontal">
+                                    <div class="panel-body">
+                                        <div class="tab-content">
+
+                                            <!--First tab-->
+                                            <div id="demo-bv-tab1" class="tab-pane">
+                                                <div class="form-group">
+                                                    <h4>
+                                                        Don(a) <label id="nombrepensionado"></label> cuénteme cual¿cuál fue el motivo de su cambio de caja?. Su respuesta nos ayudará a mejorar nuestra atención y servicio.
+                                                    </h4>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Ingrese Respuesta del Pensionado</label>
+                                                    <textarea placeholder="Respuesta del Pensionado" rows="4" cols="2" id="respuestaPregunta1" class="form-control"></textarea>
+
+                                                </div>
+                                            </div>
+
+
+                                            <!--Second tab-->
+                                            <div id="demo-bv-tab2" class="tab-pane fade">
+                                                <div class="form-group">
+                                                    <h4>
+                                                        ¿El Pensionado sigue en el Sistema?
+                                                    </h4>
+                                                    <div class="col-lg-4">
+                                                        <select class="form-control" name="ddlrespuestaPregunta2" id="ddlrespuestaPregunta2" data-placeholder="Seleccione respuesta">
+                                                            <option value="0">Seleccione...</option>
+                                                            <option value="1">Si</option>
+                                                            <option value="2">No</option>
+                                                            <option value="3">No Sabe</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                            <!--Third tab-->
+                                            <div id="demo-bv-tab3" class="tab-pane">
+                                                <div class="form-group">
+                                                    <h4>
+                                                        ¿Al Pensionado le gustaría volver a la Caja la Araucana?
+                                                    </h4>
+                                                    <div class="col-lg-4">
+                                                        <select class="form-control" name="ddlrespuestaPregunta3" id="ddlrespuestaPregunta3" data-placeholder="Seleccione respuesta">
+                                                            <option value="0">Seleccione...</option>
+                                                            <option value="1">Si</option>
+                                                            <option value="2">No</option>
+                                                            <option value="3">No Sabe</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--five tab-->
+                                            <div id="demo-bv-tab5" class="tab-pane">
+                                                <div class="form-group">
+                                                    <h4>
+                                                        ¿Cuál es la razón de la desafiliación?
+                                                    </h4>
+                                                    <div class="col-lg-8">
+                                                        <select class="form-control" name="ddlrespuestaPregunta4" id="ddlrespuestaPregunta4" data-placeholder="Seleccione respuesta"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--Fourth tab-->
+                                            <div id="demo-bv-tab4" class="tab-pane  mar-btm text-center">
+                                                <span class="text-success"><i class="demo-pli-medal-2 icon-2x"></i></span>
+                                                <p class="text-semibold mar-no">Encuesta Terminada Satisfactoriamente, Favor confirme para Grabar</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--Footer button-->
+                                    <div class="panel-footer text-right">
+                                        <div class="box-inline">
+                                            <button type="button" class="previous btn btn-primary">Volver</button>
+                                            <button type="button" class="next btn btn-primary">Siguiente</button>
+                                            <button type="button" class="finish btn btn-warning" disabled>Confirmar</button>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!--===================================================-->
+                            <!-- End Form wizard with Validation -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="modal_asigna_pensionado" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-xs">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header">
+                <div class="panel-control">
+                    <span class="badge badge-pink" id="cantPensScheck">0</span>
+                    <span>Pensionados seleccionados</span>
+                </div>
+                <h4 class="modal-title">Asiganción de pensionados</h4>
+            </div>
+            <div id="msjAsigPensionado"></div>
+            <div class="modal-body">
+                <div class="col-sm-8 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label">Seleccione un ejecutivo para asignar...</label>
+                        <select id="dllEjePensiondos" class="form-control"></select>
+                    </div>
+                </div>
+            </div>
+            <!--Modal footer-->
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                <button class="btn btn-primary" id="btAsignarPensionado">Asignar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
+    <script src="~/Assets/js.App/src/EncuestaPensionados.js?g=@Guid.NewGuid().ToString()"></script>
+
+
+}

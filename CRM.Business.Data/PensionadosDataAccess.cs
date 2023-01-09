@@ -1,18 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CRM.Business.Entity;
-using System.Data;
-using CDK.Data;
+﻿using CDK.Data;
 using CDK.Integration;
+using CRM.Business.Entity;
+using System;
+using System.Collections.Generic;
+using System.Data;
 
 
 namespace CRM.Business.Data
 {
     public static class PensionadosDataAccess
     {
+
+
+        public static List<EncuestaPensionados> EncuestaPensioandos(string Token, string rutEjecutivo)
+        {
+            Parametros param = new Parametros
+            {
+                new Parametro("@TOKEN",Token),
+                new Parametro("@RUT_EJECUTIVO",rutEjecutivo),
+
+            };
+            return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_Encuesta_Desafiliacion ", param, EncuestaPensionadoEntity);
+        }
+
+        public static List<EncuestaPensionadosEstados> EncuestaPensioandosEstados(string Token, string rutEjecutivo)
+        {
+            Parametros param = new Parametros
+            {
+                new Parametro("@TOKEN",Token),
+                new Parametro("@RUT_EJECUTIVO",rutEjecutivo),
+
+            };
+            return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_Encuesta_Desafiliacion_estado ", param, EncuestaPensionadoEstadosEntity);
+        }
+
+
+
+
         public static List<Entity.PensionadosEntity> ListaPensionados(string Token, string Nombre, string Comuna, string Prioridad, int EstadoGestion, string rutEjecutivo)
         {
             Parametros param = new Parametros
@@ -527,7 +551,7 @@ namespace CRM.Business.Data
         #endregion
 
 
-        public static List<PensionadosUnoPorcientoEntity> ListaPensionadosUnoPorciento(string rut, string epp, int estado_id,string rutEjecutivo)
+        public static List<PensionadosUnoPorcientoEntity> ListaPensionadosUnoPorciento(string rut, string epp, int estado_id, string rutEjecutivo)
         {
             Parametros parametros = new Parametros()
             {
@@ -741,6 +765,46 @@ namespace CRM.Business.Data
                 prioridad = row["prioridad"] != DBNull.Value ? Convert.ToInt32(row["prioridad"]) : 0,
             };
         }
-        
+
+
+        private static EncuestaPensionados EncuestaPensionadoEntity(DataRow row)
+        {
+            return new EncuestaPensionados
+            {
+                Id = row["ID"] != DBNull.Value ? Convert.ToInt32(row["ID"]) : 0,
+                RutPensionadoDV = row["RutPensionadoDV"] != DBNull.Value ? row["RutPensionadoDV"].ToString() : string.Empty,
+                RutPensionado = row["RutPensionado"] != DBNull.Value ? Convert.ToInt32(row["RutPensionado"]) : 0,
+                Dv = row["Dv"] != DBNull.Value ? row["Dv"].ToString() : string.Empty,
+                FechaDesafiliacion = row["FechaDesafiliacion"] != DBNull.Value ? Convert.ToDateTime(row["FechaDesafiliacion"]) : new DateTime(1900, 1, 1),
+                CCAFDestino = row["CCAFDestino"] != DBNull.Value ? row["CCAFDestino"].ToString() : string.Empty,
+                NombrePensionado =row["NombrePensionado"] != DBNull.Value ? row["NombrePensionado"].ToString() : string.Empty,
+                Direccion = row["Direccion"] != DBNull.Value ? row["Direccion"].ToString() : string.Empty,
+                Numero = row["Numero"] != DBNull.Value ? Convert.ToInt32(row["Numero"]) : 0,
+                DireccionCompleta = row["DireccionCompleta"] != DBNull.Value ? row["DireccionCompleta"].ToString() : string.Empty,
+                Departamento = row["Departamento"] != DBNull.Value ? Convert.ToInt32(row["Departamento"]) : 0,
+                Poblacion = row["Poblacion"] != DBNull.Value ? Convert.ToInt32(row["Poblacion"]) : 0,
+                NombreComuna = row["NombreComuna"] != DBNull.Value ? row["NombreComuna"].ToString() : string.Empty,
+                CodigoRegion = row["CodigoRegion"] != DBNull.Value ? Convert.ToInt32(row["CodigoRegion"]) : 0,
+                NombreRegion = row["NombreRegion"] != DBNull.Value ? row["NombreRegion"].ToString() : string.Empty,
+                FlagTarget = row["FlagTarget"] != DBNull.Value ? Convert.ToInt32(row["FlagTarget"]) : 0,
+                Codigo = row["Codigo"] != DBNull.Value ? Convert.ToInt32(row["Codigo"]) : 0,
+                SucursalDependencia = row["SucursalDependencia"] != DBNull.Value ? row["SucursalDependencia"].ToString() : string.Empty,
+                Estado_encuesta = row["Estado_encuesta"] != DBNull.Value ? row["Estado_encuesta"].ToString() : string.Empty,
+
+            };
+        }
+
+
+        private static EncuestaPensionadosEstados EncuestaPensionadoEstadosEntity(DataRow row)
+        {
+            return new EncuestaPensionadosEstados
+            {
+                Id = row["Id"] != DBNull.Value ? Convert.ToInt32(row["Id"]) : 0,
+                Descripcion = row["Descripcion"] != DBNull.Value ? row["Descripcion"].ToString() : string.Empty,
+             
+
+            };
+        }
+
     }
 }

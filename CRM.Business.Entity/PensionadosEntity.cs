@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CRM.Business.Entity
 {
@@ -334,5 +331,37 @@ namespace CRM.Business.Entity
         public int estadoGestion { get; set; }
         public string marca { get; set; }
         public int periodo { get; set; }
+    }
+
+
+    public class EncuestaPensionados
+    {
+        public int Id { get; set; }
+        public string RutPensionadoDV { get; set; }
+        public int RutPensionado { get; set; }
+        public string Dv { get; set; }
+        public DateTime FechaDesafiliacion { get; set; }
+        public string CCAFDestino { get; set; }
+        public string NombrePensionado { get; set; }
+        public string DireccionCompleta { get; set; }        
+        public string Direccion { get; set; }
+        public int Numero { get; set; }
+        public int Departamento { get; set; }
+        public int Poblacion { get; set; }
+        public string NombreComuna { get; set; }
+        public int CodigoRegion { get; set; }
+        public string NombreRegion { get; set; }
+        public int FlagTarget { get; set; }
+        public int Codigo { get; set; }
+        public string SucursalDependencia { get; set; }
+        public string Estado_encuesta { get; set; }
+
+    }
+
+    public class EncuestaPensionadosEstados
+    {
+        public long Id { get; set; }
+        public string Descripcion { get; set; }
+        public int Estados { get; set; }
     }
 }

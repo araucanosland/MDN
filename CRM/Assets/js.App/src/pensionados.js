@@ -5,10 +5,56 @@ jQuery.support.cors = true;
 let marcaGestionConctact = 0;
 
 
+metodos = {
+    CargaEjecutivoPensionadosAT() {
+        debugger;
+        let oficina = $("#ddloatpensionado").val();
+
+        let fechaHoy = new Date();
+        let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
+
+        fetch(`http://${motor_api_server}:4002/pensionados/lista-ejecutivo-pensionado/${oficina}/${periodo}`, {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'default'
+        })
+            .then(response => response.json())
+            .then(datos => {
+                $("#dllEjePensiondos").html("");
+                $("#dllEjePensiondos").append($("<option>").attr("value", "0").html("Seleccione..."));
+
+                $.each(datos, function (i, e) {
+                    $("#dllEjePensiondos").append($("<option>").attr("value", e.rut).html(e.Nombre))
+
+                });
+            });
+    },
+    CargaEjecutivoAT() {
+        debugger;
+        let oficina = $("#ddloatpensionado").val();
+        let fechaHoy = new Date();
+        let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
+        fetch(`http://${motor_api_server}:4002/pensionados/lista-ejecutivo-pensionado/${oficina}/${periodo}`, {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'default'
+        })
+            .then(response => response.json())
+            .then(datos => {
+                $("#dllEjecutivo").html("");
+                $("#dllEjecutivo").append($("<option>").attr("value", "").html("Todos"));
+                $.each(datos, function (i, e) {
+                    $("#dllEjecutivo").append($("<option>").attr("value", e.rut).html(e.Nombre))
+                });
+            });
+    }
+}
+
 function opcionContactabilidad(val, row, index) {
     //console.log({
     //    val, row, index
     //})
+
 
     return `<select class="form-contol" onchange="ejecutarAccion(${row.id})">
                 <option value="0">Seleccione</option>
@@ -129,7 +175,9 @@ var appPensionadosFiltros = new Vue({
         this.obtenerEstados();
         this.obtenerPrioridad();
         this.obtenerComunas();
-        this.CargaEjecutivoPensionados();
+       // this.CargaEjecutivoPensionados();
+       // this.CargaEjecutivo();
+        
     },
     updated() {
         //console.log('cambió')
@@ -174,9 +222,28 @@ var appPensionadosFiltros = new Vue({
             //});
 
         },
+        CargaEjecutivo() {
+            debugger;
+            let oficina = $("#ddloatpensionado").val();
+            let fechaHoy = new Date();
+            let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
+            fetch(`http://${motor_api_server}:4002/pensionados/lista-ejecutivo-pensionado/${oficina}/${periodo}`, {
+                method: 'GET',
+                mode: 'cors',
+                cache: 'default'
+            })
+                .then(response => response.json())
+                .then(datos => {                  
+                    $("#dllEjecutivo").html("");                   
+                    $("#dllEjecutivo").append($("<option>").attr("value", "").html("Todos"));
+                    $.each(datos, function (i, e) {                      
+                        $("#dllEjecutivo").append($("<option>").attr("value", e.rut).html(e.Nombre))
+                    });
+                });
+        },
         CargaEjecutivoPensionados() {
-
-            let oficina = getCookie("Oficina");
+            let oficina = $("#ddloatpensionado").val();
+           
             let fechaHoy = new Date();
             let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
 
@@ -188,16 +255,16 @@ var appPensionadosFiltros = new Vue({
                 .then(response => response.json())
                 .then(datos => {
                     $("#dllEjePensiondos").html("");
-                    $("#dllEjecutivo").html("");
                     $("#dllEjePensiondos").append($("<option>").attr("value", "0").html("Seleccione..."));
-                    $("#dllEjecutivo").append($("<option>").attr("value", "").html("Todos"));
+                  
                     $.each(datos, function (i, e) {
                         $("#dllEjePensiondos").append($("<option>").attr("value", e.rut).html(e.Nombre))
-                        $("#dllEjecutivo").append($("<option>").attr("value", e.rut).html(e.Nombre))
+                     
                     });
                 });
         },
         handleEventoClickFiltrar() {
+            debugger;
             let rut;
             let nombre = $('#txtNombrePen').val()
             let marca = $('#dllFoco').val()
@@ -208,8 +275,9 @@ var appPensionadosFiltros = new Vue({
             }
             else {
                 rut = $('#dllEjecutivo').val();
+               
             }
-           
+
             $("#tblAsigPen").bootstrapTable('refresh', {
                 url: `http://${motor_api_server}:4002/pensionados/leads`,
                 query: {
@@ -224,7 +292,8 @@ var appPensionadosFiltros = new Vue({
                     pex: $('#dllMarca').val(),
                     fecha_compromiso: $('#vencidos_pensionados').val(),
                     cargo: getCookie('Cargo'),
-                    oficinasAgenteterritotial: $("#ddloatpensionado").val()
+                    oficinasAgenteterritotial: $("#ddloatpensionado").val(),
+                    rutejecutivoBusqueda:$('#dllEjecutivo').val()
                 }
             });
         },
@@ -365,6 +434,11 @@ var appPensionadoUniversal = new Vue({
 
 $(function () {
 
+
+
+
+
+
     $('body').popover({
         placement: 'top',
         container: 'body',
@@ -375,6 +449,20 @@ $(function () {
             return $('#popover-content').html();
         }
     })
+
+
+
+    $('#ddloatpensionado').on('change', function (event) {
+        debugger;
+        if ($("#ddloatpensionado").val() == "") {
+            $('#divAgente').css('display', 'none')
+        }
+        else {
+            $('#divAgente').css('display', 'block')
+            metodos.CargaEjecutivoAT();
+        }
+
+    });
 
     $('#demo-lg-modal-pensionado').on('hidden.bs.modal', async (event) => {
 
@@ -1542,7 +1630,7 @@ $(function () {
     }
 
     if (getCookie('Cargo') == 'Agente' || getCookie('Cargo') == 'Agente Territorial'|| getCookie('Cargo') == 'Jefe Servicio al Cliente' || getCookie('Cargo') == 'Jefe Plataforma') {
-        $('#divAgente').css('display', 'block')
+        //$('#divAgente').css('display', 'block')
         $('#mdAsigEjePen').css('display', 'block');
     }
     else {
@@ -1563,6 +1651,21 @@ $(function () {
     }
 
     $('#modalAsignacion').click(function () {
+       
+        if ($("#ddloatpensionado").val() == "") {
+            $.niftyNoty({
+                type: 'danger',
+                container: 'floating',
+                html: '<strong>Error</strong><li>Debe Seleccionar una oficina para Asginar!</li>',
+                focus: false,
+                timer: 5000
+            });
+            $("#ddloatpensionado").focus();
+            return false;
+        }
+
+
+
         if (result['length'] != 0) {
             $('#modal_asigna_pensionado').modal('show')
         }
@@ -1575,6 +1678,12 @@ $(function () {
                 timer: 5000
             });
         }
+    });
+
+
+    $('#modal_asigna_pensionado').on('show.bs.modal', async (event) => {
+        debugger;
+        metodos.CargaEjecutivoPensionadosAT();
     });
 
 
@@ -1638,6 +1747,7 @@ $(function () {
 
     var result = [];
     $('#btAsignarPensionado').click(function () {
+        debugger;
         if ($("#dllEjePensiondos").val() != "") {
             var malos = []
             var buenos = 0;
@@ -1645,7 +1755,7 @@ $(function () {
                 var webPensionado = {
                     ejecutivo_asignado: $("#dllEjePensiondos").val(),
                     id: result[i],
-                    oficina: getCookie("Oficina"),
+                    oficina: $("#ddloatpensionado").val(),
                 }
 
                 fetch(`http://${motor_api_server}:4002/pensionados/asigna-ejecutivo-pensionado`, {

@@ -1,4 +1,5 @@
-﻿using CRM.Business.Data;
+﻿using CRM.ActionFilters;
+using CRM.Business.Data;
 using CRM.Business.Entity;
 using CRM.Business.Entity.Clases;
 using System;
@@ -45,6 +46,16 @@ namespace CRM.Controllers
         //    return comunas;
         //}
         #endregion
+
+
+
+        [HttpGet]
+        [Route("listar-ejecutivos-asignacion")]
+        public IEnumerable<EstadoGestionPensionadoEntity> Listar_ejecutivo_asignacion(int Oficina,int Periodo)
+        {
+            List<EstadoGestionPensionadoEntity> estadosgestion = PensionadosDataAccess.ListaPensionadosEstadosGestionNull();
+            return estadosgestion;
+        }
 
 
 
@@ -212,7 +223,34 @@ namespace CRM.Controllers
             LeadPensionados prospecto = PensionadosDataAccess.Busca_Prospecto(rut, periodo);
             return prospecto;
         }
-        
+
+
+        //[AuthorizationRequired]
+        [HttpGet]
+        [Route("encuesta-pensionados")]
+        public IEnumerable<EncuestaPensionados> EncuestaPensionados(string Token)
+        {
+            CookieHeaderValue cookie = Request.Headers.GetCookies("Rut").FirstOrDefault();
+            string Rutejecutivo = cookie.Cookies.FirstOrDefault(s => s.Name == "Rut").Value;
+
+
+            IEnumerable<EncuestaPensionados> encuesta = PensionadosDataAccess.EncuestaPensioandos(Token, Rutejecutivo);
+            return encuesta;
+        }
+
+
+        [HttpGet]
+        [Route("encuesta-pensionados-estados")]
+        public IEnumerable<EncuestaPensionadosEstados> EncuestaPensionadosEstados(string Token)
+        {
+            CookieHeaderValue cookie = Request.Headers.GetCookies("Rut").FirstOrDefault();
+            string Rutejecutivo = cookie.Cookies.FirstOrDefault(s => s.Name == "Rut").Value;
+
+
+            IEnumerable<EncuestaPensionadosEstados> estados = PensionadosDataAccess.EncuestaPensioandosEstados(Token, Rutejecutivo);
+            return estados;
+        }
+
 
     }
 }
