@@ -2113,7 +2113,7 @@
 
 
                 $("#bdy_datos").html("");
-                debugger;
+             
                 $.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-licencias-dia-index", { responsable: responsable, estado: estado, folio: folio, diadesde: diadesde, diahasta: diahasta, formatoLM: formatoLM, codOficina: $("#ddlloficinas").val() }, function (result) {
 
                     $("#cantLMindex").html('');
@@ -2589,7 +2589,7 @@
 
                     $("#bdy_datos_tabdevuelta_tata").html("");
                     $.each(result, function (i, e) {
-                        debugger
+                        
 
                         $("#bdy_datos_tabdevuelta_tata").append(
                             $("<tr>")

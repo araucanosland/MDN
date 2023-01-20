@@ -124,7 +124,7 @@ var appAcuerdoPagosFiltros = new Vue({
 
         },
         handleEventoClickFiltrar() {
-            debugger;
+           
             var fechaHoy = new Date();
             var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
             $("#tabla_recuperaciones_acuerdo").bootstrapTable('refresh', {                

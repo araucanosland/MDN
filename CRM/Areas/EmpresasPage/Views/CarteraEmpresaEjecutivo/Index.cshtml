@@ -1058,7 +1058,7 @@
                     editable: false,
 
                     eventClick: function (event) {
-                        debugger;
+                     
                         $('#txtFechacita_update').val(event.start._i.toFecha())
                         $('#slTipoVisita_update').val(event.TipoVisita)
                         $('#txtObsCita_update').val(event.Glosa)
@@ -1114,7 +1114,7 @@
                         return false;
                     },
                     select: function (start, end) {
-                        debugger;
+                       
                         var check = moment(start).format('YYYY-MM-DD');
                         var today = moment(new Date()).format('YYYY-MM-DD');
                         $("#slEmpresaAgendasIng").val('0');
@@ -1486,7 +1486,7 @@
             else if ($('#slFrecuencia').val() == 'Diaria') {
                 results = "Null"
             }
-            debugger;
+            
             if ($('#slEmpresaAgendasIng').val() == "0") {
                 $.niftyNoty({
                     type: 'danger',
@@ -1616,7 +1616,7 @@
                         label: "Eliminar Cita Frecuente",
                         className: "btn-danger",
                         callback: function () {
-                            debugger;
+                         
                             if ($("#btCita_elimina").data("idregistro") == "0") {
                                 $.niftyNoty({
                                     type: 'danger',

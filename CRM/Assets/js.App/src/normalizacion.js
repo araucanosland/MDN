@@ -118,6 +118,7 @@ var appNormalizacionFiltros = new Vue({
 
         },
         handleEventoClickFiltrar() {
+ 
             var fechaHoy = new Date();
             var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
 

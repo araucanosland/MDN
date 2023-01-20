@@ -62,7 +62,7 @@ namespace CRM.Business.Data
                     FechaPrimeraAutorizacion = row["FechaPrimeraAutorizacion"] != DBNull.Value ? Convert.ToDateTime(row["FechaPrimeraAutorizacion"]) : new DateTime(1900, 1, 1),
                     FechaUltimaAutorizacion = row["FechaUltimaAutorizacion"] != DBNull.Value ? Convert.ToDateTime(row["FechaUltimaAutorizacion"]) : new DateTime(1900, 1, 1),
                     NombreEmpresa= row["NombreEmpresa"] != DBNull.Value ? row["NombreEmpresa"].ToString() : string.Empty,
-                    RutEmpresa = row["RutEmpresa"] != DBNull.Value ? row["RutEmpresa"].ToString() : string.Empty,
+                 //   RutEmpresa = row["RutEmpresa"] != DBNull.Value ? row["RutEmpresa"].ToString() : string.Empty,
                     CodigoCausante = row["CodigoCausante"] != DBNull.Value ? row["CodigoCausante"].ToString() : string.Empty,
                     IdEstadoGestion= row["IdEstadoGestion"] != DBNull.Value ? row["IdEstadoGestion"].ToString() : string.Empty,
                     Estadogestion = row["Estadogestion"] != DBNull.Value ? row["Estadogestion"].ToString() : string.Empty

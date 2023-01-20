@@ -947,6 +947,37 @@ namespace CRM.Controllers
             return salida;
         }
 
+
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("listar-mi-oficina-AT")]
+        public List<Ejecutivo> listarEjecutivosDeMiOficinaAT(int tipoCampania,string OficinaAT)
+        {
+            List<Ejecutivo> salida = new List<Ejecutivo>();
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+            List<DotacionEntity> ejecs = DotacionDataAccess.ListarMiOficinaAT(token, OficinaAT);
+
+            if (tipoCampania > 0)
+            {
+                ejecs.ForEach(ej =>
+                {
+                    salida.Add(new Ejecutivo { EjecutivoData = ej, CantidadAsignaciones = AsignacionDataAccess.CantidadAsignacionesByRut(ej.Rut, tipoCampania, ej.IdSucursal) });
+                });
+            }
+            else
+            {
+                ejecs.ForEach(ej =>
+                {
+                    salida.Add(new Ejecutivo { EjecutivoData = ej, CantidadAsignaciones = 0 });
+                });
+            }
+
+            return salida;
+        }
+
+
+
         [AuthorizationRequired]
         [HttpGet]
         [Route("listar-mi-oficina-historica")]

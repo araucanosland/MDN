@@ -227,27 +227,96 @@ namespace CRM.Controllers
 
         //[AuthorizationRequired]
         [HttpGet]
-        [Route("encuesta-pensionados")]
-        public IEnumerable<EncuestaPensionados> EncuestaPensionados(string Token)
+        [Route("listar-encuesta-pensionados")]
+        public IEnumerable<EncuestaPensionados> ListarEncuestaPensionados(string Token,int Periodo,int Estado,string Ejecutivo,string OficinasAgenteterritorial)
         {
             CookieHeaderValue cookie = Request.Headers.GetCookies("Rut").FirstOrDefault();
             string Rutejecutivo = cookie.Cookies.FirstOrDefault(s => s.Name == "Rut").Value;
 
 
-            IEnumerable<EncuestaPensionados> encuesta = PensionadosDataAccess.EncuestaPensioandos(Token, Rutejecutivo);
+            CookieHeaderValue cookieOf = Request.Headers.GetCookies("Oficina").FirstOrDefault();
+            int Oficina= Convert.ToInt32(cookieOf.Cookies.FirstOrDefault(s => s.Name == "Oficina").Value);
+
+            CookieHeaderValue cookieCargo = Request.Headers.GetCookies("Cargo").FirstOrDefault();
+            string Cargo = cookieOf.Cookies.FirstOrDefault(s => s.Name == "Cargo").Value;
+
+            IEnumerable<EncuestaPensionados> encuesta = PensionadosDataAccess.ListaEncuestaPensioandos(Token, Rutejecutivo,Oficina, Periodo, Estado,Cargo, Ejecutivo, OficinasAgenteterritorial);
             return encuesta;
         }
 
 
         [HttpGet]
         [Route("encuesta-pensionados-estados")]
-        public IEnumerable<EncuestaPensionadosEstados> EncuestaPensionadosEstados(string Token)
+        public IEnumerable<EncuestaPensionadosEstados> EncuestaPensionadosEstados(string Token,int IdPadre)
         {
             CookieHeaderValue cookie = Request.Headers.GetCookies("Rut").FirstOrDefault();
             string Rutejecutivo = cookie.Cookies.FirstOrDefault(s => s.Name == "Rut").Value;
 
 
-            IEnumerable<EncuestaPensionadosEstados> estados = PensionadosDataAccess.EncuestaPensioandosEstados(Token, Rutejecutivo);
+            IEnumerable<EncuestaPensionadosEstados> estados = PensionadosDataAccess.EncuestaPensioandosEstados(Token, Rutejecutivo,IdPadre);
+            return estados;
+        }
+
+
+        [HttpGet]
+        [Route("lista-ejecutivo-asigna-pensionado")]
+        public IEnumerable<EjecutivoAsignacionPensionados> ListaEjecutivoAsignaPensionado(int Periodo,int codOficina)
+        {
+            CookieHeaderValue cookie = Request.Headers.GetCookies("Rut").FirstOrDefault();
+            string Rutejecutivo = cookie.Cookies.FirstOrDefault(s => s.Name == "Rut").Value;
+
+    
+
+            IEnumerable<EjecutivoAsignacionPensionados> estados = PensionadosDataAccess.ListaEjecutivoAsignaPensionados(Periodo,codOficina);
+            return estados;
+        }
+
+
+        [HttpPost]
+        [Route("Guardar-Encuesta-Pensionados")]
+        public ResultadoBase GuardarEncuestaPensioando(EncuestaPensioandosEntity encuesta)
+        {
+            try
+            {
+                CookieHeaderValue cookie = Request.Headers.GetCookies("Rut").FirstOrDefault();
+                string Rutejecutivo = cookie.Cookies.FirstOrDefault(s => s.Name == "Rut").Value;
+                //web.EjecutivoRut = Rutejecutivo;
+                PensionadosDataAccess.GuardarEncuestaPensionado(encuesta);
+                return new ResultadoBase() { Estado = "OK", Mensaje = "Datos OK", Objeto = "entrada" };
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message.Split(';');
+                return new ResultadoBase() { Estado = "ERR", Mensaje = x[1], Objeto = x[0] };
+            }
+        }
+
+        [HttpPost]
+        [Route("Asignar-Pensionado-Encuesta")]
+        public ResultadoBase AsignarPensionadoEncuesta(PensioandoAsignacionWeb asignar)
+        {
+            try
+            {
+                CookieHeaderValue cookie = Request.Headers.GetCookies("Rut").FirstOrDefault();
+                string Rutejecutivo = cookie.Cookies.FirstOrDefault(s => s.Name == "Rut").Value;
+                //web.EjecutivoRut = Rutejecutivo;
+                PensionadosDataAccess.AsignarEjecutivoPensionadoEncuesta(asignar);
+                return new ResultadoBase() { Estado = "OK", Mensaje = "Datos OK", Objeto = "entrada" };
+            }
+            catch (Exception ex)
+            {
+                var x = ex.Message.Split(';');
+                return new ResultadoBase() { Estado = "ERR", Mensaje = x[1], Objeto = x[0] };
+            }
+        }
+
+
+        [HttpGet]
+        [Route("lista-gestion-historial-encuesta")]
+        public IEnumerable<GestionHistorialEncuesta> ListaGestionEncuesta(int IdPensionado)
+        {
+            
+            IEnumerable<GestionHistorialEncuesta> estados = PensionadosDataAccess.ListaGestionEncuesta(IdPensionado);
             return estados;
         }
 

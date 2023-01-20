@@ -61,6 +61,19 @@
 
                                 <!--First tab-->
                                 <div id="demo-bv-tab1" class="tab-pane">
+
+                                    <div class="form-group">
+                                        <div id="oficina_reasignacion" style="display:none;" class="col-sm-12 text-xs-center">
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Oficina</label>
+                                                <div class="col-lg-3">
+                                                    <select class="form-control" id="ddloatreasignacion" name="ddloatreasignacion"></select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">Seleccione Tipo de Campaña</label>
                                         <div class="col-lg-4">
@@ -76,14 +89,13 @@
                                             </select>
                                         </div>
                                     </div>
+
+
+
+
                                 </div>
 
-                                <div id="oficina_reasignacion" style="margin-top: -22px;display:none;" class="col-sm-2 text-xs-center">
-                                    <div class="form-group">
-                                        <label class="control-label">Oficina</label>
-                                        <select class="form-control" id="ddloatreasignacion"></select>
-                                    </div>
-                                </div>
+
 
                                 <!--Second tab-->
                                 <div id="demo-bv-tab2" class="tab-pane fade">
@@ -276,17 +288,36 @@
 
     <script>
 
+
+     
+
         $(document).ready(function () {
 
-
-
             if (getCookie("Cargo") == "Agente Territorial") {
+                debugger;
                 $("#oficina_reasignacion").css("display", "block");
+                $("#slTipoCamp").prop('disabled', true);
+                var fechaHoy = new Date();
+                var Periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
+
+                $.SecGetJSON(BASE_URL + "/motor/api/Gestion/v3/listar-agente-territorial", { Periodo: Periodo, Rut: getCookie("Rut") }, function (response) {
+
+                    $("#ddloatreasignacion").html("");
+                    $("#ddloatreasignacion").append($("<option>").val('').html("Todas").data("id", '').data("nombre", "Todas"));
+                    $.each(response, function (i, datos) {
+
+                        $("#ddloatreasignacion").append($("<option>").val(datos.Cod_Oficina).html(datos.Oficina).data("Cod_Oficina", datos.Cod_Oficina).data("Oficina", datos.Oficina));
+
+                    });
+                });
             }
 
-
+                                 
 
             $('.lista-ejecutivos').chosen({ width: '100%', no_results_text: "No se han encontrado resultados" });
+
+
+      
 
 
             // FORM WIZARD WITH VALIDATION
@@ -302,6 +333,7 @@
                     $('#demo-bv-wz').find('.finish').hide().prop('disabled', true);
                 },
                 onTabShow: function (tab, navigation, index) {
+                    
                     var $total = navigation.find('li').length;
                     var $current = index + 1;
                     var $percent = ($current / $total) * 100;
@@ -336,8 +368,26 @@
 
                 },
                 onNext: function () {
+                  
                     isValid = null;
                     $('#demo-bv-wz-form').bootstrapValidator('validate');
+
+                    if (getCookie("Cargo") == "Agente Territorial") {
+                        
+                        if ($('#ddloatreasignacion').val() == "") {
+                            $.niftyNoty({
+                                type: 'danger',
+                                message: '<strong>Error!!</strong><li>Debe seleccionar una oficina</li>',
+                                container: 'floating',
+                                timer: 3000
+                            });
+                            $("#ddloatreasignacion").focus();
+                            return false;
+                        }
+
+                    }
+
+
 
                     if ($("#slEjecutivDestino_chosen").is(":visible")) {
 
@@ -432,7 +482,7 @@
                             }
                         }
                     },
-                    nroCasosAsignar: {
+                     nroCasosAsignar: {
                         message: 'Número Casos Asignar Invalido',
                         validators: {
                             notEmpty: {
@@ -476,11 +526,55 @@
 
 
 
+           
+
+
+            //---------Validaciones-------
+
+            if (getCookie("Cargo") == "Agente Territorial") {
+                $("#ddloatreasignacion").on("change", function () {
+                    if ($(this).val() == "") {
+                        $("#slTipoCamp").prop('disabled', true);
+                    }
+                    else {
+                        $("#slTipoCamp").prop('disabled', false);
+                    }
+                                       
+                });
+            }
+
+            $("#ddloatreasignacion").on("change", function () {
+                debugger;
+
+                if ($("#slTipoCamp").val() == "") {
+                   
+                    return false;
+                }
+                var tipoCampania = $("#slTipoCamp").val() != "" && $("#slTipoCamp").val() != "2" && $("#slTipoCamp").val() != "5" && $("#slTipoCamp").val() != "6" && $("#slTipoCamp").val() != "7" ? $("#slTipoCamp").val() : 0
+                $.SecGetJSON(BASE_URL + "/motor/api/Gestion/listar-mi-oficina-AT", { tipoCampania, OficinaAT: $("#ddloatreasignacion").val() }, function (respuesta) {
+
+                    $(".lista-ejecutivos").html("");
+                    $(".lista-ejecutivos").append($("<option>").val(""));
+                    $("#nroCasosOrigen").val("")
+                    $.each(respuesta, function (i, e) {
+                        //Llenar los origenes solo que tengan cantidad > 0
+                        //if (e.CantidadAsignaciones > 0) {
+                        $("#slEjecutivOrigen").append($("<option>").val(e.EjecutivoData.Rut).html(e.EjecutivoData.Rut + " " + e.EjecutivoData.Nombres).data({ "asignaciones": e.CantidadAsignaciones, "oficina": e.EjecutivoData.IdSucursal }));
+                        //}
+                        //Llenar los destinos
+                        $("#slEjecutivDestino").append($("<option>").val(e.EjecutivoData.Rut).html(e.EjecutivoData.Rut + " " + e.EjecutivoData.Nombres).data({ "asignaciones": e.CantidadAsignaciones, "oficina": e.EjecutivoData.IdSucursal }));
+                    });
+                    $(".lista-ejecutivos").trigger("chosen:updated");
+                });
+            });
+
 
             $("#slTipoCamp").on("change", function () {
                 debugger;
-                var tipoCampania = $(this).val() != "" && $(this).val() != "2" && $(this).val() != "5" && $(this).val() != "6" && $(this).val() != "7" ? $(this).val() : 0
-                $.SecGetJSON(BASE_URL + "/motor/api/Gestion/listar-mi-oficina", { tipoCampania }, function (respuesta) {
+                
+                var tipoCampania = $(this).val()!= "" && $(this).val() != "2" && $(this).val() != "5" && $(this).val() != "6" && $(this).val() != "7" ? $(this).val() : 0
+                $.SecGetJSON(BASE_URL + "/motor/api/Gestion/listar-mi-oficina-AT", { tipoCampania, OficinaAT: $("#ddloatreasignacion").val() }, function (respuesta) {
+                //    $.SecGetJSON(BASE_URL + "/motor/api/Gestion/listar-mi-oficina", { tipoCampania }, function (respuesta) {
 
                     $(".lista-ejecutivos").html("");
                     $(".lista-ejecutivos").append($("<option>").val(""));
@@ -504,7 +598,15 @@
                     var rutEjecutivo = $(this).val();
                     var fechaHoy = new Date();
                     var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
-                    var oficina = getCookie('Oficina');
+                    var oficina; getCookie('Oficina');
+                    var OficinaTerritorial = $("#ddloatreasignacion").val()
+                    var Cargo = getCookie('Cargo');
+           
+                    if (Cargo == "Agente Territorial")
+                        oficina = $("#ddloatreasignacion").val()
+                    else
+                        oficina= getCookie('Oficina');
+
                     fetch(`http://${motor_api_server}:4002/normalizacion/leadAsignados?rutEjecutivo=${rutEjecutivo}&periodo=${periodo}&oficina=${oficina}`, {
                         method: 'GET',
                         mode: 'cors',
@@ -512,6 +614,7 @@
                     })
                         .then(rs => rs.text())
                         .then(rsText => {
+                            debugger;
                             console.log({ rsText })
                             $("#nroCasosOrigen").val(rsText);
                             $("#nroCasosAsignar").val(rsText);
@@ -601,11 +704,18 @@
             });
 
             $("#slEjecutivDestino").on("change", function () {
+                debugger;
                 if ($('#slTipoCamp').val() == 2) {
                     var rutEjecutivo = $(this).val();
                     var fechaHoy = new Date();
                     var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
-                    var oficina = getCookie('Oficina');
+
+                    var Cargo = getCookie('Cargo');
+                    if (Cargo == "Agente Territorial")
+                        oficina = $("#ddloatreasignacion").val()
+                    else
+                        oficina = getCookie('Oficina');
+
                     fetch(`http://${motor_api_server}:4002/normalizacion/leadAsignados?rutEjecutivo=${rutEjecutivo}&periodo=${periodo}&oficina=${oficina}`, {
                         method: 'GET',
                         mode: 'cors',
@@ -621,7 +731,12 @@
                     var rutEjecutivo = $(this).val();
                     var fechaHoy = new Date();
                     var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
-                    var oficina = getCookie('Oficina');
+                    var Cargo = getCookie('Cargo');
+                    if (Cargo == "Agente Territorial")
+                        oficina = $("#ddloatreasignacion").val()
+                    else
+                        oficina = getCookie('Oficina');
+
                     fetch(`http://${motor_api_server}:4002/acuerdopago/leadAsignados?rutEjecutivo=${rutEjecutivo}&periodo=${periodo}&oficina=${oficina}`, {
                         method: 'GET',
                         mode: 'cors',
@@ -638,7 +753,11 @@
                     var rutEjecutivo = $(this).val();
                     var fechaHoy = new Date();
                     var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
-                    var oficina = getCookie('Oficina');
+                    var Cargo = getCookie('Cargo');
+                    if (Cargo == "Agente Territorial")
+                        oficina = $("#ddloatreasignacion").val()
+                    else
+                        oficina = getCookie('Oficina');
                     fetch(`http://${motor_api_server}:4002/segurocesantia/leadAsignados?rutEjecutivo=${rutEjecutivo}&periodo=${periodo}&oficina=${oficina}`, {
                         method: 'GET',
                         mode: 'cors',
@@ -655,7 +774,11 @@
                     var rutEjecutivo = $(this).val();
                     var fechaHoy = new Date();
                     var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
-                    var oficina = getCookie('Oficina');
+                    var Cargo = getCookie('Cargo');
+                    if (Cargo == "Agente Territorial")
+                        oficina = $("#ddloatreasignacion").val()
+                    else
+                        oficina = getCookie('Oficina');
                     fetch(`http://${motor_api_server}:4002/ign/leadAsignadosIgn?rutEjecutivo=${rutEjecutivo}&periodo=${periodo}&oficina=${oficina}`, {
                         method: 'GET',
                         mode: 'cors',
@@ -672,7 +795,11 @@
                     var rutEjecutivo = $(this).val();
                     var fechaHoy = new Date();
                     var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
-                    var oficina = getCookie('Oficina');
+                    var Cargo = getCookie('Cargo');
+                    if (Cargo == "Agente Territorial")
+                        oficina = $("#ddloatreasignacion").val()
+                    else
+                        oficina = getCookie('Oficina');
                     fetch(`http://${motor_api_server}:4002/campana-pex/leadAsignadosPex?rutEjecutivo=${rutEjecutivo}&periodo=${periodo}&oficina=${oficina}`, {
                         method: 'GET',
                         mode: 'cors',
@@ -691,9 +818,17 @@
 
                 bootbox.confirm("¿Está seguro de Traspasar las Asignaciones? ...esto no tiene vuelta a trás!", function (result) {
                     if (result) {
-
+                        debugger;
                         Pace.track(function () {
+                            debugger;
                             if ($("#slTipoCamp").val() != 2 && $("#slTipoCamp").val() != 5 && $("#slTipoCamp").val() != 4 && $("#slTipoCamp").val() != 6 && $("#slTipoCamp").val() != 7) {
+                                var codOficina;
+                                var Cargo = getCookie('Cargo');
+                                if (Cargo == "Agente Territorial")
+                                    codOficina = $("#ddloatreasignacion").val()
+                                else
+                                    codOficina = getCookie('Oficina');
+
 
                                 var WebReasignacion = {
                                     ProcesoReasignacion: {
@@ -701,7 +836,7 @@
                                         RutEjecutivoDestino: $("#slEjecutivDestino").find(':selected').val(),
                                         TipoCampania: $("#slTipoCamp").find(':selected').val(),
                                         CantidadAsignaciones: $("#nroCasosAsignar").val(),
-                                        CodOficina: getCookie("Oficina")
+                                        CodOficina: codOficina
                                     },
                                     AuxLog: {
                                         OrigenAntes: $("#Resumen_EjecutivoOrigen_nroCasos_antes").val(),
@@ -714,31 +849,31 @@
 
                                 //setTimeout(function () {
 
-                                    $.SecPostJSON(BASE_URL + "/motor/api/Gestion/procesar-reasignacion", WebReasignacion, function (respuesta) {
-                                        if (respuesta.Estado === "OK") {
+                                $.SecPostJSON(BASE_URL + "/motor/api/Gestion/procesar-reasignacion", WebReasignacion, function (respuesta) {
+                                    if (respuesta.Estado === "OK") {
 
-                                            $("#nameOrigen").html($("#slEjecutivOrigen").find(':selected').html())
-                                            $("#nameDestino").html($("#slEjecutivDestino").find(':selected').html())
-                                            $("#resumen_tipo_camp").html($("#slTipoCamp").find(':selected').html())
-                                            $("#resumen_cantidad_asignaciones").html($("#nroCasosAsignar").val());
-                                            $("#origenAntes").html(respuesta.Objeto.AuxLog.OrigenAntes);
-                                            $("#origenDespues").html(respuesta.Objeto.AuxLog.OrigenDespues);
-                                            $("#destinoAntes").html(respuesta.Objeto.AuxLog.DestinoAntes);
-                                            $("#destinoDespues").html(respuesta.Objeto.AuxLog.DestinoDespues);
+                                        $("#nameOrigen").html($("#slEjecutivOrigen").find(':selected').html())
+                                        $("#nameDestino").html($("#slEjecutivDestino").find(':selected').html())
+                                        $("#resumen_tipo_camp").html($("#slTipoCamp").find(':selected').html())
+                                        $("#resumen_cantidad_asignaciones").html($("#nroCasosAsignar").val());
+                                        $("#origenAntes").html(respuesta.Objeto.AuxLog.OrigenAntes);
+                                        $("#origenDespues").html(respuesta.Objeto.AuxLog.OrigenDespues);
+                                        $("#destinoAntes").html(respuesta.Objeto.AuxLog.DestinoAntes);
+                                        $("#destinoDespues").html(respuesta.Objeto.AuxLog.DestinoDespues);
 
 
-                                            $("#origenAntes").html($("#nroCasosOrigen").val());
-                                            $("#origenDespues").html($("#Resumen_EjecutivoOrigen_nroCasos_despues").val());
+                                        $("#origenAntes").html($("#nroCasosOrigen").val());
+                                        $("#origenDespues").html($("#Resumen_EjecutivoOrigen_nroCasos_despues").val());
 
-                                            $("#destinoAntes").html($("#nroCasosDestinoActual").val());
-                                            $("#destinoDespues").html($("#Resumen_EjecutivoDestino_nroCasos_despues").val());
+                                        $("#destinoAntes").html($("#nroCasosDestinoActual").val());
+                                        $("#destinoDespues").html($("#Resumen_EjecutivoDestino_nroCasos_despues").val());
 
-                                            $(".CharlyWizardContainer").hide();
-                                            $("#CharlyFinallyContainer").show();
-                                        }
-                                    });
+                                        $(".CharlyWizardContainer").hide();
+                                        $("#CharlyFinallyContainer").show();
+                                    }
+                                });
 
-                               // }, 1000);
+                                // }, 1000);
 
 
 
@@ -750,12 +885,21 @@
                                 var fechaHoy = new Date();
                                 var per = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
 
+
+                                var codOficina;
+                                var Cargo = getCookie('Cargo');
+                                if (Cargo == "Agente Territorial")
+                                    codOficina = $("#ddloatreasignacion").val()
+                                else
+                                    codOficina = getCookie('Oficina');
+
+
                                 var formData = {
                                     rutOrigen: $("#slEjecutivOrigen").find(':selected').val(),
                                     rutDestino: $("#slEjecutivDestino").find(':selected').val(),
                                     periodo: per,
                                     cantidadReasignar: $("#nroCasosAsignar").val(),
-                                    oficina: getCookie("Oficina")
+                                    oficina: codOficina
                                 };
 
                                 if ($("#slTipoCamp").val() == 2) {

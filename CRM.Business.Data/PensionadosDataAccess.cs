@@ -5,31 +5,76 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 
-
 namespace CRM.Business.Data
 {
     public static class PensionadosDataAccess
     {
 
 
-        public static List<EncuestaPensionados> EncuestaPensioandos(string Token, string rutEjecutivo)
+        public static int AsignarEjecutivoPensionadoEncuesta(PensioandoAsignacionWeb asignacion)
+        {
+            Parametros pram = new Parametros
+            {
+
+                new Parametro("@Ejecutivo_Asignado", asignacion.Ejecutivo_Asignado),
+                new Parametro("@RutPensionado",asignacion.RutPensionado),
+                new Parametro("@Oficina", asignacion.Oficina),
+
+
+            };
+            return DBHelper.InstanceNegocio.EjecutarProcedimiento("pensionados.Asignar_Pensionado_Encuesta", pram);
+        }
+
+
+
+        public static List<GestionHistorialEncuesta> ListaGestionEncuesta(int IdPensionado)
+        {
+            Parametros param = new Parametros
+            {
+                new Parametro("@Id",IdPensionado),
+
+            };
+            return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_gestiones_encuestas", param, GestionHistorialGestionEntity);
+
+        }
+
+
+        public static List<EjecutivoAsignacionPensionados> ListaEjecutivoAsignaPensionados(int Periodo, int codOficina)
+        {
+            Parametros param = new Parametros
+            {
+                new Parametro("@cod_sucursal",codOficina),
+                new Parametro("@periodo",Periodo),
+
+            };
+            return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.ejecutivo_asignacion_Encuesta ", param, AsignacionPensionadosEntity);
+        }
+
+        public static List<EncuestaPensionados> ListaEncuestaPensioandos(string Token, string rutEjecutivo, int Oficina, int Periodo, int Estado, string Cargo, string EjecutivoBusqueda, string OficinasAgenteterritorial)
         {
             Parametros param = new Parametros
             {
                 new Parametro("@TOKEN",Token),
                 new Parametro("@RUT_EJECUTIVO",rutEjecutivo),
+                new Parametro("@Oficina",Oficina),
+                new Parametro("@Periodo",Periodo),
+                new Parametro("@EstadoId",Estado),
+                new Parametro("@Cargo",Cargo),
+                new Parametro("@EjecutivoBusqueda",EjecutivoBusqueda),
+                new Parametro("@OficinasAgenteterritorial",OficinasAgenteterritorial),
+
 
             };
             return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_Encuesta_Desafiliacion ", param, EncuestaPensionadoEntity);
         }
 
-        public static List<EncuestaPensionadosEstados> EncuestaPensioandosEstados(string Token, string rutEjecutivo)
+        public static List<EncuestaPensionadosEstados> EncuestaPensioandosEstados(string Token, string rutEjecutivo, int IdPadre)
         {
             Parametros param = new Parametros
             {
                 new Parametro("@TOKEN",Token),
                 new Parametro("@RUT_EJECUTIVO",rutEjecutivo),
-
+                new Parametro("@IdPadre",IdPadre),
             };
             return DBHelper.InstanceNegocio.ObtenerColeccion("pensionados.Listar_Encuesta_Desafiliacion_estado ", param, EncuestaPensionadoEstadosEntity);
         }
@@ -746,6 +791,24 @@ namespace CRM.Business.Data
             return DBHelper.InstanceNegocio.EjecutarProcedimiento("pensionados.Guardar_Gestion_Pensionado", pram);
         }
 
+
+        public static int GuardarEncuestaPensionado(EncuestaPensioandosEntity encuesta)
+        {
+            Parametros pram = new Parametros
+            {
+                new Parametro("@Idlead", encuesta.Idlead),
+                new Parametro("@Estado",encuesta.Estado),
+                new Parametro("@Pregunta1",encuesta.Pregunta1),
+                new Parametro("@Pregunta2", encuesta.Pregunta2),
+                new Parametro("@Pregunta3", encuesta.Pregunta3),
+                new Parametro("@Pregunta4",encuesta.Pregunta4),
+                new Parametro("@RutEjecutivo",encuesta.RutEjecutivo),
+                new Parametro("@Observacion",encuesta.Observaciones),
+
+            };
+            return DBHelper.InstanceNegocio.EjecutarProcedimiento("pensionados.Guardar_Encuesta_Pensionado", pram);
+        }
+
         public static LeadPensionados Busca_Prospecto(string rut, int periodo)
         {
             Parametros parametros = new Parametros()
@@ -767,6 +830,31 @@ namespace CRM.Business.Data
         }
 
 
+        private static EjecutivoAsignacionPensionados AsignacionPensionadosEntity(DataRow row)
+        {
+            return new EjecutivoAsignacionPensionados
+            {
+                Rut = row["Rut"] != DBNull.Value ? row["Rut"].ToString() : string.Empty,
+                Nombre = row["Nombre"] != DBNull.Value ? row["Nombre"].ToString() : string.Empty,
+                Cod_Sucursal = row["Cod_Sucursal"] != DBNull.Value ? Convert.ToInt32(row["Cod_Sucursal"]) : 0,
+            };
+        }
+
+        private static GestionHistorialEncuesta GestionHistorialGestionEntity(DataRow row)
+        {
+            return new GestionHistorialEncuesta
+            {
+
+                Id = row["Id"] != DBNull.Value ? Convert.ToInt32(row["Id"]) : 0,
+                RutPensionado = row["RutPensionado"] != DBNull.Value ? row["RutPensionado"].ToString() : string.Empty,
+                Estado = row["estado"] != DBNull.Value ? row["estado"].ToString() : string.Empty,
+                FechaGestion = row["FechaGestion"] != DBNull.Value ? Convert.ToDateTime(row["FechaGestion"]) : new DateTime(1900, 1, 1),
+
+            };
+        }
+
+
+
         private static EncuestaPensionados EncuestaPensionadoEntity(DataRow row)
         {
             return new EncuestaPensionados
@@ -777,7 +865,7 @@ namespace CRM.Business.Data
                 Dv = row["Dv"] != DBNull.Value ? row["Dv"].ToString() : string.Empty,
                 FechaDesafiliacion = row["FechaDesafiliacion"] != DBNull.Value ? Convert.ToDateTime(row["FechaDesafiliacion"]) : new DateTime(1900, 1, 1),
                 CCAFDestino = row["CCAFDestino"] != DBNull.Value ? row["CCAFDestino"].ToString() : string.Empty,
-                NombrePensionado =row["NombrePensionado"] != DBNull.Value ? row["NombrePensionado"].ToString() : string.Empty,
+                NombrePensionado = row["NombrePensionado"] != DBNull.Value ? row["NombrePensionado"].ToString() : string.Empty,
                 Direccion = row["Direccion"] != DBNull.Value ? row["Direccion"].ToString() : string.Empty,
                 Numero = row["Numero"] != DBNull.Value ? Convert.ToInt32(row["Numero"]) : 0,
                 DireccionCompleta = row["DireccionCompleta"] != DBNull.Value ? row["DireccionCompleta"].ToString() : string.Empty,
@@ -787,10 +875,11 @@ namespace CRM.Business.Data
                 CodigoRegion = row["CodigoRegion"] != DBNull.Value ? Convert.ToInt32(row["CodigoRegion"]) : 0,
                 NombreRegion = row["NombreRegion"] != DBNull.Value ? row["NombreRegion"].ToString() : string.Empty,
                 FlagTarget = row["FlagTarget"] != DBNull.Value ? Convert.ToInt32(row["FlagTarget"]) : 0,
-                Codigo = row["Codigo"] != DBNull.Value ? Convert.ToInt32(row["Codigo"]) : 0,
+                Oficina = row["Oficina"] != DBNull.Value ? Convert.ToInt32(row["Oficina"]) : 0,
                 SucursalDependencia = row["SucursalDependencia"] != DBNull.Value ? row["SucursalDependencia"].ToString() : string.Empty,
                 Estado_encuesta = row["Estado_encuesta"] != DBNull.Value ? row["Estado_encuesta"].ToString() : string.Empty,
-
+                Estado_id = row["Estado_id"] != DBNull.Value ? Convert.ToInt32(row["Estado_id"]) : 0,
+                EjecutivoAsignado = row["EjecutivoAsignado"] != DBNull.Value ? row["EjecutivoAsignado"].ToString() : string.Empty,
             };
         }
 
@@ -801,7 +890,7 @@ namespace CRM.Business.Data
             {
                 Id = row["Id"] != DBNull.Value ? Convert.ToInt32(row["Id"]) : 0,
                 Descripcion = row["Descripcion"] != DBNull.Value ? row["Descripcion"].ToString() : string.Empty,
-             
+
 
             };
         }

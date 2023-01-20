@@ -38,6 +38,20 @@ namespace CRM.Business.Data
             return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_ObtenerEjecutivosOficinaByToken", p, ConstructorEntidad);
         }
 
+
+        public static List<DotacionEntity> ListarMiOficinaAT(string Token, string OficinaAT)
+        {
+            Parametros p = new Parametros()
+            {
+                new Parametro("@Token", Token),
+                new Parametro("@OficinaAT", OficinaAT),
+            };
+
+
+            return DBHelper.InstanceCRM.ObtenerColeccion("spMotor_ObtenerEjecutivosOficinaByToken_at", p, ConstructorEntidad);
+        }
+
+
         public static List<DotacionEntity> ListarMiOficinaHistorica(string Token, int Periodo)
         {
             Parametros prms = new Parametros()

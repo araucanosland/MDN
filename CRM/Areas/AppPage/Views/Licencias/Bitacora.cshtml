@@ -156,8 +156,7 @@
             $('.contenedor-folios').html("");
             $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-Bitacora", { codIngreso: CodIng }, function (datos) {
 
-                debugger;
-              
+                 
                 let glosa;
                 let html = ``;
                 let responsable;
@@ -349,7 +348,7 @@
                 $("#lblcorreo").text('');
                 // console.log(datos);
                 $.each(datos, function (i, licencia) {
-                    debugger;
+              
                     $("#trTipoLM").show();
                     $("#trFechaInicioLM").show();
                     $("#trFechaTerminoLM").show();
@@ -367,7 +366,7 @@
                     $("#lbltelefono").text(licencia.Telefono);
                     $("#lblcorreo").text(licencia.Email);
                     $("#lblmandato").text(licencia.Mandato);
-                    debugger;
+                 
                     
                     if (licencia.Responsable != 'RRLL' || licencia.Etapa != 'Conforme') {
                         let html = `<div class="timeline-entry" >

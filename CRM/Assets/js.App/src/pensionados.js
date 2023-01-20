@@ -8,7 +8,14 @@ let marcaGestionConctact = 0;
 metodos = {
     CargaEjecutivoPensionadosAT() {
         debugger;
-        let oficina = $("#ddloatpensionado").val();
+        var oficina;
+        if (getCookie("Cargo") == "Agente Territorial") {
+            oficina = $("#ddloatpensionado").val();
+        }
+        else {    
+            oficina = getCookie("Oficina");
+        }
+        
 
         let fechaHoy = new Date();
         let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
@@ -1651,19 +1658,21 @@ $(function () {
     }
 
     $('#modalAsignacion').click(function () {
-       
-        if ($("#ddloatpensionado").val() == "") {
-            $.niftyNoty({
-                type: 'danger',
-                container: 'floating',
-                html: '<strong>Error</strong><li>Debe Seleccionar una oficina para Asginar!</li>',
-                focus: false,
-                timer: 5000
-            });
-            $("#ddloatpensionado").focus();
-            return false;
-        }
+        debugger;
+        if (getCookie("Cargo") == "Agente Territorial") {
 
+            if ($("#ddloatpensionado").val() == "") {
+                $.niftyNoty({
+                    type: 'danger',
+                    container: 'floating',
+                    html: '<strong>Error</strong><li>Debe Seleccionar una oficina para Asginar!</li>',
+                    focus: false,
+                    timer: 5000
+                });
+                $("#ddloatpensionado").focus();
+                return false;
+            }
+        }
 
 
         if (result['length'] != 0) {
@@ -1784,12 +1793,17 @@ $(function () {
                 icon: 'pli-like-2 icon-2x',
                 message: '<strong>OK..</strong>Se Asignaron ' + result.length + ' Pensionados  Correctamente...!',
                 container: '#msjAsigPensionado',
-                timer: 4000
+                timer: 3000,
+                onHidden: function () {
+                    appPensionadosFiltros.handleEventoClickFiltrar();
+                    result = []
+                    $('#dllEjePensiondos').val('0')
+                    $("#modal_asigna_pensionado").modal('hide');
+                }
+
             });
 
-            appPensionadosFiltros.handleEventoClickFiltrar();
-            result = []
-            $('#dllEjePensiondos').val('0')
+            
         }
         else {
             $.niftyNoty({

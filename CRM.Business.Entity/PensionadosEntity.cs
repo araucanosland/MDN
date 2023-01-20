@@ -302,6 +302,20 @@ namespace CRM.Business.Entity
 
     }
 
+    public class EncuestaPensioandosEntity
+    {
+
+        public int Idlead { get; set; }
+        public int Estado { get; set; }
+        public string Pregunta1 { get; set; }
+        public string Pregunta2 { get; set; }
+        public string Pregunta3 { get; set; }
+        public string Pregunta4 { get; set; }
+        public string RutEjecutivo { get; set; }
+        public string Observaciones { get; set; }
+    }
+
+
     public class WebPensionadosUnoPorcientoGestionEntity
     {
         public string NombreEjecutivo { get; set; }
@@ -343,7 +357,7 @@ namespace CRM.Business.Entity
         public DateTime FechaDesafiliacion { get; set; }
         public string CCAFDestino { get; set; }
         public string NombrePensionado { get; set; }
-        public string DireccionCompleta { get; set; }        
+        public string DireccionCompleta { get; set; }
         public string Direccion { get; set; }
         public int Numero { get; set; }
         public int Departamento { get; set; }
@@ -352,10 +366,11 @@ namespace CRM.Business.Entity
         public int CodigoRegion { get; set; }
         public string NombreRegion { get; set; }
         public int FlagTarget { get; set; }
-        public int Codigo { get; set; }
+        public int Oficina { get; set; }
         public string SucursalDependencia { get; set; }
         public string Estado_encuesta { get; set; }
-
+        public int Estado_id { get; set; }
+        public string EjecutivoAsignado { get; set; }
     }
 
     public class EncuestaPensionadosEstados
@@ -364,4 +379,30 @@ namespace CRM.Business.Entity
         public string Descripcion { get; set; }
         public int Estados { get; set; }
     }
+
+    public class EjecutivoAsignacionPensionados
+    {
+        public string Rut { get; set; }
+        public string Nombre { get; set; }
+        public int Cod_Sucursal { get; set; }
+    }
+
+    public class GestionHistorialEncuesta
+    {
+        public int Id { get; set; }
+        public string RutPensionado { get; set; }
+        public string Estado { get; set; }
+        public DateTime FechaGestion { get; set; }
+    }
+
+
+
+
+    public class PensioandoAsignacionWeb
+    {
+        public string Ejecutivo_Asignado { get; set; }
+        public string RutPensionado { get; set; }
+        public int Oficina { get; set; }
+    }
+    
 }
