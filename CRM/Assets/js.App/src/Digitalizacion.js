@@ -1027,7 +1027,7 @@ $(function () {
                 if (respuesta.estado = 'OK') {
 
                     metodos.CargaGrillaAsginacion("01-01-2021", sessionStorage.getItem('dt_fecha_asignacion_hasta'), 'Filtro', $("#ddlejecutivoAsignacion").val(), 1, $("#txtrutagenteDI").val(), $("#txtcreditoagenteDI").val(), $("#txtofertaagenteDI").val(), $("#ddlEstadosagenteDI").val(), 2);
-                    debugger;
+                    
                     
 
                 }
@@ -1069,9 +1069,9 @@ $(function () {
                 Cargo: getCookie("Cargo"),
                 TipoEjecutivo: 'EjecutivoAsignado'
             }
-            debugger;
+            
             $.SecPostJSON(BASE_URL + "/motor/api/digitalizacion/Actualizar-Gestion-Ejecutivo", WebGestionDigitalizacion, function (respuesta) {
-                debugger;
+                
                 if (respuesta.estado = 'OK') {
                  
                     metodos.CargaGrillaAsginacionLeaglizacion("01-01-2021", $("#dt_fecha_asignacion_hastaLegalizado").val(), 'Filtro', $("#ddlejecutivoAsignacionLegalizado").val(), 2, $("#txtrutagenteDL").val(), $("#txtcreditoagenteDL").val(), $("#txtofertaagenteDL").val(), $("#ddlEstadosagenteDL").val(), 6)

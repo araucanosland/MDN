@@ -217,7 +217,7 @@ var metodos = {
 
 
             if (Audit == "3sp3c1l1st4") {
-                debugger;
+                
                 if (Auditor == 2) {
                     $("#OficinaAuditora").val("División Riesgo Crédito")
                 }
@@ -613,7 +613,7 @@ $(function () {
     $("#lblEstado").text("Reparado").css("color", "red")
 
     $('#btn-guardar').on("click", function () {
-        debugger;
+        
 
         var estadoAprobado = 0;
         if ($("#lblEstado").text() == "Aprobado") {
@@ -802,7 +802,7 @@ $(function () {
             }
 
             if (EstadoEsp == "Reparado") {
-                debugger;
+                
                 var WebGestionDigitalizacion = {
                     Id_lead: Id_Lead,
                     Id_Estado: 1,

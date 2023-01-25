@@ -294,7 +294,7 @@
         $(document).ready(function () {
 
             if (getCookie("Cargo") == "Agente Territorial") {
-                debugger;
+                
                 $("#oficina_reasignacion").css("display", "block");
                 $("#slTipoCamp").prop('disabled', true);
                 var fechaHoy = new Date();
@@ -544,7 +544,7 @@
             }
 
             $("#ddloatreasignacion").on("change", function () {
-                debugger;
+                
 
                 if ($("#slTipoCamp").val() == "") {
                    
@@ -570,7 +570,7 @@
 
 
             $("#slTipoCamp").on("change", function () {
-                debugger;
+                
                 
                 var tipoCampania = $(this).val()!= "" && $(this).val() != "2" && $(this).val() != "5" && $(this).val() != "6" && $(this).val() != "7" ? $(this).val() : 0
                 $.SecGetJSON(BASE_URL + "/motor/api/Gestion/listar-mi-oficina-AT", { tipoCampania, OficinaAT: $("#ddloatreasignacion").val() }, function (respuesta) {
@@ -593,7 +593,7 @@
             });
 
             $("#slEjecutivOrigen").on("change", function () {
-                debugger;
+                
                 if ($('#slTipoCamp').val() == 2) {
                     var rutEjecutivo = $(this).val();
                     var fechaHoy = new Date();
@@ -614,7 +614,7 @@
                     })
                         .then(rs => rs.text())
                         .then(rsText => {
-                            debugger;
+                            
                             console.log({ rsText })
                             $("#nroCasosOrigen").val(rsText);
                             $("#nroCasosAsignar").val(rsText);
@@ -704,7 +704,7 @@
             });
 
             $("#slEjecutivDestino").on("change", function () {
-                debugger;
+                
                 if ($('#slTipoCamp').val() == 2) {
                     var rutEjecutivo = $(this).val();
                     var fechaHoy = new Date();
@@ -818,9 +818,9 @@
 
                 bootbox.confirm("¿Está seguro de Traspasar las Asignaciones? ...esto no tiene vuelta a trás!", function (result) {
                     if (result) {
-                        debugger;
+                        
                         Pace.track(function () {
-                            debugger;
+                            
                             if ($("#slTipoCamp").val() != 2 && $("#slTipoCamp").val() != 5 && $("#slTipoCamp").val() != 4 && $("#slTipoCamp").val() != 6 && $("#slTipoCamp").val() != 7) {
                                 var codOficina;
                                 var Cargo = getCookie('Cargo');

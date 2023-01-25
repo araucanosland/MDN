@@ -75,7 +75,7 @@ var metodos = {
         });
     },
     ObtieneObjetoVidaSana: function (IdEmpresaAnexo) {
-        debugger;
+        
         $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtener-gestion-vidaSana", { IdEmpresaAnexo: IdEmpresaAnexo }, function (response) {
 
           
@@ -1175,7 +1175,7 @@ var cargador = {
             selectHelper: true,
             editable: false,
             eventClick: function (event) {
-                debugger;
+                
                 $('#txtFechacita_update').val(event.start._i.toFecha())
                 $('#slTipoVisita_update').val(event.TipoVisita)
                 $('#txtObsCita_update').val(event.Glosa)
@@ -2003,7 +2003,7 @@ $('#form_registro_agendaEmpresa_update').bootstrapValidator({
 });
 //--------------------------Eliminar Cita
 $('#btCita_elimina').on('click', function () {
-    debugger;
+    
     var rutEmpresa = 0;
     if (rutE != "" && rutE != 'undefined' && rutE != null) {
         rutEmpresa = rutE;

@@ -200,7 +200,7 @@ $(function () {
 
             
             if (encuesta_ == '') {
-                debugger;
+                
                 $('#nombre_r').val($(event.relatedTarget).data('nombre'));
                 //$('#mdl_Estamento_R').val($(event.relatedTarget).data('estamento'));
                 $('#mdl_Cargo_R').val($(event.relatedTarget).data('cargo'));
@@ -351,7 +351,7 @@ $(function () {
             }
         }
 
-        debugger;
+        
         var LLamado_ = null;
 
         if ($('#mdl_llamado').val() != '0') {
@@ -359,7 +359,7 @@ $(function () {
         }
 
         var pasaresolutor = $('#ModaldllSubEstadoGestion').val();
-        debugger;
+        
         var webGestion = {
             Id_lead: $('#txtId').val(),
             /*Estamento: $('#mdl_Estamento_R').val(),*/
@@ -373,9 +373,9 @@ $(function () {
             SubEstado_id: $('#ModaldllSubEstadoGestion').val(),
             RutEjecutivo: $('#rutejecutivo').val(),
         }
-        debugger;
+        
         $.SecPostJSON(BASE_URL + "/motor/api/campanadiplomado/Guardar_Gestion_Diplomado", webGestion, function (respuesta) {
-            debugger;
+            
             if (respuesta.Estado == 'OK') {
                 $.niftyNoty({
                     type: 'success',
@@ -414,25 +414,25 @@ $(function () {
     });
 
     $('#btn_Anterior').on("click", function () {
-        debugger;
+        
         $("#Hoja1").css("display", "block");
         $("#Hoja2").css("display", "none");
         return false;
     });
     $('#btn_Siguiente').on("click", function () {
-        debugger;
+        
         $("#Hoja1").css("display", "none");
         $("#Hoja2").css("display", "block");
         return false;
     });
     $('#btn_Anterior_t').on("click", function () {
-        debugger;
+        
         $("#Hoja3").css("display", "block");
         $("#Hoja4").css("display", "none");
         return false;
     });
     $('#btn_Siguiente_t').on("click", function () {
-        debugger;
+        
         $("#Hoja3").css("display", "none");
         $("#Hoja4").css("display", "block");
         return false;

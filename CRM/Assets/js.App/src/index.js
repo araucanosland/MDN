@@ -1030,7 +1030,7 @@ $(function () {
 
     //COMERCIAL 
     $('#button').click(function () {
-        debugger;
+        
         $("#tabla_comercial").bootstrapTable('refresh', {
             url: BASE_URL + "/motor/api/Gestion/v3/lista-seguimientos",
             query: {

@@ -22,7 +22,7 @@
 
 $(function () {
     $("#btn-gestion-VidaSana").on("click", function () {
-        debugger;
+        
         $('#modal-Vida-sana').modal('show');
     });
 });

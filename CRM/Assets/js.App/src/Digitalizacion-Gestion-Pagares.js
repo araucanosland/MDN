@@ -83,7 +83,7 @@ var metodos = {
             }
 
             if (Audit == "3sp3c1l1st4") {
-                debugger;
+                
                 $("#ddPagare").prop("disabled", false)
                 $("#ddlcedula").prop("disabled", false)
                 $("#ddlPagareObs").css("display", "none");
@@ -606,7 +606,7 @@ $(function () {
         }
 
         if (Audit == "3sp3c1l1st4") {
-            debugger;
+            
 
             if ($('#ddPagare').val() == "0" || $("#ddlcedula").val() == "0") {
                 $.niftyNoty({

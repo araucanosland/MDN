@@ -27,7 +27,7 @@ var Fn = {
 }
 
 function eliminarMDN(asdasdasd) {
-    debugger;
+    
 
 }
 
@@ -42,7 +42,7 @@ function formatFecha(value, row, index) {
 
 
 function eliminar(rut) {
-    debugger;
+    
     bootbox.confirm({
         size: "medium",
         title: "Este Usuario se borrará definitivamente del sistema",

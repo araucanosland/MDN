@@ -7,7 +7,7 @@ let marcaGestionConctact = 0;
 
 metodos = {
     CargaEjecutivoPensionadosAT() {
-        debugger;
+        
         var oficina;
         if (getCookie("Cargo") == "Agente Territorial") {
             oficina = $("#ddloatpensionado").val();
@@ -37,7 +37,7 @@ metodos = {
             });
     },
     CargaEjecutivoAT() {
-        debugger;
+        
         let oficina = $("#ddloatpensionado").val();
         let fechaHoy = new Date();
         let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
@@ -230,7 +230,7 @@ var appPensionadosFiltros = new Vue({
 
         },
         CargaEjecutivo() {
-            debugger;
+            
             let oficina = $("#ddloatpensionado").val();
             let fechaHoy = new Date();
             let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
@@ -271,7 +271,7 @@ var appPensionadosFiltros = new Vue({
                 });
         },
         handleEventoClickFiltrar() {
-            debugger;
+            
             let rut;
             let nombre = $('#txtNombrePen').val()
             let marca = $('#dllFoco').val()
@@ -460,7 +460,7 @@ $(function () {
 
 
     $('#ddloatpensionado').on('change', function (event) {
-        debugger;
+        
         if ($("#ddloatpensionado").val() == "") {
             $('#divAgente').css('display', 'none')
         }
@@ -1075,7 +1075,7 @@ var appPensionadosModal = new Vue({
             })
                 .then(response => response.json())
                 .then(datos => {
-                    debugger;
+                    
                     $.each(datos, function (i, e) {
                         if (e.id != "602" && e.id != "603" && e.id != "604" && e.id != "605" && e.id != "606") {
                             var lb = $('<label>').prop('for', `contacto-rd-${e.id}`).text(e.nombre);
@@ -1453,7 +1453,7 @@ var appPensionadosModal = new Vue({
                 .then(respuesta => {
                     if (respuesta.length > 0) {
                         if (respuesta[0].con_contacto == 'SI') {
-                            debugger;
+                            
                             //render.ModalCargaRBContactoSI();
                             $('#lbTitulo').html(respuesta[0].nomContatoSi);
                             $("#rdkContactoNO").prop('checked', false);
@@ -1469,7 +1469,7 @@ var appPensionadosModal = new Vue({
                                 })
                                     .then(response => response.json())
                                     .then(datos => {
-                                        debugger;
+                                        
                                         $.each(datos, function (i, e) {
                                             if (e.id == "601"|| e.id == "602" || e.id == "603" || e.id == "604" || e.id == "605" || e.id == "606" ) {
                                                 var lb = $('<label>').prop('for', `contacto-rd-${e.id}`).text(e.nombre);
@@ -1494,9 +1494,9 @@ var appPensionadosModal = new Vue({
                                 })
                                     .then(response => response.json())
                                     .then(datos => {
-                                        debugger;
+                                        
                                         $.each(datos, function (i, e) {
-                                            debugger;
+                                            
                                             if ( e.id != "602" && e.id != "603" && e.id != "604" && e.id != "605" && e.id != "606") {
                                                 var lb = $('<label>').prop('for', `contacto-rd-${e.id}`).text(e.nombre);
                                                 var inp = $('<input>').addClass('magic-radio').prop({ type: 'radio', name: 'rbContactoSIMedio', id: `contacto-rd-${e.id}` }).val(e.id)
@@ -1658,7 +1658,7 @@ $(function () {
     }
 
     $('#modalAsignacion').click(function () {
-        debugger;
+        
         if (getCookie("Cargo") == "Agente Territorial") {
 
             if ($("#ddloatpensionado").val() == "") {
@@ -1691,7 +1691,7 @@ $(function () {
 
 
     $('#modal_asigna_pensionado').on('show.bs.modal', async (event) => {
-        debugger;
+        
         metodos.CargaEjecutivoPensionadosAT();
     });
 
@@ -1756,7 +1756,7 @@ $(function () {
 
     var result = [];
     $('#btAsignarPensionado').click(function () {
-        debugger;
+        
         if ($("#dllEjePensiondos").val() != "") {
             var malos = []
             var buenos = 0;

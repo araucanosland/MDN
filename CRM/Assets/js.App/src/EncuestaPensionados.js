@@ -131,9 +131,10 @@ var metodos = {
         $.SecGetJSON(BASE_URL + "/motor/api/pensionados/lista-gestion-historial-encuesta", { IdPensionado: Id }, function (gestiones) {
 
             $('.contenedor-folios').html("");
-            let html = `<h4 class="list-group-item-heading">Gestiones Realizadas</h4>`;
+            let html = `<hr class="solid">`;
+            $('.contenedor-folios').append(html);
             $.each(gestiones, function (i, e) {
-                debugger;
+                
                 html = `<h4 class="list-group-item-heading"></h4>
                             <p class="list-group-item-text">
                                 <strong>Fecha Gestión: ${e.FechaGestion} </strong> 
@@ -161,12 +162,15 @@ var metodos = {
 function formatterSelect(val, row, index) {
 
     if (val == 'Sin Gestion' || val == 'No contesta' || val == 'Contactado con tercero, volver a llamar') {
-        return `<select class="form-select"  onchange="ejecutarCambioEstado(${row.Id})"  id="ddlestados_${row.id}" style="border-radius: 6px; width: 130px;")">
+       
+        let volverLlamar = val == "Contactado con tercero, volver a llamar" ? 'selected':'' ;
+        let No_Contesta = val == 'No contesta' ? 'selected' : '';
+        return `<select class="form-select"  onchange="ejecutarCambioEstado(${row.Id})"  id="ddlestados_${row.id}" style="border-radius: 6px; width: 250px;")">
                 <option value="-1">Sin Gestión</option>
-                <option value="22">Contactado, no responde encuesta</option>
+                <option value="22"}>Contactado, no responde encuesta</option>
                 <option value="23">Contactado con tercero</option>
-                <option value="24">Contactado con tercero, volver a llamar</option>
-                <option value="25">No contesta</option>
+                <option value="24" ${volverLlamar} >Contactado con tercero, volver a llamar</option>
+                <option value="25" ${No_Contesta}>No contesta</option>
                 <option value="27">Teléfono no corresponde</option>
              </select>
              
@@ -215,14 +219,14 @@ function ejecutarCambioEstado(Id) {
 function idFormatter(value, row, index) {
 
     if (row.Estado_encuesta == 'Sin Gestion' || row.Estado_encuesta == 'No contesta' || row.Estado_encuesta == 'Contactado con tercero, volver a llamar') {
-        return `<a href="${value}"  class="btn-link" data-estadoId="${row.Estado_id}" data-nombre="${row.NombrePensionado}" data-estado="${row.Estado_encuesta}" data-toggle="modal" data-target="#modal_encusta_pensionado" data-backdrop="static" data-keyboard="false" data-lead="${row.Id}"  data-rut="${row.RutPensionadoDV}">${row.RutPensionadoDV}</a>`;
+        return `<a href="${value}"  class="btn-link"  data-estadoId="${row.Estado_id}" data-nombre="${row.NombrePensionado}" data-estado="${row.Estado_encuesta}" data-toggle="modal" data-target="#modal_encusta_pensionado" data-backdrop="static" data-keyboard="false" data-lead="${row.Id}"  data-rut="${row.RutPensionadoDV}">${row.RutPensionadoDV}</a>`;
     }
     else {
         return row.RutPensionadoDV;
     }
 }
 function contactFormat(value, row, index) {
-    return `<a href="${value}"  class="btn-link" data-Id=${row.Id}  data-rutPensionado=${row.RutPensionadoDV} data-toggle="modal" data-target="#modal-contactabilidad" data-backdrop="static" data-keyboard="false">${row.RutPensionadoDV}</a>`;
+    return `<a href="${value}"  class="btn-link" style="margin-left:50px;" data-Id=${row.Id}  data-rutPensionado=${row.RutPensionadoDV} data-toggle="modal" data-target="#modal-contactabilidad" data-backdrop="static" data-keyboard="false"><i class="ion-search"></i></a>`;
 
 }
 
@@ -307,7 +311,7 @@ $(function () {
             var malos = []
             var buenos = 0;
             $.each(result, function (i, e) {
-                debugger;
+                
                 var PensioandoAsignacionWeb = {
                     Ejecutivo_Asignado: $("#dllEjePensiondos").val(),
                     RutPensionado: result[i],
@@ -316,7 +320,7 @@ $(function () {
 
 
                 $.SecPostJSON(BASE_URL + "/motor/api/pensionados/Asignar-Pensionado-Encuesta", PensioandoAsignacionWeb, function (datos) {
-                    debugger;
+                    
                     if (datos.Estado == "OK") {
                     }
                 });
@@ -516,7 +520,7 @@ $(function () {
         }
 
         $.SecPostJSON(BASE_URL + "/motor/api/pensionados/Guardar-Encuesta-Pensionados", IngresoEncuesta, function (datos) {
-            debugger;
+            
             if (datos.Estado == "OK") {
                 $.niftyNoty({
                     type: 'success',
@@ -597,7 +601,7 @@ $(function () {
             rutAf = rutAf.substring(0, rutAf.indexOf('-'));
 
             metodos.CargaGrillaContacto(rutAf, '#bdy_datos_contactos');
-            debugger;
+            
             metodos.CargaHistorialGestiones(Id);
         }
     })
@@ -640,7 +644,7 @@ $(function () {
 
         e.preventDefault();
         var $form = $(e.target);
-        debugger;
+        
         var rutClie = $('#hdRutEjec').val()
         rutClie = rutClie.split('.').join('')
         rutClie = rutClie.substring(0, rutClie.length - 2)
@@ -663,6 +667,7 @@ $(function () {
                 icon: 'pli-like-2 icon-2x',
                 message: 'Contacto Guardado correctamente.',
                 container: '#tab-gestion-3',
+                timer: 3000
             });
         });
 
