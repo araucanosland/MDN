@@ -18,6 +18,9 @@
         <!--Nav Tabs-->
         <ul class="nav nav-tabs">
             <li class="active">
+                <a data-toggle="tab" href="#tab-diferencia-carga" aria-expanded="true" id="tab_carga" class="tab-principal">CARGA DATOS</a>
+            </li>
+            <li class="">
                 <a data-toggle="tab" href="#tab-diferencia-cotiz" aria-expanded="true" id="tab_diferenciaCotiz" class="tab-principal">DIFERENCIAS DE COTIZACIONES</a>
             </li>
             <li class="">
@@ -28,7 +31,13 @@
             </li>
         </ul>
         <div class="tab-content">
-            <div id="tab-diferencia-cotiz" class="tab-pane fade active in">
+            <div id="tab-diferencia-carga" class="tab-pane fade active in">
+                <div class="panel" style="border-radius: 7px;">
+                    <button id="btn_carga" class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#md-carga-Datos" data-backdrop="static" data-keyboard="false">Proceso de Carga</button>
+                </div>
+            </div>
+
+            <div id="tab-diferencia-cotiz" class="tab-pane">
                 <div class="panel" style="border-radius: 7px;">
                     <div class="panel-heading">
                         <h3 class="panel-title">FILTROS</h3>
@@ -615,7 +624,39 @@
     </div>
 </div>
 
+<div id="md-carga-Datos" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-hidden="true">
 
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 6px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title">Cargar Proceso COMPIN</h4>
+            </div>
+            <form id="form_registro_anexoUpCompin" action="#" method="post">
+                <div class="panel-body">
+                    <div class="panel panel-bordered-primary" id="panel_Carga" style="border-color: #e6e6e6;">
+                        <div class="panel-body">
+
+                            <div id="dzMainCompin" class="dropzone demo-dropzone">
+                                <div class="dz-default dz-message">
+                                    <div class="dz-icon">
+                                        <i class="demo-pli-upload-to-cloud icon-5x"></i>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
 
 @section script{
     <script src="~/Assets/js/vue.js"></script>
@@ -635,4 +676,37 @@
     <script src="~/Assets/js.App/src/cobranza-previsional.js?g=@Guid.NewGuid().ToString()"></script>
 
 
-}
+}<script>
+    //----------------DROP ZONE TATA
+    Dropzone.autoDiscover = false;
+    var myDropzone = new Dropzone("div#dzMain", {
+        url: "#",
+        maxFiles: 1,
+        uploadMultiple: false,
+        maxFilesize: 15,
+        acceptedFiles: '.csv'
+    });
+    myDropzone.on("addedfile", function (file) {
+        document.getElementById("overlay").style.display = "block";
+    });
+
+    myDropzone.on("complete", function (file) {
+
+        document.getElementById("overlay").style.display = "none";
+        myDropzone.removeFile(file);
+
+        $("#pnl-carga-busqueda").show();
+        //$("#panel_Carga_Excel").hide();
+        $('#demo-lg-modal-CargaExcel').modal('hide');
+        cargador.CargaDatosTablaTab2ExcelRRLL("", "Todos");
+
+    });
+
+    $('#md-carga-Datos').on('show.bs.modal', function (event) {
+
+        myDropzone2.options.url = "/motor/api/Licencias/carga-Compin-dropzone";
+
+    });
+
+
+    </script>
