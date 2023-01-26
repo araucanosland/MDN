@@ -625,8 +625,9 @@ $(function () {
            
             var cargo = getCookie("Cargo");
             $.SecGetJSON(BASE_URL + "/motor/api/Gestion/obtener-seguimiento", { periodo: entorno.Periodo, afiRut: rutAfilado.trim(), tipoCampagna: tpcmp, cargo: getCookie("Cargo"), rut: getCookie("Rut")}, function (datos) {
-
+                
                 if (datos.Estado === "OK") {
+                    
                     location.href = BASE_URL + '/motor/App/Gestion/Oferta/' + datos.Objeto.Seguimiento.Periodo.toString() + '/' + rutAfilado + '/' + tpcmp
                 } else {
                     $.niftyNoty({

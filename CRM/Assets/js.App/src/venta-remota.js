@@ -15,6 +15,7 @@ var appVentaRemota = new Vue({
     methods: {
 
         obtenerBanco() {
+           
             fetch(`http://${motor_api_server}:4002/venta-remota/lista-bancos`, {
                 method: 'GET',
                 mode: 'cors',
@@ -22,11 +23,13 @@ var appVentaRemota = new Vue({
             })
                 .then(response => response.json())
                 .then(bancoJSON => {
+                    
                     this.filtros.banco = bancoJSON;
                 });
         },
 
         cargaLeadFiltroCall(rut) {
+           
             fetch(`http://${motor_api_server}:4002/venta-remota/obtiene-registro-bancos/${rut}`, {
                 method: 'GET',
                 mode: 'cors',
@@ -70,7 +73,7 @@ var appVentaRemota = new Vue({
                 ejecutivo_ingreso: getCookie('Rut'),
                 oficina: parseInt(getCookie('Oficina')),
             };
-
+            
             fetch(`http://${motor_api_server}:4002/venta-remota/guarda-banco-afiliado`, {
                 method: 'POST',
                 body: JSON.stringify(formData),

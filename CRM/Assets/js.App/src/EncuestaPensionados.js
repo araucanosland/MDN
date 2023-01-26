@@ -306,7 +306,7 @@ $(function () {
     metodos.CargaddlejecutivoBusqueda();
 
     $('#btAsignarPensionado').click(function () {
-        debugger;
+       
         if ($("#dllEjePensiondos").val() != "" && $("#dllEjePensiondos").val() != "-1") {
             var malos = []
             var buenos = 0;

@@ -157,7 +157,7 @@ $(function () {
             $("#btn_Siguiente_t").css("visibility", "visible");
             $("#btn_Anterior").css("visibility", "hidden");
             $("#btn_Siguiente").css("visibility", "hidden");
-            debugger;
+           
             //$('#mdl_Estamento_R').val($(event.relatedTarget).data('estar'));
             $('#mdl_Cargo_R').val($(event.relatedTarget).data('cargor'));
             $('#mdl_Nombre_R').val($(event.relatedTarget).data('nombrer'));

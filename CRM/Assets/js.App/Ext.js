@@ -703,12 +703,12 @@ $(function () {
 
 
 
-    debugger;
+   
     if (sessionStorage.getItem('menu_principal') == null) {
-        debugger;
+       
        
         $.SecGetJSON(BASE_URL + "/motor/api/Auth/menu", function (categorias) {
-            debugger;
+           
 
             if (getCookie("Cargo") == "Auditor LM") {
                 let menu =
@@ -785,7 +785,7 @@ $(function () {
             }
 
             else {
-                debugger;
+               
                 sessionStorage.setItem('menu_principal', JSON.stringify(categorias));
 
                 $.each(categorias, function (i, categoriaItm) {
@@ -845,7 +845,7 @@ $(function () {
         });
     }
     else {
-        debugger;
+       
         var categorias = JSON.parse(sessionStorage.getItem('menu_principal'));
 
         if (getCookie("Cargo") == "Regímenes Legales") {

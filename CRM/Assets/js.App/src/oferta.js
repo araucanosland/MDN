@@ -1,55 +1,59 @@
-﻿$(function () {
+﻿
+var render = {
 
+    HistorialGestion: function (gesList) {
+        //Gestiones Realizadas
+        $("#gestiones_realizadas").html("");
+        $.each(gesList, function (i, e) {
+            $("#gestiones_realizadas").append($("<a>").attr("href", '#')
+                .append($("<h4>").addClass("list-group-item-heading").html("<strong>Gestor:</strong> " + e.Gestor.EjecutivoData.Nombres))
+                .append($("<p>").addClass("list-group-item-text").html("<strong>Fecha Gestión:</strong>" + e.GestionBase.FechaAccion.toFechaHora() + ", <strong>Fecha Prox. Gestión:</strong> " + e.GestionBase.FechaCompromete.toFecha()))
+                .append($("<p>").addClass("list-group-item-text").html("<strong>Estado:</strong> " + e.EstadoGestion.eges_nombre + ",  <strong>Sub Estado:</strong> " + e.SubEstadoGestion.eges_nombre))
+                .append($("<p>").addClass("list-group-item-text").html("<strong>Comentario:</strong> " + e.GestionBase.Descripcion))
+            );
+        });
 
-
-    var render = {
-        HistorialGestion: function (gesList) {
-            //Gestiones Realizadas
-            $("#gestiones_realizadas").html("");
-            $.each(gesList, function (i, e) {
-                $("#gestiones_realizadas").append($("<a>").attr("href", '#')
-                    .append($("<h4>").addClass("list-group-item-heading").html("<strong>Gestor:</strong> " + e.Gestor.EjecutivoData.Nombres))
-                    .append($("<p>").addClass("list-group-item-text").html("<strong>Fecha Gestión:</strong>" + e.GestionBase.FechaAccion.toFechaHora() + ", <strong>Fecha Prox. Gestión:</strong> " + e.GestionBase.FechaCompromete.toFecha()))
-                    .append($("<p>").addClass("list-group-item-text").html("<strong>Estado:</strong> " + e.EstadoGestion.eges_nombre + ",  <strong>Sub Estado:</strong> " + e.SubEstadoGestion.eges_nombre))
-                    .append($("<p>").addClass("list-group-item-text").html("<strong>Comentario:</strong> " + e.GestionBase.Descripcion))
-                );
-            });
-
-            if (gesList.length > 0 && gesList[0].EstadoGestion.ejes_terminal === "CERRADOS") {
-                $(".esconder").hide();
-            } else {
-                $(".esconder").show();
-            }
-
-            $("#morfeable_monto").text("Monto Pre Aprobado");
-
-        },
-        HistorialGestionRecuperaciones: function (gesList) {
-            $("#gestiones_realizadas").html("");
-            $.each(gesList, function (i, e) {
-                var consecuencia = (e.ConsecuenciaGestion !== null) ? ", <strong>Consecuencia:</strong> " + e.ConsecuenciaGestion.eges_nombre : "";
-                var estatus = (e.EstadoGestion !== null) ? ", <strong>Estado:</strong> " + e.EstadoGestion.eges_nombre : "";
-                $("#gestiones_realizadas").append($("<a>").attr("href", '#')
-                    .append($("<h4>").addClass("list-group-item-heading").html("<strong>Gestor:</strong> " + e.Gestor.EjecutivoData.Nombres))
-                    .append($("<p>").addClass("list-group-item-text").html("<strong>Fecha Gestión:</strong>" + e.GestionBase.FechaAccion.toFechaHora() + ", <strong>Fecha Prox. Gestión:</strong> " + e.GestionBase.FechaCompromete.toFecha()))
-                    .append($("<p>").addClass("list-group-item-text").html("<strong>Causa basal:</strong> " + e.CausaBasalGestion.eges_nombre + consecuencia + estatus))
-                    .append($("<p>").addClass("list-group-item-text").html("<strong>Comentario:</strong> " + e.GestionBase.Descripcion))
-                );
-            });
+        if (gesList.length > 0 && gesList[0].EstadoGestion.ejes_terminal === "CERRADOS") {
+            $(".esconder").hide();
+        } else {
+            $(".esconder").show();
         }
 
+        $("#morfeable_monto").text("Monto Pre Aprobado");
+
+    },
+    HistorialGestionRecuperaciones: function (gesList) {
+        $("#gestiones_realizadas").html("");
+        $.each(gesList, function (i, e) {
+            var consecuencia = (e.ConsecuenciaGestion !== null) ? ", <strong>Consecuencia:</strong> " + e.ConsecuenciaGestion.eges_nombre : "";
+            var estatus = (e.EstadoGestion !== null) ? ", <strong>Estado:</strong> " + e.EstadoGestion.eges_nombre : "";
+            $("#gestiones_realizadas").append($("<a>").attr("href", '#')
+                .append($("<h4>").addClass("list-group-item-heading").html("<strong>Gestor:</strong> " + e.Gestor.EjecutivoData.Nombres))
+                .append($("<p>").addClass("list-group-item-text").html("<strong>Fecha Gestión:</strong>" + e.GestionBase.FechaAccion.toFechaHora() + ", <strong>Fecha Prox. Gestión:</strong> " + e.GestionBase.FechaCompromete.toFecha()))
+                .append($("<p>").addClass("list-group-item-text").html("<strong>Causa basal:</strong> " + e.CausaBasalGestion.eges_nombre + consecuencia + estatus))
+                .append($("<p>").addClass("list-group-item-text").html("<strong>Comentario:</strong> " + e.GestionBase.Descripcion))
+            );
+        });
     }
 
+}
 
-    var faIcon = {
-        valid: 'fa fa-check-circle fa-lg text-success',
-        invalid: 'fa fa-times-circle fa-lg',
-        validating: 'fa fa-refresh'
-    }
-    var trutAfiliado = $('#rut-afi').val();
-    var tperiodo = $('#periodo').val();
-    var tipoCamp = $('#tipo').val();
 
+var faIcon = {
+    valid: 'fa fa-check-circle fa-lg text-success',
+    invalid: 'fa fa-times-circle fa-lg',
+    validating: 'fa fa-refresh'
+}
+var trutAfiliado = $('#rut-afi').val();
+var tperiodo = $('#periodo').val();
+var tipoCamp = $('#tipo').val();
+
+
+$(function () {
+    
+
+
+   
     console.log(tipoCamp)
 
     $('.volvere').on('click', function (event) {
@@ -59,9 +63,9 @@
 
 
 
-
-    $.SecGetJSON(BASE_URL + "/motor/api/Gestion/obtener-seguimiento", { periodo: tperiodo, afiRut: trutAfiliado, tipoCampagna: tipoCamp }, function (datos) {
-
+    
+    $.SecGetJSON(BASE_URL + "/motor/api/Gestion/obtener-seguimiento", { periodo: tperiodo, afiRut: trutAfiliado, tipoCampagna: tipoCamp, cargo: getCookie("Cargo"), rut: getCookie("Rut") }, function (datos) {
+        
         if (datos.Estado === "OK") {
             const Asignacion = datos.Objeto;
             const afiData = Asignacion.Seguimiento;
@@ -815,7 +819,7 @@
         }
     })
     $("#telefonos_Malo").on("click", function (e) {
-
+        
 
         var WebDatoContacto = {
             afiliado_Rut: $("#afi_rut").val().replace('.', '').replace('.', ''),
@@ -939,7 +943,7 @@
     })
     $("#celulares_Malo").on("click", function (e) {
 
-
+        
         var WebDatoContacto = {
             afiliado_Rut: $("#afi_rut").val().replace('.', '').replace('.', ''),
             tipo: "celulares",
@@ -1060,7 +1064,7 @@
     })
     $("#correos_Malo").on("click", function (e) {
 
-
+        
         var WebDatoContacto = {
             afiliado_Rut: $("#afi_rut").val().replace('.', '').replace('.', ''),
             tipo: "correos",
@@ -1178,7 +1182,7 @@
 
 
     $("#afi_oficina_preferencia").on("change", function () {
-
+        
         if ($(this).val() != "") {
             var WebPreferencia = {
                 afiliado_Rut: $("#afi_rut").val().replace('.', '').replace('.', ''),
@@ -1197,7 +1201,7 @@
         }
     });
     $("#afi_horario_preferencia").on("change", function () {
-
+        
         if ($(this).val() != "") {
 
             var WebPreferencia = {
