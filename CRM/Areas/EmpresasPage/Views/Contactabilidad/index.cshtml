@@ -2,7 +2,6 @@
 <link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
 
-
 <div id="page-content">
     <div class="row">
         <div class="panel" style="border-radius: 7px;">
@@ -11,7 +10,26 @@
             </div>
             <div class="panel-body">
                 <div class="row">
+
+                    <div id="oficina_contactabilidad" style="display:none;" class="col-sm-2 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">Oficina</label>
+                            <select class="form-control" id="ddloatcontactabilidad"></select>
+                        </div>
+                    </div>
+
+
                     <div class="col-sm-4 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">Nombre de Empresa</label>
+                            <select class="form-control chosen-single" id="dllNombreEmpresas" tabindex="2" name="dllNombreEmpresas" >
+                                <option value="">Seleccione...</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 text-xs-center" style="display:none" >
                         <div class="form-group">
                             <label class="control-label">Nombre de Empresa</label>
                             <select class="form-control" id="dllNombreEmpresa" tabindex="2" name="dllNombreEmpresa" v-on:change="eventoCambiaEstado" required v-model="modelos.compania">
@@ -39,7 +57,6 @@
                 </div>
             </div>
         </div>
-
         <div class="panel" style="border-radius: 7px;">
             <div class="panel-heading">
                 <div class="panel-control">
@@ -78,7 +95,6 @@
         </div>
     </div>
 </div>
-
 <div id="mdl_data_contactabiliadad" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="border-radius: 7px;">
@@ -97,6 +113,8 @@
                     <div class="panel-body msjContactabilidad">
                         <form id="form-info-contactabilidad" action="#" method="post">
                             <div class="row">
+
+                       
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="control-label">EMPRESA</label>
@@ -175,8 +193,5 @@
         </div>
     </div>
 </div>
-
-
-
 
 

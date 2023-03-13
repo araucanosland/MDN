@@ -7,7 +7,7 @@ let marcaGestionConctact = 0;
 
 metodos = {
     CargaEjecutivoPensionadosAT() {
-        
+    
         var oficina;
         if (getCookie("Cargo") == "Agente Territorial") {
             oficina = $("#ddloatpensionado").val();
@@ -37,8 +37,15 @@ metodos = {
             });
     },
     CargaEjecutivoAT() {
-        
-        let oficina = $("#ddloatpensionado").val();
+    
+        var oficina;
+        if (getCookie("Cargo") == "Agente Territorial") {
+            oficina = $("#ddloatpensionado").val();
+        }
+        else {
+            oficina = getCookie("Oficina");
+        }
+
         let fechaHoy = new Date();
         let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
         fetch(`http://${motor_api_server}:4002/pensionados/lista-ejecutivo-pensionado/${oficina}/${periodo}`, {
@@ -230,7 +237,7 @@ var appPensionadosFiltros = new Vue({
 
         },
         CargaEjecutivo() {
-            
+         
             let oficina = $("#ddloatpensionado").val();
             let fechaHoy = new Date();
             let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
@@ -284,6 +291,10 @@ var appPensionadosFiltros = new Vue({
                 rut = $('#dllEjecutivo').val();
                
             }
+
+          
+          
+
 
             $("#tblAsigPen").bootstrapTable('refresh', {
                 url: `http://${motor_api_server}:4002/pensionados/leads`,
@@ -1632,16 +1643,17 @@ var appPensionadosModal = new Vue({
 $(function () {
 
     if (getCookie("Cargo") == "Agente Territorial") {
-
+      
         $("#oficina_pensionado").css("display", "block");
     }
 
     if (getCookie('Cargo') == 'Agente' || getCookie('Cargo') == 'Agente Territorial'|| getCookie('Cargo') == 'Jefe Servicio al Cliente' || getCookie('Cargo') == 'Jefe Plataforma') {
         //$('#divAgente').css('display', 'block')
         $('#mdAsigEjePen').css('display', 'block');
+        metodos.CargaEjecutivoAT();
     }
     else {
-        $('#divAgente').css('display', 'none')
+        //$('#divAgente').css('display', 'none')
         $('#mdAsigEjePen').css('display', 'none');
     }
 
@@ -1756,15 +1768,23 @@ $(function () {
 
     var result = [];
     $('#btAsignarPensionado').click(function () {
-        
+   
         if ($("#dllEjePensiondos").val() != "") {
             var malos = []
             var buenos = 0;
             $.each(result, function (i, e) {
+            
+                var oficina;
+                if (getCookie("Cargo") == "Agente Territorial") {
+                    oficina = $("#ddloatpensionado").val();
+                }
+                else {
+                    oficina = getCookie("Oficina");
+                }
                 var webPensionado = {
                     ejecutivo_asignado: $("#dllEjePensiondos").val(),
                     id: result[i],
-                    oficina: $("#ddloatpensionado").val(),
+                    oficina: oficina,
                 }
 
                 fetch(`http://${motor_api_server}:4002/pensionados/asigna-ejecutivo-pensionado`, {

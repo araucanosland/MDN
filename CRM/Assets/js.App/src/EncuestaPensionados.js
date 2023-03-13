@@ -37,7 +37,14 @@ var metodos = {
         let fechaHoy = new Date();
         let periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
 
-        $.SecGetJSON(BASE_URL + "/motor/api/pensionados/lista-ejecutivo-asigna-pensionado", { Periodo: periodo, codOficina: getCookie('Oficina') }, function (response) {
+        var Oficina
+        if (getCookie("Cargo") == "Agente Territorial") {
+            Oficina = $("#ddloATEencuesta").val()
+        } else {
+            Oficina = getCookie('Oficina')
+        }
+
+        $.SecGetJSON(BASE_URL + "/motor/api/pensionados/lista-ejecutivo-asigna-pensionado", { Periodo: periodo, codOficina: Oficina }, function (response) {
 
             $("#dllEjePensiondos").html("");
             $("#dllEjePensiondos").append($("<option>").val('-1').html("Seleccione...").data("id", '-1').data("descripcion", "Seleccione..."));

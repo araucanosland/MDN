@@ -306,6 +306,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CampanaDiplomadoController.cs" />
     <Compile Include="Controllers\CarteraFFVVController.cs" />
+    <Compile Include="Controllers\CobranzaPrevisionalController.cs" />
     <Compile Include="Controllers\ContrasenaController.cs" />
     <Compile Include="Controllers\CallCenterController.cs" />
     <Compile Include="Controllers\BuscarController.cs" />
@@ -416,6 +417,7 @@
     <Content Include="Assets\js.App\src\callbackTAM.js" />
     <Content Include="Assets\js.App\src\CampanaDiplomado.js" />
     <Content Include="Assets\js.App\src\CargasFamiliares.js" />
+    <Content Include="Assets\js.App\src\cobranza-previsional.js" />
     <Content Include="Assets\js.App\src\cobranza.js" />
     <Content Include="Assets\js.App\src\contactabilidad-empresa.js" />
     <Content Include="Assets\js.App\src\contacto-diferimiento.js" />

@@ -25,25 +25,36 @@ var appSeguroContactabilidadFiltros = new Vue({
         this.loadTablaContactabilidad();
     },
     updated() {
+       
     },
     methods: {
 
         obtenerCompania() {
-           
+            
             let codigo_sucursal_asociada = getCookie('Oficina')
-            fetch(`http://${motor_api_server}:4002/compania/lista-compania/${codigo_sucursal_asociada}`, {
+            let cargoAT = getCookie("Cargo")
+            let oficinaAT;
+            if ($("#ddloatcontactabilidad").val() == null) {
+                oficinaAT = getCookie('Oficina')
+            }
+            else {
+                oficinaAT = $("#ddloatcontactabilidad").val()
+            }
+
+            fetch(`http://${motor_api_server}:4002/compania/lista-compania/${codigo_sucursal_asociada}`, { 
                 method: 'GET',
                 mode: 'cors',
                 cache: 'default'
             })
                 .then(response => response.json())
-        
+
                 .then(companiaJSON => {
-                    
+              
                     let a = companiaJSON;
                     this.filtros.companias = companiaJSON;
+                    console.log(this.filtros.companias)
                 }).then(x => {
-                   
+                  
                     $('#dllNombreEmpresa').chosen({ width: '100%' });
                     $("#dllNombreEmpresa").chosen().change(function (e) {
                         appSeguroContactabilidadFiltros.eventoCambiaEstado($(e.target).val());
@@ -58,7 +69,16 @@ var appSeguroContactabilidadFiltros = new Vue({
 
         },
         obtenerPuntoAtencion(compania) {
-            let codigo_sucursal_asociada = getCookie('Oficina')
+       
+            let codigo_sucursal_asociada
+            if (getCookie("Cargo") == "Agente Territorial") {
+
+                codigo_sucursal_asociada = $("#ddloatcontactabilidad").val()
+            }
+            else {
+                codigo_sucursal_asociada = getCookie('Oficina')
+            }
+            
             fetch(`http://${motor_api_server}:4002/compania/lista-punto-atencion/${compania}/${codigo_sucursal_asociada}`, {
                 method: 'GET',
                 mode: 'cors',
@@ -66,6 +86,7 @@ var appSeguroContactabilidadFiltros = new Vue({
             })
                 .then(response => response.json())
                 .then(puntosSubJSON => {
+                 
                     this.filtros.puntosAtencion = puntosSubJSON;
                     this.filtros.puntosAtencionFiltro = puntosSubJSON;
                 });
@@ -95,7 +116,11 @@ var appSeguroContactabilidadFiltros = new Vue({
                 });
         },
         eventoCambiaEstado(compania) {
+          
             this.obtenerPuntoAtencion(compania)
+        },
+        eventoCambioOficina() {
+            this.obtenerCompania();
         },
         eventoCambiaCargo() {
             let id = this.modelos.estamento.id;
@@ -136,7 +161,7 @@ var appSeguroContactabilidadFiltros = new Vue({
                     this.modelos.cargo = x.cargo.id;
                     return x;
                 }).then(x => {
-                    this.modelos.puntosAten = x.puntoAtencion.codigo; 
+                    this.modelos.puntosAten = x.puntoAtencion.codigo;
                 });
 
         },
@@ -305,10 +330,10 @@ var appSeguroContactabilidadFiltros = new Vue({
         editaContacto() {
             desactivaCamposModal();
             $('#btn_update_contact').removeAttr("disabled");
-           // let idDLL = $('#dllNombreEmpresaModal').val();
-           // $('#dllNombreEmpresaModal').prop('disabled', true).trigger("chosen:updated");
-           // console.log({ nada: idDLL})
-           /// $('#dllNombreEmpresaModal').val(idDLL).trigger("chosen:updated");
+            // let idDLL = $('#dllNombreEmpresaModal').val();
+            // $('#dllNombreEmpresaModal').prop('disabled', true).trigger("chosen:updated");
+            // console.log({ nada: idDLL})
+            /// $('#dllNombreEmpresaModal').val(idDLL).trigger("chosen:updated");
         },
         handleEventoAbreModal() {
             $('#btn_edit_contact').attr("disabled", true);
@@ -325,6 +350,126 @@ var appSeguroContactabilidadFiltros = new Vue({
     }
 });
 
+
+var metodos = {
+    CargaCompaniaAT: function () {
+
+        let oficinaAT
+        if (getCookie("Cargo") == "Agente Territorial") {
+
+            if ($("#ddloatcontactabilidad").val() == null) {
+                oficinaAT = getCookie('Oficina')
+            }
+            else {
+                oficinaAT = $("#ddloatcontactabilidad").val()
+            }
+        }
+        else {
+            oficinaAT = getCookie('Oficina')
+        }
+
+          $.SecGetJSON(BASE_URL + "/motor/api/Contactos/obetener-compania-contacto-AT", { Oficina: getCookie('Oficina'), cargoAT: getCookie("Cargo"), oficinaAT: oficinaAT }, function (response) {
+           
+            $("#dllNombreEmpresas").html("");
+
+            $("#dllNombreEmpresas").append($("<option>").val('').html("Seleccione").data("RutEmpresa", '').data("NombreEmpresa", "Seleccione"));
+            $.each(response, function (i, datos) {
+
+                $("#dllNombreEmpresas").append($("<option>").val(datos.RutEmpresa).html(datos.NombreEmpresa).data("RutEmpresa", datos.RutEmpresa).data("NombreEmpresa", datos.NombreEmpresa));
+
+            });
+
+          
+        });
+
+
+
+    },
+    CargaPuntoAtencion: function () {
+      
+        
+        let oficinaAT
+        if (getCookie("Cargo") == "Agente Territorial") {
+
+            if ($("#ddloatcontactabilidad").val() == null) {
+                oficinaAT = getCookie('Oficina')
+            }
+            else {
+                oficinaAT = $("#ddloatcontactabilidad").val()
+            }
+        }
+        else {
+            oficinaAT = getCookie('Oficina')
+        }
+
+        $.SecGetJSON(BASE_URL + "/motor/api/Contactos/obetener-compania-contacto-AT", { Oficina: getCookie('Oficina'), cargoAT: getCookie("Cargo"), oficinaAT: oficinaAT }, function (response) {
+          
+            $("#dllNombreEmpresasModal").html("");
+
+            $("#dllNombreEmpresasModal").append($("<option>").val('').html("Seleccione").data("RutEmpresa", '').data("NombreEmpresa", "Seleccione"));
+            $.each(response, function (i, datos) {
+
+                $("#dllNombreEmpresasModal").append($("<option>").val(datos.RutEmpresa).html(datos.NombreEmpresa).data("RutEmpresa", datos.RutEmpresa).data("NombreEmpresa", datos.NombreEmpresa));
+            });
+            $("#dllNombreEmpresasModal").val($("#dllNombreEmpresas").val());
+
+        });
+
+
+
+    }
+};
+
+
+let oficinaAT;
+if ($("#ddloatcontactabilidad").val() == null) {
+    oficinaAT = getCookie('Oficina')
+}
+else {
+    oficinaAT = $("#ddloatcontactabilidad").val()
+}
+
+metodos.CargaCompaniaAT();
+
+
+if (getCookie("Cargo") == "Agente Territorial") {
+
+    $("#oficina_contactabilidad").css("display", "block");
+
+    var fechaHoy = new Date();
+    var Periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
+
+    $.SecGetJSON(BASE_URL + "/motor/api/Gestion/v3/listar-agente-territorial", { Periodo: Periodo, Rut: getCookie("Rut") }, function (response) {
+        $("#ddloatcontactabilidad").html("");
+
+        $("#ddloatcontactabilidad").append($("<option>").val('').html("Seleccione").data("id", '').data("nombre", "Seleccione"));
+        $.each(response, function (i, datos) {
+             $("#ddloatcontactabilidad").append($("<option>").val(datos.Cod_Oficina).html(datos.Oficina).data("Cod_Oficina", datos.Cod_Oficina).data("Oficina", datos.Oficina));
+
+        });
+        $("#ddloatcontactabilidad").val(getCookie("Oficina"))
+
+    });
+
+}
+$("#ddloatcontactabilidad").change(function (e) {
+   
+   // $('#dllNombreEmpresa').removeAttr('disabled').trigger("chosen:updated");
+    appSeguroContactabilidadFiltros.eventoCambioOficina();
+   // $("#dllPuntoAtencion").val("");
+   
+    metodos.CargaCompaniaAT();
+});
+$("#dllNombreEmpresas").on("change", function (e) {
+   
+    appSeguroContactabilidadFiltros.obtenerPuntoAtencion($(this).val());
+});
+
+//$("#dllNombreEmpresas").chosen().change(function (e) {
+//    appSeguroContactabilidadFiltros.obtenerPuntoAtencion($(this).val());
+//});
+
+
 function contactabilidadLinkFormatter(value, row, index) {
     return `<a href="#" class="btn-link" data-target="#mdl_data_contactabiliadad" data-toggle="modal" data-id="${row.id}" >${value}</a>`;
 }
@@ -332,6 +477,8 @@ function contactabilidadLinkFormatter(value, row, index) {
 $("#mdl_data_contactabiliadad").on("shown.bs.modal", function (event) {
     const id = $(event.relatedTarget).data('id');
     appSeguroContactabilidadFiltros.obtenerEstamento();
+    //metodos.CargaPuntoAtencion();
+
     if (id != undefined) {
         $('#dllNombreEmpresaModal').prop('disabled', true).trigger("chosen:updated");
         $('#btn_edit_contact').removeAttr("disabled");
@@ -364,7 +511,7 @@ $("#mdl_data_contactabiliadad").on("hidden.bs.modal", function () {
 });
 
 function desactivaCamposModal() {
-  //  $('#dllNombreEmpresaModal').removeAttr('disabled').trigger("chosen:updated");
+    //  $('#dllNombreEmpresaModal').removeAttr('disabled').trigger("chosen:updated");
     $('#dllPuntoAtencionModal').removeAttr("disabled");
     $('#txtRutContacto').removeAttr("disabled");
     $('#txtNombreContacto').removeAttr("disabled");
@@ -375,7 +522,7 @@ function desactivaCamposModal() {
 }
 
 function bloqueaCamposModal() {
-  //  $('#dllNombreEmpresaModal').prop('disabled', true).trigger("chosen:updated");
+    //  $('#dllNombreEmpresaModal').prop('disabled', true).trigger("chosen:updated");
     $('#dllPuntoAtencionModal').attr("disabled", true);
     $('#txtRutContacto').attr("disabled", true);
     $('#txtNombreContacto').attr("disabled", true);

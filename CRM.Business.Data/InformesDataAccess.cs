@@ -1,9 +1,9 @@
-﻿using System;
+﻿using CDK.Data;
+using CDK.Integration;
+using CRM.Business.Entity;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using CRM.Business.Entity;
-using CDK.Data;
-using CDK.Integration;
 
 namespace CRM.Business.Data
 {
@@ -86,14 +86,16 @@ namespace CRM.Business.Data
 
 
 
-        public static List<TrackingEntity> ListarTrackingNormalizacionBySucursal(string TokenEjecutivo, int Periodo)
+        public static List<TrackingEntity> ListarTrackingNormalizacionBySucursal(string TokenEjecutivo, int Periodo, string cargoAT, string oficinaAT)
         {
             Parametros pram = new Parametros
             {
                 new Parametro("@TokenEjecutivo",TokenEjecutivo),
                 new Parametro("@Periodo", Periodo),
+                new Parametro("@CargoAgente",cargoAT),
+                new Parametro("@oficinaAT", oficinaAT)
             };
-            return DBHelper.InstanceReportes.ObtenerColeccion("negocios.SPReporte_TrackingNormalizacionAgenteSucursal", pram, ConstructorEntidadTrackingNormalizacion);
+            return DBHelper.InstanceReportes.ObtenerColeccion("negocios.SPReporte_TrackingNormalizacionAgenteSucursal_AT", pram, ConstructorEntidadTrackingNormalizacion);
         }
         private static TrackingEntity ConstructorEntidadTrackingNormalizacion(DataRow row)
         {

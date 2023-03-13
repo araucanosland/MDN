@@ -36,10 +36,10 @@ namespace CRM.Controllers
         [AuthorizationRequired]
         [HttpGet]
         [Route("Lista-Traking-Normalizacion")]
-        public IEnumerable<TrackingEntity> ObtenerTrackingNormalizacionInforme(int Periodo)
+        public IEnumerable<TrackingEntity> ObtenerTrackingNormalizacionInforme(int Periodo,string CargoAT,string OficinaAT)
         {
             string token = ActionContext.Request.Headers.GetValues("Token").First();
-            return InformesDataAccess.ListarTrackingNormalizacionBySucursal(token, Periodo);
+            return InformesDataAccess.ListarTrackingNormalizacionBySucursal(token, Periodo, CargoAT, OficinaAT);
         }
         [AuthorizationRequired]
         [HttpGet]

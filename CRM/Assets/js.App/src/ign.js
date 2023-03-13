@@ -22,6 +22,27 @@ var appIgn = new Vue({
     },
     methods: {
         cargalistaIgn() {
+
+      
+            if (getCookie("Cargo") == "Agente Territorial") {
+            
+                oficina = $("#ddloatign").val()
+
+                if ($("#ddloatign").val() == "") {
+                    $.niftyNoty({
+                        type: 'danger',
+                        message: 'Debe Seleccionar una oficina.',
+                        container: 'floating',
+                        timer: 3000
+                    });
+                    $("#ddloatign").focus();
+                    return false;
+                }
+            }
+
+
+
+
             var fechaHoy = new Date();
             var periodo = fechaHoy.getFullYear().toString() + (fechaHoy.getMonth() + 1).toString().padStart(2, '0');
           
@@ -160,9 +181,32 @@ var appIgnModal = new Vue({
             }
         },
         obtenerLeadIDIgn(id_lead) {
-            let oficina = parseInt(getCookie('Oficina'))
+            var oficina;
+            var cargo = getCookie("Cargo")
+            let oficinasAgenteterritotial = $("#ddloatign").val();
+      
+
+            
+
+            if (cargo == "Agente Territorial") {
+                oficina = $("#ddloatign").val()
+
+                if ($("#ddloatign").val() == "") {
+                    $.niftyNoty({
+                        type: 'danger',
+                        message: 'Debe Seleccionar una oficina.',
+                        container: '#msjIgn',
+                        timer: 3000
+                    });
+                    $("#ddloatign").focus();
+                    return false;
+                }
 
 
+            }
+            else {
+                oficina = getCookie("Oficina")
+            }
             fetch(`http://${motor_api_server}:4002/ign/lead-ign/${id_lead}/${oficina}`, {
                 method: 'GET',
                 mode: 'cors',
@@ -306,7 +350,11 @@ $('#modal_ign').on('show.bs.modal', async (event) => {
         event.stopPropagation();
     }).on('show.bs.modal hide.bs.modal', function (event) {
         event.stopPropagation();
-    });
+        });
+
+
+
+
     appIgnModal.obtenerLeadIDIgn(id_lead)
 });
 

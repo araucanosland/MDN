@@ -1,15 +1,33 @@
-﻿using System;
+﻿using CDK.Data;
+using CDK.Integration;
+using CRM.Business.Entity.Contactibilidad;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using CRM.Business.Entity;
-using CDK.Integration;
-using CDK.Data;
 
 
 namespace CRM.Business.Data.ContactabilidadDataAccess
 {
     public class ContactabilidadDataAccess
     {
+
+
+        public static List<CompaniaAT> ObtenerCompania(int Oficina, string CargoAT, string OficinaAT)
+        {
+            Parametros parametros = new Parametros
+            {
+                    new Parametro("@Oficina",Oficina),
+                    new Parametro("@CargoAT",CargoAT),
+                    new Parametro("@OficinaAT",OficinaAT)
+
+            };
+
+            return DBHelper.InstanceCRM.ObtenerColeccion("scafi.sp_Motor_ObtenerContacto_AT", parametros, CompaniaATEntity);
+        }
+
+
+
+
         public static List<Entity.Contactibilidad.ContactabilidadEntity> ListarContacto(int RutAfiliado)
         {
             Parametros parametros = new Parametros
@@ -53,7 +71,7 @@ namespace CRM.Business.Data.ContactabilidadDataAccess
         }
 
 
-   
+
         private static Entity.Contactibilidad.ContactabilidadEntity ConstructorEntidad(DataRow row)
         {
             return new Entity.Contactibilidad.ContactabilidadEntity
@@ -90,14 +108,15 @@ namespace CRM.Business.Data.ContactabilidadDataAccess
                 Descripcion = row["Descripcion"] != DBNull.Value ? row["Descripcion"].ToString() : string.Empty,
             };
         }
-        //private static Entity.Contactibilidad.IndiceContactabilidad IndContacto(DataRow row)
-        //{
-        //    return new Entity.Contactibilidad.IndiceContactabilidad
-        //    {
-        //        IdEstado = row["IdEstado"] != DBNull.Value ? Convert.ToInt32(row["IdEstado"]) : 0,
-        //        Descripcion = row["Descripcion"] != DBNull.Value ? row["Descripcion"].ToString() : string.Empty,
-        //    };
-        //}
+        private static CompaniaAT CompaniaATEntity(DataRow row)
+        {
+            return new CompaniaAT
+            {
+               
+                RutEmpresa = row["RutEmpresa"] != DBNull.Value ? row["RutEmpresa"].ToString() : string.Empty,
+                NombreEmpresa = row["NombreEmpresa"] != DBNull.Value ? row["NombreEmpresa"].ToString() : string.Empty,
+            };
+        }
     }
 }
 

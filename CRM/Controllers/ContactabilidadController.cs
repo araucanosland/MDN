@@ -10,12 +10,31 @@ using CRM.Business.Entity.Contracts;
 using CRM.Business.Data;
 using CRM.ActionFilters;
 using CRM.Filters;
+using CRM.Business.Entity.Contactibilidad;
+using CRM.Business.Data.ContactabilidadDataAccess;
 
 namespace CRM.Areas.AppPage.Controllers
 {
     [RoutePrefix("api/Contactos")]
     public class ContactabilidadController : ApiController
     {
+
+        [AuthorizationRequired]
+        [HttpGet]
+        [Route("obetener-compania-contacto-AT")]
+        public IEnumerable<CompaniaAT> ObetenercompaniacontactoAT(int Oficina,string CargoAT,string OficinaAT)
+        {
+            string token = ActionContext.Request.Headers.GetValues("Token").First();
+
+            IEnumerable<CompaniaAT> compania= ContactabilidadDataAccess.ObtenerCompania(Oficina,CargoAT,OficinaAT);
+
+            return compania;
+        }
+
+
+
+
+
         [AuthorizationRequired]
         [HttpGet]
         [Route("lista-contactos-afi")]

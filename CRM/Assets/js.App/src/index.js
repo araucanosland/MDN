@@ -96,14 +96,8 @@ $(function () {
     if (getCookie("Cargo") == "Agente Territorial") {
         $("#oficina_derivaciones").css("display", "block");
         $("#oficina_comercial").css("display", "block");
-
-        
+       
     }
-
-
-
-
-
 
     var faIcon = {
         valid: 'fa fa-check-circle fa-lg text-success',
@@ -821,7 +815,7 @@ $(function () {
     render.ComboTipoAsignacion()
     //DERIVACIONES
     $('#btn_derivaciones').click(function () {
-       
+     
         $("#tabla_derivaciones").bootstrapTable('refresh', {
             url: BASE_URL + "/motor/api/Gestion/v3/lista-seguimientos",
             query: {
@@ -1371,7 +1365,7 @@ $(function () {
 
 
     $('#mdl_data').on('show.bs.modal', function (e) {
-
+     
         $('#modal_beneficios').modal('hide')
 
 
@@ -1410,10 +1404,20 @@ $(function () {
 
         // appVentaRemota.obtenerBanco()
 
+      
+        var Oficina
+        if (getCookie('Cargo') == 'Agente Territorial') {
+            Oficina=$("#ddloatderivaciones").val()
+        }
+        else {
+            Oficina = getCookie("Cargo")
+        }
+
 
         $('#linkencuesta').prop('href', '/motor/App/DatosAfiliados?RutBuscar=' + trutAfiliado)
-        $.SecGetJSON(BASE_URL + "/motor/api/Gestion/obtener-seguimiento", { periodo: tperiodo, afiRut: trutAfiliado, tipoCampagna: tipoCamp }, function (datos) {
-
+     
+        $.SecGetJSON(BASE_URL + "/motor/api/Gestion/obtener-seguimiento", { periodo: tperiodo, afiRut: trutAfiliado, tipoCampagna: tipoCamp, cargo: Oficina, rut: trutAfiliado}, function (datos) {
+           
             if (datos.Estado === "OK") {
                 const Asignacion = datos.Objeto;
                 const afiData = Asignacion.Seguimiento;
@@ -2424,7 +2428,7 @@ $(function () {
 
 
     $('#mdl_data').on('hide.bs.modal', function (e) {
-
+        
         $('#tab_contacti').tab('show');
 
         $(".desaparecible, .forma-uno").show();
