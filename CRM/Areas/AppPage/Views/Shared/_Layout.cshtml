@@ -1,0 +1,478 @@
+﻿
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="~/Assets/img/favicon.ico" />
+    <link href="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
+
+    @*
+        <meta http-equiv="cache-control" content="max-age=0" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="expires" content="0" />
+        <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+        <meta http-equiv="pragma" content="no-cache" />
+    *@
+
+    @RenderSection("metas", false)
+    <title>Motor de Negocios</title>
+    <!--STYLESHEET-->
+    <!--=================================================-->
+    <!--Open Sans Font [ OPTIONAL ]-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+
+    <!--Bootstrap Stylesheet [ REQUIRED ]-->
+    <link href="~/Assets/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!--Nifty Stylesheet [ REQUIRED ]-->
+    <link href="~/Assets/css/nifty.min.css" rel="stylesheet">
+    <link href="~/Assets/css/themes/type-a/theme-ocean.min.css" rel="stylesheet">
+
+
+    <!--Nifty Premium Icon [ DEMONSTRATION ]-->
+    <link href="~/Assets/css/demo/nifty-demo-icons.min.css" rel="stylesheet">
+
+    <!--FooTable [ OPTIONAL ]-->
+    <link href="~/Assets/plugins/fooTable/css/footable.core.css" rel="stylesheet">
+
+    <!--Ion Icons [ OPTIONAL ]-->
+    <link href="~/Assets/plugins/ionicons/css/ionicons.min.css" rel="stylesheet">
+
+    <!--Bootstrap Datepicker [ OPTIONAL ]-->
+    <link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+
+    <link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet" />
+    <link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet" />
+
+
+    <!--JAVASCRIPT-->
+    <!--=================================================-->
+    <!--Pace - Page Load Progress Par [OPTIONAL]-->
+    <link href="~/Assets/plugins/pace/pace.min.css" rel="stylesheet">
+    <link href="~/Assets/css.App/print.css" rel="stylesheet">
+
+    <script src="~/Assets/plugins/clipboard/dist/clipboard.js"></script>
+    <!--jQuery [ REQUIRED ]-->
+    <script src="~/Assets/js/jquery.min.js"></script>
+    <script src="~/Assets/plugins/pace/pace.min.js"></script>
+
+    <script src="~/Assets/js.App/Conf.js?v=@Html.Raw(CRM.Areas.AppPage.Controllers.Jasheo.CurrentDateHash)"></script>
+    <script src="~/Assets/js.App/Ext.js?v=@Html.Raw(CRM.Areas.AppPage.Controllers.Jasheo.CurrentDateHash)"></script>
+
+    <!--BootstrapJS [ RECOMMENDED ]-->
+    <script src="~/Assets/js/bootstrap.min.js"></script>
+
+
+    <!--NiftyJS [ RECOMMENDED ]-->
+    <script src="~/Assets/js/nifty.js"></script>
+
+    <!--Premium Line Icons [ OPTIONAL ]-->
+    <link href="~/Assets/premium/icon-sets/icons/line-icons/premium-line-icons.min.css" rel="stylesheet">
+
+    <!--Modals [ SAMPLE ]-->
+    <script src="~/Assets/js/demo/ui-modals.js"></script>
+
+    <!--Icons [ SAMPLE ]-->
+    <script src="~/Assets/js/demo/icons.js"></script>
+
+    <!--Bootstrap Datepicker [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+
+</head>
+
+<!--TIPS-->
+<!--You may remove all ID or Class names which contain "demo-", they are only used for demonstration. -->
+<body>
+    <div id="container" class="effect aside-float aside-bright mainnav-lg">
+
+        <!--NAVBAR-->
+        <!--===================================================-->
+        <header id="navbar" class="no-print">
+            <div id="navbar-container">
+
+                <!--Brand logo & name-->
+                <!--================================-->
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand">
+                        <img src="~/Assets/img/M.png" alt="Nifty Logo" class="brand-icon">
+                        <div class="brand-title">
+                            <span class="brand-text" style="font-size:14px;">Motor de Negocios</span>
+                        </div>
+                    </a>
+                </div>
+                <!--================================-->
+                <!--End brand logo & name-->
+                <!--Navbar Dropdown-->
+                <!--================================-->
+                <div class="navbar-content clearfix">
+                    <ul class="nav navbar-top-links pull-left">
+
+                        <!--Navigation toogle button-->
+                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                        <li class="tgl-menu-btn">
+                            <a class="mainnav-toggle" href="#">
+                                <i class="demo-pli-view-list"></i>
+                            </a>
+                        </li>
+                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                        <!--End Navigation toogle button-->
+                        <!--Notification dropdown-->
+                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                        <li class="dropdown" style="display:none;">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                                <i class="demo-pli-bell"></i>
+                                <span class="badge badge-header badge-danger"></span>
+                            </a>
+
+                            <!--Notification dropdown menu-->
+                            <div class="dropdown-menu dropdown-menu-md">
+                                <div class="pad-all bord-btm">
+                                    <p class="text-semibold text-main mar-no">Tienes 2 Notificaciones.</p>
+                                </div>
+                                <div class="nano scrollable">
+                                    <div class="nano-content">
+                                        <ul class="head-list">
+
+                                            <!-- Dropdown list-->
+                                            <li>
+                                                <a href="#">
+                                                    <div class="clearfix">
+                                                        <p class="pull-left">Tasa de Gestión</p>
+                                                        <p class="pull-right">70%</p>
+                                                    </div>
+                                                    <div class="progress progress-sm">
+                                                        <div style="width: 70%;" class="progress-bar">
+                                                            <span class="sr-only">70% Complete</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <!-- Dropdown list-->
+                                            <li>
+                                                <a href="#">
+                                                    <div class="clearfix">
+                                                        <p class="pull-left">Tasa Gestión Positiva</p>
+                                                        <p class="pull-right">10%</p>
+                                                    </div>
+                                                    <div class="progress progress-sm">
+                                                        <div style="width: 10%;" class="progress-bar progress-bar-warning">
+                                                            <span class="sr-only">10% Complete</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <!-- Dropdown list-->
+                                            <li>
+                                                <a class="media" href="#">
+                                                    <span class="label label-danger pull-right">Nuevo</span>
+                                                    <div class="media-left">
+                                                        <i class="demo-pli-speech-bubble-7 icon-2x"></i>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div class="text-nowrap">9 Gestiones Atrasadas</div>
+                                                        <small class="text-muted">Gestionar mas rápido</small>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!--Dropdown footer-->
+                                <div class="pad-all bord-top">
+                                    <a href="#" class="btn-link text-dark box-block">
+                                        <i class="fa fa-angle-right fa-lg pull-right"></i>-
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                        <!--End notifications dropdown-->
+                        <li class="col-sm-9">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <div class="col-sm-4 text-right">
+                                    <span class="brand-text" style="font-size:11px;margin-left: 58px; margin-top:10px; color:white;">Buscar Afiliado: </span>
+                                </div>
+                                <div class="col-sm-6" style="padding-bottom:0px; margin-top:3px;">
+                                    <form id="frm-rut" action="/motor/App/DatosAfiliados" method="get">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control es-rut" name="RutBuscar" id="RutBuscar" tabindex="1" required placeholder="11111111-1" autocomplete="off" style="padding-bottom:0px; margin-top:3px;">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="submit" style="padding-bottom:0px; margin-top:3px;"><i class="ion-search"></i></button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                        <li id="dropdown-user" class="dropdown" style="display:none; float: right;">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
+                                <span class="pull-right">
+                                    <i class="demo-pli-gear icon-2x icon-fw" style="line-height: 1.7em; font-size: 1.8em; font-style: inherit;"></i>
+                                </span>
+                                <div class="username hidden-xs"></div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-md dropdown-menu-right panel-default">
+
+
+                                <!-- User dropdown menu -->
+                                <ul class="head-list usuario-soporte" style="display:none;">
+                                    <li>
+                                        <a href="#" id="btVolverListado">
+                                            <i class="demo-pli-computer-secure icon-lg icon-fw"></i> Volver a mi Cuenta
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="head-list usuario-comun" style="display:none;">
+                                    <li>
+                                        <a href="#" data-target="#demo-default-modal" data-toggle="modal">
+                                            <i class="demo-psi-lock-2"></i> Cambiar contraseña
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- Dropdown footer -->
+                                <div class="pad-all text-right hidden">
+                                    <a href="#" class="btn btn-primary" id="btCerSesion">
+                                        <i class="demo-pli-unlock"></i> Cerrar Sesión
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!--================================-->
+                <!--End Navbar Dropdown-->
+            </div>
+        </header>
+        <!--===================================================-->
+        <!--END NAVBAR-->
+        <div class="boxed">
+            <!--CONTENT CONTAINER-->
+            <!--===================================================-->
+            <div id="content-container">
+                @RenderBody()
+            </div>
+            <!--===================================================-->
+            <!--END CONTENT CONTAINER-->
+            <!--MAIN NAVIGATION-->
+            <!--===================================================-->
+            <nav id="mainnav-container" class="no-print">
+                <div id="mainnav">
+                    <!--Menu-->
+                    <!--================================-->
+                    <div id="mainnav-menu-wrap">
+                        <div class="nano">
+                            <div class="nano-content">
+                                <!--Profile Widget-->
+                                <!--================================-->
+                                <div id="mainnav-profile" class="mainnav-profile">
+                                    <div class="profile-wrap">
+                                        <div class="pad-btm">
+                                            <img class="img-circle img-sm img-border" src="~/Assets/img/profile-photos/1.png" alt="Profile Picture">
+                                        </div>
+                                        <a href="#profile-nav">
+                                            <script type="text/javascript">
+                                                $(function () {
+                                                  
+                                                    var oficinas = [];
+                                                    oficinas[0] = "Sin Información"
+                                                    oficinas[1] = "Merced"
+                                                    oficinas[3] = "San Bernardo"
+                                                    oficinas[4] = "Talagante"
+                                                    oficinas[5] = "Melipilla"
+                                                    oficinas[6] = "Metropolitana"
+                                                    oficinas[8] = "Gran Avenida"
+                                                    oficinas[11] = "Arica"
+                                                    oficinas[13] = "Iquique"
+                                                    oficinas[21] = "Tocopilla"
+                                                    oficinas[22] = "Antofagasta"
+                                                    oficinas[23] = "Calama"
+                                                    oficinas[24] = "María Elena"
+                                                    oficinas[31] = "Copiapó"
+                                                    oficinas[32] = "Vallenar"
+                                                    oficinas[41] = "Ovalle"
+                                                    oficinas[42] = "La Serena"
+                                                    oficinas[43] = "Coquimbo"
+                                                    oficinas[44] = "Illapel"
+                                                    oficinas[45] = "Vicuña"
+                                                    oficinas[51] = "Viña del Mar"
+                                                    oficinas[52] = "San Antonio"
+                                                    oficinas[53] = "Quillota"
+                                                    oficinas[54] = "Valparaíso"
+                                                    oficinas[56] = "Los Andes"
+                                                    oficinas[57] = "La Calera"
+                                                    oficinas[58] = "Quilpué"
+                                                    oficinas[59] = "Casablanca"
+                                                    oficinas[61] = "Rancagua"
+                                                    oficinas[62] = "San Fernando"
+                                                    oficinas[71] = "Curicó"
+                                                    oficinas[72] = "Talca"
+                                                    oficinas[73] = "Linares"
+                                                    oficinas[74] = "Constitución"
+                                                    oficinas[81] = "Chillán"
+                                                    oficinas[82] = "Concepción"
+                                                    oficinas[84] = "Los Ángeles"
+                                                    oficinas[85] = "Talcahuano"
+                                                    oficinas[86] = "San Carlos"
+                                                    oficinas[87] = "Cañete"
+                                                    oficinas[88] = "Coronel"
+                                                    oficinas[89] = "Mulchen"
+                                                    oficinas[92] = "Temuco"
+                                                    oficinas[93] = "Angol"
+                                                    oficinas[97] = "Victoria"
+                                                    oficinas[101] = "Valdivia"
+                                                    oficinas[102] = "Osorno"
+                                                    oficinas[103] = "Puerto Montt"
+                                                    oficinas[104] = "Castro"
+                                                    oficinas[105] = "Puerto Varas"
+                                                    oficinas[106] = "La Unión"
+                                                    oficinas[107] = "Ancud"
+                                                    oficinas[108] = "Quellón"
+                                                    oficinas[109] = "Calbuco"
+                                                    oficinas[110] = "Puerto Aysén"
+                                                    oficinas[111] = "Coyhaique"
+                                                    oficinas[121] = "Puerto Natales"
+                                                    oficinas[122] = "Punta Arenas"
+                                                    oficinas[130] = "La Florida"
+                                                    oficinas[133] = "Puente Alto"
+                                                    oficinas[134] = "Independencia"
+                                                    oficinas[135] = "Maipú"
+                                                    oficinas[136] = "Quilicura"
+                                                    oficinas[137] = "Centro Cívico"
+                                                    oficinas[138] = "Providencia"
+                                                    oficinas[170] = "Las Condes"
+                                                    oficinas[171] = "Ñuñoa"
+                                                    oficinas[172] = "Huechuraba"
+                                                    oficinas[174] = "Estación Central"
+                                                    oficinas[457] = "Gerencia Sucursales y Servicio"
+                                                    oficinas[991] = "Serv Empresas"
+                                                    
+                                                    
+                                                   
+                                                    if (getCookie("Usuario") == "Vega Salgado, M.Eugenia" || getCookie("Usuario") == "Garcia Gonzalez,Alejandra") {
+                                                        $("#nombre_usuario").html(getCookie("Usuario").OrdenaNombre() + '<br/><small>' + '</small><br/><small>' + "Gerencia de Personas" + '</small>')
+                                                    }
+                                                    else {
+                                                        $("#nombre_usuario").html(getCookie("Usuario").OrdenaNombre() + '<br/><small>' + getCookie("Cargo") + '</small><br/><small>' + oficinas[getCookie("Oficina")] + '</small>')
+                                                    }
+                                                })
+                                            </script>
+                                            <p class="mnp-name" id="nombre_usuario">N/A</p>
+                                        </a>
+                                    </div>
+                                </div>
+                                <ul id="mainnav-menu" class="list-group"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--================================-->
+                    <!--End menu-->
+                </div>
+            </nav>
+            <!--===================================================-->
+            <!--END MAIN NAVIGATION-->
+        </div>
+        <!-- FOOTER -->
+        <!--===================================================-->
+        <footer id="footer">
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <!-- Remove the class "show-fixed" and "hide-fixed" to make the content always appears. -->
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <p class="pad-lft">&#0169; 2017 Información Analítica</p>
+        </footer>
+        <!--===================================================-->
+        <!-- END FOOTER -->
+        <!-- SCROLL PAGE BUTTON -->
+        <!--===================================================-->
+        <button class="scroll-top btn">
+            <i class="pci-chevron chevron-up"></i>
+        </button>
+        <!--===================================================-->
+        <!--Large Bootstrap Modal-->
+        <!--===================================================-->
+
+
+        <div id="notini-modal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close puede-cerrarse" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                        @*<h4 class="modal-title" id="notini-title">Large modal</h4>*@
+                    </div>
+                    <div class="modal-body" id="notini-body">
+                        <img src="~/Assets/data/imagen_popup.jpg" width="800" height="600" />
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" id="btn_popup_noticia" class="btn btn-primary" type="button">OK</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        @*<div id="notini-modal" class="modal fade" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close puede-cerrarse" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                            <h4 class="modal-title" id="notini-title">Large modal</h4>
+                        </div>
+                        <div class="modal-body" id="notini-body">
+
+                        </div>
+                        <div class="modal-footer puede-cerrarse">
+                            <button data-dismiss="modal" class="btn btn-primary puede-cerrarse" type="button">OK</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>*@
+
+
+    </div>
+    <!--===================================================-->
+    <!-- END OF CONTAINER -->
+
+    @RenderSection("script", false)
+
+    <script src="~/Assets/js/jquery.rut.chileno.min.js"></script>
+    <script src="~/Assets/plugins/masked-input/jquery.maskedinput.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+
+            var support = getCookie('X-Support-Token');
+            var token = getCookie('Token');
+            if (support != null && support != '' && support != token) {
+                $('#dropdown-user').show();
+                $('.usuario-soporte').show();
+            }
+
+            if (getCookie('Cargo') === 'Agente') {
+                $('a[href$="/motor/Emp/CarteraEmpresaEjecutivo"]').closest('li').remove()
+            }
+
+            $('#btVolverListado').on('click', function (e) {
+                //Kill sesion e ir a inicio soporte
+                $.SecGetJSON(BASE_URL + "/motor/api/Auth/kill", function (respuesta) {
+                    //Limpiar cookies y variables locales y de sesion
+                    var cookies = document.cookie.split(";");
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i];
+                        var eqPos = cookie.indexOf("=");
+                        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                    }
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    setTimeout("location.href = '/motor/App/Inicio'", 1000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

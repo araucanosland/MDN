@@ -1,0 +1,586 @@
+﻿
+
+
+
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+<div id="page-content">
+
+    <div class="modal-body">
+        <div class="tab-base" style="margin-bottom: 0px !important;">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a data-toggle="tab" href="#tab-filtros" aria-expanded="false">FILTROS</a>
+                </li>
+                <li class="">
+                    <a data-toggle="tab" href="#tab-consulta" aria-expanded="false">CONSULTA</a>
+                </li>
+            </ul>
+            <div class="tab-content" style="box-shadow: 0 0 0 !important;">
+                <div id="tab-filtros" class="tab-pane fade active in">
+                    <div id="divCopago">
+                        <div class="panel" style="border-radius: 7px;">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">FILTROS</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-3 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">RUT</label>
+                                            <input id="txtRutFiltroCopago" type="text" placeholder="Ej. 12345678" class="form-control" maxlength="10" autocomplete="off">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">ESTADO</label>
+                                            <select class="form-control" id="dllEstadoCopago" name="dllEstadoCopago" v-on:change="eventoCambiaEstadoCopago" v-model="modelos.estados">
+                                                <option value="">Todos...</option>
+                                                <option v-for="estadoCopago in filtros.estados" :value="estadoCopago.id">{{estadoCopago.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">SUB-ESTADO</label>
+                                            <select class="form-control" id="dllSubEstadoCopago" name="dllSubEstadoCopago" v-model="modelos.subEstados">
+                                                <option value="">Todos...</option>
+                                                <option v-for="subEstadoCopago in filtros.subEstados" :value="subEstadoCopago.nombre">{{subEstadoCopago.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-1 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label"></label>
+                                            <button class="btn btn-primary btn-rounded" v-on:click="cargaLeadFiltroCall" style="margin-top: 21px;">Filtrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel" style="border-radius: 7px;">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">RESULTADO DE BUSQUEDA</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table data-toggle="table"
+                                               data-sort-name="id"
+                                               data-page-list="[]"
+                                               data-page-size="50"
+                                               data-search="false"
+                                               data-pagination="true" id="tblCopago" style="font-size: 12px">
+
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="rut_completo" data-sortable="true" data-formatter="formaterRut">RUT</th>
+                                                    <th data-field="nombre" data-sortable="true">NOMBRE</th>
+                                                    <th data-field="folio" data-sortable="true">N° FOLIO </th>
+                                                    <th data-field="rut_empresa" data-sortable="true" data-formatter="formatoRutEmpresa">RUT EMPRESA</th>
+                                                    <th data-field="empresa" data-sortable="true">EMPRESA</th>
+                                                    <th data-field="estado" data-sortable="true">ESTADO</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-consulta" class="tab-pane fade">
+                    <div class="panel" style="border-radius: 8px;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">BUSQUEDA POR RUT</h3>
+                        </div>
+                        <div class="panel-body">
+
+
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="control-label">RUT</label>
+                                        <input type="text" placeholder="Ingrese Rut" maxlength="10" id="txtIngRutSearch" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" style="border-radius: 6px; margin-top: 21px;" v-on:click="consultaReasignacion">Buscar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div id="alertSearchTitulo" class="demo-preview-alert" style="display: none;">
+                                <div class="alert alert-primary media fade in" style="border-radius: 8px;">
+                                    <button class="close"><i class="pci-cross pci-circle"></i></button>
+                                    <h4 class="alert-title" id="tituloAfiliado"></h4>
+                                    <p class="alert-message" id="ejecutivoTitulo"></p>
+                                    <div class="mar-top" id="tituloBotones" style="display:none;">
+                                        <button class="btn btn-success btn-rounded" id="btSiRegistro" style="width: 80px;">SI</button>
+                                        <button class="btn btn-warning btn-rounded" id="btNoRegistro" style="width: 80px;">NO</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="msjregsitro"></div>
+                    </div>
+                    <div class="panel" style="border-radius: 8px; display:none;" id="divIngreso">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">INGRESO SOLICITUD</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">RUT</label>
+                                        <input type="text" id="txtIngRut" maxlength="10" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">NOMBRE</label>
+                                        <input type="text" id="txtIngNombre" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">TELEFONO</label>
+                                        <input type="text" id="txtIngFono" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">EMAIL</label>
+                                        <input type="text" id="txtCorreo" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">OBSERVACIÓN</label>
+                                <textarea rows="3" id="txtIngObs" name="txtIngObs" class="form-control" style="border-radius: 6px;"></textarea>
+                            </div>
+                        </div>
+                        <div class="panel-footer text-right">
+                            <button class="btn btn-success btn-rounded" v-on:click="guardaRegistro" type="submit">GUARDAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modal_copago" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header" style="background: #337ab7;">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" style="color: #f1f1f1;">GESTION COPAGO</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="tab-base" id="MDL_Primario_acuerdo_pago" style="margin-bottom: 0px !important;">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-gestion-call" aria-expanded="false">Gestión</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-historial-call" aria-expanded="false">Historial</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-contactabiliadad" id="tabContactCopago" aria-expanded="false">Contactabilidad</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-gestion-call" class="tab-pane fade active in">
+                            <div class="panel" style="border-radius: 7px;">
+                                <div class="panel-body">
+                                    <div id="msjCopago"></div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">RUT</label>
+                                                <input class="form-control" id="txtRutLeadCopago" type="text" disabled>
+                                                <input class="form-control" id="txtidLeadCopago" type="text" style="display:none" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">NOMBRE</label>
+                                                <input class="form-control" id="txtNombreCopago" type="text" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">RUT EMPRESA</label>
+                                                <input class="form-control" type="text" id="txtEmpresaCopago" disabled>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">PROMEDIO RENTA</label>
+                                                <input class="form-control" type="text" id="txtPromedioRentaCopago" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">PROMEDIO RENTA ANTERIOR</label>
+                                                <input class="form-control" type="text" id="txtPromedioAnteriorCopago" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel" style="border-radius: 7px;">
+                                <div class="panel-body">
+                                    <table data-toggle="table"
+                                           data-sort-name="id"
+                                           data-page-list="[]"
+                                           data-page-size="50"
+                                           data-search="false"
+                                           data-pagination="true" id="tblDetalleCopago" style="font-size: 12px" class="table table-striped">
+
+                                        <thead>
+                                            <tr>
+                                                <th data-field="folio" data-sortable="true">Folio</th>
+                                                <th data-field="valor_cuota" data-sortable="true" data-formatter="formatoMoneyCopago">Valor Cuota</th>
+                                                <th data-field="beneficio_cuota" data-sortable="true" data-formatter="formatoMoneyCopago">Beneficio Cuota </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="panel" style="border-radius: 7px;">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">ESTADO</label>
+                                                <select class="form-control" id="dllEstadoModal" name="dllEstadoModal" v-on:change="eventoCambiaEstadoCopagoModal" v-model="modelos.estadosModal">
+                                                    <option value="">Seleccione...</option>
+                                                    <option v-for="estadoCall in filtros.estadosModal" :value="estadoCall.id">{{estadoCall.nombre}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">SUB-ESTADO</label>
+                                                <select class="form-control" id="dllSubEstadoModal" name="dllSubEstadoModal" v-model="modelos.subEstadosModal">
+                                                    <option value="">Seleccione...</option>
+                                                    <option v-for="subEstadoModal in filtros.subEstadosModal" :value="subEstadoModal.id">{{subEstadoModal.nombre}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label">RESPUETA</label>
+                                        <textarea rows="3" id="txtRespuestaCopago" name="txtRespuestaCopago" class="form-control" style="border-radius: 6px;"></textarea>
+                                    </div>
+
+                                    <div id="checkListCopago" style="display:none;">
+                                        <div id="msjCopagoCheck"></div>
+                                        <div class="row">
+                                            <div class="col-sm-7">
+                                                <div class="panel" style="border-radius: 9px;">
+                                                    <div class="panel-heading">
+                                                        <div class="panel-control">
+                                                            <em class="text-muted"><small>Chequear requisitos antes del llamado:</small></em>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="form-group pad-ver">
+                                                            <div class="col-md-12">
+                                                                <div class="checkbox">
+                                                                    <input id="afiliado_act_cmr" class="magic-checkbox" type="checkbox">
+                                                                    <label for="afiliado_act_cmr">Afiliado está activo en CMR</label>
+                                                                </div>
+                                                                <div class="checkbox">
+                                                                    <input id="empresa_acogida_ley_prot" class="magic-checkbox" type="checkbox">
+                                                                    <label for="empresa_acogida_ley_prot">Empresa NO acogida a Ley de Protección del Empleo</label>
+                                                                </div>
+                                                                <div class="checkbox">
+                                                                    <input id="afiliado_renta_imp_act" class="magic-checkbox" type="checkbox">
+                                                                    <label for="afiliado_renta_imp_act">Renta imponible actual < a $400</label>
+                                                                </div>
+
+                                                                <div class="checkbox">
+                                                                    <input id="afiliado_renta_impo" class="magic-checkbox" type="checkbox">
+                                                                    <label for="afiliado_renta_impo">Para Rentas entre M$ 400 y M$ 700:</label>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label">JUL$</label>
+                                                                            <input class="form-control numero" id="afiliado_mes_1" type="text" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label">AGO$</label>
+                                                                            <input class="form-control numero" id="afiliado_mes_2" type="text" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label">SEPT$</label>
+                                                                            <input class="form-control numero" type="text" id="afiliado_mes_3" disabled>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-sm-3">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label">PROM$</label>
+                                                                            <input class="form-control" type="text" id="afiliado_renta_promedio" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <em class="text-muted"><small>Si no cuenta con esta información utilice enero, febrero, y marzo 2020. Para empresas nuevas afiliadas posterior a esa fecha solicitar cotización afp.</small></em>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-5">
+                                                <div class="panel" style="border-radius: 9px; height: 327px;">
+                                                    <div class="panel-heading">
+                                                        <div class="panel-control">
+                                                            <em class="text-muted"><small>Preguntar durante el llamado sugerencias de beneficios:</small></em>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="form-group pad-ver">
+                                                            <div class="col-md-12">
+                                                                <div class="checkbox">
+                                                                    <input id="salud" class="magic-checkbox" type="checkbox">
+                                                                    <label for="salud">Salud</label>
+                                                                </div>
+                                                                <div class="checkbox">
+                                                                    <input id="educacion" class="magic-checkbox" type="checkbox">
+                                                                    <label for="educacion">Educación</label>
+                                                                </div>
+                                                                <div class="checkbox">
+                                                                    <input id="gastos_servicios" class="magic-checkbox" type="checkbox">
+                                                                    <label for="gastos_servicios">Gastos y servicios del hogar</label>
+                                                                </div>
+                                                                <div class="checkbox">
+                                                                    <input id="turismo_recreacion" class="magic-checkbox" type="checkbox">
+                                                                    <label for="turismo_recreacion">Turismo y recreación</label>
+                                                                </div>
+                                                                <div class="checkbox">
+                                                                    <input id="otros" class="magic-checkbox" type="checkbox">
+                                                                    <label for="otros">Otros</label>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="control-label">Observación</label>
+                                                                    <textarea rows="3" id="observacion_salud" name="observacion_salud" class="form-control" style="border-radius: 6px;"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-sm-7">
+                                                <div class="panel" style="border-radius: 9px; height: 180px;">
+                                                    <div class="panel-heading">
+                                                        <div class="panel-control">
+                                                            <em class="text-muted"><small>Preguntar si prom$ entre $400.001 y $700.000:</small></em>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <div class="checkbox">
+                                                                    <input id="renta_actual" class="magic-checkbox" type="checkbox">
+                                                                    <label for="renta_actual">Renta actual</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-4" style="margin-top: -20px;">
+                                                                <div class="form-group">
+                                                                    <label class="col-md-5 control-label" for="renta_actual_monto">$</label>
+                                                                    <div class="col-md-12">
+                                                                        <input type="text" id="renta_actual_monto" class="form-control numero" disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-4" style="margin-top: -20px;">
+                                                                <div class="form-group">
+                                                                    <label class="col-md-5 control-label" for="renta_variacion">Variación%</label>
+                                                                    <div class="col-md-9">
+                                                                        <input type="text" id="renta_variacion" class="form-control" disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="checkbox">
+                                                            <input id="documentacion_sistema" class="magic-checkbox" type="checkbox">
+                                                            <label for="documentacion_sistema">Adjuntar documentación en sistema. </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="panel" style="border-radius: 9px; height: 180px;">
+                                                    <div class="panel-heading">
+                                                        <div class="panel-control">
+                                                            <em class="text-muted"><small>Preguntar si prom$ entre $400.001 y $700.000:</small></em>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="col-md-12">
+                                                            <div class="checkbox">
+                                                                <input id="afiliado_recibe_trans" class="magic-checkbox" type="checkbox">
+                                                                <label for="afiliado_recibe_trans">Cliente quiere recibir transferencia.</label>
+                                                            </div>
+                                                            <div class="checkbox">
+                                                                <input id="afiliado_recibe_sucursal" class="magic-checkbox" type="checkbox">
+                                                                <label for="afiliado_recibe_sucursal">Cliente quiere cobrar en sucursal.</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="msCopagoGest"></div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                                <button class="btn btn-primary" v-on:click="handleSubmitGestionCopago">Guardar</button>
+                            </div>
+                        </div>
+                        <div id="tab-historial-call" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div v-for="gestion in dataModalHist">
+                                    <a href="#">
+                                        <h4 class="list-group-item-heading"><strong>Gestor: </strong>{{gestion.rut_ejecutivo != undefined && gestion.rut_ejecutivo}}</h4>
+                                        <p class="list-group-item-text">
+                                            <strong>Fecha Gestión: </strong>{{gestion.fecha_gestion != undefined && gestion.fecha_gestion.toFechaHoraPrueba()}}, @*<strong>Fecha Compromiso: </strong>
+                                                {{gestion.fechaCompromiso != undefined && gestion.fechaCompromiso !=null ? gestion.fechaCompromiso: '------'}}*@
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Estado: </strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado: '------'}}
+                                            <strong>Sub-Estado: </strong>{{gestion.sub_estado != undefined && gestion.sub_estado != null ? gestion.sub_estado: '------'}}
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Comentarios: </strong> {{gestion.respuesta}}
+                                        </p>
+                                    </a>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-contactabiliadad" class="tab-pane fade">
+                            <div class="alert alert-warning" id="msjContactCopago" style="display:none;">
+                                <strong>Contacto!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                            </div>
+                            <div class="row">
+                                <button type="button" id="btn-add-contac_copago" class="btn btn-primary btn-xs">+</button>
+                            </div>
+                            <div class="mar-btm" style="display: none;" id="formulario-contac_copago">
+                                <form id="form-registro-contacto_copago" action="#" method="post">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Tipo de Contacto</label>
+                                                    <select class="selectpicker" id="cbtippContac_copago" name="cbtippContac_copago">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Celular</option>
+                                                        <option value="2">Teléfono</option>
+                                                        <option value="3">Mail</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Clasificación de Contacto</label>
+                                                    <select class="selectpicker" id="cbClasificacionConctac_copago" name="cbClasificacionConctac_copago">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Personal</option>
+                                                        <option value="2">Comercial</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Datos de Contacto</label>
+                                                <input class="form-control" id="afi_NewContacto_copago" type="text" value="" maxlength="150" name="afi_NewContacto_norm">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" id="btGuardaContacto_copago" type="submit">Guardar Contacto</button>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <table class="table table-hover table-vcenter" style="font-size: 11px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Gestión</th>
+                                            <th>Datos Contacto</th>
+                                            <th>Tipo contacto</th>
+                                            <th>Indice</th>
+                                            <th>Ultimo Contacto Valido</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bdy_datos_contactos_copago"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section script{
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
+    <script src="~/Assets/js.App/src/copago.js?g=@Guid.NewGuid().ToString()"></script>
+
+}

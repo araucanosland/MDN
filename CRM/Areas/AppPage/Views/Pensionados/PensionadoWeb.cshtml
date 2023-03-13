@@ -1,0 +1,795 @@
+﻿
+@{
+    ViewBag.Title = "PensionadoWeb";
+}
+
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+<div id="page-content">
+    <div class="tab-base">
+        <div class="tab-content">
+            <div class="row">
+                <h1 class="page-header text-overflow">Pensionado 1 % </h1>
+                <br />
+                <div class="panel" style="border-radius: 8px">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Filtros de Búsqueda</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-3 text-xs-center">
+                                <div class="form-group">
+                                    <label class="control-label">Rut</label>
+                                    <input type="text" class="form-control" id="txtRutPen" placeholder="Rut pensionado.." tabindex="1">
+                                </div>
+                            </div>
+                            <div class="col-sm-3 text-xs-center">
+                                <div class="form-group">
+                                    <label class="control-label">EPP Actual</label>
+                                    <select id="dllEppPen" class="form-control" tabindex="3"></select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3 text-xs-center">
+                                <div class="form-group">
+                                    <label class="control-label">Estado Gestion</label>
+                                    <select id="dllEstadoGestion" class="form-control" tabindex="4"></select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="btn_buscar_pensionado">BUSCAR</button>
+                                </div>
+                            </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="panel" style="border-radius: 8px">
+                    <h3 class="panel-title">Pensionado</h3>
+                    <form class="form-horizontal">
+                        <div class="panel-body">
+                            <table data-toggle="table"
+                                   data-sort-name="Id"
+                                   data-page-list="[]"
+                                   data-page-size="30"
+                                   data-search="false"
+                                   data-show-pagination-switch="false"
+                                   data-pagination="true" id="tblAsigPen" style="font-size: 12px">
+                                <thead>
+                                    <tr>
+                                        <th data-field="Id" data-sortable="true" data-formatter="idFormatter">ID</th>
+                                        <th data-field="Rut_Afiliado" data-sortable="true">Rut</th>
+                                        <th data-field="Nombre_Afiliado" data-sortable="true">Nombre</th>
+                                        <th data-field="Epp_text" data-sortable="true">Epp Actual</th>
+                                        <th data-field="Estado" data-sortable="true">Estado</th>
+                                        <th data-field="Fecha_Ultima_Pension" data-formatter="formatoFecha" data-sortable="true">Fecha Ultima Pensión</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mdl_data_gestion_pensionado" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 7px;">
+            <div class="modal-header">
+                <button id="btCerrarModal" type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                @*<h4 class="modal-title">Pensionado ---- CODIGO:  <label id="codPensionado"></label> </h4>*@
+            </div>
+            <div class="modal-body">
+                <div class="panel">
+                    <div class="tab-base" id="MDL_Primario" style="margin-bottom: 0px !important;">
+                        <!--Nav Tabs-->
+                        <ul class="nav nav-tabs" id="tabPenGestionModal">
+                            <li class="active tabDatos">
+                                <a data-toggle="tab" id="tabDatosPen" href="#tab-gestion-pensionado" aria-expanded="true">Datos Pensionado</a>
+                            </li>
+                            <li class="" style="display:none;">
+                                <a data-toggle="tab" href="#tab-gestion-contacto" aria-expanded="false">Contacto/Gestión</a>
+                            </li>
+                            <li class="tabGestion" style="display :none">
+                                <a data-toggle="tab" id="tabgestion" href="#tab-gestion-gestion" aria-expanded="false">Gestión</a>
+                            </li>
+                            <li class="tabHistorial">
+                                <a data-toggle="tab" id="tabHistorial" href="#tab-gestion-historial" aria-expanded="false">Historial Gestión</a>
+                            </li>
+                            <li class="tabContactabilidad">
+                                <a data-toggle="tab" id="tabContactabilidad" href="#tab-gestion-contactabilidad" aria-expanded="false">Contactabilidad</a>
+                            </li>
+                            <li class="tabDomicilio" style="display :none">
+                                <a data-toggle="tab" id="tabDomicilio" href="#tab-gestion-domicilio" aria-expanded="false">Domicilio</a>
+                            </li>
+
+                        </ul>
+                        <input class="form-control" id="txtId" type="text" style="display:none">
+                        <input class="form-control" id="rutejecutivo" type="text" style="display:none">
+                        <!--Tabs Content-->
+                        <div class="tab-content" style="box-shadow: 0 0 0 !important;">
+                            <div id="tab-gestion-pensionado" class="tab-pane fade active in">
+                                <div class="panel" style="border-radius: 6px; border: 1px solid #dad3d3;">
+                                    <div class="panel-heading">
+                                        <div class="panel-control">
+                                            <a href="#fakelink" class="add-tooltip demo-pli-question-circle icon-lg unselectable" data-html="true" data-title="<h4>Información</h4><p style='width:150px'>Podra visualizar y editar los datos de contacto y dirección del pensionado.</p>" data-original-title="" title=""></a>
+                                        </div>
+                                        <h3 class="panel-title">Datos Pensionado</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div id="msjMantPensionadoContacto"></div>
+                                        <form>
+
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Rut</label>
+                                                        <input class="form-control" id="Pen_rut" type="text" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Nombres</label>
+                                                        <input class="form-control" id="pen_nombre" type="text" disabled>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label segmento_texto">Epp en Sistema</label>
+                                                        <input class="form-control" id="pen_epp" type="text" disabled>
+                                                        @*<select class="form-control" id="ModaldllEppPen" tabindex="2" disabled></select>*@
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label segmento_texto">Beneficio otorgado</label>
+                                                        <input class="form-control" id="pen_beneficio" type="text" disabled>
+                                                        @*<select class="form-control" id="ModaldllBeneficioPen" tabindex="2" disabled></select>*@
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label class="control-label">Fecha de última pensión</label>
+                                                    <div id="dp-component-pensionados-pension">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control" id="Modalfechaultimapension" disabled>
+                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <label class="control-label">Fecha de último beneficio</label>
+                                                    <div id="dp-component-pensionados-beneficio">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control" id="Modalfechaultimobeneficio" disabled>
+                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <hr />
+                                            <div class="=row">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label segmento_texto">Estado</label>
+                                                        <select class="form-control" id="ModaldllEstadoGestion" tabindex="2"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="form-group">
+                                                        <label class="control-label segmento_texto">Sub Estado</label>
+                                                        <select class="form-control" id="ModaldllSubEstadoGestion" tabindex="2" disabled></select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4" id="divnuevoepp" style="display:none">
+                                                    <div class="form-group">
+                                                        <label class="control-label segmento_texto">Nuevo Epp</label>
+                                                        <select class="form-control" id="ModaldllNuevoEpp" tabindex="2"></select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-5" id="divotroepp" style="display:none">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Ingrese Nombre Epp</label>
+                                                        <input class="form-control" id="peneppOtro" placeholder="Ingrese nombre.." type="text">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            
+                                            <div class="row">
+                                                 <div class="col-sm-8" id="divobservacion" >
+                                                    <div class="form-group">
+                                                        <label class="control-label">Ingrese Observación</label>
+                                                        <input class="form-control" id="penObservacion" placeholder="Ingrese observación.." type="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-primary" id="btn-guardar">Guardar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab-gestion-contacto" class="tab-pane fade" style="display:none;">
+                                <div class="panel" style="border-radius: 6px; border: 1px solid #dad3d3;">
+                                    <div class="panel-heading">
+                                        <div class="panel-control">
+                                            <a href="#fakelink" class="add-tooltip demo-pli-question-circle icon-lg unselectable" data-html="true" data-title="<h4>Information</h4><p style='width:150px'>This is an information bubble to help the user.</p>" data-original-title="" title=""></a>
+                                        </div>
+                                        <h3 class="panel-title">Contacto</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div id="msjMantContacto"></div>
+                                        <div id="msjMantGestionPen"></div>
+                                        <form id="pensionado-contacto" action="#" method="post">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Se contacto con Pensionado?</label>
+                                                    <select class="form-control" id="slContactoPensionado" name="slContactoPensionado">
+                                                        <option value="">Seleccione</option>
+                                                        <option value="SI">SI</option>
+                                                        <option value="NO">NO</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4" id="dvContactMedio" style="display:none;">
+                                                <div class="form-group">
+                                                    <label class="control-label">Por cual medio?</label>
+                                                    <select class="form-control" id="slContactMedio" name="slContactMedio"></select>
+                                                    <label class="control-label" style="font-size: 10px; color: #a94442; display:none;" id="lbslContactMedio">Debe selecciona una opción</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4" id="dvNOContactoPensionadoFono" style="display:none;">
+                                                <div class="form-group">
+                                                    <label class="control-label">Intento por Fono</label>
+                                                    <select class="form-control" id="slNOContactoPensionadoFono" name="slNOContactoPensionadoFono">
+                                                        <option value="">Seleccione</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4" id="dvNOContactoPensionadoDom" style="display:none;">
+                                                <div class="form-group">
+                                                    <label class="control-label">Intento a Domicilio</label>
+                                                    <select class="form-control" id="slNOContactoPensionadoDom" name="slNOContactoPensionadoDom">
+                                                        <option value="">Seleccione</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row esconder" style="text-align: left;">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Observación</label>
+                                                        <textarea placeholder="Observación" rows="3" class="form-control" id="txtObsContacto" name="txtObsContacto"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row esconder" id="btSaveContatoPensionado" style="text-align: left; display:none">
+                                                <button data-dismiss="modal" class="btn btn-default" id="btCerrarGersPen" type="button">Cerrar</button>
+                                                <button class="btn btn-primary esconder" id="btn_savearPensionadoCon" type="submit">Guardar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="panel" style="border-radius: 6px; border: 1px solid #dad3d3; display:none;" id="paneGestionPesnionado">
+                                    <div class="panel-heading">
+                                        <div class="panel-control">
+                                            <a href="#fakelink" class="add-tooltip demo-pli-question-circle icon-lg unselectable" data-html="true" data-title="<h4>Information</h4><p style='width:150px'>This is an information bubble to help the user.</p>" data-original-title="" title=""></a>
+                                        </div>
+                                        <h3 class="panel-title">Gestión</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <form id="datos-gestion_pensionado" action="#" method="post">
+                                            <div class="row esconder" style="text-align: left;">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Estado</label>
+                                                        <select class="form-control" id="ges_estado_pensionado" name="ges_estado_pensionado">
+                                                            <option value="">Seleccione</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Sub Estado</label>
+                                                        <select class="form-control" id="ges_subestado_pensionado" name="ges_subestado_pensionado">
+                                                            <option value="">Seleccione</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4" id="prox_gest_pensionado" style="display: none;">
+
+                                                    <label class="control-label">Fecha Próxima Gestión</label>
+                                                    <div id="dp-component-pensionados">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control" id="ges_prox_gestion_pensionado" name="ges_prox_gestion_pensionado">
+                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3" id="prox_hora_gest_pensionado" style="display: none;">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Hora</label>
+                                                        <div class="input-group date">
+                                                            <select id="slComienzaDia_pensionado" name="slComienzaDia_pensionado" class="form-control" tabindex="-98">
+                                                                <option value="">Seleccione</option>
+                                                                <option value="09:00">9:00 hrs.</option>
+                                                                <option value="09:30">9:30 hrs.</option>
+                                                                <option value="10:00">10:00 hrs.</option>
+                                                                <option value="10:30">10:30 hrs.</option>
+                                                                <option value="11:00">11:00 hrs.</option>
+                                                                <option value="11:30">11:30 hrs.</option>
+                                                                <option value="12:00">12:00 hrs.</option>
+                                                                <option value="12:30">12:30 hrs.</option>
+                                                                <option value="13:00">13:00 hrs.</option>
+                                                                <option value="13:30">13:30 hrs.</option>
+                                                                <option value="14:00">14:00 hrs.</option>
+                                                                <option value="14:30">14:30 hrs.</option>
+                                                                <option value="15:00">15:00 hrs.</option>
+                                                                <option value="15:30">15:30 hrs.</option>
+                                                                <option value="16:00">16:00 hrs.</option>
+                                                                <option value="16:30">16:30 hrs.</option>
+                                                                <option value="17:00">17:00 hrs.</option>
+                                                                <option value="17:30">17:30 hrs.</option>
+                                                                <option value="18:00">18:00 hrs.</option>
+                                                                <option value="18:30">18:30 hrs.</option>
+                                                                <option value="19:00">19:00 hrs.</option>
+                                                                <option value="19:30">19:30 hrs.</option>
+                                                                <option value="20:00">20:00 hrs.</option>
+                                                                <option value="20:30">20:30 hrs.</option>
+                                                                <option value="21:00">21:00 hrs.</option>
+                                                            </select>
+                                                            <span class="input-group-addon"><i class="demo-pli-clock"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row esconder" style="text-align: left;">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Comentarios</label>
+                                                        <textarea placeholder="Comentarios" rows="3" class="form-control" id="txt_interes_comentarios_pensionado" name="txt_interes_comentarios_pensionado"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button data-dismiss="modal" class="btn btn-default" id="btCerrarGersPen" type="button">Cerrar</button>
+                                            <button class="btn btn-primary esconder" id="btn_savearPensionado" type="submit">Guardar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab-gestion-historial" class="tab-pane fade">
+                                <div class="list-group" id="gestiones_realizadas_pensionados" style="min-height:290px;">
+
+                                </div>
+                            </div>
+                            <div id="tab-gestion-contactabilidad" class="tab-pane fade">
+                                <div class="alert alert-warning" id="msjContactBeneficio" style="display:none;">
+                                    <strong>Contacto!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                                </div>
+                                <div class="row">
+                                    <button type="button" id="btn-add-contac_beneficio" class="btn btn-primary btn-xs">+</button>
+                                </div>
+                                <div class="mar-btm" style="display: none;" id="formulario-contac_beneficio">
+                                    <form id="form-registro-bnf" action="#" method="post">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="btn-group bootstrap-select">
+                                                        <label class="control-label">Tipo de Contacto</label>
+                                                        <select class="selectpicker" id="cbtippContac_beneficio" name="cbtippContac_beneficio">
+                                                            <option value="">Seleccione..</option>
+                                                            <option value="1">Celular</option>
+                                                            <option value="2">Teléfono</option>
+                                                            <option value="3">Mail</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="btn-group bootstrap-select">
+                                                        <label class="control-label">Clasificación de Contacto</label>
+                                                        <select class="selectpicker" id="cbClasificacionConctac_beneficio" name="cbClasificacionConctac_beneficio">
+                                                            <option value="">Seleccione..</option>
+                                                            <option value="1">Personal</option>
+                                                            <option value="2">Comercial</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="control-label">Datos de Contacto</label>
+                                                    <input class="form-control" id="afi_NewContacto_beneficio" type="text" value="" maxlength="150" name="afi_NewContacto_beneficio">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-primary" id="btGuardaContacto_beneficio" type="submit">Guardar Contacto</button>
+                                    </form>
+                                </div>
+                                <div class="row">
+                                    <table class="table table-hover table-vcenter" style="font-size: 11px;">
+                                        <thead>
+                                            <tr>
+                                                <th>Gestión</th>
+                                                <th>Datos Contacto</th>
+                                                <th>Tipo contacto</th>
+                                                <th>Indice</th>
+                                                <th>Ultimo Contacto Valido</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="bdy_datos_contactos_beneficio"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="tab-gestion-domicilio" class="tab-pane fade">
+                                <div id="msj-contact-domicilio"></div>
+                                <div class="header">
+                                    <a class="close" id="btNewContatoDomicilio">
+                                        <i class="demo-pli-add icon-2x "></i>
+                                        <span class="menu-title">
+                                            <strong>Agregar Domicilio</strong>
+                                        </span>
+                                    </a>
+                                    <h4 class="modal-title" id="myLargeModalLabel-search"> Base Potenciada Direcciones</h4>
+                                </div>
+                                <div class="body" id="bdy_busqueda_pensionadoDirecciones">
+                                    <div style="display:none;" id="newContactoDirecciones">
+                                        <hr />
+                                        <div class="panel panel-bordered-info" style="border-radius: 5px;">
+                                            <div class="panel-body">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Dirección</label>
+                                                                <input type="text" id="txtTelfConPotDirecciones" class="form-control" maxlength="20">
+
+                                                                <i class="demo-psi-dis-like icon-lg"></i>
+                                                                <i class="fa fa-thumbs-o-down"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Relaciondo</label>
+                                                                <input type="text" id="txtRelacConPotDirecciones" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer text-right">
+                                                    <button class="btn btn-success" type="button" id="btSaveContPontenciadaDirecciones">Guardar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <div id="NotfGenericaDBPotenciadoDirecciones"></div>
+                                                <hr />
+                                                <div class="panel-body">
+                                                    <table data-toggle="table"
+                                                           data-sort-name="id"
+                                                           data-page-list="[]"
+                                                           data-page-size="10"
+                                                           data-pagination="true" id="tblPenPotenciadaDirecciones">
+                                                        <thead>
+                                                            <tr>
+                                                                <th data-field="direccion" data-sortable="true">Dirección</th>
+                                                                <th data-field="ranking" data-sortable="true">Ranking</th>
+                                                                <th data-field="relacionados" data-sortable="true">Relacionado</th>
+                                                                <th data-field="marca" data-formatter="estadoImgDomicilio" data-sortable="true">Estado</th>
+                                                                <th data-field="relacionados" data-formatter="opcionDomicilio">Acciones</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab-gestion-gestion" class="tab-pane fade">
+                                <div id="msjMantPensionado"></div>
+                                <h4 class="modal-title" id="lbTitulo">Contacto</h4>
+                                <!--CONTACTO-->
+                                <div class="modal-body" id="etapaContacto" style="display:block">
+                                    <div class="alert alert-success" style="border-radius: 5px; height: 54px; background-color: #f3f3f3; color: #696666;">
+                                        <label class="col-md-5 control-label">Se contactó con Pensionado? </label>
+                                        <div class="col-md-6" style="margin-top: -11px;">
+                                            <div class="radio">
+                                                <input id="rdkContactoSi" class="magic-radio" type="radio" name="inline-form-radioContacto" value="SI">
+                                                <label for="rdkContactoSi">SI</label>
+                                                <input id="rdkContactoNO" class="magic-radio" type="radio" name="inline-form-radioContacto" value="NO">
+                                                <label for="rdkContactoNO">NO</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="visibility: hidden;">
+                                        separador
+                                    </div>
+                                    <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; display:none;" id="paso1_Si">
+                                        <div class="panel-body">
+                                            <div class="form-group pad-ver">
+                                                <label class="col-md-4 control-label">Por que medio?</label>
+                                                <div class="col-md-8" id="dvRbMedioSi"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; display:none;" id="paso1_No">
+                                        <div class="panel-body">
+                                            <label class="control-label" style="margin-top: 20px;"><strong>Fono</strong></label>
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12" id="dvRbMedioNoFono" style="margin-top: 20px;"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <div id="subFonoNo" style="display:none;"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div id="dp-txtFechaConFonoNO" class="col-sm-3" style="display:none;">
+                                                    <label class="control-label">Fecha</label>
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" id="txtFechaConFonoNO" name="txtFechaConFonoNO">
+                                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style="visibility: hidden;">
+                                                separador
+                                            </div>
+
+                                            <label class="control-label" style="margin-top: 20px;"><strong>Domicilio</strong></label>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12" id="dvRbMedioNoDomi" style="margin-top: 20px;"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div id="subDomiNo" style="display:none;"></div>
+                                                </div>
+
+                                                <div id="dp-txtFechaConDomiNO" class="col-sm-3" style="margin-top: 37px; display:none;">
+                                                    <label class="control-label">Fecha</label>
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" id="txtFechaConDomiNO" name="txtFechaConDomiNO">
+                                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Observación</label>
+                                            <textarea placeholder="Observación" rows="3" class="form-control" id="txtObservacionContacto" name="txtObservacionContacto"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-primary" id="btn_contacto" type="submit" v-on:click="handleSubmitContactoPensionado" disabled>Siguiente</button>
+                                    </div>
+                                </div>
+
+                                <!--INTERES-->
+                                <div class="modal-body" id="etapaInteres" style="display:none">
+                                    <div class="alert alert-success" style="border-radius: 5px; height: 54px; background-color: #f3f3f3; color: #696666;">
+                                        <label class="col-md-5 control-label">Pensionado  está interesado?  </label>
+                                        <div class="col-md-7" style="margin-top: -11px;">
+                                            <div class="radio" id="divInteres"></div>
+                                        </div>
+                                    </div>
+                                    <div class="alert alert-warning" id="msjBloqueo" style="display:none;">
+                                        <strong>Atencion!</strong> Pensionado, <a href="#" class="alert-link" id="msjBlockPen"></a>
+                                    </div>
+                                    <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; display:none;" id="Interes_Si">
+                                        <div class="panel-body">
+                                            <div class="form-group pad-ver">
+                                                <label class="col-md-4 control-label">Como avanzamos?</label>
+                                                <div class="col-md-8" id="divInteresSI">
+
+                                                </div>
+                                            </div>
+                                            <div style="visibility: hidden;">
+                                                separador
+                                            </div>
+                                            <div class="form-group pad-ver">
+                                                <div class="col-md-4 control-label">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Cuando?</label>
+                                                    </div>
+                                                </div>
+                                                <div id="dp-component-pensionados-interes" class="col-md-4">
+                                                    <label class="control-label">Fecha</label>
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" id="txtFechacita" name="txtFechacita">
+                                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Hora</label>
+                                                        <div class="input-group date">
+                                                            <select id="slHoraInteres" name="slHoraInteres" class="form-control" tabindex="-98">
+                                                                <option value="">Seleccione</option>
+                                                                <option value="09:00">9:00 hrs.</option>
+                                                                <option value="09:30">9:30 hrs.</option>
+                                                                <option value="10:00">10:00 hrs.</option>
+                                                                <option value="10:30">10:30 hrs.</option>
+                                                                <option value="11:00">11:00 hrs.</option>
+                                                                <option value="11:30">11:30 hrs.</option>
+                                                                <option value="12:00">12:00 hrs.</option>
+                                                                <option value="12:30">12:30 hrs.</option>
+                                                                <option value="13:00">13:00 hrs.</option>
+                                                                <option value="13:30">13:30 hrs.</option>
+                                                                <option value="14:00">14:00 hrs.</option>
+                                                                <option value="14:30">14:30 hrs.</option>
+                                                                <option value="15:00">15:00 hrs.</option>
+                                                                <option value="15:30">15:30 hrs.</option>
+                                                                <option value="16:00">16:00 hrs.</option>
+                                                                <option value="16:30">16:30 hrs.</option>
+                                                                <option value="17:00">17:00 hrs.</option>
+                                                                <option value="17:30">17:30 hrs.</option>
+                                                                <option value="18:00">18:00 hrs.</option>
+                                                                <option value="18:30">18:30 hrs.</option>
+                                                                <option value="19:00">19:00 hrs.</option>
+                                                                <option value="19:30">19:30 hrs.</option>
+                                                                <option value="20:00">20:00 hrs.</option>
+                                                                <option value="20:30">20:30 hrs.</option>
+                                                                <option value="21:00">21:00 hrs.</option>
+                                                            </select>
+                                                            <span class="input-group-addon"><i class="demo-pli-clock"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; display:none;" id="Interes_Terminada">
+                                        <div class="panel-body">
+                                            <div class="form-group pad-ver">
+                                                <label class="col-md-4 control-label">Por que?</label>
+                                                <div class="col-md-8" id="divInteresTerminada"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; display:none;" id="Interes_NO">
+                                        <div class="panel-body">
+                                            <div class="form-group pad-ver">
+                                                <label class="col-md-4 control-label">Por que?</label>
+                                                <div class="col-md-8" id="divInteresNO">
+
+                                                </div>
+                                                <div class="col-md-8" id="divInteresNoInteresado" style="display:none;">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; display:none;" id="Interes_Ocupado">
+                                        <div class="panel-body">
+
+                                            <div style="visibility: hidden;">
+                                                separador
+                                            </div>
+                                            <div class="form-group pad-ver">
+                                                <div class="col-md-4 control-label">
+                                                    <div class="form-group">
+                                                        <label class="control-label" style="margin-top: 27px;">Agendar nueva llamada!</label>
+                                                    </div>
+                                                </div>
+                                                <div id="dp-component-pensionados-interes" class="col-md-4">
+                                                    <label class="control-label">Fecha</label>
+                                                    <div class="input-group date">
+                                                        <input type="text" class="form-control" id="txtFechacita2" name="txtFechacita2">
+                                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Hora</label>
+                                                        <div class="input-group date">
+                                                            <select id="slHoraInteres2" name="slHoraInteres2" class="form-control" tabindex="-98">
+                                                                <option value="">Seleccione</option>
+                                                                <option value="09:00">9:00 hrs.</option>
+                                                                <option value="09:30">9:30 hrs.</option>
+                                                                <option value="10:00">10:00 hrs.</option>
+                                                                <option value="10:30">10:30 hrs.</option>
+                                                                <option value="11:00">11:00 hrs.</option>
+                                                                <option value="11:30">11:30 hrs.</option>
+                                                                <option value="12:00">12:00 hrs.</option>
+                                                                <option value="12:30">12:30 hrs.</option>
+                                                                <option value="13:00">13:00 hrs.</option>
+                                                                <option value="13:30">13:30 hrs.</option>
+                                                                <option value="14:00">14:00 hrs.</option>
+                                                                <option value="14:30">14:30 hrs.</option>
+                                                                <option value="15:00">15:00 hrs.</option>
+                                                                <option value="15:30">15:30 hrs.</option>
+                                                                <option value="16:00">16:00 hrs.</option>
+                                                                <option value="16:30">16:30 hrs.</option>
+                                                                <option value="17:00">17:00 hrs.</option>
+                                                                <option value="17:30">17:30 hrs.</option>
+                                                                <option value="18:00">18:00 hrs.</option>
+                                                                <option value="18:30">18:30 hrs.</option>
+                                                                <option value="19:00">19:00 hrs.</option>
+                                                                <option value="19:30">19:30 hrs.</option>
+                                                                <option value="20:00">20:00 hrs.</option>
+                                                                <option value="20:30">20:30 hrs.</option>
+                                                                <option value="21:00">21:00 hrs.</option>
+                                                            </select>
+                                                            <span class="input-group-addon"><i class="demo-pli-clock"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Comentarios</label>
+                                            <textarea placeholder="Comentarios" rows="3" class="form-control" id="txt_interes_comentarios_pen" name="txt_interes_comentarios_pen"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-success" id="btn_interes_guardar" type="submit" disabled>Guardar</button>
+                                        <button class="btn btn-primary" id="btn_interes" v-on:click="handleEventoClickbtn_interes" type="submit" disabled>Siguiente</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
+    <script src="~/Assets/js.App/src/PensionadosWeb.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/js.App/src/beneficios-unoporciento.js?g=@Guid.NewGuid().ToString()"></script>
+
+}

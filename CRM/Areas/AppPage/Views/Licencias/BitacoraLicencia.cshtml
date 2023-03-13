@@ -1,0 +1,421 @@
+﻿
+
+@{
+    /**/
+
+    ViewBag.Title = "Ingreso";
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!--Magic Checkbox [ OPTIONAL ]-->
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
+
+
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Bitácora Licencia Médica</h3>
+                </div>
+
+                <!--Block Styled Form -->
+                <!--===================================================-->
+                <form id="frm-data-lc">
+                    <div class="panel-body">
+
+                        <div class="col-lg-4">
+
+                            <h4>Datos de la Licencia </h4>
+
+                            <table class="table text-left">
+                                <tr>
+                                    <td><strong>Folio Licencia</strong></td>
+                                    <td><label id="lblfolic"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Rut Afiliado</strong></td>
+                                    <td><label id="lblRutAfiliado"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fecha Ingreso</strong></td>
+                                    <td><label id="lblfechaingreso"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Oficina</strong></td>
+                                    <td><label id="lbloficina"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Formato </strong></td>
+                                    <td><label id="lblformato"></label></td>
+                                </tr>
+                                <tr id="trTipoLM">
+                                    <td><strong>Tipo LM </strong></td>
+                                    <td><label id="lbltipoLM"></label></td>
+                                </tr>
+                                <tr id="trFechaInicioLM">
+                                    <td><strong>Fecha Inicio LM </strong></td>
+                                    <td><label id="lblfechaInicioLM"></label></td>
+                                </tr>
+                                <tr id="trFechaTerminoLM">
+                                    <td><strong>Fecha Término LM </strong></td>
+                                    <td><label id="lblfechaTerminoLM"></label></td>
+                                </tr>
+                                <tr id="trCantidadDiasLM">
+                                    <td><strong>Cantidad de Días </strong></td>
+                                    <td><label id="lblCantidadDiasLM"></label></td>
+                                </tr>
+
+
+                                <tr>
+                                    <td><strong>Quien Envía </strong></td>
+                                    <td><label id="lblquienenvia"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Teléfono o Celular  </strong></td>
+                                    <td><label id="lbltelefono"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Correo electrónico </strong></td>
+                                    <td><label id="lblcorreo"></label></td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <button class="btn btn-warning" type="button" id="bt-bolver">Volver</button>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                        <div class="col-lg-7 col-lg-offset-1">
+                            <h4>Seguimiento de Licencia Médica</h4>
+                            <!-- Timeline -->
+                            <!--===================================================-->
+                            <div class="timeline  contenedor-folios">
+
+
+                            </div>
+                            <!--===================================================-->
+                            <!-- End Timeline -->
+
+                        </div>
+                    </div>
+
+                </form>
+                <!--===================================================-->
+                <!--End Block Styled Form -->
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+</div>
+<!--===================================================-->
+<!--End page content-->
+
+
+@section script{
+
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <!--Masked Input [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/masked-input/jquery.maskedinput.min.js"></script>
+
+
+    <script>
+
+
+        $(function () {
+
+            var CodIng = httpGet("ci");
+
+
+            $('.contenedor-folios').html("");
+            $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-Bitacora-LM", { codIngreso: CodIng }, function (datos) {
+
+
+
+
+                $("#lblfolic").text('');
+                $("#lblRutAfiliado").text('');
+                $("#lblfechaingreso").text('');
+                $("#lblformato").text('');
+                $("#lbloficina").text('');
+                $("#lblquienenvia").text('');
+                $("#lbltelefono").text('');
+                $("#lblcorreo").text('');
+               // console.log(datos);
+                $.each(datos, function (i, licencia) {
+
+                   // if (licencia.FormatoLM == "Manual - Casilla") {
+                        $("#trTipoLM").show();
+                        $("#trFechaInicioLM").show();
+                        $("#trFechaTerminoLM").show();
+                        $("#trCantidadDiasLM").show();
+
+                    //}
+                    //else {
+                    //    $("#trTipoLM").hide();
+                    //    $("#trFechaInicioLM").hide();
+                    //    $("#trFechaTerminoLM").hide();
+                    //    $("#trCantidadDiasLM").hide();
+                    //}
+
+
+                    $("#lblfolic").text(licencia.FolioLicencia);
+                    $("#lblRutAfiliado").text(licencia.RutAfiliado);
+                    $("#lblfechaingreso").text(licencia.FechaIngreso.toFecha());
+                    $("#lblformato").text(licencia.FormatoLM);
+
+                    $("#lblCantidadDiasLM").text(licencia.DiasAutorizados);
+
+                    $("#lblfechaInicioLM").text(licencia.FechaInicioLM.toFecha());
+                    $("#lblfechaTerminoLM").text(licencia.FechaHastaLM.toFecha());
+                    $("#lbltipoLM").text(licencia.TipoLM);
+                    $("#lbloficina").text(licencia.Oficina);
+                    $("#lblquienenvia").text(licencia.Quienenvia);
+                    $("#lbltelefono").text(licencia.Telefono);
+                    $("#lblcorreo").text(licencia.Email);
+
+                    
+                  
+                    let html = `<div class="timeline-entry" >
+                             <div class="timeline-stat">` ;
+                    //----------------Licencias esta pronunciada [id Tarea =51]
+                    if (licencia.EtapaId == "59" || licencia.EtapaId == "58" || licencia.EtapaId == "57" || licencia.EtapaId == "56" || licencia.EtapaId == "55") {
+                        html = html + `<div class="timeline-icon  bg-success"></div>`;
+                    }
+                    else if (licencia.EtapaId == "60") {
+                        html = html + `<div class="timeline-icon  bg-success"></div>`;
+                        if (licencia.EtapaId == "59" || licencia.EtapaId == "58" || licencia.EtapaId == "57" || licencia.EtapaId == "56" || licencia.EtapaId == "55") {
+                            html = html + `<div class="timeline-icon "></div>`;
+                        }
+
+                    }
+
+                    else if (licencia.Estado == "Activada") {
+                        html = html + `<div class="timeline-icon  bg-success"></div>`;
+                    }
+
+                    else {
+                        html = html + `<div class="timeline-icon"></div>`;
+                    }
+
+                    html = html + `<div class="timeline-time">${licencia.FechaInicio.toFecha()}</div>
+                             </div>`;
+
+
+
+                    if (licencia.EtapaId == "59" || licencia.EtapaId == "58" || licencia.EtapaId == "57" || licencia.EtapaId == "56" || licencia.EtapaId == "55") {
+                        html = html + `<div class="timeline-label text-left" style="background-color:#398452;border-right-color:#398452">`;
+                    }
+                    else if (licencia.EtapaId == "60") {
+                        html = html + `<div class="timeline-label text-left" style="background-color:#398452;border-right-color:#398452">`;
+                    }
+                    else if (licencia.EtapaId == "50") {
+                        html = html + `<div class="timeline-label text-left" style="background-color:#398452;border-right-color:#398452">`;
+                    }
+                    else if (licencia.EtapaId == "52") {
+                        html = html + `<div class="timeline-label text-left" style="background-color:#398452;border-right-color:#398452">`;
+                    }
+                    else {
+                        html = html + `<div class="timeline-label text-left">`;
+
+                    }
+
+                    
+                    if (licencia.EtapaId == "59" || licencia.EtapaId == "58" || licencia.EtapaId == "57" || licencia.EtapaId == "56" || licencia.EtapaId == "55") {
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Pronunciamiento COMPIN :${licencia.EstadoPronunciamiento}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">SubComisón : ${licencia.SubComision}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Fecha Pronunciamiento : ${licencia.FechaPronunciamiento.toFecha()}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Días Autorizados : ${licencia.DiasAutorizados}</p>`;
+
+
+                    }
+                    else if (licencia.EtapaId == "60") {
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Entidad Pago COMPIN :${licencia.EntidadPago}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Estado Pago : ${licencia.EstadoPago}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Tipo Pago  : ${licencia.TipoPago}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Monto Pago  : ${licencia.MontoPago}</p>`;
+
+
+                    }
+
+                    else if (licencia.EtapaId == "20") {
+                        html = html + ` <p class="mar-no pad-btm">Estado LM:  ${licencia.Etapa}</p>`;
+
+                        html = html + ` <p class="mar-no pad-btm"> Responsable:  ${licencia.Ejecutado}</p>`;
+                        html = html + ` <p class="mar-no pad-btm">Motivo Devolución :${licencia.MotivoDevolucion}</p>`;
+
+
+                    }
+                    else if (licencia.EtapaId == "34" || licencia.EtapaId == "26" )  { 
+                        
+                        html = html + ` <p class="mar-no pad-btm">Estado LM: ${licencia.Etapa}</p>`;
+                        html = html + ` <p class="mar-no pad-btm">SubComisión:  ${licencia.SubComisionTarea}</p>`;
+                        html = html + ` <p class="mar-no pad-btm"> Responsable:  ${licencia.Ejecutado}</p>`;
+                       
+
+
+                    }
+
+                    else if (licencia.IdEtapaSiguiente == "17"  && licencia.EtapaId=="50") { // Devuelta Compin Sucursal
+                        
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Estado LM: ${licencia.Etapa}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">SubComisión:  ${licencia.SubComisionTarea}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5"> Responsable:  ${licencia.Ejecutado}</p>`;
+
+
+
+                    }
+                    else if (licencia.IdEtapaSiguiente == "34" && licencia.EtapaId == "50") {// Devuelta Compin RRLL
+                        
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Estado LM: ${licencia.Etapa}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">SubComisión:  ${licencia.SubComisionTarea}</p>`;
+                     //   html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5"> Responsable:  ${licencia.Ejecutado}</p>`;
+
+
+
+                    }
+                    else if (licencia.EtapaId == "52" ) {// Licencias Pagadas por Pronunciamientos
+                        
+                       // html = html + `<p class="mar-no pad-btm" style="color:#f5f5f5">${licencia.Etapa}</p>`;
+                        html = html + `<p class="mar-no pad-btm" style="color:#f5f5f5">${licencia.PagoPronunciamiento}</p>`;
+                        //  html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5"> Responsable:  ${licencia.Ejecutado}</p>`;
+
+
+
+                    }
+                    else if (licencia.EtapaId == "27" || licencia.EtapaId == "34") {
+                        
+                        html = html + ` <p class="mar-no pad-btm">Estado LM: ${licencia.Etapa}</p>`;
+                        html = html + ` <p class="mar-no pad-btm">SubComisión:  ${licencia.SubComisionTarea}</p>`;
+                        html = html + ` <p class="mar-no pad-btm">  ${licencia.MotivoDevolucionCompin}</p>`;                        
+                      //  html = html + ` <p class="mar-no pad-btm"> Responsable:  ${licencia.Ejecutado}</p>`;
+
+
+
+                    }
+                    else if (licencia.EtapaId == "25" ) {
+                        
+                        html = html + ` <p class="mar-no pad-btm">Estado LM : Devuelta TATA</p>`;
+                        html = html + ` <p class="mar-no pad-btm" >Estado Gestión : ${licencia.Etapa}</p>`;
+                      //  html = html + ` <p class="mar-no pad-btm" > Responsable:  ${licencia.Ejecutado}</p>`;
+
+
+
+                    }
+                    else if (licencia.EtapaId == "32") {
+                        
+                        html = html + ` <p class="mar-no pad-btm">Estado LM : Devuelta Compin</p>`;
+                        html = html + ` <p class="mar-no pad-btm" >Estado Gestión : ${licencia.Etapa}</p>`;
+                        html = html + ` <p class="mar-no pad-btm"> ${licencia.MotivoDevolucionCompin}</p>`;            
+                       // html = html + ` <p class="mar-no pad-btm" > Responsable:  ${licencia.Ejecutado}</p>`;
+
+
+
+                    }
+                    else if (licencia.EtapaId == "2") {
+                        
+                        html = html + ` <p class="mar-no pad-btm">Estado LM : Devuelta Oficina</p>`;
+                        html = html + ` <p class="mar-no pad-btm" > Responsable:  ${licencia.Ejecutado}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" > ${licencia.MotivoDevueltaOficina}</p>`;
+                       
+
+
+
+                    }
+                    else if (licencia.EtapaId == "46") {
+                        
+                        html = html + ` <p class="mar-no pad-btm">Estado LM : ${licencia.Etapa}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" > Responsable:  ${licencia.Ejecutado}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" > ${licencia.GestionOficina}</p>`;
+                    }
+                    else if (licencia.EtapaId == "47") {
+                        
+                        html = html + ` <p class="mar-no pad-btm">Estado LM : ${licencia.Etapa}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" > Responsable:  ${licencia.Ejecutado}</p>`;
+                       html = html + ` <p class="mar-no pad-btm" > ${licencia.GestionOficina2}</p>`;
+                    }
+                    else if (licencia.EtapaId == "48") {
+                        
+                        html = html + ` <p class="mar-no pad-btm">Estado LM : ${licencia.Etapa}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" > Responsable:  ${licencia.Ejecutado}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" > ${licencia.GestionOficina3}</p>`;
+                    }
+                    else if (licencia.EtapaId == "50") {
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5">Estado LM:  ${licencia.Siguienteetapa}</p>`;
+
+                        html = html + ` <p class="mar-no pad-btm" style="color:#f5f5f5;" > Responsable:  ${licencia.Ejecutado}</p>`;
+                        // html = html + ` <p class="mar-no pad-btm" >Etapa Actual : <strong> ${licencia.Etapa}</strong></p>`;
+                    }
+                    //else if (licencia.Estado == '') {
+                    //    //html = html + ` <p class="mar-no pad-btm" >Estado LM: ${licencia.Etapa}</p>`;
+                    //    //html = html + ` <p class="mar-no pad-btm" > Responsable:  ${licencia.Ejecutado}</p>`;
+                    //}
+                    else {
+                        // html = html + ` <p class="mar-no pad-btm" >Etapa Actual : <strong> ${licencia.Etapa}</strong></p>`;
+                        html = html + ` <p class="mar-no pad-btm"  >Estado LM: ${licencia.Etapa}</p>`;
+                        html = html + ` <p class="mar-no pad-btm" > Responsable:  ${licencia.Ejecutado}</p>`;
+                    }
+
+
+
+                    //else {
+
+                    //    if (licencia.Ejecutado == "Oficina") {
+                    //        //html = html + `    <p class="mar-no pad-btm">Etapa Flujo: ${licencia.Etapa}</p>`;
+                    //        html = html + ` <p class="mar-no pad-btm">Responsable ${licencia.Asignado}</p>`;
+                    //        html = html + ` <p class="mar-no pad-btm">Estado  Licencia Médica : <strong>${licencia.Etapa}</strong></p>`;
+                    //    }
+                    //    else if (licencia.Ejecutado == "Auditoría") {
+
+                    //        html = html + ` <p class="mar-no pad-btm">Responsable ${licencia.Asignado}</p>`;
+                    //        html = html + ` <p class="mar-no pad-btm">Estado  Auditoría : <strong>${licencia.EtapaAuditoria}</strong></p>`;
+                    //        html = html + ` <p class="mar-no pad-btm">Estado  Licencia Médica : <strong>${licencia.Etapa}</strong></p>`;
+
+                    //    }
+                    //}
+
+                    html = html + `  </div>
+                    </div>` ;
+
+                    console.log(html);
+                    $('.contenedor-folios').append(html);
+                });
+
+            });
+
+
+            $("#bt-bolver").on("click", function () {
+                // location.href = BASE_URL + "/motor/App/Licencias"
+                location.href = "javascript:history.back()";
+            });
+
+
+        });
+
+    </script>
+
+
+}

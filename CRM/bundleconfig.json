@@ -1,0 +1,72 @@
+﻿[
+  {
+    "outputFileName": "Assets/js.App/bundle.min.js",
+    "inputFiles": [
+      "Assets/js/jquery.min.js",
+      "Assets/plugins/pace/pace.js",
+      "Assets/js/bootstrap.min.js",
+      "Assets/js/nifty.js",
+      "Assets/js.App/Conf.js",
+      "Assets/js.App/Ext.js",
+      "Assets/js/demo/ui-modals.js",
+      "Assets/js/demo/icons.js",
+      "Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.js",
+      "Assets/plugins/bootstrap-validator/bootstrapValidator.js",
+      "Assets/plugins/chosen/chosen.jquery.min.js"
+    ],
+    "sourceMap": true,
+    "minify": {
+      "enabled": true
+    }
+  },
+  {
+    "outputFileName": "Assets/js.App/gestion.min.js",
+    "inputFiles": [
+      "Assets/plugins/fooTable/dist/footable.all.min.js",
+      "Assets/plugins/bootstrap-validator/bootstrapValidator.min.js",
+      "Assets/plugins/bootstrap-select/bootstrap-select.min.js",
+      "Assets/plugins/bootstrap-table/bootstrap-table.min.js",
+      "Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"
+      //"Assets/js.App/printThis.js",
+      //"Assets/js.App/src/index.js"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  },
+  {
+    "outputFileName": "Assets/js.App/inicio.min.js",
+    "inputFiles": [
+      "Assets/plugins/fooTable/dist/footable.all.min.js",
+      "Assets/plugins/bootstrap-select/bootstrap-select.min.js",
+      "Assets/plugins/masked-input/jquery.maskedinput.min.js",
+      "Assets/js/jquery.rut.chileno.min.js",
+      "Assets/plugins/gauge-js/gauge.min.js",
+      "Assets/js.App/src/BuscadorGrilla.js",
+      "Assets/js.App/src/inicio.js"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  },
+  {
+    "outputFileName": "Assets/js.App/ficha-empresa.min.js",
+    "inputFiles": [
+      "Assets/plugins/dropzone/dropzone.min.js",
+      "Assets/plugins/bootstrap-select/bootstrap-select.min.js",
+      "Assets/plugins/chosen/chosen.jquery.min.js",
+      "Assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js",
+      "Assets/plugins/switchery/switchery.min.js",
+      "Assets/plugins/fullcalendar/lib/moment.min.js",
+      "Assets/plugins/fullcalendar/lib/jquery-ui.custom.min.js",
+      "Assets/plugins/fullcalendar/fullcalendar.min.js",
+      "Assets/plugins/fullcalendar/lang-all.js",
+      "Assets/plugins/bootbox/bootbox.min.js",
+      "Assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js"
+    ],
+    "minify": {
+      "enabled": true
+    }
+  }
+
+]

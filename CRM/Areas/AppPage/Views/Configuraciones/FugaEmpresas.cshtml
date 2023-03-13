@@ -1,0 +1,314 @@
+﻿@{
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+}
+<!--Switchery [ OPTIONAL ]-->
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+
+
+
+
+<div id="page-content">
+
+
+    <div class="row">
+        <div class="col-lg-12">
+
+
+            <div class="tab-base">
+
+                <!--Nav Tabs-->
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a data-toggle="tab" href="#demo-lft-tab-1" aria-expanded="true" id="tab_preaprobados">Fuga Empresas</a>
+                    </li>
+
+                </ul>
+
+                <!--Tabs Content-->
+                <div class="tab-content">
+                    <div id="demo-lft-tab-1" class="tab-pane fade active in">
+                        <div class="panel-body">
+                            <form id="form-asignados" action="#" method="get">
+
+                                <div class="filtros col-lg-12">
+                                    <div class="form-group">
+                                        <label class="control-label">¿Hay alguna empresa en riesgo de fuga en su sucursal?</label>
+                                        <div class="">
+                                         No.  <input class="js-switch" type="checkbox" id="EstadoArticulo" name="EstadoArticulo" checked /> Si.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row interact-fom">
+                                    <div class="col-md-12">
+                                        <h6>Señala las empresas ingresando los datos solicitados</h6>
+                                    </div>
+                                </div>
+                                <div class="table-container interact-fom">
+                                    <div class="row d-clonar">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label class="control-label">Rut Empresa</label>
+                                                <input type="text" class="form-control rut_empresa" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Nombre Empresa</label>
+                                                <input type="text" class="form-control nombre_empresa" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label class="control-label">N Trabajadores</label>
+                                                <input type="text" class="form-control n_trabajadores" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label class="control-label">Comentarios</label>
+                                                <input type="text" class="form-control comentarios" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-12">
+                                    <label class="control-label">&nbsp;</label>
+                                    <div class="">
+                                        <button class="btn btn-primary" id="btn-guardar">Guardar</button>
+                                        <button type="button" class="btn btn-info" id="btn-add">(+) Agregar otra Empresa</button>
+                                    </div>
+
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+@section script{
+
+    <!--Switchery [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+
+
+
+    <script>
+        $(document).ready(function () {
+
+            var existe_ya = false;
+            var fuga_id = undefined;
+            const oficina = getCookie('Oficina');
+            
+            $.SecGetJSON(`http://${motor_api_server}:4002/fuga-empresas?filter=codigoOficina||eq||${oficina}&join=empresasFuga`, function (datos) {
+
+                
+                
+                const ejecuciones = datos.filter(function (dato) {
+                    const today = new Date().toLocaleDateString();
+                    return new Date(dato.guardadoEl).toLocaleDateString() == today
+                })
+
+                if (ejecuciones.length > 0) {
+                    existe_ya = true;
+                    const hoy = ejecuciones[0];
+                    
+                    if (hoy.hayNovedad == 1) {
+
+                        console.log({
+                            x: hoy.empresasFuga,
+                            y: hoy
+                        })
+
+                        fuga_id = hoy.id
+
+
+                        hoy.empresasFuga.forEach(e => {
+                            var last = $('.table-container').find('.d-clonar').last();
+                            var set = $(last).clone()
+
+                            $(set).find('.rut_empresa').val(e.rutEmpresa)
+                            $(set).find('.nombre_empresa').val(e.nombreEmpresa)
+                            $(set).find('.n_trabajadores').val(e.cantidadTrabajadores)
+                            $(set).find('.comentarios').val(e.observaciones)
+                            $(set).insertAfter(last);
+                        })
+
+                        $('.table-container').find('.d-clonar').first().remove();
+                        //$('.table-container').find('input').prop('disabled', true)
+                    } else {
+                        $('#EstadoArticulo').trigger("click");
+                    }
+
+                    //$('#btn-add').prop('disabled', true);
+                    //$("#btn-guardar").prop("disabled", true);
+                    //$("#btn-guardar").html(" Ya marcado para hoy <i class='pli-like-2 icon-1x'></i>")
+                }
+
+                
+                
+                
+            });
+
+
+            $("#btn-add").on('click', function () {
+                var last = $('.table-container').find('.d-clonar').last();
+                var set = $(last).clone()
+                $(set).find('input').val('')
+                $(set).insertAfter(last);
+            })
+
+            
+
+            $('#EstadoArticulo').on("change", function () {
+                if ($(this).is(':checked')) {
+                    $('.interact-fom').show();
+                    //$('#btn-add').prop('disabled', false);
+                } else {
+                    $('.interact-fom').hide();
+                    //$('#btn-add').prop('disabled', true);
+                }
+            })
+
+
+
+            $("#form-asignados").on("submit", function () {
+
+                let steps = [];
+                console.log({
+                    existe_ya,
+                    fuga_id
+                })
+
+                if (existe_ya) {
+                    steps.push('[WAY][->][EXISTENCIA]');
+                    steps.push('[SEND_DELETE][->][ELIMINANDO_EXISTENTE]');
+                    $.ajax({
+                        url: `http://${motor_api_server}:4002/fuga-empresas/${fuga_id}`,
+                        type: 'DELETE',
+                        success: function(result) {
+                            steps.push('[STEP][->][ELIMINA_EXISTENTE]');
+                        }
+                    });
+                }
+                //return false;
+
+
+
+                //validaciones
+                //todo: if() [->] validar si hay novedad poner al menos una empresa
+                $('.d-clonar').each((i, e) => {
+                    var $co = $(e)
+
+                    if ( $('#EstadoArticulo').is(':checked') && ($($co.find('.rut_empresa')).val() == '' ||
+                        $($co.find('.nombre_empresa')).val() == '' ||
+                        $($co.find('.n_trabajadores')).val() == '' ||
+                        $($co.find('.comentarios')).val() == '')
+                    ) {
+                        $.niftyNoty({
+                            type: 'danger',
+                            message: 'Debes rellenar todos los campos',
+                            container: 'floating',
+                            timer: 5000
+                        });
+                    }
+                  
+                })
+
+                //inicializaciones
+                //$("#btn-guardar").prop("disabled", true);
+
+                //Primer objeto
+                var transferObjectMaster = {
+                    "hayNovedad": $('#EstadoArticulo').is(':checked') ? 1:0,
+                    "guardadoEl": new Date(),
+                    "rutEjecutivo": getCookie('Rut'),
+                    "codigoOficina": parseInt(getCookie('Oficina'))
+                };
+
+                steps.push('[SEND_POST][->][GENERANDO_NUEVO]');
+                $.SecPostJSON(`http://${motor_api_server}:4002/fuga-empresas`, transferObjectMaster, function (datos) {
+
+                    if (datos) {
+                        steps.push('[STEP][->][NUEVO_GENERADO]');
+                        if ($('#EstadoArticulo').is(':checked')) {
+
+                            const id_fuga = parseInt(datos.id);
+                            var nomina_empresas = [];
+
+                            $('.d-clonar').each((i, e) => {
+                                var $co = $(e)
+                                const ob = {
+                                    "rutEmpresa": $($co.find('.rut_empresa')).val(),
+                                    "nombreEmpresa": $($co.find('.nombre_empresa')).val(),
+                                    "cantidadTrabajadores": parseInt($($co.find('.n_trabajadores')).val()),
+                                    "observaciones": $($co.find('.comentarios')).val(),
+                                    "alertaFugaEmpresa": id_fuga
+                                };
+                                nomina_empresas.push(ob);
+                            })
+
+
+                            //Segundo objeto
+                            const nomina_transfer_object = {
+                                "bulk": nomina_empresas
+                            };
+
+                            steps.push('[SEND_POST][->][INGRESANDO_NOMINA]');
+                            $.SecPostJSON(`http://${motor_api_server}:4002/fuga-empresas-nomina/bulk`, nomina_transfer_object, function (datos) {
+                                steps.push('[STEP][->][NOMINA_INGRESADA]');
+                                $.niftyNoty({
+                                    type: 'success',
+                                    icon: 'pli-like-2 icon-2x',
+                                    message: 'Datos ingresados correctamente',
+                                    container: 'floating',
+                                    timer: 5000
+                                });
+
+
+                                //$("#btn-guardar").html(" Ya marcado para hoy <i class='pli-like-2 icon-1x'></i>")
+                                //$('.table-container').find('input').prop('disabled', true)
+                            })
+                        } else {
+                            $.niftyNoty({
+                                type: 'success',
+                                icon: 'pli-like-2 icon-2x',
+                                message: 'Datos ingresados correctamente',
+                                container: 'floating',
+                                timer: 5000
+                            });
+
+
+                            //$("#btn-guardar").html(" Ya marcado para hoy <i class='pli-like-2 icon-1x'></i>")
+                        }
+                    }
+                });
+                console.log({steps})
+                return false;
+            })
+
+
+
+
+            var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+            elems.forEach(function (html) {
+                var switchery = new Switchery(html);
+            });
+
+        });
+
+
+    </script>
+
+}

@@ -1,0 +1,257 @@
+﻿
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+<div id="page-content">
+    <div id="contIGN">
+        <div class="panel" style="border-radius: 7px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">FILTROS IGN</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-3 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">ESTADO</label>
+                            <select class="form-control" id="dllEstadoIgnPrin" v-on:change="eventoCambSubEstadoIng" v-model="modelosP.estadosIgn">
+                                <option value="">Seleccione...</option>
+                                <option v-for="estIgn in filtrosP.estadosIgn" :value="estIgn.id">{{estIgn.nombreEstado}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">SUB-ESTADO</label>
+                            <select class="form-control" v-model="modelosP.subEstadosIgn" id="slSubEstadoIngPrin">
+                                <option value="">Seleccione...</option>
+                                <option v-for="subEstIgn in filtrosP.subEstadosIgn" :value="subEstIgn.id">{{subEstIgn.nombreEstado}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">ESTADO NOMINA</label>
+                            <select class="form-control" v-model="modelosP.estadoNominaIgn" id="slEstadoIngNomina">
+                                <option value="">Seleccione...</option>
+                                <option v-for="estNominaIgn in filtrosP.estadoNominaIgn" :value="estNominaIgn.estadoNomina">{{estNominaIgn.estadoNomina}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                   
+                    <div class="col-sm-3 text-xs-center">
+                        <div id="oficina_ign" style="display:none;">
+                            <div class="form-group">
+                                <label class="control-label">Oficina</label>
+                                <select class="form-control" id="ddloatign"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1 text-xs-center">
+
+                        <div class="form-group">
+                            <label class="control-label"></label>
+                            <button class="btn btn-primary btn-rounded" v-on:click="cargalistaIgn" style="margin-top: 21px;">Filtrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel" style="border-radius: 7px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">DATOS IGN</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table data-toggle="table"
+                               data-sort-name="id"
+                               data-page-list="[]"
+                               data-page-size="50"
+                               data-search="true"
+                               data-pagination="true" id="tblIgn" style="font-size: 10px">
+                            <thead>
+                                <tr>
+                                    <th data-field="rutEmpresa" data-sortable="true" data-formatter="idFormatterMoldalIgn">RUT EMPRESA</th>
+                                    <th data-field="nombreEmpresa" data-sortable="true">NOM. EMPRESA</th>
+                                    <th data-field="nNominas" data-sortable="true">CANT. NOMINA </th>
+                                    <th data-field="folio" data-sortable="true">CANT. FOLIOS </th>
+                                    <th data-field="montoNomina" data-formatter="formatoMoneyFormatterign" data-sortable="true">MON. NOMINA</th>
+                                    <th data-field="montoNominaPendiente" data-formatter="formatoMoneyFormatterign" data-sortable="true">M. NOMINA PEND.</th>
+                                    <th data-field="ignActual" data-formatter="formatoPorcentaje" data-sortable="true">IGN ACTUAL</th>
+                                    <th data-field="ultimaGestion.estado.nombreEstado" data-sortable="true">ESTADO</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal_ign" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header" style="background: #337ab7;">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" style="color: #f1f1f1;">Gestion IGN</h4>
+            </div>
+            <div id="msjIgn"></div>
+            <div class="modal-body">
+                <div class="tab-base" id="MDL_Primario_acuerdo_pago" style="margin-bottom: 0px !important;">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-gestion-ign" aria-expanded="false">Gestión</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-historial-ign" aria-expanded="false">Historial</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content msjAcuerdo_pago" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-gestion-ign" class="tab-pane fade active in">
+                            <div class="panel-body">
+                                <form id="form-info-pensionado" action="#" method="post">
+                                    <div class="row">
+                                        <div class="col-sm-2" style="display:none;">
+                                            <div class="form-group">
+                                                <label class="control-label">ID</label>
+                                                <input class="form-control" :value="dataModal.id_lead" id="txtIdIng" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Nombre</label>
+                                                <input class="form-control" :value="dataModal.nombreEmpresa" type="text" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Rut Empresa</label>
+                                                <input class="form-control" :value="dataModal.rutEmpresa" id="txtRutEmpIng" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Cantidad Nominas</label>
+                                                <input class="form-control" :value="dataModal.nNominas" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label" id="labelrutempresa">Cantidad Folios</label>
+                                                <input class="form-control" :value="dataModal.folio" type="text" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" id="labelrutempresa">Monto Nomina</label>
+                                                <input class="form-control" :value=" '$ ' + dataModal.montoNomina" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" id="labelrutempresa">Mon. N. Pendiente</label>
+                                                <input class="form-control" :value="'$ ' + dataModal.montoNominaPendiente" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" id="labelempresa">IGN Actual</label>
+                                                <input class="form-control" :value="dataModal.ignActual + ' %'" name="pen_correo" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" id="labelrutempresa">IGN Mes Ant.</label>
+                                                <input class="form-control" :value="dataModal.ignAnterior + ' %'" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" id="labelempresa">Prom. IGN Ult. 3M</label>
+                                                <input class="form-control" type="text" :value="dataModal.promedioIgnM3 + ' %'" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label" id="labelrutempresa">Prom. IGN Ult. 6M</label>
+                                                <input class="form-control" :value="dataModal.promedioIgnM6 + ' %'" type="text" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-4 text-xs-center">
+                                    <div class="form-group">
+                                        <label class="control-label">Estado</label>
+                                        <select class="form-control" id="dllEstadoIgn" v-on:change="eventoCambiaSubEstadoIng" v-model="modelos.estadosIgn">
+                                            <option value="">Seleccione...</option>
+                                            <option v-for="estIgn in filtros.estadosIgn" :value="estIgn.id">{{estIgn.nombreEstado}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 text-xs-center">
+                                    <div class="form-group">
+                                        <label class="control-label">Sub-Estado</label>
+                                        <select class="form-control" v-model="modelos.subEstadosIgn" id="slSubEstadoIng">
+                                            <option value="">Seleccione...</option>
+                                            <option v-for="subEstIgn in filtros.subEstadosIgn" :value="subEstIgn.id">{{subEstIgn.nombreEstado}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 text-xs-center" id="divFechaComp" style="display:none;">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Compromiso</label>
+                                        <div id="dp-component-ign">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="ges_prox_compromiso_ign" name="ges_prox_compromiso_ign">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label class="control-label">Observación</label>
+                                <textarea placeholder="Observación" rows="3" id="txtObservacionIgn" name="txtObservacionIgn" class="form-control"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                                <button class="btn btn-primary" v-on:click="handleSubmitGestionIgn">Guardar</button>
+                            </div>
+                        </div>
+                        <div id="tab-historial-ign" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div v-for="gestion in dataModal.gestiones">
+                                    <a href="#">
+                                        <h4 class="list-group-item-heading">@*<strong>Gestor: </strong> {{gestion.nombreEjecutivo != undefined && gestion.nombreEjecutivo.OrdenaNombre()}}*@</h4>
+                                        <p class="list-group-item-text">
+                                            <strong>Fecha Gestión: </strong>{{gestion.fechaGestion != undefined && gestion.fechaGestion}}, <strong>Fecha Compromiso: </strong>
+                                            {{gestion.fechaCompromiso != undefined && gestion.fechaCompromiso !=null ? gestion.fechaCompromiso: '------'}}
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Estado: </strong>{{gestion.Nestado != undefined && gestion.Nestado != null ? gestion.Nestado.nombreEstado: '------'}}
+                                            @* <strong>Sub-Estado: </strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado.nombre: '------'}}*@
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Comentarios: </strong> {{gestion.comentarios}}
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+﻿[
+  {
+    "id": 23939874,
+    "nombre": "MAGDALENA BRIONES FERNÁNDEZ",
+    "prioridad": "0",
+    "comuna": "Santiago",
+    "estado": "Sucrsal",
+    "fono": "99557700",
+    "mail": "magdalena.briones@gmail.com"
+  },
+  {
+    "id": 23939875,
+    "nombre": "MANUEL ADULIO SEGURA HARO",
+    "prioridad": "0",
+    "comuna": "San Miguel",
+    "estado": "Interes",
+    "fono": "25695022",
+    "mail": "manuel.adulio@gmail.com"
+  },
+  {
+    "id": 23939876,
+    "nombre": "OTTO ALBERT KOCH GONZÁLEZ",
+    "prioridad": "0",
+    "comuna": "La Florida",
+    "estado": "Domicilio",
+    "fono": "25236542",
+    "mail": "albert.koch@hotmail.com"
+  }
+]

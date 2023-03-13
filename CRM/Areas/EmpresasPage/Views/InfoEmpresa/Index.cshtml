@@ -1,0 +1,367 @@
+﻿
+
+
+
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+
+
+<div id="page-content">
+
+    <div id="infoEmpresa">
+        <div class="panel" style="border-radius: 7px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">BUSQUEDA EMPRESA</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-3 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">RUT EMPRESA</label>
+                            <input id="txtRutInfoEmp" type="text" autocomplete="off" class="form-control" maxlength="8">
+                            
+                            <span class="label label-info" style="border-radius: 5px;">Ingrese Rut sin guion y digito verificador.</span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label"></label>
+                            <button class="btn btn-primary btn-rounded" v-on:click="obtenerInfoEmpresa" style="margin-top: 21px;">Buscar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="panel" style="border-radius: 15px;">
+                <div class="panel-heading">
+                    <h3 class="panel-title" style="border-radius: 11px;">
+                        INFORMACIÓN EMPRESA
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table  table-condensed" style="font-size: 11px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 200px; background: #ffa726; border-radius: 5px;">RUT</th>
+                                <th style="background: #ffa726; border-radius: 5px; text-align: center;">
+                                    {{dataModal.EMPRESA_RUT}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>EMPRESA</td>
+                                <td style="text-align: center;">{{dataModal.EMPRESA}}</td>
+                            </tr>
+                            <tr>
+                                <td>HOLDING</td>
+                                <td style="text-align: center;">{{dataModal.HOLDING}}</td>
+                            </tr>
+                            @*<tr>
+                                    <td>SUCURSAL</td>
+                                    <td style="text-align: center;"></td>
+                                </tr>*@
+                            <tr>
+                                <td>TIPO EMPRESA</td>
+                                <td style="text-align: center;">{{dataModal.SEGMENTO_EMPRESA}}</td>
+                            </tr>
+                            <tr>
+                                <td>SECTOR ECONÓMICO</td>
+                                <td style="text-align: center;">{{dataModal.SECTOR_ECONOMICO}}</td>
+                            </tr>
+                            <tr>
+                                <td>TAMAÑO</td>
+                                <td style="text-align: center;">{{dataModal.TAMAÑO_EMPRESA}}</td>
+                            </tr>
+                            <tr>
+                                <td>TRABAJADORES</td>
+                                <td style="text-align: center;">{{dataModal.TRABAJADORES}}</td>
+                            </tr>
+                            <tr>
+                                <td>% PENETRACIÓN</td>
+                                <td style="text-align: center;">{{dataModal.PENETRACION}} %</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr style="background: #949494;" />
+                    <table class="table  table-condensed" style="font-size: 11px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 200px;">IGN</th>
+                                <th style="background-color: #ef5350; border-radius: 5px; color: white; text-align: center;">{{dataModal.IGN_ACTUAL}} %</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>TOTAL NÓMINA</td>
+                                <td style="text-align: center;">{{dataModal.TOTAL_NOMINA}}</td>
+                            </tr>
+                            <tr>
+                                <td>PEND. PAGO</td>
+                                <td style="text-align: center;">{{dataModal.PENDIENTE_PAGO}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr style="background: #949494;" />
+                    <table class="table  table-condensed" style="font-size: 11px;">
+                        <tbody>
+                            <tr>
+                                <td style="width: 200px;">TOTAL COLACIONES</td>
+                                <td style="text-align: center;">{{dataModal.CREDITOS}}</td>
+                            </tr>
+                            <tr>
+                                <td>COLACIONES VIG. $</td>
+                                <td style="text-align: center;">{{dataModal.DEUDA}}</td>
+                            </tr>
+                            <tr>
+                                <td>MORA + 30 $</td>
+                                <td style="text-align: center;">{{dataModal.MORA_30}}</td>
+                            </tr>
+                            <tr>
+                                <td>INDICE MORA + 30</td>
+                                <td style="text-align: center;">{{dataModal.INDICE_MORA_30}} %</td>
+                            </tr>
+                            <tr>
+                                <td>MORA + 365 $</td>
+                                <td style="text-align: center;">{{dataModal.MORA_365}}</td>
+                            </tr>
+                            <tr>
+                                <td>TASA DE RIESGO</td>
+                                <td style="background-color: #ef5350; border-radius: 5px; color: white; text-align: center;">{{dataModal.TR}} %</td>
+                            </tr>
+                            <tr>
+                                <td>CLASIFICACIÓN</td>
+                                <td style="text-align: center;">{{dataModal.CLASIFICACION_RIESGO}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<div id="modal_pex" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header" style="background: #337ab7;">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" style="color: #f1f1f1;">Gestion PEX</h4>
+            </div>
+            <div id="msjIgn"></div>
+            <div class="modal-body">
+                <div class="tab-base" id="MDL_Primario_acuerdo_pago" style="margin-bottom: 0px !important;">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-gestion-pex" aria-expanded="false">Gestión</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-historial-pex" aria-expanded="false">Historial</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" id="tabContactabilidad" href="#tab-contactabilidad" aria-expanded="false">Contactabilidad</a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content msjAcuerdo_pago" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-gestion-pex" class="tab-pane fade active in">
+                            <div class="panel-body">
+                                <form id="form-info-pensionado" action="#" method="post">
+
+
+                                    <input class="form-control" :value="dataModal.id" id="txtIdLeadPex" type="text" disabled style="display:none">
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label class="control-label" id="txtNomPex">Nombre</label>
+                                                <input class="form-control" :value="dataModal.nombre" type="text" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Rut</label>
+                                                <input class="form-control" :value="dataModal.rut" id="txtRutPex" type="text" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Segmento</label>
+                                                <input class="form-control" :value="dataModal.segmento" type="text" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Monto</label>
+                                                <input class="form-control" :value=" '$ ' + dataModal.monto" type="text" disabled>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Afiliado</label>
+                                                <input class="form-control" :value="dataModal.afiliado" type="text" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Empresa</label>
+                                                <input class="form-control" :value="dataModal.nombreEmpresa" type="text" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-4 text-xs-center">
+                                    <div class="form-group">
+                                        <label class="control-label">Estado</label>
+                                        <select class="form-control" v-model="modelosModal.estadosModal" id="slEstadoModal" v-on:change="eventoCambSubEstadoPexModal">
+                                            <option value="">Seleccione...</option>
+                                            <option v-for="EstPex in filtrosModal.estadosModal" :value="EstPex.id">{{EstPex.nombre}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 text-xs-center">
+                                    <div class="form-group">
+                                        <label class="control-label">Sub-Estado</label>
+                                        <select class="form-control" v-model="modelosModal.subEstadosModal" id="slSubEstadoModal">
+                                            <option value="">Seleccione...</option>
+                                            <option v-for="subEstadoPex in filtrosModal.subEstadosModal" :value="subEstadoPex.id">{{subEstadoPex.nombre}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 text-xs-center" id="divFechaComp" style="display:none;">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Compromiso</label>
+                                        <div id="dp-component-pex">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="ges_prox_compromiso_pex" name="ges_prox_compromiso_pex">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label class="control-label">Observación</label>
+                                <textarea placeholder="Observación" rows="3" id="txtObservacionPex" name="txtObservacionPex" class="form-control"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                                <button class="btn btn-primary" v-on:click="handleEventoClickGuardaPex">Guardar</button>
+                            </div>
+                        </div>
+                        <div id="tab-historial-pex" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div v-for="gestion in dataModal.gestiones">
+                                    <a href="#">
+                                        <h4 class="list-group-item-heading">@*<strong>Gestor: </strong> {{gestion.nombreEjecutivo != undefined && gestion.nombreEjecutivo.OrdenaNombre()}}*@</h4>
+                                        <p class="list-group-item-text">
+                                            <strong>Fecha Gestión: </strong>{{gestion.fechaGestion != undefined && gestion.fechaGestion.toFecha()}}, <strong>Fecha Compromiso: </strong>
+                                            {{gestion.fechaCompromiso != undefined && gestion.fechaCompromiso !=null ? gestion.fechaCompromiso.toFecha(): '------'}}
+                                        </p>
+                                        <p class="list-group-item-text">
+
+                                            <strong>Estado: </strong>{{gestion.estadoCliente != undefined && gestion.estadoCliente != null ? gestion.estadoCliente.nombre: '------'}}
+                                            @* <strong>Sub-Estado: </strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado.nombre: '------'}}*@
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Comentarios: </strong> {{gestion.comentarios}}
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tab-contactabilidad" class="tab-pane fade">
+                            <div class="row">
+                                <button type="button" id="btn-add-contac-seguro_cesantia" class="btn btn-primary btn-xs">+</button>
+                            </div>
+                            <div class="mar-btm" style="display: none;" id="formulario-contac_seguro_cesantia">
+                                <form id="form-registro-contacto_seguro-cesantia" action="#" method="post">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Tipo de Contacto</label>
+                                                    <select class="selectpicker" id="cbtippContac_seg" name="cbtippContac_seg">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Celular</option>
+                                                        <option value="2">Teléfono</option>
+                                                        <option value="3">Mail</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Clasificación de Contacto</label>
+                                                    <select class="selectpicker" id="cbClasificacionConctac_seg" name="cbClasificacionConctac_seg">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Personal</option>
+                                                        <option value="2">Comercial</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Datos de Contacto</label>
+                                                <input class="form-control" id="afi_NewContacto_seg" type="text" value="" maxlength="150" name="afi_NewContacto_seg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" id="btGuardaContacto_seguro-cesantia" type="submit">Guardar Contacto</button>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <table class="table table-hover table-vcenter" style="font-size: 11px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Gestión</th>
+                                            <th>Datos Contacto Nor</th>
+                                            <th>Tipo contacto</th>
+                                            <th>Indice</th>
+                                            <th>Ultimo Contacto Valido</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bdy_datos_contactos"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section script{
+
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/js.App/src/info-empresa.js?g=@Guid.NewGuid().ToString()"></script>
+
+}

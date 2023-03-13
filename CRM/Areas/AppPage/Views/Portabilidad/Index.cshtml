@@ -1,0 +1,339 @@
+﻿
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+<div id="page-content">
+    <div id="divPortabilidad">
+        <div class="panel" style="border-radius: 7px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">FILTROS</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-2 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">RUT</label>
+                            <input id="txtRutPortabilidad" type="text" placeholder="Ej. 12345678-0" class="form-control" maxlength="10" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">DICOM</label>
+                            <select class="form-control" id="dllDicomPortabilidad" name="dllDicomPortabilidad">
+                                <option value="">Todos...</option>
+                                <option value="SIN DICOM">SIN DICOM</option>
+                                <option value="POCO">POCO</option>
+                                <option value="IMPORTANTE">IMPORTANTE</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">PRE-APROBADO</label>
+                            <select class="form-control" id="dllPreAprobadoPortabilidad" name="dllPreAprobadoPortabilidad">
+                                <option value="">Todos...</option>
+                                <option value="SI">SI</option>
+                                <option value="NO">NO</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">COMPRA CARTERA</label>
+                            <select class="form-control" id="dllCompraCarteraPortabilidad" name="dllCompraCarteraPortabilidad">
+                                <option value="">Todos...</option>
+                                <option value="SI">SI</option>
+                                <option value="NO">NO</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">ESTADO</label>
+                            <select class="form-control" id="dlEstadoPortabilidad" name="dlEstadoPortabilidad" v-model="modelos.estados">
+                                <option value="">Todos...</option>
+                                <option v-for="estadoPort in filtros.estados" :value="estadoPort.nombre">{{estadoPort.nombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label"></label>
+                            <button class="btn btn-primary btn-rounded" v-on:click="cargaLeadFiltroPortabilidad" style="margin-top: 21px;">Filtrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel" style="border-radius: 7px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"></h3>
+                    </div>
+                    <div class="panel-body">
+                        <table data-toggle="table"
+                               data-sort-name="id"
+                               data-page-list="[]"
+                               data-page-size="50"
+                               data-search="false"
+                               data-pagination="true" id="tblPortabilidad" style="font-size: 12px">
+                            <thead>
+                                <tr>
+                                    <th data-field="rut" data-sortable="true" data-formatter="formaterRut">RUT</th>
+                                    <th data-field="nombre" data-sortable="true">NOMBRE</th>
+                                    <th data-field="saldo_pendiente" data-sortable="true" data-formatter="formatoMoneyCopago">SALDO PENDIENTE</th>
+                                    <th data-field="oferta_preaprobado" data-sortable="true" data-formatter="formatoMoneyCopago">OFERTA PRE-APROBADA</th>
+                                    <th data-field="oferta_compra_cartera" data-sortable="true" data-formatter="formatoMoneyCopago">OFERTA COMPRA CARTERA</th>
+                                    <th data-field="dicom" data-sortable="true">DICOM</th>
+                                    <th data-field="ultimaGestion.estado" data-sortable="true">ESTADO</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modal_portabilidad" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header" style="background: #337ab7;">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" style="color: #f1f1f1;">GESTION</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="tab-base" id="MDL_Primario_portabilidad" style="margin-bottom: 0px !important;">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-gestion-port" aria-expanded="false">GESTION</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-historial-port" aria-expanded="false">HISTORIAL</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-contactabiliadad_port" aria-expanded="false">CONTACTABILIDAD</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-gestion-port" class="tab-pane fade active in">
+                            <div class="panel" style="border-radius: 7px;">
+                                <div class="panel-body">
+                                    <div id="msjPort"></div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">RUT</label>
+                                                <input class="form-control" id="txtRutModalPort" :value="dataModal.rut" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <div class="form-group">
+                                                <label class="control-label">NOMBRE</label>
+                                                <input class="form-control" id="txtNombreModalPort" :value="dataModal.nombre" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label">N° CREDITOS</label>
+                                                <input class="form-control" type="text" id="txtOfertaModalPort" :value="dataModal.n_creditos" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">SALDO PENDIENTE</label>
+                                                <input class="form-control money" id="txtSaldoPendiente" :value="dataModal.saldo_pendiente" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">MES MORA</label>
+                                                <input class="form-control" id="txtSaldoMora" :value="dataModal.meses_mora" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">PORTADOR</label>
+                                                <input class="form-control" type="text" id="txtPortadorModal" :value="dataModal.portador" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">OFERTA PRE-APROBADA</label>
+                                                <input class="form-control money" id="txtOfertaPreAprobadaM" :value="dataModal.oferta_preaprobado" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">OFERTA COMPRA CARTERA</label>
+                                                <input class="form-control money" id="txtxOfertaCompraCarteraM" :value="dataModal.oferta_compra_cartera" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">DICOM</label>
+                                                <input class="form-control" type="text" id="txtDicomModal" :value="dataModal.dicom" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel" style="border-radius: 7px;">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">ESTADO</label>
+                                                <select class="form-control" id="dllEstadoModal" name="dllEstadoModal" v-on:change="eventoCambiaEstadoPortModal" v-model="modelos.estadosModal">
+                                                    <option value="">Seleccione...</option>
+                                                    <option v-for="estadoPortM in filtros.estadosModal" :value="estadoPortM.id">{{estadoPortM.nombre}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">SUB-ESTADO</label>
+                                                <select class="form-control" id="dllSubEstadoModal" name="dllSubEstadoModal" v-model="modelos.subEstadosModal">
+                                                    <option value="">Seleccione...</option>
+                                                    <option v-for="subEstadoPortM in filtros.subEstadosModal" :value="subEstadoPortM.id">{{subEstadoPortM.nombre}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">OBSERVACION</label>
+                                        <textarea rows="3" id="txtobservacionPort" name="txtobservacionPort" class="form-control" style="border-radius: 6px;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                                <button class="btn btn-primary" v-on:click="handleSubmitGuadarGestion">Guardar</button>
+                            </div>
+                        </div>
+                        <div id="tab-historial-port" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div v-for="gestion in dataModalHist">
+                                    <a href="#">
+                                        <h4 class="list-group-item-heading"><strong>Gestor: </strong>{{gestion.rut_ejecutivo != undefined && gestion.rut_ejecutivo}}</h4>
+                                        <p class="list-group-item-text">
+                                            <strong>Fecha Gestión: </strong>{{gestion.fecha_gestion != undefined && gestion.fecha_gestion.toFechaHoraPrueba()}}
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Estado: </strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado: '------'}}
+                                            <strong>Sub-Estado: </strong>{{gestion.subEstado != undefined && gestion.subEstado != null ? gestion.subEstado: '------'}}
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Comentarios: </strong> {{gestion.observacion}}
+                                        </p>
+                                    </a>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-contactabiliadad_port" class="tab-pane fade">
+                            <div class="row">
+                                <button type="button" id="btn-add-contac_portabilidad" class="btn btn-primary btn-xs">+</button>
+                            </div>
+                            <div class="mar-btm" style="display: none;" id="formulario-contac_portabilidad">
+                                <form id="form-registro-contacto_portabilidad" action="#" method="post">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Tipo de Contacto</label>
+                                                    <select class="selectpicker" id="cbtippContac_portabilidad" name="cbtippContac_portabilidad">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Celular</option>
+                                                        <option value="2">Teléfono</option>
+                                                        <option value="3">Mail</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Clasificación de Contacto</label>
+                                                    <select class="selectpicker" id="cbClasificacionConctac_portabilidad" name="cbClasificacionConctac_portabilidad">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Personal</option>
+                                                        <option value="2">Comercial</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Datos de Contacto</label>
+                                                <input class="form-control" id="afi_NewContacto_portabilidad" type="text" value="" maxlength="150" name="afi_NewContacto_portabilidad">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" id="btGuardaContacto_portabilidad" type="submit">Guardar Contacto</button>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <table class="table table-hover table-vcenter" style="font-size: 11px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Gestión</th>
+                                            <th>Datos Contacto</th>
+                                            <th>Tipo contacto</th>
+                                            <th>Indice</th>
+                                            <th>Ultimo Contacto Valido</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bdy_datos_contactos_portabilidad"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section script{
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
+    <script src="~/Assets/js.App/src/portabilidad.js?g=@Guid.NewGuid().ToString()"></script>
+
+}
+
+
+

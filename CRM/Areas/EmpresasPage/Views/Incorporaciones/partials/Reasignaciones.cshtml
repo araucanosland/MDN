@@ -1,0 +1,136 @@
+@{
+    Layout = null;
+}
+<div id="page-reasignaciones">
+    <div id="demo-step-wz">
+        <div class="wz-heading wz-w-label bg-primary">
+
+            <!--Progress bar-->
+            <div class="progress progress-xs">
+                <div style="width: 0%; margin: 0px 12.5%;" class="progress-bar progress-bar-dark"></div>
+            </div>
+
+            <!--Nav-->
+            <ul class="wz-steps wz-icon-bw wz-nav-off text-lg">
+                <li class="col-xs-4 active">
+                    <a data-toggle="tab" href="#demo-step-tab1" aria-expanded="true">
+                        <span class="icon-wrap icon-wrap-xs icon-circle bg-gray mar-ver">
+                            <span class="wz-icon icon-txt text-bold">1</span>
+                            <i class="wz-icon-done demo-psi-like"></i>
+                        </span>
+                        <small class="wz-desc box-block text-semibold">Ejecutivo Origen</small>
+                    </a>
+                </li>
+                <li class="col-xs-4">
+                    <a data-toggle="tab" href="#demo-step-tab2" aria-expanded="false">
+                        <span class="icon-wrap icon-wrap-xs icon-circle bg-gray mar-ver">
+                            <span class="wz-icon icon-txt text-bold">2</span>
+                            <i class="wz-icon-done demo-psi-like"></i>
+                        </span>
+                        <small class="wz-desc box-block text-semibold">Ejecutivo Destino</small>
+                    </a>
+                </li>
+                <li class="col-xs-4">
+                    <a data-toggle="tab" href="#demo-step-tab4" aria-expanded="false">
+                        <span class="icon-wrap icon-wrap-xs icon-circle bg-gray mar-ver">
+                            <span class="wz-icon icon-txt text-bold">3</span>
+                            <i class="wz-icon-done demo-psi-like"></i>
+                        </span>
+                        <small class="wz-desc box-block text-semibold">Confirmación</small>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!--Form-->
+        <form class="form-horizontal">
+            <div class="panel-body">
+                <div class="tab-content">
+
+                    <!--First tab-->
+                    <div id="demo-step-tab1" class="tab-pane active in">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Ejecutivo</label>
+                                        <select class="form-control" v-model="modeloBusqueda.rutEjecutivo">
+                                            <option v-for="ejecutivo in datos.ejecutivos" :value="ejecutivo.Rut" :selected="sesion.ejecutivoLogueado === ejecutivo.Rut">{{ ejecutivo.Nombre }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">B&uacute;squeda</label>
+                                        <input type="text" class="form-control" v-model="modeloBusqueda.busqueda">
+                                    </div>
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-3">
+                                    <button type="button" v-on:click="handleSearchLeads" class="btn btn-primary">Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <table id="table-conche-sumare"
+                                   class="table table-striped"
+                                   data-search="false"
+                                   data-show-refresh="false"
+                                   data-show-toggle="false"
+                                   data-show-columns="false"
+                                   data-page-list="[]"
+                                   data-page-size="40"
+                                   data-pagination="true"
+                                   data-side-pagination="server"
+                                   data-show-pagination-switch="false"
+                                   data-locale="es-CL"
+                                   data-response-handler="responseHandler">
+                                <thead>
+                                    <tr>
+                                        <th data-checkbox="true" data-field="sele">Sel</th>
+                                        <th data-sortable="true" data-field="empresa.rut">Rut</th>
+                                        <th data-sortable="true" data-field="empresa.nombre">Razon Social</th>
+                                        <th data-sortable="true" data-field="empresa.cantidadEmpleados">Nro. de Empleados</th>
+                                        <th data-sortable="true" data-field="clase">Clasificacion</th>
+                                        <th data-sortable="true" data-field="cajaOrigen">Caja Origen</th>
+                                        <th data-sortable="false" data-field="estado" data-formatter="prospectosVisados_formatBanderaGestion">Gestionado</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        
+                    </div>
+
+                    <!--Second tab-->
+                    <div id="demo-step-tab2" class="tab-pane fade">
+                        <div class="form-group">
+                            <label class="control-label">Ejecutivo Destino</label>
+                            <select class="form-control" v-model="modeloBusqueda.rutEjecutivoDestino">
+                                <option value="">Selecciona</option>
+                                <option v-for="ejecutivo in datos.ejecutivos" :value="ejecutivo.Rut" >{{ ejecutivo.Nombre }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!--Fourth tab-->
+                    <div id="demo-step-tab4" class="tab-pane mar-btm text-center">
+                        <h4>Confirmación</h4>
+                        <p>Realmente deseas hacer la reasignación. </p>
+                    </div>
+                </div>
+            </div>
+
+            <!--Footer button-->
+            <div class="panel-footer text-right">
+                <div class="box-inline">
+                    <button type="button" class="previous btn btn-primary disabled">Volver</button>
+                    <button type="button" class="next btn btn-primary" style="">Continuar</button>
+                    <button type="button" class="finish btn btn-info" style="display: none;" disabled="" v-on:click="handleReasignarCasos">Reasignar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+

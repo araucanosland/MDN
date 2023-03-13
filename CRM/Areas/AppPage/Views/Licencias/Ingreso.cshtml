@@ -1,0 +1,3095 @@
+﻿
+@{
+    ViewBag.Title = "Ingreso";
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!--Magic Checkbox [ OPTIONAL ]-->
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
+
+
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Recepción de Licencias No Visadas</h3>
+                </div>
+
+                <!--Block Styled Form -->
+                <!--===================================================-->
+                <form id="frm-data-lc">
+                    <div class="panel-body">
+
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Rut Afiliado</label>
+                                    <input type="text" class="form-control es-rut" name="AfiliadoRut" id="AfiliadoRut" tabindex="1" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Nombre Afiliado</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="AfiNombres">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="checkbox pad-top">
+                                    <label>
+                                        <input type="checkbox" name="SistemaNoData" id="SistemaNoData" tabindex="2"> Sin datos en sistema
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">Rut Empresa</label>
+                                    <input type="text" class="form-control es-rut" readonly="readonly" id="EmpresaRut">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Nombre Empresa</label>
+                                    <input type="text" class="form-control" readonly="readonly" id="EmpresaNombre">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label class="control-label">Formato Licencia</label>
+                                    <div class="radio">
+                                        <!-- Inline radio buttons -->
+                                        <input id="radio-formato-manual-lm" class="magic-radio" type="radio" name="radio-formato-licencia">
+                                        <label for="radio-formato-manual-lm">Manual</label>
+                                        <!-- <input id="radio-formato-electronico-lm" class="magic-radio" type="radio" name="radio-formato-licencia">
+                                        <label for="radio-formato-electronico-lm">Electrónica</label> -->
+                                        <input id="radio-formato-mixto-lm" class="magic-radio" type="radio" name="radio-formato-licencia" style="display:none">
+                                        <label for="radio-formato-mixto-lm" style="display:none">Mixta</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <div class="checkbox pad-top">
+                                        <label>
+                                            <input type="checkbox" name="DerivarLM" id="DerivarLM" tabindex="2"> Derivar Licencia
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">Numero Licencia</label>
+                                    <input type="text" class="form-control" name="FolioLic" id="FolioLic" tabindex="3" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-2" style="display:none">
+                                <div class="form-group">
+                                    <label class="control-label">Dias Licencia</label>
+                                    <input type="text" class="form-control validatore" id="DiasLM" name="DiasLM" tabindex="6" readonly="readonly">
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Derivar LM a:</label>
+                                    <select class="form-control" id="sslOfiDerivacion" name="OfiDerivacion " disabled="disabled"></select>
+                                </div>
+
+                            </div>
+                            <div id="div_Viaingreso_derivacion" style="display:none">
+                                <div class="col-md-2">
+                                    <!-- Checkboxes -->
+                                    <div class="radio" style="margin-top:24px">
+                                        <input id="chk_casilla_derivada" name="chk_casilla_derivada" class="magic-radio" type="checkbox">
+                                        <label id ="lbl_casilla_derivada"  for="chk_casilla_derivada">Casilla</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="radio" style="margin-top:24px">
+                                        <input id="chk_presencial_derivada" name="chk_presencial_derivada" class="magic-radio" type="checkbox">
+                                        <label id="lbl_presencial_derivada"for="chk_presencial_derivada">Presencial</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label" id="lblvalija">N° Nota Interna</label>
+                                        <input type="text" class="form-control" id="valija" name="valija">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="form-control alert-danger" id="lblmensajecompin" style="display:none;">Sucursal no cuenta con COMPIN directa para tramitación, LM será enviada a sucursal: <b><u><span id="lblCompin" style="display:none;"></span></u></b></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-------DATOS COMPIN-->
+                        <div id="divcompin" style="display:none">
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Envío Compin Centralizado</label>
+                                        <input type="text" class="form-control" name="compin" id="compin" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Subcomisión</label>
+                                        <input type="text" class="form-control" id="subcomision" name="subcomision" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha Subido a Comp</label>
+                                        <input type="text" class="form-control" id="subido_a_plataforma_compin" name="subido_a_plataforma_compin" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!---------------->
+
+
+
+                        <div class="row">
+                            <div class="col-sm-2" style="display:none">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha Desde</label>
+                                    <input type="text" id="FechaDesdeLM" name="FechaDesdeLM" class="form-control demo-msk-date validatore" placeholder="dd/mm/yyyy" tabindex="5" readonly="readonly">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2" style="display:none">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha Hasta</label>
+                                    <input type="text" id="FechaHastaLM" class="form-control demo-msk-date" placeholder="dd/mm/yyyy" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-sm-2" style="display:none">
+                                <div class="form-group">
+                                    <input type="text" class="form-control validatore" id="FormLM" name="FormLM" tabindex="7" readonly="readonly" value="Manual" style="display:none;">
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="form-control alert-danger" id="lblmensajecompin1" style="display:none;">NOTA INTERNA debe ser dirigida a:<b><u><span id="lblCompin1" style="display:none;"></span></u></b></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3" style="display:none">
+                                <div class="form-group">
+                                    <label class="control-label">Color</label>
+
+                                    <div class="radio">
+
+                                        <!-- Inline radio buttons -->
+                                        <input id="demo-inline-form-radio" class="magic-radio" type="radio" name="inline-form-radio" disabled="disabled">
+                                        <label for="demo-inline-form-radio">Roja</label>
+
+                                        <input id="demo-inline-form-radio-2" class="magic-radio" type="radio" name="inline-form-radio" disabled="disabled">
+                                        <label for="demo-inline-form-radio-2">Verde</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2" style="display:none">
+                                <div class="form-group">
+                                    <label class="control-label">Tipo Licencia</label>
+                                    <input type="text" class="form-control validatore" id="TipoLM" name="TipoLM" tabindex="6" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2" style="display:none">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha Afiliación</label>
+                                    <input type="text" id="wq1" class="form-control demo-msk-date" placeholder="dd/mm/yyyy" readonly="readonly">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2" style="display:none">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha Contrato</label>
+                                    <input type="text" id="wq2" class="form-control demo-msk-date" placeholder="dd/mm/yyyy" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row" id="checkTipoingreso">
+                            <h4 class="title">Vía de Ingreso Licencia</h4>
+
+                            <div class="form-group pad-ver">
+
+
+                                <div class="col-md-2" id="">
+                                    <!-- Checkboxes -->
+                                    <div class="radio">
+                                        <input id="chk_casilla" name="chk_casilla" class="magic-radio" type="checkbox">
+                                        <label for="chk_casilla">Casilla</label>
+                                    </div>
+                                    <div class="radio">
+                                        <input id="chk_presencial" name="chk_presencial" class="magic-radio" type="checkbox">
+                                        <label for="chk_presencial">Presencial</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-2" id="divopc-banner" style="display:none">
+                                    <h5 class="title">Es Banner</h5>
+                                    <!-- Checkboxes -->
+                                    <div class="radio">
+                                        <input id="chk_banner_si" name="chk_banner_si" class="magic-radio" type="checkbox">
+                                        <label for="chk_banner_si">Si</label>
+                                    </div>
+                                    <div class="radio">
+                                        <input id="chk_banner_no" name="chk_banner_no" class="magic-radio" type="checkbox">
+                                        <label for="chk_banner_no">No</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-2" id="divopc-casilla" style="display:none">
+                                    <h5 class="title">Quién envía Licencia</h5>
+                                    <!-- Checkboxes -->
+                                    <div class="radio">
+                                        <input id="chk_trabajador" name="chk_trabajador" class="magic-radio" type="checkbox">
+                                        <label for="chk_trabajador">Trabajador</label>
+                                    </div>
+                                    <div class="radio">
+                                        <input id="chk_empleador" name="chk_empleador" class="magic-radio" type="checkbox">
+                                        <label for="chk_empleador">Empleador</label>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-6" id="tabDatos" style="display:none">
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Email</label>
+                                                <input type="text" class="form-control" name="email" id="email" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Teléfono Contacto</label>
+                                                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="ej: 912345678" disabled>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group" id="divestadorecpecion">
+                                    <label class="h4 control-label">
+                                        Ingrese Estado de Recepción de Licencia
+                                    </label>
+                                    <div class="radio" style="">
+                                        <input type="radio" id="falta_doc_no" name="listaprincipal" class="magic-radio falta-doc" value="1" />
+                                        <label for="falta_doc_no">
+                                            Conforme, con toda la documentación requerida
+                                        </label>
+                                    </div>
+                                    <div class="radio" style="">
+                                        <input type="radio" id="pendiente" name="listaprincipal" class="magic-radio pendiente" value="1" />
+                                        <label for="pendiente">
+                                            Conforme, con documentación pendiente
+                                        </label>
+                                    </div>
+
+
+                                    <div class="radio" style="" id="divdevueltacheck">
+                                        <input type="radio" id="devuelta" name="listaprincipal" class="magic-radio devuelta" value="1" />
+                                        <label for="devuelta">
+                                            Devuelta por falta de documentación
+                                        </label>
+                                    </div>
+                                    <div class="radio" style="" id="divnotramitadacheck">
+                                        <input type="radio" id="notramitada" name="listaprincipal" class="magic-radio notramitada" value="1" />
+                                        <label for="notramitada">
+                                            LM No Tramitada por La Araucana
+                                        </label>
+
+                                    </div>
+                                    <div class="radio" style="display:none" id="divreemplazada">
+                                        <div class="radio">
+                                            <input id="chk_devuelta_reemplazada" name="chk_devuelta_reemplazada" class="magic-radio" type="checkbox">
+                                            <label for="chk_devuelta_reemplazada">LM Reemplazada Por Una Nueva </label>
+                                        </div>
+                                        <div class="col-sm-2" style="display:none" id="Divnuevofolio">
+                                            <div class="form-group">
+                                                <label class="control-label">Nuevo Folio</label>
+                                                <input type="text" class="form-control" id="nuevo_folio" name="nuevo_folio" placeholder="">
+                                                <input type="hidden"  id="nuevo_folio_valor" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="row docs-faltantes-op1" id="checkList1" style="display:none;">
+                            <h4 class="title">Documentos Faltantes</h4>
+
+                            <div class="form-group pad-ver">
+                                <div class="col-md-7" id="divcoforme">
+
+                                    <div class="col-md-3 pull-left">
+                                        <div class="form-group">
+                                            <input id="m1" name="lista" class="magic-checkbox" type="checkbox" value="1">
+                                            <label for="m1" id="lm1">Liq. Mes 1</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="fechaLm1" name="" disabled></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 pull-left">
+                                        <div class="form-group">
+                                            <input id="m2" name="lista" class="magic-checkbox" type="checkbox" value="1">
+                                            <label for="m2" id="lm1">Liq. Mes 2</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="fechaLm2" name="" disabled></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 pull-left">
+                                        <div class="form-group">
+                                            <input id="m3" name="lista" class="magic-checkbox" type="checkbox" value="1">
+                                            <label for="m3" id="lm1">Liq. Mes 3</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="fechaLm3" name="" disabled></select>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div id="divMaternales">
+                                        <p>Maternales</p>
+                                    </div>
+
+
+                                    <div class="col-md-3 pull-left">
+                                        <div class="form-group">
+                                            <input id="m4" name="lista" class="magic-checkbox" type="checkbox" value="1">
+                                            <label for="m4" id="lm1">Liq. Mes 4</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="fechaLm4" name="" disabled></select>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-md-3 pull-left">
+                                        <div class="form-group">
+                                            <input id="m5" name="lista" class="magic-checkbox" type="checkbox" value="1">
+                                            <label for="m5" id="lm1">Liq. Mes 5</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="fechaLm5" name="" disabled></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 pull-left">
+                                        <div class="form-group">
+                                            <input id="m6" name="lista" class="magic-checkbox" type="checkbox" value="1">
+                                            <label for="m6" id="lm1">Liq. Mes 6</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="fechaLm6" name="" disabled></select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Checkboxes -->
+                                    <div id="divRN" class="checkbox" style="display:none">
+                                        <input name="lista" id="chk_RN" class="magic-checkbox" type="checkbox">
+                                        <label for="chk_RN">
+                                            Certificado de Nacimiento Recién Nacido
+
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" id="divdevuelta1">
+                                    <!-- Checkboxes -->
+                                    <div class="checkbox">
+                                        <input id="certificado_renta" name="lista" class="magic-checkbox" type="checkbox">
+                                        <label for="certificado_renta">Certificado de Renta</label>
+                                    </div>
+
+                                    <!-- Checkboxes -->
+                                    <div class="checkbox">
+                                        <input id="accr1" name="lista" class="magic-checkbox" type="checkbox">
+                                        <label for="accr1">Acredita 90 días Cotiz./Finiquito</label>
+                                    </div>
+
+                                    <!-- Checkboxes -->
+                                    <div class="checkbox">
+                                        <input id="accr2" name="lista" class="magic-checkbox" type="checkbox">
+                                        <label for="accr2">Certificado Afiliación AFP</label>
+                                    </div>
+
+                                    <!-- Checkboxes -->
+                                    <div class="checkbox">
+                                        <input id="accr3" name="lista" class="magic-checkbox" type="checkbox">
+                                        <label for="accr3">Cert.Pago Pensiones/Exención Cotizaciones</label>
+                                    </div>
+
+
+                                    <!-- Checkboxes -->
+                                    <div id="divotros" name="lista" class="checkbox">
+                                        <input id="otros" class="magic-checkbox" type="checkbox">
+                                        <label for="otros">Otros</label>
+                                    </div>
+                                    <!-- Checkboxes -->
+                                    <div id="divfataFirmaemleador" style="display:none" class="checkbox">
+                                        <input id="chk_fataFirmaemleador" class="magic-checkbox" type="checkbox">
+                                        <label for="chk_fataFirmaemleador">Falta Firma y Timbre Empleador</label>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-4" id="divdevuelta">
+
+                                    <!-- Checkboxes -->
+                                    <div id="divlmnolegible" class="checkbox">
+                                        <input name="lista" id="chk_ilm" class="magic-checkbox" type="checkbox">
+                                        <label for="chk_ilm">Imagen Licencia Médica no legible </label>
+                                    </div>
+
+                                    <!-- Checkboxes -->
+                                    <div id="divempl" class="checkbox">
+                                        <input name="lista" id="chk_empl" class="magic-checkbox" type="checkbox">
+                                        <label for="chk_empl">
+                                            Sección Diagnóstico no aperturado
+                                        </label>
+                                    </div>
+
+                                    <!-- Checkboxes -->
+                                    <div id="divsinfirma" class="checkbox" style="display:none">
+                                        <input id="chk_sinfirma" class="magic-checkbox" type="checkbox">
+                                        <label for="chk_sinfirma">
+                                            Licencia sin firma del Trabajador(a)
+
+                                        </label>
+                                    </div>
+
+
+                                    <!-- Checkboxes -->
+                                    <div div="divtrabajnuevo" class="checkbox">
+                                        <input name="lista" id="chk_trabajnuevo" class="magic-checkbox" type="checkbox">
+                                        <label for="chk_trabajnuevo">
+                                            Trabajador Nuevo, falta Contrato de Trabajo
+
+                                        </label>
+                                    </div>
+                                    <!-- Checkboxes -->
+                                    <div div="divdatoincompl" class="checkbox">
+                                        <input name="lista" id="chk_datoincompl" class="magic-checkbox" type="checkbox">
+                                        <label for="chk_datoincompl">
+                                            Datos incompletos de Empresa (Sección C)
+
+                                        </label>
+                                    </div>
+                                    <!-- Checkboxes -->
+                                    <div div="divsinCI" class="checkbox">
+                                        <input name="lista" id="chk_sinCI" class="magic-checkbox" type="checkbox">
+                                        <label for="chk_sinCI">
+                                            Trabajador Nuevo, falta Cédula de Identidad
+                                        </label>
+                                    </div>
+
+                                    <!-- Checkboxes -->
+                                    <div id="divcartaAutorizacion" class="checkbox" style="display:none">
+                                        <input name="lista" id="chk_cartaAutorizacion" class="magic-checkbox" type="checkbox">
+                                        <label for="chk_cartaAutorizacion">
+                                            Carta de autorización del trabajador para que el Empleador acceda a datos de la Licencia
+                                        </label>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-12" id="divnotramitada">
+
+                                    <!-- Checkboxes -->
+                                    <div div="divmutual" class="checkbox">
+                                        <input name="lista" id="chk_mutual" class="magic-checkbox" type="checkbox" value="1">
+                                        <label for="chk_mutual">Pertenece a Mutual: Las LM tipo 5 y 6 (accidente de trayecto al trabajo o accidente en el trabajo), NO son tramitable por las CCAF  </label>
+                                    </div>
+
+                                    <!-- Checkboxes -->
+                                    <div div="divisapre" class="checkbox">
+                                        <input name="lista" id="chk_isapre" class="magic-checkbox" type="checkbox" value="1">
+                                        <label for="chk_isapre">
+                                            Pertenece a ISAPRE: Las LM cuyo afiliado este en esta entidad Previsional de Salud, NO son tramitable por las CCAF
+
+                                        </label>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="row mar-top docs-obervacion" style="display:none;">
+                                <div class="col-md-12">
+                                    <label for="comentarios">Comentarios</label>
+                                    <textarea id="comentarios" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-right">
+                        <button class="btn btn-primary" type="button" id="bt-bolver">Volver</button>
+                        <button class="btn btn-success" type="submit" id="bt-guarda-otra">Guardar</button>
+                        <!--<button class="btn btn-success" type="submit" id="bt-guarda-bolver" tabindex="4">Guardar y Volver</button>-->
+                    </div>
+
+                </form>
+                <!--===================================================-->
+                <!--End Block Styled Form -->
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+<!--===================================================-->
+<!--End page content-->
+
+
+@section script{
+
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <!--Masked Input [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/masked-input/jquery.maskedinput.min.js"></script>
+    <script src="~/Assets/js/jquery.rut.chileno.min.js"></script>
+    <script>
+
+
+        $(function () {
+
+
+
+            //$("#chk_banner_si").prop("cheked", false);
+            //$("#chk_banner_no").prop("cheked", false);
+            var CodIng = httpGet("ci");
+            var Tab = httpGet("tab");
+
+            //-------------------Valija
+
+            $("#lblvalija").hide();
+            $("#valija").hide();
+
+
+            var cargador = {
+                cargaLC: function (CodIng) {
+
+                    $.SecGetJSON(BASE_URL + "/motor/api/Licencias/licencia-data", { codIngreso: CodIng }, function (response) {
+
+
+                        $("#AfiliadoRut").val(response.IngresoData.RutAfiliado);
+                        $("#AfiliadoRut").mask('99.999.999-*')
+                        $("#AfiliadoRut").trigger("blur");
+                        $("#AfiliadoRut").prop("disabled", true);
+                        if (response.IngresoData.FormatoLM == 'Mixta') {
+                            $("#radio-formato-mixto-lm").prop('checked', true)
+                            $("#radio-formato-mixto-lm").trigger("change")
+
+
+                        }
+
+                        $("#divreemplazada").show();
+                        if (response.IngresoData.FormatoLM == "Manual") {
+                            $('#radio-formato-mixto-lm').prop("checked", false);
+                            $('#radio-formato-manual-lm').prop("checked", true);
+                        }
+                        else {
+                            $('#radio-formato-mixto-lm').prop("checked", true);
+                            $('#radio-formato-manual-lm').prop("checked", false);
+                        }
+
+                        $("#FolioLic").val(response.IngresoData.FolioLicencia);
+                        $("#FolioLic").prop("disabled", true);
+                        $('#radio-formato-mixto-lm').prop("disabled", true);
+                        $('#radio-formato-manual-lm').prop("disabled", true);
+
+
+                        //---valida si existe compin
+                        if (response.IngresoData.compincentralizado == 'Si') {
+                            $('#divcompin').show();
+                            $('#compin').val(response.IngresoData.compincentralizado);
+                            $('#subcomision').val(response.IngresoData.Subcomision);
+                            $('#subido_a_plataforma_compin').val(response.IngresoData.Subido_a_plataforma_compin.toFecha());
+                        }
+                        else {
+                            $('#divcompin').hide();
+
+                        }
+
+
+                        if (response.DocumentosFaltantes.tipoSeleccion == "1") {
+                            $(`#pendiente`).prop('checked', response.DocumentosFaltantes.tipoSeleccion);
+
+                            if (response.DocumentosFaltantes.tipoSeleccion == "1") {
+                                $(`#pendiente`).trigger('change');
+                            }
+                        }
+
+                        if (response.DocumentosFaltantes.tipoSeleccion == "0") {
+                            $(`#falta_doc_no`).prop('checked', response.DocumentosFaltantes.tipoSeleccion);
+
+                            if (response.DocumentosFaltantes.tipoSeleccion == "0") {
+                                $(`#falta_doc_no`).trigger('change');
+                            }
+                        }
+
+                        if (response.DocumentosFaltantes.tipoSeleccion == "2") {
+                            $(`#devuelta`).prop('checked', response.DocumentosFaltantes.tipoSeleccion);
+
+                            if (response.DocumentosFaltantes.tipoSeleccion == "2") {
+                                $(`#devuelta`).trigger('change');
+                            }
+                        }
+
+                        if (response.DocumentosFaltantes.tipoSeleccion == "3") {
+                            $(`#notramitada`).prop('checked', response.DocumentosFaltantes.tipoSeleccion);
+
+                            if (response.DocumentosFaltantes.tipoSeleccion == "3") {
+                                $(`#notramitada`).trigger('change');
+                            }
+                        }
+
+                        if (response.DocumentosFaltantes.tipoSeleccion == "42") {
+                            $(`#chk_devuelta_reemplazada`).prop('checked', response.DocumentosFaltantes.tipoSeleccion);
+
+                            if (response.DocumentosFaltantes.tipoSeleccion == "42") {
+                                $(`#chk_devuelta_reemplazada`).trigger('change');
+                                $(`#nuevo_folio`).prop("disabled", true);
+                                $(`#nuevo_folio`).val(response.DocumentosFaltantes.Comentarios);
+
+                            }
+                        }
+
+
+
+                        //----valida chk fecha liqudacion
+
+
+                        $(`#m1`).prop('checked', response.DocumentosFaltantes.Liquidacion1);
+                        $(`#m2`).prop('checked', response.DocumentosFaltantes.Liquidacion2);
+                        $(`#m3`).prop('checked', response.DocumentosFaltantes.Liquidacion3);
+                        $(`#m4`).prop('checked', response.DocumentosFaltantes.Liquidacion4);
+                        $(`#m5`).prop('checked', response.DocumentosFaltantes.Liquidacion5);
+                        $(`#m6`).prop('checked', response.DocumentosFaltantes.Liquidacion6);
+                        $(`#certificado_renta`).prop('checked', response.DocumentosFaltantes.CertificadoRenta);
+                        $(`#accr1`).prop('checked', response.DocumentosFaltantes.Acredita90);
+                        $(`#accr2`).prop('checked', response.DocumentosFaltantes.CertificadoAfiliacionAFP);
+                        $(`#accr3`).prop('checked', response.DocumentosFaltantes.CertPagPensiones);
+                        $(`#otros`).prop('checked', response.DocumentosFaltantes.Otros);
+                        $(`#comentarios`).val(response.DocumentosFaltantes.Comentarios);
+                        $('#chk_ilm').prop('checked', response.DocumentosFaltantes.Imagen);
+                        if ($("#radio-formato-manual-lm").is(':checked')) {
+                            $('#chk_empl').prop('checked', response.DocumentosFaltantes.diagnostico);
+
+                        } else {
+
+                            $('#chk_empl').hide();
+                        }
+                        $('#chk_sinfirma').prop('checked', response.DocumentosFaltantes.sinfirma);
+                        $('#chk_trabajnuevo').prop('checked', response.DocumentosFaltantes.contrato);
+                        $('#chk_sinCI').prop('checked', response.DocumentosFaltantes.cedular_identidad);
+                        $('#chk_datoincompl').prop('checked', response.DocumentosFaltantes.seccion_c);
+                        $('#chk_RN').prop('checked', response.DocumentosFaltantes.certificado_nacimiento);
+                        $('#chk_mutual').prop('checked', response.DocumentosFaltantes.mutual);
+                        $('#chk_isapre').prop('checked', response.DocumentosFaltantes.isapre);
+                        $('#chk_cartaAutorizacion').prop('checked', response.DocumentosFaltantes.cartaAutorizacion);
+                        $('#chk_fataFirmaemleador').prop('checked', response.DocumentosFaltantes.Faltafirmaempleador);
+
+
+                        if ($('#m1').prop('checked')) {
+
+                            $("#fechaLm1").prop("disabled", false);
+                        }
+                        else {
+
+                            $("#fechaLm1").prop("disabled", true);
+                        }
+
+                        if ($('#m2').prop('checked')) {
+
+                            $("#fechaLm2").prop("disabled", false);
+                        }
+                        else {
+
+                            $("#fechaLm2").prop("disabled", true);
+                        }
+
+                        if ($('#m3').prop('checked')) {
+
+                            $("#fechaLm3").prop("disabled", false);
+                        }
+                        else {
+
+                            $("#fechaLm3").prop("disabled", true);
+                        }
+                        if ($('#m4').prop('checked')) {
+
+                            $("#fechaLm4").prop("disabled", false);
+                        }
+                        else {
+
+                            $("#fechaLm4").prop("disabled", true);
+                        }
+
+                        if ($('#m5').prop('checked')) {
+
+                            $("#fechaLm5").prop("disabled", false);
+                        }
+                        else {
+
+                            $("#fechaLm5").prop("disabled", true);
+                        }
+
+                        if ($('#m6').prop('checked')) {
+
+                            $("#fechaLm6").prop("disabled", false);
+                        }
+                        else {
+
+                            $("#fechaLm6").prop("disabled", true);
+                        }
+
+                        if (response.DocumentosFaltantes.fechaliquidacion1 == '')
+                            $('#fechaLm1').val('Seleccione...');
+                        else
+                            $('#fechaLm1').val(response.DocumentosFaltantes.fechaliquidacion1.substring(3, 10));
+
+                        if (response.DocumentosFaltantes.fechaliquidacion2 == '')
+                            $('#fechaLm2').val('Seleccione...');
+                        else
+                            $('#fechaLm2').val(response.DocumentosFaltantes.fechaliquidacion2.substring(3, 10));
+
+                        if (response.DocumentosFaltantes.fechaliquidacion3 == '')
+                            $('#fechaLm3').val('Seleccione...');
+                        else
+                            $('#fechaLm3').val(response.DocumentosFaltantes.fechaliquidacion3.substring(3, 10));
+
+                        if (response.DocumentosFaltantes.fechaliquidacion4 == '')
+                            $('#fechaLm4').val('Seleccione...');
+                        else
+                            $('#fechaLm4').val(response.DocumentosFaltantes.fechaliquidacion3.substring(3, 10));
+
+                        if (response.DocumentosFaltantes.fechaliquidacion5 == '')
+                            $('#fechaLm5').val('Seleccione...');
+                        else
+                            $('#fechaLm5').val(response.DocumentosFaltantes.fechaliquidacion5.substring(3, 10));
+                        if (response.DocumentosFaltantes.fechaliquidacion6 == '')
+                            $('#fechaLm6').val('Seleccione...');
+                        else
+                            $('#fechaLm6').val(response.DocumentosFaltantes.fechaliquidacion6.substring(3, 10));
+
+
+
+
+                        //---ingreso Casilla
+                        if (response.IngresoData.viaIngresoLicenica == 1) {
+                            $(`#chk_casilla`).prop('checked', true);
+                            $(`#chk_presencial`).prop('checked', false);
+                            $("#chk_casilla").prop("checked", true);
+                            $("#chk_presencial").prop("checked", false);
+                            $("#divopc-casilla").show();
+                            $("#tabDatos").show();
+                            $("#email").prop("disabled", false);
+                            $("#telefono").prop("disabled", false);
+                            //$("#lblvalija").hide();
+                            //$("#valija").hide();
+
+                            //$("#divdevuelta").show();
+
+                            $("#divdevueltacheck").show();
+                            $("#divnotramitadacheck").show();
+                            if (response.IngresoData.quienEnvia == 1) {
+                                $(`#chk_trabajador`).prop('checked', true);
+                                $(`#chk_empleador`).prop('checked', false);
+
+                            }
+                            if (response.IngresoData.quienEnvia == 2) {
+                                $(`#chk_trabajador`).prop('checked', false);
+                                $(`#chk_empleador`).prop('checked', true);
+
+                            }
+
+                            $(`#email`).prop('disbaled', false);
+                            $(`#telefono`).prop('disbaled', false);
+                            $(`#email`).val(response.IngresoData.email);
+                            $(`#telefono`).val(response.IngresoData.telefono);
+
+
+                            if (response.IngresoData.esBanner == 0) {
+                                $('#chk_banner_no').prop("checked", true);
+                                $('#chk_banner_si').prop("checked", false);
+                                $("#divopc-banner").show();
+                                $("#divcartaAutorizacion").show();
+                            }
+                            else {
+
+                                $('#chk_banner_no').prop("checked", false);
+                                $('#chk_banner_si').prop("checked", true);
+                                $("#divopc-banner").show();
+                                $("#divcartaAutorizacion").hide();
+                            }
+
+
+
+                        }
+
+
+                        //----ingreso presencial
+                        if (response.IngresoData.viaIngresoLicenica == 2) {
+                            $("#chk_casilla").prop("checked", false);
+                            $("#chk_presencial").prop("checked", true);
+                            $("#divopc-casilla").hide();
+                            $("#email").prop("disabled", false);
+                            $("#telefono").prop("disabled", false);
+                            //$("#lblvalija").show();
+                            //$("#valija").show();
+
+                            $("#tabDatos").show();
+                            $("#divdevuelta").hide();
+                            $("#divdevueltacheck").hide();
+                            $("#divnotramitadacheck").hide();
+                            $("#divdevuelta1").show();
+
+                            if (response.IngresoData.quienEnvia == 1) {
+                                $(`#chk_trabajador`).prop('checked', true);
+                                $(`#chk_empleador`).prop('checked', false);
+
+                            }
+                            if (response.IngresoData.quienEnvia == 2) {
+                                $(`#chk_trabajador`).prop('checked', false);
+                                $(`#chk_empleador`).prop('checked', true);
+
+                            }
+
+                            $(`#email`).prop('disbaled', false);
+                            $(`#telefono`).prop('disbaled', false);
+                            $(`#email`).val(response.IngresoData.email);
+                            $(`#telefono`).val(response.IngresoData.telefono);
+                            $("#divcoforme").show();
+                        }
+
+                        if (response.IngresoData.viaIngresoLicenica == 0) {
+                            $(`#chk_casilla`).prop('checked', false);
+                            $(`#chk_presencial`).prop('checked', false);
+                            $("#divdevuelta").show();
+                        }
+
+                        $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-suc-derivacion", function (datos) {
+                            $("#sslOfiDerivacion").html("");
+                            $("#sslOfiDerivacion").attr("disabled", true);
+                            $.each(datos, function (i, oficina) {
+                                var selected = (oficina.codOficina == response.IngresoData.OficinaDerivacion)
+                                $("#sslOfiDerivacion").append($("<option>").val(oficina.codOficina).html(oficina.DescOficina).prop("selected", selected));
+                            });
+                        });
+
+                        //--------------- DerivarLM
+
+                        if (response.IngresoData.OficinaDerivacion != 0) {
+                           
+                            $("#sslOfiDerivacion").val(response.IngresoData.OficinaDerivacion);
+                            $("#sslOfiDerivacion").prop("disabled", false);
+                            $("#falta_doc_no").prop("checked", false);
+                            $("#pendiente").prop("checked", false);
+                            $("#devuelta").prop("checked", false);
+                            $("#notramitada").prop("checked", false);
+                            $("#falta_doc_no").hide();
+                            $("#pendiente").hide();
+                            $("#devuelta").hide();
+                            $("#notramitada").hide();
+                            $("#checkTipoingreso").show();
+                            $('.docs-faltantes-op1').hide();
+                            $("#divestadorecpecion").show();
+                            $('#fechaLm1').val('Seleccione...');
+                            $('#fechaLm2').val('Seleccione...');
+                            $('#fechaLm3').val('Seleccione...');
+                            $('#fechaLm4').val('Seleccione...');
+                            $('#fechaLm5').val('Seleccione...');
+                            $('#fechaLm6').val('Seleccione...');
+                            $("#fechaLm1").prop("disabled", true);
+                            $("#fechaLm2").prop("disabled", true);
+                            $("#fechaLm3").prop("disabled", true);
+                            $("#fechaLm4").prop("disabled", true);
+                            $("#fechaLm5").prop("disabled", true);
+                            $("#fechaLm6").prop("disabled", true);
+                            $("input[type=checkbox]").prop("checked", false);
+                            $('#comentarios').val('');
+                            $("#email").val('');
+                            $("#telefono").val('');
+                            $("#DerivarLM").prop("checked", false);
+                            $("#DerivarLM").prop("disabled", true);
+
+
+                            if (response.IngresoData.viaIngresoLicenica == 1) {
+                                $(`#chk_casilla`).prop('checked', true);
+                                $(`#chk_presencial`).prop('checked', false);
+                            }
+                            else {
+
+                                $(`#chk_casilla`).prop('checked', false);
+                                $(`#chk_presencial`).prop('checked', true);
+
+                                if (response.IngresoData.FlagLM == 1) {
+                                    
+                                    $("#div_Viaingreso_derivacion").show();
+                                    $("#chk_casilla_derivada").hide();
+                                    $("#lbl_casilla_derivada").hide();
+                                    $("#chk_presencial_derivada").hide();
+                                    $("#lbl_presencial_derivada").hide();
+                                    $("#lblvalija").show();
+                                    $("#valija").show();
+                                    $("#valija").prop('disabled', true);
+                                    $("#valija").prop('style', "margin-left:-300px");
+                                    $("#lblvalija").prop('style', "margin-left:-300px");
+                                    $("#valija").val(response.DocumentosFaltantes.Comentarios);
+
+                                    
+
+                                }
+                    
+
+                            }
+
+
+                        }
+
+                        cargador.EstadoConsulta();
+
+                    });
+
+                },
+                saveLC: function (volver) {
+                    var viaIngresoLicenica = 0;
+                    var quienEnvia = 0;
+                    var pendienteDocumentacion = 0;
+                    var Faltadoc = 0;
+                    var esBanner = 0;
+                    if ($("#falta_doc_no").is(':checked')) {
+                        $("#fechaLm1").val("Seleccione...");
+                        $("#fechaLm2").val("Seleccione...");
+                        $("#fechaLm3").val("Seleccione...");
+                        $("#fechaLm4").val("Seleccione...");
+                        $("#fechaLm5").val("Seleccione...");
+                        $("#fechaLm6").val("Seleccione...");
+                        $("#fechaLm1").prop("disabled", true);
+                        $('#m1').prop("checked", false);
+                        $('#m2').prop("checked", false);
+                        $('#m3').prop("checked", false);
+                        $('#m4').prop("checked", false);
+                        $('#m5').prop("checked", false);
+                        $('#m6').prop("checked", false);
+                        $('#certificado_renta').prop("checked", false);
+                        $('#accr1').prop("checked", false);
+                        $('#accr2').prop("checked", false);
+                        $('#accr3').prop("checked", false);
+                        $('#otros').prop("checked", false);
+                        $('#chk_ilm').prop("checked", false);
+                        $('#chk_empl').prop("checked", false);
+                        $('#chk_sinfirma').prop("checked", false);
+                        $('#chk_trabajnuevo').prop("checked", false);
+                        $('#chk_sinCI').prop("checked", false);
+                        $('#chk_datoincompl').prop("checked", false);
+                        $('#chk_RN').prop("checked", false);
+                        $('#chk_isapre').prop("checked", false);
+                        $('#chk_mutual').prop("checked", false);
+                        $('#pendiente').prop("checked", false);
+                        $('#devuelta').prop("checked", false);
+                        $('#notramitada').prop("checked", false);
+                        $('#chk_cartaAutorizacion').prop("checked", false);
+
+                    }
+
+                    if ($('#radio-formato-manual-lm').prop('checked') == false && $('#radio-formato-mixto-lm').prop('checked') == false) {
+                        $.niftyNoty({
+                            type: 'danger',
+                            container: 'floating',
+                            html: '<strong>Error</strong><li>Debe ingresar Formato de licencia!!</li>',
+                            focus: false,
+                            timer: 3000
+                        });
+
+                        $('#bt-guarda-otra').prop('disabled', false);
+                        return false;
+
+                    }
+
+                    if ($('#radio-formato-mixto-lm').prop('checked')) {
+
+                        var dato = $('#FolioLic').val();
+
+                        if (dato == '') {
+                            $.niftyNoty({
+                                type: 'danger',
+                                container: 'floating',
+                                html: '<strong>Error</strong><li>Debe ingresar Folio de licencia!!</li>',
+                                focus: false,
+                                timer: 3000
+                            });
+                            $('#FolioLic').focus();
+
+                            $('#bt-guarda-otra').prop('disabled', false);
+                            return false;
+
+                        }
+
+                        value = dato.replace(/-/g, '')
+                        var xx = value.substring(0, 1);
+                        if (xx == '3' || xx == '4') {
+                            var xy = Number(value.substring(1, value.length - 1)).toMoney(0) + '-' + value.substring(value.length - 1);
+                            var result = $.rut.validar(xy)
+                            if (result == false) {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong><li>Formato de licencia no válido, favor revisar!!</li>',
+                                    focus: false,
+                                    timer: 3000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                return false;
+                            }
+
+                        }
+                        else {
+                            $.niftyNoty({
+                                type: 'danger',
+                                container: 'floating',
+                                html: '<strong>Error</strong><li>Formato de licencia no válido, favor revisar!!</li>',
+                                focus: false,
+                                timer: 3000
+                            });
+                            return false;
+
+                        }
+
+                    }
+                    if ($('#radio-formato-manual-lm').prop('checked')) {
+
+                        var dato = $('#FolioLic').val();
+                        if (dato == '') {
+                            $.niftyNoty({
+                                type: 'danger',
+                                container: 'floating',
+                                html: '<strong>Error</strong><li>Debe ingresar Folio de licencia!!</li>',
+                                focus: false,
+                                timer: 3000
+                            });
+                            $('#FolioLic').focus();
+                            $('#bt-guarda-otra').prop('disabled', false);
+                            return false;
+
+                        }
+
+
+                        var dato = $('#FolioLic').val();
+                        if (dato.length != 8) {
+                            $.niftyNoty({
+                                type: 'danger',
+                                container: 'floating',
+                                html: '<strong>Error</strong><li>Largo de licencia no válido, favor revisar!!></li>',
+                                focus: false,
+                                timer: 3000
+                            });
+                            $('#bt-guarda-otra').prop('disabled', false);
+                            return false;
+                        }
+
+                        if (isNaN(dato)) {
+                            $.niftyNoty({
+                                type: 'danger',
+                                container: 'floating',
+                                html: '<strong>Error</strong><li>Formato de licencia no válido, favor revisar!!</li>',
+                                focus: false,
+                                timer: 3000
+                            });
+                            $('#bt-guarda-otra').prop('disabled', false);
+                            return false;
+                        }
+
+                    }
+
+                    if ($("#DerivarLM").prop("checked") == false) {
+
+
+                        //--valida tipo via ingreso
+                        if ($('#chk_casilla').prop('checked') == false && $('#chk_presencial').prop('checked') == false) {
+
+                            $.niftyNoty({
+                                type: 'danger',
+                                container: 'floating',
+                                html: '<strong>Error</strong> <li> Debe Seleccionar al menos una vía de ingreso licencia</li>',
+                                focus: false,
+                                timer: 5000
+                            });
+                            $('#bt-guarda-otra').prop('disabled', false);
+
+
+                            return false;
+
+                        }
+
+
+                        //--quien envia
+
+                        if ($('#chk_casilla').prop('checked') == true) {
+                            viaIngresoLicenica = 1;
+
+                            //--- es Banner
+                            if ($('#chk_banner_no').prop('checked') == false && $('#chk_banner_si').prop('checked') == false) {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong> <li> Debe Seleccionar Es Banner Si / No</li>',
+                                    focus: false,
+                                    timer: 5000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+
+                                return false;
+                            }
+
+                            if ($('#chk_banner_no').prop('checked') == true) {
+
+                                esBanner = 0;
+                            }
+                            else {
+
+                                esBanner = 1;
+                            }
+
+                            //------------Trabajador o empleador
+                            if ($('#chk_trabajador').prop('checked') == false && $('#chk_empleador').prop('checked') == false) {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong> <li> Debe Seleccionar quien envía licencia licencia trabajador o Empleador</li>',
+                                    focus: false,
+                                    timer: 5000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+
+
+                                return false;
+                            }
+
+
+                            if ($('#chk_trabajador').prop('checked') == true) {
+                                quienEnvia = 1;
+                            }
+
+                            if ($('#chk_empleador').prop('checked') == true) {
+                                quienEnvia = 2;
+                            }
+
+                            if ($('#email').prop('disabled') != true) {
+                                if ($('#email').val() == '') {
+                                    $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                        html: '<strong>Error</strong><li>Debe ingresar Email!!</li>',
+                                        focus: false,
+                                        timer: 3000
+                                    });
+                                    $("#email").focus();
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    return false;
+                                }
+
+                                if ($('#email').val() != '') {
+                                    var regex = /[\w-\.]{2,}@@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+                                    if (!regex.test($('#email').val().trim())) {
+
+                                        $.niftyNoty({
+                                            type: 'danger',
+                                            container: 'floating',
+                                            html: '<strong>Error</strong><li>Formato de Email no válido, favor revisar!!</li>',
+                                            focus: false,
+                                            timer: 3000
+                                        });
+                                        $('#bt-guarda-otra').prop('disabled', false);
+                                        $("#email").focus();
+                                        return false;
+
+                                    }
+
+                                }
+                            }
+
+                            if ($('#telefono').prop('disabled') != true) {
+                                var dato = $('#telefono').val();
+                                if ($('#telefono').val() != '') {
+
+                                    if (dato.length != 9) {
+                                        $.niftyNoty({
+                                            type: 'danger',
+                                            container: 'floating',
+                                            html: '<strong>Error</strong><li>Largo teléfono no válido!!</li>',
+                                            focus: false,
+                                            timer: 3000
+                                        });
+                                        $('#bt-guarda-otra').prop('disabled', false);
+                                        $('#telefono').focus();
+                                        return false;
+                                    }
+                                }
+
+                                if (isNaN(dato)) {
+                                    $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                        html: '<strong>Error</strong><li>Formato de teléfono no válido!!</li>',
+                                        focus: false,
+                                        timer: 3000
+                                    });
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    $('#telefono').focus();
+                                    return false;
+                                }
+
+
+                            }
+
+                        }
+
+
+
+
+                        //-------------Presencial----------
+
+                        if ($('#chk_presencial').prop('checked') == true) {
+                            viaIngresoLicenica = 2;
+
+                            if ($('#email').prop('disabled') != true) {
+
+                                if ($('#email').val() != '') {
+                                    var regex = /[\w-\.]{2,}@@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+                                    if (!regex.test($('#email').val().trim())) {
+
+                                        $.niftyNoty({
+                                            type: 'danger',
+                                            container: 'floating',
+                                            html: '<strong>Error</strong><li> Formato de Email no válido, favor revisar!!</li>',
+                                            focus: false,
+                                            timer: 3000
+                                        });
+                                        $('#bt-guarda-otra').prop('disabled', false);
+                                        $("#email").focus();
+                                        return false;
+
+                                    }
+
+                                }
+                            }
+
+
+
+                            if ($('#telefono').prop('disabled') != true) {
+
+                                var dato = $('#telefono').val();
+
+                                if (dato == '') {
+                                    $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                        html: '<strong>Error</strong><li>Debe ingresar teléfono de contacto!!</li>',
+                                        focus: false,
+                                        timer: 3000
+                                    });
+                                    $("#telefono").focus();
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    return false;
+                                }
+
+                                if ($('#telefono').val() != '') {
+
+                                    if (dato.length != 9) {
+                                        $.niftyNoty({
+                                            type: 'danger',
+                                            container: 'floating',
+                                            html: '<strong>Error</strong><li>Largo teléfono no válido!!</li>',
+                                            focus: false,
+                                            timer: 3000
+                                        });
+                                        $('#bt-guarda-otra').prop('disabled', false);
+                                        $('#telefono').focus();
+                                        return false;
+                                    }
+                                }
+
+                                if (isNaN(dato)) {
+                                    $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                        html: '<strong>Error</strong><li>Formato de teléfono no válido!!</li>',
+                                        focus: false,
+                                        timer: 3000
+                                    });
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    $('#telefono').focus();
+                                    return false;
+                                }
+                                
+                                //if ($('#valija').val() == '') {
+                                //        $.niftyNoty({
+                                //            type: 'danger',
+                                //            container: 'floating',
+                                //            html: '<strong>Error</strong> <li>Debe ingresar Número de Valija!!</li>',
+                                //            focus: false,
+                                //            timer: 3000
+                                //        });
+                                //        $('#bt-guarda-otra').prop('disabled', false);
+                                //        $('#valija').focus();
+                                //        return false;
+
+                                //}
+                                //$('#comentarios').val($('#valija').val())
+
+                            }
+
+                        }
+
+
+
+                        if ($('#notramitada').prop('checked') == true) {
+                            if ($('#chk_isapre').prop('checked') == false && $('#chk_mutual').prop('checked') == false) {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong><li> Debe Seleccionar al menos un Documento Faltante</li>',
+                                    focus: false,
+                                    timer: 5000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                return false;
+                            }
+
+                        }
+
+                        if ($('#pendiente').prop('checked') == true) {
+                            if ($('#accr3').prop('checked') == false && $('#accr2').prop('checked') == false && $('#accr1').prop('checked') == false && $('#certificado_renta').prop('checked') == false && $('#m1').prop('checked') == false && $('#m2').prop('checked') == false && $('#m3').prop('checked') == false && $('#m4').prop('checked') == false && $('#m5').prop('checked') == false && $('#m6').prop('checked') == false) {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Debe Seleccionar al menos un Documento Faltante</strong><li>Liq. Mes 1</li><li>Liq.Mes 2</li><li>Liq. Mes 3</li><li>Liq. Mes 4</li><li>Liq. Mes 5</li><li>Liq. Mes 6</li><li>Certificado de Renta</li><li>Acredita 90 días Cotiz./Finiquito</li><li>Certificado Afiliación AFP</li><li>Cert.Pago Pensiones/Exención Cotizaciones</li>',
+                                    focus: false,
+                                    timer: 5000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                return false;
+                            }
+
+                        }
+
+                        if ($('#devuelta').prop('checked') == true) {
+
+                            if ($('#radio-formato-mixto-lm').prop('checked')) {
+                                var dato = $('#FolioLic').val();
+                                value = dato.replace(/-/g, '')
+                                var xx = value.substring(0, 1);
+                                if (xx == '3' || xx == '4') {
+                                    var xy = Number(value.substring(1, value.length - 1)).toMoney(0) + '-' + value.substring(value.length - 1);
+                                    var result = $.rut.validar(xy)
+                                    if (result == false) {
+                                        $.niftyNoty({
+                                            type: 'danger',
+                                            container: 'floating',
+                                            html: '<strong>Error</strong> <li>Formato de licencia no válido, favor revisar!!</li>',
+                                            focus: false,
+                                            timer: 3000
+                                        });
+                                        $('#bt-guarda-otra').prop('disabled', false);
+                                        return false;
+                                    }
+
+                                }
+                                if ($('#chk_fataFirmaemleador').prop('checked') == false && $('#accr3').prop('checked') == false && $('#accr2').prop('checked') == false && $('#accr1').prop('checked') == false && $('#certificado_renta').prop('checked') == false && $('#m1').prop('checked') == false && $('#m2').prop('checked') == false && $('#m3').prop('checked') == false && $('#chk_cartaAutorizacion').prop('checked') == false && $('#chk_cartaAutorizacion').prop('checked') == false && $('#chk_sinCI').prop('checked') == false && $('#chk_datoincompl').prop('checked') == false && $('#chk_trabajnuevo').prop('checked') == false) {
+                                    $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                        html: '<strong>Debe Seleccionar al menos un Documento Faltante</strong><li>Liq. Mes 1</li><li>Liq.Mes 2</li><li>Liq. Mes 3</li><li>Liq. Mes 4</li><li>Liq. Mes 5</li><li>Liq. Mes 6</li><li>Certificado de Renta</li><li>Acredita 90 días Cotiz./Finiquito</li><li>Certificado Afiliación AFP</li><li>Cert.Pago Pensiones/Exención Cotizaciones</li><li>Trabajador Nuevo, falta Contrato de Trabajo</li><li>Datos incompletos de Empresa (Sección C)</li><li>Trabajador Nuevo, falta Cédula de Identidad</li><li>Carta de autorización del trabajador</li><li>Falta Firma y Timbre Empleador</li><li>Licencia sin firma del Trabajador(a)</li>',
+                                        focus: false,
+                                        timer: 5000
+                                    });
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    // $('#frm-data-lc').bootstrapValidator('updateStatus', 'FolioLic', 'NOT_VALIDATED').bootstrapValidator('validateField', 'FolioLic');
+
+                                    return false;
+                                }
+
+                            }
+                            if ($('#radio-formato-manual-lm').prop('checked')) {
+                                var dato = $('#FolioLic').val();
+                                if (dato.length != 8) {
+                                    $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                        html: '<strong>Error</strong><li>Formato de licencia no válido, favor revisar!!</li>',
+                                        focus: false,
+                                        timer: 3000
+                                    });
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    return false;
+                                }
+
+                                if ($('#chk_banner_si').prop('checked')) {
+                                    if ($('#chk_fataFirmaemleador').prop('checked') == false && $('#accr3').prop('checked') == false && $('#accr2').prop('checked') == false && $('#accr1').prop('checked') == false && $('#certificado_renta').prop('checked') == false && $('#m1').prop('checked') == false && $('#m2').prop('checked') == false && $('#m3').prop('checked') == false && $('#m4').prop('checked') == false && $('#m5').prop('checked') == false && $('#m6').prop('checked') == false && $('#chk_cartaAutorizacion').prop('checked') == false && $('#chk_sinCI').prop('checked') == false && $('#chk_datoincompl').prop('checked') == false && $('#chk_trabajnuevo').prop('checked') == false && $('#chk_ilm').prop('checked') == false && $('#chk_empl').prop('checked') == false) {
+                                        $.niftyNoty({
+                                            type: 'danger',
+                                            container: 'floating',
+                                            html: '<strong>Debe Seleccionar al menos un Documento Faltante</strong><li>Liq. Mes 1</li><li>Liq.Mes 2</li><li>Liq. Mes 3</li><li>Liq. Mes 4</li><li>Liq. Mes 5</li><li>Liq. Mes 6</li><li>Certificado de Renta</li><li>Acredita 90 días Cotiz./Finiquito</li><li>Certificado Afiliación AFP</li><li>Cert.Pago Pensiones/Exención Cotizaciones</li>  <li>Imagen Licencia Médica no legible</li><li>Sección Diagnóstico no aperturado</li><li>Licencia sin firma del Trabajador(a)</li><li>Trabajador Nuevo, falta Contrato de Trabajo</li><li>Datos incompletos de Empresa (Sección C)</li><li>Trabajador Nuevo, falta Cédula de Identidad</li>',
+                                            focus: false,
+                                            timer: 5000
+                                        });
+                                        $('#bt-guarda-otra').prop('disabled', false);
+                                        return false;
+                                    }
+                                }
+                                else {
+                                    if ($('#chk_fataFirmaemleador').prop('checked') == false && $('#accr3').prop('checked') == false && $('#accr2').prop('checked') == false && $('#accr1').prop('checked') == false && $('#certificado_renta').prop('checked') == false && $('#m1').prop('checked') == false && $('#m2').prop('checked') == false && $('#m3').prop('checked') == false && $('#m4').prop('checked') == false && $('#m5').prop('checked') == false && $('#m6').prop('checked') == false && $('#chk_cartaAutorizacion').prop('checked') == false && $('#chk_sinCI').prop('checked') == false && $('#chk_datoincompl').prop('checked') == false && $('#chk_trabajnuevo').prop('checked') == false && $('#chk_ilm').prop('checked') == false && $('#chk_empl').prop('checked') == false) {
+                                        $.niftyNoty({
+                                            type: 'danger',
+                                            container: 'floating',
+                                            html: '<strong>Debe Seleccionar al menos un Documento Faltante</strong><li>Liq. Mes 1</li><li>Liq.Mes 2</li><li>Liq. Mes 3</li><li>Liq. Mes 4</li><li>Liq. Mes 5</li><li>Liq. Mes 6</li><li>Certificado de Renta</li><li>Acredita 90 días Cotiz./Finiquito</li><li>Certificado Afiliación AFP</li><li>Cert.Pago Pensiones/Exención Cotizaciones</li>  <li>Imagen Licencia Médica no legible</li><li>Sección Diagnóstico no aperturado</li><li>Licencia sin firma del Trabajador(a)</li><li>Trabajador Nuevo, falta Contrato de Trabajo</li><li>Datos incompletos de Empresa (Sección C)</li><li>Trabajador Nuevo, falta Cédula de Identidad</li><li>Carta de autorización del trabajador</li>',
+                                            focus: false,
+                                            timer: 5000
+                                        });
+                                        $('#bt-guarda-otra').prop('disabled', false);
+                                        return false;
+                                    }
+
+                                }
+
+
+
+
+                                if ($('#chk_RN').prop('checked') == false && $('#chk_ilm').prop('checked') == false && $('#chk_empl').prop('checked') == false && $('#chk_trabajnuevo').prop('checked') == false && $('#chk_datoincompl').prop('checked') == false && $('#chk_sinCI').prop('checked') == false) {
+                                    $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                        html: '<strong>Debe Seleccionar al menos un Documento Faltante para Devueltas</strong><li>Certificado de Nacimiento Recién Nacido</li><li>Licencia sin firma del Trabajador(a)</li><li>Trabajador Nuevo, falta Contrato de Trabajo</li><li>Datos incompletos de Empresa (Sección C)</li><li>rabajador Nuevo, falta Cédula de Identidad</li>',
+                                        focus: false,
+                                        timer: 3000
+                                    });
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    return false;
+
+                                }
+
+                            }
+                        }
+
+                        //--vaidacion nuevos casos
+                        if ($('#chk_casilla').prop('checked') == true) {
+
+                            if ($('#chk_devuelta_reemplazada').prop('checked') == false && $('#falta_doc_no').prop('checked') == false && $('#notramitada').prop('checked') == false && $('#pendiente').prop('checked') == false && $('#devuelta').prop('checked') == false) {
+                                //cambiado por el nuevoe flujo
+                                //  if ($('#falta_doc_no').prop('checked') == false && $('#notramitada').prop('checked') == false && $('#pendiente').prop('checked') == false && $('#devuelta').prop('checked') == false) {
+                                pendienteDocumentacion = -1;
+                                Faltadoc = 1;
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong> <li>Debe Seleccionar alguna opción de Estado Recepción LM!!</li>',
+                                    focus: false,
+                                    timer: 3000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                return false;
+                            }
+
+
+                        }
+
+                        if ($('#chk_presencial').prop('checked') == true) {
+                            if ($('#falta_doc_no').prop('checked') == false && $('#pendiente').prop('checked') == false) {
+                                pendienteDocumentacion = -1;
+                                Faltadoc = 1;
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong> <li>Debe Seleccionar alguna opción de Estado Recepción LM!! </li>',
+                                    focus: false,
+                                    timer: 3000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                return false;
+
+                            }
+                        }
+
+                        if ($('#m1').prop('checked')) {
+                            if ($("#fechaLm1").val() == "Seleccione...") {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong><li>Liq. Mes 1 debe ingresar fecha LM!!</li>',
+                                    focus: false,
+                                    timer: 3000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                return false;
+                            }
+
+                        } else $("#fechaLm1").val("Seleccione...");
+                        if ($('#m2').prop('checked')) {
+                            if ($("#fechaLm2").val() == "Seleccione...") {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong><li>Liq. Mes 2 debe ingresar fecha LM!!</li>',
+                                    focus: false,
+                                    timer: 3000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                return false;
+                            }
+
+                        } else $("#fechaLm2").val("Seleccione...");
+                        if ($('#m3').prop('checked')) {
+                            if ($("#fechaLm3").val() == "Seleccione...") {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong><li>Liq. Mes 3 debe ingresar fecha LM!!</li>',
+                                    focus: false,
+                                    timer: 3000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                return false;
+                            }
+
+                        } else $("#fechaLm3").val("Seleccione...");
+                        if ($('#m4').prop('checked')) {
+                            if ($("#fechaLm4").val() == "Seleccione...") {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong><li>Liq. Mes 4 debe ingresar fecha LM!!</li>',
+                                    focus: false,
+                                    timer: 3000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                return false;
+                            }
+
+                        } else $("#fechaLm4").val("Seleccione...");
+                        if ($('#m5').prop('checked')) {
+                            if ($("#fechaLm5").val() == "Seleccione...") {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong><li>Liq. Mes 5 debe ingresar fecha LM!!</li>',
+                                    focus: false,
+                                    timer: 3000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                return false;
+                            }
+
+                        } else $("#fechaLm5").val("Seleccione...");
+                        if ($('#m6').prop('checked')) {
+                            if ($("#fechaLm6").val() == "Seleccione...") {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong><li>Liq. Mes 6 debe ingresar fecha LM!!</li>',
+                                    focus: false,
+                                    timer: 3000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                return false;
+                            }
+
+                        } else $("#fechaLm6").val("Seleccione...");
+
+                        if ($('#pendiente').prop('checked')) {
+
+                            pendienteDocumentacion = 1;
+                            Faltadoc = 1;
+                        }
+
+                        if ($('#falta_doc_no').prop('checked')) {
+
+                            pendienteDocumentacion = 0;
+                            Faltadoc = 0;
+                        }
+                        if ($('#devuelta').prop('checked')) {
+
+                            pendienteDocumentacion = 2;
+                            Faltadoc = 1;
+                        }
+                        if ($('#notramitada').prop('checked')) {
+
+                            pendienteDocumentacion = 3;
+                            Faltadoc = 1;
+                        }
+                        if ($('#chk_devuelta_reemplazada').prop('checked')) {
+                            
+                            pendienteDocumentacion = 42;
+                            Faltadoc = 1;
+
+                            //$('#nuevo_folio').trigger("blur");
+                            if ($("#chk_devuelta_reemplazada").prop("checked") == true) {
+                                var dato = $('#nuevo_folio').val();
+                                var rut = $('#AfiliadoRut').val();
+                                if (dato == '') {
+
+                                    $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                        html: '<strong>Error</strong><li>Debe Ingresar Folio Nuevo!!!</li>',
+                                        focus: false,
+                                        timer: 3000
+                                    });
+
+                                    $('#nuevo_folio').focus();
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    return false;
+                                }
+                                if (dato.length != 8) {
+                                    $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                        html: '<strong>Error</strong><li>Largo de licencia no válido, favor revisar!!</li>',
+                                        focus: false,
+                                        timer: 3000
+                                    });
+
+                                    $('#nuevo_folio').focus();
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    return false;
+                                }
+
+                                if (isNaN(dato)) {
+                                    $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                        html: '<strong>Error</strong><li>Formato de licencia no válido, favor revisar!!</li>',
+                                        focus: false,
+                                        timer: 3000
+                                    });
+                                    $('#nuevo_folio').focus();
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    return false;
+                                }
+
+                                if ($('#nuevo_folio_valor').val() == '') {
+                                     $.niftyNoty({
+                                        type: 'danger',
+                                        container: 'floating',
+                                         html: '<strong>Error</strong> Folio No Existe o No Está Asociado al Rut Del Afiliado!!',
+                                        focus: false,
+                                        timer: 3000
+                                    });
+
+                                    $('#nuevo_folio').focus();
+                                    $('#bt-guarda-otra').prop('disabled', false);
+                                    return false;
+
+                                }
+                            }
+
+                            $('#comentarios').val(dato);
+
+
+
+                        }
+
+
+
+                        $("#sslOfiDerivacion").val(0);
+
+                    }
+                    if ($("#DerivarLM").prop("checked") == true) {
+
+                        pendienteDocumentacion = -1;
+                        Faltadoc = 1;
+
+                        
+
+                        if ($("#sslOfiDerivacion").val() == 0) {
+
+                            $.niftyNoty({
+                                type: 'danger',
+                                container: 'floating',
+                                html: '<strong>Error</strong><li>Debe seleccinar oficia para derivar!!</li>',
+                                focus: false,
+                                timer: 3000
+                            });
+                            $("#sslOfiDerivacion").focus();
+                            $('#bt-guarda-otra').prop('disabled', false);
+                            return false;
+                        }
+                        if ($("#chk_casilla_derivada").prop("checked") == false && $("#chk_presencial_derivada").prop("checked") == false) {
+                            $.niftyNoty({
+                                type: 'danger',
+                                container: 'floating',
+                                html: '<strong>Error</strong><li> Debe Seleccionar Tipo de Ingreso!!</li> ',
+                                focus: false,
+                                timer: 3000
+                            });
+
+                            $('#bt-guarda-otra').prop('disabled', false);
+                            return false;
+                        }
+
+
+                        if ($("#chk_casilla_derivada").prop("checked") == true) {
+                            viaIngresoLicenica = 1
+                        }
+                      
+                        if ($("#chk_presencial_derivada").prop("checked") == true) {
+                          
+
+                            if ($('#valija').val() == '') {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong> <li>Debe ingresar Número de Nota Interna!!</li>',
+                                    focus: false,
+                                    timer: 3000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                $('#valija').focus();
+                                return false;
+
+                            }
+                            $('#comentarios').val($('#valija').val())
+                            viaIngresoLicenica = 2
+                        }
+                    }
+
+
+
+
+
+
+                    var WebIngresoLicencia = {
+
+                        //Los Obligatorios
+                        CodIngreso: (typeof CodIng != "undefined") ? CodIng : 0,
+                        CodOficina: getCookie("Oficina"),
+                        RutAfiliado: $("#AfiliadoRut").val(),
+                        NombreAfiliado: $("#AfiNombres").val().length > 0 ? $("#AfiNombres").val() : "-",
+                        FolioLc: $("#FolioLic").val(),
+                        SinDatosEnSistema: $("#SistemaNoData").is(":checked"),
+                        FormatoLM: $("#FormLM").val(),
+                        //Los Opcionales
+                        CantidadDiasLM: $("#DiasLM").val(),
+                        FechaInicioLM: $("#FechaDesdeLM").val(),
+                        FechaHastaLM: $("#FechaHastaLM").val(),
+                        TipoLM: $("#TipoLM").val(),
+                        OfiDerivacion: parseInt($("#sslOfiDerivacion option:selected").data('id')) > 0 ? $("#sslOfiDerivacion option:selected").data('id') : $("#sslOfiDerivacion").val(),
+                        //Los Documentos
+                        DocumentacionLM: [],
+                        //Documentacion Faltante
+                        LiqMes1: $('#m1').is(':checked') ? 1 : 0,
+                        LiqMes2: $('#m2').is(':checked') ? 1 : 0,
+                        LiqMes3: $('#m3').is(':checked') ? 1 : 0,
+                        LiqMes4: $('#m4').is(':checked') ? 1 : 0,
+                        LiqMes5: $('#m5').is(':checked') ? 1 : 0,
+                        LiqMes6: $('#m6').is(':checked') ? 1 : 0,
+                        CertificadoRenta: $('#certificado_renta').is(':checked') ? 1 : 0,
+                        Acredita90: $('#accr1').is(':checked') ? 1 : 0,
+                        CertificadoAfiliacionAFP: $('#accr2').is(':checked') ? 1 : 0,
+                        CertPagPensiones: $('#accr3').is(':checked') ? 1 : 0,
+                        Otros: $('#otros').is(':checked') ? 1 : 0,
+                        Comentarios: $('#comentarios').val().length > 0 ? $('#comentarios').val() : '',
+                        FaltaDocumentacion: Faltadoc,
+                        tipoSeleccion: pendienteDocumentacion,
+                        Imagen: $('#chk_ilm').is(':checked') ? 1 : 0,
+                        diagnostico: $('#chk_empl').is(':checked') ? 1 : 0,
+                        sinfirma: $('#chk_sinfirma').is(':checked') ? 1 : 0,
+                        contrato: $('#chk_trabajnuevo').is(':checked') ? 1 : 0,
+                        cedular_identidad: $('#chk_sinCI').is(':checked') ? 1 : 0,
+                        seccion_c: $('#chk_datoincompl').is(':checked') ? 1 : 0,
+                        certificado_nacimiento: $('#chk_RN').is(':checked') ? 1 : 0,
+                        mutual: $('#chk_mutual').is(':checked') ? 1 : 0,
+                        isapre: $('#chk_isapre').is(':checked') ? 1 : 0,
+                        fechaliquidacion1: $("#fechaLm1 option:selected").data('Fecha'),
+                        fechaliquidacion2: $("#fechaLm2 option:selected").data('Fecha'),
+                        fechaliquidacion3: $("#fechaLm3 option:selected").data('Fecha'),
+                        fechaliquidacion4: $("#fechaLm4 option:selected").data('Fecha'),
+                        fechaliquidacion5: $("#fechaLm5 option:selected").data('Fecha'),
+                        fechaliquidacion6: $("#fechaLm6 option:selected").data('Fecha'),
+                        rutusuario: getCookie("Rut"),
+                        cartaAutorizacion: $('#chk_cartaAutorizacion').is(':checked') ? 1 : 0,
+
+                        //agregado ultimos
+                        ViaIngresoLicenica: viaIngresoLicenica,
+                        QuienEnvia: quienEnvia,
+                        Email: $("#email").val(),
+                        Telefono: $("#telefono").val(),
+                        EsBanner: esBanner,
+                        firmaEmpleador: $('#chk_fataFirmaemleador').is(':checked') ? 1 : 0
+                    }
+
+
+                    const fl = $("#FormLM").val();
+                    console.log({ fl })
+                   
+                    $.SecPostJSON(BASE_URL + "/motor/api/Licencias/guardar-licencia", WebIngresoLicencia, function (respuesta) {
+
+                        if (respuesta.Estado === "OK") {
+
+                            $("#fechaLm1").val("Seleccione...");
+                            $("#fechaLm2").val("Seleccione...");
+                            $("#fechaLm3").val("Seleccione...");
+                            $("#fechaLm4").val("Seleccione...");
+                            $("#fechaLm5").val("Seleccione...");
+                            $("#fechaLm6").val("Seleccione...");
+                            $("#fechaLm1").prop("disabled", true);
+                            $("#fechaLm2").prop("disabled", true);
+                            $("#fechaLm3").prop("disabled", true);
+                            $("#fechaLm4").prop("disabled", true);
+                            $("#fechaLm5").prop("disabled", true);
+                            $("#fechaLm6").prop("disabled", true);
+                            $("#falta_doc_no").prop("checked", false);
+                            $("#pendiente").prop("checked", false);
+                            $("#devuelta").prop("checked", false);
+                            $("#notramitada").prop("checked", false);
+                            $('.docs-faltantes-op1').hide();
+                            $('.docs-obervacion').hide();
+                            $('#divcoforme').hide();
+                            $('#divdevuelta1').hide();
+                            $('#divdevuelta').hide();                //} else {
+                            $('#divnotramitada').hide();
+                            $('#divRN').hide();
+
+                            //$.niftyNoty({
+                            //    type: 'success',
+                            //    container: 'floating',
+                            //    html: '<strong>OK</strong> ' + respuesta.Mensaje,
+                            //    focus: false,
+                            //    timer: 3000,
+                            //    onHidden: function () {
+                            //        if (typeof volver != "undefined" && volver == 1) {
+                            //            location.href = BASE_URL + "/motor/App/Licencias"
+                            //        }
+                            //    }
+                            //});
+                            bootbox.dialog({
+                                message: respuesta.Mensaje + " " + "¿Desea Ingesar nueva licencia?",
+                                title: "Ingreso de LM",
+                                buttons: {
+                                    success: {
+                                        label: "Si",
+                                        className: "btn-success",
+                                        callback: function () {
+                                            location.reload();
+                                        }
+                                    },
+
+                                    danger: {
+                                        label: "No",
+                                        className: "btn-danger",
+                                        callback: function () {
+                                            location.href = BASE_URL + "/motor/App/Licencias";
+                                        }
+                                    }
+
+                                }
+                            });
+
+
+                        } else {
+
+                            if (respuesta.Objeto == "[0001]") {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    container: 'floating',
+                                    html: '<strong>Error</strong> ' + respuesta.Mensaje,
+                                    focus: false,
+                                    timer: 3000,
+                                    onHidden: function () {
+                                        if (typeof volver != "undefined" && volver == 1) {
+                                            location.href = BASE_URL + "/motor/App/Licencias"
+
+                                        }
+                                    }
+
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                            }
+
+                            if (respuesta.Objeto == "[0002]") {
+
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    message: '<strong>Error</strong> ' + respuesta.Mensaje,
+                                    container: 'floating',
+                                    timer: 5000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                                //bootbox.dialog({
+                                //    message: respuesta.Mensaje + " " + "¿Desea Actualizar?",
+                                //    title: "Recepción de LM",
+                                //    buttons: {
+                                //        success: {
+                                //            label: "Si",
+                                //            className: "btn-success",
+                                //            callback: function () {
+                                //                $.SecPostJSON(BASE_URL + "/motor/api/Licencias/guardar-licencia-derivacion", WebIngresoLicencia, function (respuesta) {
+                                //                    if (respuesta.Estado === "OK") {
+                                //                        $.niftyNoty({
+                                //                            type: 'success',
+                                //                            message: '<strong>OK</strong> Licencia Actualizada. ',
+                                //                            container: 'floating',
+                                //                            timer: 5000
+                                //                        });
+                                //                    }
+
+                                //                });
+
+                                //            }
+                                //        },
+
+                                //        danger: {
+                                //            label: "No",
+                                //            className: "btn-danger",
+                                //            callback: function () {
+                                //                $.niftyNoty({
+                                //                    type: 'danger',
+                                //                    message: '<strong>licencia no derivada</strong>',
+                                //                    container: 'floating',
+                                //                    timer: 5000
+                                //                });
+                                //            }
+
+                                //        }
+
+                                //    }
+                                //});
+
+                            }
+                            if (respuesta.Objeto == "[0004]") {
+                                $.niftyNoty({
+                                    type: 'danger',
+                                    message: '<strong>Error</strong> ' + respuesta.Mensaje,
+                                    container: 'floating',
+                                    timer: 5000
+                                });
+                                $('#bt-guarda-otra').prop('disabled', false);
+                            }
+                        }
+                    });
+
+
+                },
+                EstadoConsulta: function () {
+                    if (Tab == "read") {
+
+                        $("#chk_casilla").prop("disabled", true);
+                        $("#chk_banner_si").prop("disabled", true);
+                        $("#chk_banner_no").prop("disabled", true);
+                        $("#chk_trabajador").prop("disabled", true);
+                        $("#chk_empleador").prop("disabled", true);
+                        $("#chk_presencial").prop("disabled", true);
+                        $("#email").prop("disabled", true);
+                        $("#chk_empl").prop("disabled", true);
+                        $("#chk_datoincompl").prop("disabled", true);
+                        $("#DerivarLM").prop("disabled", true);
+                        $("#telefono").prop("disabled", true);
+                        $("#falta_doc_no").prop("disabled", true);
+                        $("#pendiente").prop("disabled", true);
+                        $("#devuelta").prop("disabled", true);
+                        $("#notramitada").prop("disabled", true);
+                        $("#m1").prop("disabled", true);
+                        $("#m2").prop("disabled", true);
+                        $("#m3").prop("disabled", true);
+                        $("#m4").prop("disabled", true);
+                        $("#m5").prop("disabled", true);
+                        $("#m6").prop("disabled", true);
+                        $("#chk_RN").prop("disabled", true);
+                        $("#accr1").prop("disabled", true);
+                        $("#accr2").prop("disabled", true);
+                        $("#accr3").prop("disabled", true);
+                        $("#otros").prop("disabled", true);
+                        $("#chk_fataFirmaemleador").prop("disabled", true);
+                        $("#chk_ilm").prop("disabled", true);
+                        $("#chk_sinfirma").prop("disabled", true);
+                        $("#chk_trabajnuevo").prop("disabled", true);
+                        $("#chk_sinCI").prop("disabled", true);
+                        $("#chk_cartaAutorizacion").prop("disabled", true);
+                        $("#chk_mutual").prop("disabled", true);
+                        $("#chk_isapre").prop("disabled", true);
+                        $("#comentarios").prop("disabled", true);
+                        $("#certificado_renta").prop("disabled", true);
+                        $("#bt-guarda-otra").prop("disabled", true);
+                        $("#fechaLm1").prop("disabled", true);
+                        $("#fechaLm2").prop("disabled", true);
+                        $("#fechaLm3").prop("disabled", true);
+                        $("#fechaLm4").prop("disabled", true);
+                        $("#fechaLm5").prop("disabled", true);
+                        $("#fechaLm6").prop("disabled", true);
+                        $("#chk_devuelta_reemplazada").prop("disabled", true);
+
+                    }
+                }
+
+
+            }
+
+
+
+
+            $("#DerivarLM").on("click", function () {
+
+                if (DerivarLM.checked) {
+
+                    $("#sslOfiDerivacion").prop("disabled", false);
+                    $("#falta_doc_no").prop("checked", false);
+                    $("#pendiente").prop("checked", false);
+                    $("#devuelta").prop("checked", false);
+                    $("#notramitada").prop("checked", false);
+                    $("#falta_doc_no").hide();
+                    $("#pendiente").hide();
+                    $("#devuelta").hide();
+                    $("#notramitada").hide();
+                    $("#checkTipoingreso").hide();
+                    $('.docs-faltantes-op1').hide();
+                    $("#divestadorecpecion").hide();
+                    $('#fechaLm1').val('Seleccione...');
+                    $('#fechaLm2').val('Seleccione...');
+                    $('#fechaLm3').val('Seleccione...');
+                    $('#fechaLm4').val('Seleccione...');
+                    $('#fechaLm5').val('Seleccione...');
+                    $('#fechaLm6').val('Seleccione...');
+                    $("#fechaLm1").prop("disabled", true);
+                    $("#fechaLm2").prop("disabled", true);
+                    $("#fechaLm3").prop("disabled", true);
+                    $("#fechaLm4").prop("disabled", true);
+                    $("#fechaLm5").prop("disabled", true);
+                    $("#fechaLm6").prop("disabled", true);
+
+
+                    $("#lblvalija").hide();
+                    $("#valija").hide();
+                    // $("#AfiliadoRut").val("");
+                    //$("#AfiliadoRut").focus();
+                    // $("#FolioLic").val("");
+                    //$("#AfiNombres").val("");
+                    //$("#EmpresaRut").val("");
+                    //$("#EmpresaNombre").val("");
+                    //$("#lblmensajecompin").hide();
+                    //$("#lblmensajecompin1").hide();
+                    //$("#lblCompin").hide();
+                    //$("#DerivarLM").prop("checked", false);
+                    //$("#sslOfiDerivacion").val('');
+                    //$("#sslOfiDerivacion").prop('disabled', true);
+
+                    $("input[type=checkbox]").prop("checked", false);
+                    //$(".falta-doc").prop("checked", false);
+                    //$(".docs-faltantes").hide();
+                    $('#comentarios').val('');
+                    $("#email").val('');
+                    $("#telefono").val('');
+                    $("#DerivarLM").prop("checked", true);
+
+                    $("#div_Viaingreso_derivacion").show();
+                    $("#chk_casilla_derivada").prop("checked", false);
+                    $("#chk_presencial_derivada").prop("checked", false);
+                } else {
+                    $("#sslOfiDerivacion").prop("disabled", true);
+                    $("#checkTipoingreso").show();
+                    $("#divestadorecpecion").show();
+                    $("#DerivarLM").prop("checked", false);
+                    $("#div_Viaingreso_derivacion").hide();
+                    $("#chk_casilla_derivada").prop("checked", false);
+                    $("#chk_presencial_derivada").prop("checked", false);
+                }
+            });
+
+            $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-suc-derivacion", function (datos) {
+
+                $("#sslOfiDerivacion").html("");
+                $.each(datos, function (i, oficina) {
+                    $("#sslOfiDerivacion").append($("<option>").val(oficina.codOficina).html(oficina.DescOficina).data("id", oficina.codOficinaCompin).data("nombre", oficina.OficinaCompin));
+                });
+            });
+            $("#sslOfiDerivacion").on("change", function (e) {
+
+                if ($(this).find(':selected').data('id') > 0) {
+                    $("#lblmensajecompin").show();
+                    $("#lblmensajecompin1").show();
+                    $("#lblCompin").html($(this).find(':selected').data('nombre'));
+                    $("#lblCompin").show();
+                    $("#lblCompin1").html($(this).find(':selected').data('nombre'));
+                    $("#lblCompin1").show();
+
+
+                }
+                else {
+                    $("#lblmensajecompin").hide();
+                    $("#lblmensajecompin1").hide();
+                    $("#lblCompin").hide();
+                    $("#lblCompin1").hide();
+                    $(this).val()
+
+                }
+            });
+
+            $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-fecha-Lm", function (datos) {
+
+                $("#fechaLm1").html("");
+                $("#fechaLm2").html("");
+                $("#fechaLm3").html("");
+                $("#fechaLm4").html("");
+                $("#fechaLm5").html("");
+                $("#fechaLm6").html("");
+                $.each(datos, function (i, fecha) {
+                    $("#fechaLm1").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
+                    $("#fechaLm2").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
+                    $("#fechaLm3").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
+                    $("#fechaLm4").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
+                    $("#fechaLm5").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
+                    $("#fechaLm6").append($("<option>").val(fecha.Fecha).html(fecha.Fecha).data("Fecha", fecha.Fecha).data("Fecha", fecha.Fecha));
+
+
+                });
+            });
+
+
+
+
+
+            // Initialize Masked Inputs
+            // a - Represents an alpha character (A-Z,a-z)
+            // 9 - Represents a numeric character (0-9)
+            // * - Represents an alphanumeric character (A-Z,a-z,0-9)
+            $.mask.definitions['~'] = '[1347]';
+            $.mask.definitions['^'] = '[34]';
+            $.mask.definitions['¬'] = '[0123456789Kk]';
+
+
+
+            $('.demo-msk-date').mask('99/99/9999');
+            $('.es-rut').mask('99.999.999-*');
+            //$('#FolioLic').mask('99999999');
+            //$("#TipoLM").mask('~');
+
+
+
+            $('#frm-data-lc').bootstrapValidator({
+                excluded: [':disabled'],
+                feedbackIcons: [],
+                fields: {
+
+                    //FaltaDocumentacion: {
+                    //    validators: {
+                    //        notEmpty: {
+                    //            message: 'Debes seleccionar una opción'
+                    //        },
+                    //    }
+                    //},
+
+                    AfiliadoRut: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Debe ingresar un rut'
+                            },
+                            callback: {
+                                message: 'Rut Invalido',
+                                callback: function (value, validator, $field) {
+                                    console.log(value)
+                                    return $.rut.validar(value);
+                                }
+                            }
+                        }
+                    },
+                    //FolioLic: {
+                    //    validators: {
+                    //        notEmpty: {
+                    //            message: 'Debe ingresar un folio'
+                    //        },
+                    //        callback: {
+                    //            message: 'Folio Invalido',
+                    //            callback: function (value, validator, $field) {
+
+                    //                if ($('#FormLM').val() == 'Mixta') {
+                    //                    value = value.replace(/-/g, '');
+                    //                    var xx = value.substring(0, 1);
+                    //                    if (xx == '3' || xx == '4') {
+                    //                        var xy = Number(value.substring(1, value.length - 1)).toMoney(0) + '-' + value.substring(value.length - 1);
+                    //                        var result = $.rut.validar(xy)
+                    //                        return result;
+                    //                    }
+                    //                    else {
+                    //                        return false;
+                    //                    }
+                    //                }
+                    //                else {
+                    //                    return true;
+                    //                }
+                    //            }
+                    //        },
+                    //    }
+                    //},
+
+                }
+            }).on('success.form.bv', function (e) {
+                // Prevén que se mande el formulario
+                e.preventDefault();
+                var $form = $(e.target);
+
+                /*if ($('#FormLM').val() == 'Mixta') {
+                    if ($("#FolioLic").val().length == 9) {
+                        $('#FolioLic').mask('9-9999999-*');
+                    }
+                    else {
+                        $('#FolioLic').mask('9-99999999-*');
+                    }
+                }*/
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                cargador.saveLC(0);
+
+                if (typeof CodIng == "undefined") {
+                    //$("#AfiliadoRut").val("");
+                    ////$("#AfiliadoRut").focus();
+                    //$("#FolioLic").val("");
+                    //$("#AfiNombres").val("");
+                    //$("#EmpresaRut").val("");
+                    //$("#EmpresaNombre").val("");
+                    //$("#lblmensajecompin").hide();
+                    //$("#lblmensajecompin1").hide();
+                    //$("#lblCompin").hide();
+                    //$("#DerivarLM").prop("checked", false);
+                    //$("#sslOfiDerivacion").val('');
+                    //$("#sslOfiDerivacion").prop('disabled', true);
+
+                    //$("input[type=checkbox]").prop("checked", false);
+                    //$(".falta-doc").prop("checked", false);
+                    //$(".docs-faltantes").hide();
+                    //$('#comentarios').val('');
+
+                    //$("#frm-data-lc").bootstrapValidator('resetForm', true);
+
+
+                }
+            })
+
+
+
+            /*.on('status.field.bv', function (e, data) {
+               var $form = $(e.target),
+                   validator = data.bv;
+
+
+               console.log({ validator })
+           });*/
+
+
+            $("#bt-bolver").on("click", function () {
+                // location.href = BASE_URL + "/motor/App/Licencias"
+                location.href = "javascript:history.back()";
+            });
+
+
+            $("#AfiliadoRut").on("keyup", function () {
+                $('#frm-data-lc').bootstrapValidator('updateStatus', 'AfiliadoRut', 'NOT_VALIDATED').bootstrapValidator('validateField', 'AfiliadoRut');
+            })
+
+
+            $("#AfiliadoRut").on("blur", function () {
+
+                if ($(this).val().length > 7) {
+                    $.SecGetJSON(BASE_URL + "/motor/api/Licencias/datos-afiliado", { AfiliadoRut: $(this).val() }, function (respuesta) {
+                        if (respuesta.Estado === "OK") {
+                            if (respuesta.Objeto.logField.codRespuestaField != 5) {
+                                $("#AfiNombres").val(respuesta.Objeto.datosAfiliado1Field.apellidoPaternoField + " " + respuesta.Objeto.datosAfiliado1Field.apellidoMaternoField + " " + respuesta.Objeto.datosAfiliado1Field.nombresField)
+                                $("#EmpresaRut").val(respuesta.Objeto.empresasField[0].rutEmpresaField);
+                                $("#EmpresaNombre").val(respuesta.Objeto.empresasField[0].razonSocialField);
+                                $("#SistemaNoData").prop("checked", false);
+                                $("#SistemaNoData").prop("disabled", true);
+
+                            } else {
+                                $("#AfiNombres").val("")
+                                $("#EmpresaRut").val("");
+                                $("#EmpresaNombre").val("");
+                                $("#SistemaNoData").prop("checked", true);
+                            }
+                        } else {
+                            $.niftyNoty({
+                                type: 'danger',
+                                container: 'floating',
+                                html: '<strong>Error</strong> ' + respuesta.Mensaje,
+                                focus: false,
+                                timer: 3000
+                            });
+                        }
+                    });
+                }
+
+
+
+            });
+
+
+            $("#radio-formato-manual-lm").on("change", function (e) {
+
+                $('#FolioLic').val('');
+                //$('#FolioLic').mask('99999999');
+                $('#FormLM').val('Manual');
+                $("#divempl").show();
+                $("#divlmnolegible").show();
+                $("#divsinfirma").hide();
+                // $("#divcartaAutorizacion").show();
+                $("#divfataFirmaemleador").hide();
+                $("#DerivarLM").prop("disabled", false);
+                $("#sslOfiDerivacion").prop("disabled", true);
+
+
+
+            })
+
+            $("#radio-formato-mixto-lm").on("change", function (e) {
+
+                $('#FolioLic').val('');
+                $('#FolioLic').prop('disabled', false);
+                //if ($(this).val().length == 9) {
+                //    $('#FolioLic').mask('9-9999999-*');
+                //}
+                //else {
+                //    $('#FolioLic').mask('9-99999999-*');
+                //}
+                $('#FormLM').val('Mixta');
+                $("#divempl").hide();
+                $("#divlmnolegible").hide();
+                $("#divsinfirma").hide();
+                $("#divcartaAutorizacion").hide();
+                $("#DerivarLM").prop("disabled", true);
+                $("#sslOfiDerivacion").prop("disabled", true);
+                $("#divsinfirma").hide();
+                $("#chk_casilla_derivada").prop("checked", false);
+                $("#chk_presencial_derivada").prop("checked", false);
+                $("#div_Viaingreso_derivacion").hide();
+                $("#div_Viaingreso_derivacion").hide();
+            })
+
+
+
+            $('#FolioLic').on("click", function (e) {
+
+                if ($('#FormLM').val() == 'Mixta') {
+                    $('#FolioLic').val($('#FolioLic').val().replace(/-/g, '').replace(/_/g, ''))
+
+
+
+                    //$('#FolioLic').unmask();
+                }
+            });
+
+
+
+
+
+            var VaLM = {
+
+                AplicarValidaciones: function (e) {
+
+                    VaLM.reiniciar();
+
+
+                    if ($("#TipoLM").val() == "" || $("#DiasLM").val() == "" || $("#FechaDesdeLM").val() == "") {
+                        return false;
+                    }
+
+                    if ($("#DiasLM").val() != "" && $("#FechaDesdeLM").val() != "") {
+                        $("#FechaHastaLM").val(CalcularDiasCorridos($("#FechaDesdeLM").val().replace(/\//g, '-'), $("#DiasLM").val()).replace(/-/g, '/'));
+                    }
+
+                    //Mostrar tres ultimas liquidaciones
+                    if ($("#TipoLM").val() == "1" || $("#TipoLM").val() == "3" || $("#TipoLM").val() == "4" || $("#TipoLM").val() == "7") {
+                        $("#doc_check").show();
+                        VaLM.mesesUltimasLiq($("#FechaDesdeLM").val())
+                    }
+
+                    if ($("#TipoLM").val() == "3") {
+                        $("#doc_check_nac").show();
+                        VaLM.mesesLiqParental($("#FechaDesdeLM").val())
+                        if ($("#DiasLM").val() >= 50) {
+                            $("#nac").show();
+                        }
+                    }
+
+                    //if ($(e.target).attr("id") == "FechaDesdeLM") {
+                    //    $('#frm-data-lc').bootstrapValidator('updateStatus', 'FechaDesdeLM', 'NOT_VALIDATED').bootstrapValidator('validateField', 'FechaDesdeLM');
+                    //}
+
+                    //if ($(e.target).attr("id") == "TipoLM") {
+                    //    $('#frm-data-lc').bootstrapValidator('updateStatus', 'TipoLM', 'NOT_VALIDATED').bootstrapValidator('validateField', 'TipoLM');
+                    //}
+
+                },
+                reiniciar: function () {
+                    $("#doc_check").hide();
+                    $("#doc_check_nac").hide();
+                    $("#nac").hide();
+                },
+                mesesUltimasLiq: function (fechaLM) {
+                    var leyendaMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                    var dt = parseDate(fechaLM.replace(/\//g, '-'));
+                    dt.setMonth(dt.getMonth() - 1)
+                    $("#lm1").text(leyendaMeses[dt.getMonth()] + " " + dt.getFullYear().toString())
+                    $("#m1").val(fechaToPeriodo(dt))
+                    $("#m1").data("tipodoc", 1)
+                    dt.setMonth(dt.getMonth() - 1)
+                    $("#lm2").text(leyendaMeses[dt.getMonth()] + " " + dt.getFullYear().toString())
+                    $("#m2").val(fechaToPeriodo(dt))
+                    $("#m2").data("tipodoc", 1)
+                    dt.setMonth(dt.getMonth() - 1)
+                    $("#lm3").text(leyendaMeses[dt.getMonth()] + " " + dt.getFullYear().toString())
+                    $("#m3").val(fechaToPeriodo(dt))
+                    $("#m3").data("tipodoc", 1)
+                },
+                mesesLiqParental: function (fechaLM) {
+                    var leyendaMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                    var dt = parseDate(fechaLM.replace(/\//g, '-'));
+                    dt.setMonth(dt.getMonth() - 8)
+                    $("#lmn1").text(leyendaMeses[dt.getMonth()] + " " + dt.getFullYear().toString())
+                    $("#mn1").val(fechaToPeriodo(dt))
+                    $("#mn1").data("tipodoc", 2)
+                    dt.setMonth(dt.getMonth() - 1)
+                    $("#lmn2").text(leyendaMeses[dt.getMonth()] + " " + dt.getFullYear().toString())
+                    $("#mn2").val(fechaToPeriodo(dt))
+                    $("#mn2").data("tipodoc", 2)
+                    dt.setMonth(dt.getMonth() - 1)
+                    $("#lmn3").text(leyendaMeses[dt.getMonth()] + " " + dt.getFullYear().toString())
+                    $("#mn3").val(fechaToPeriodo(dt))
+                    $("#mn3").data("tipodoc", 2)
+                },
+
+            }
+
+            $(".validatore").on("keyup", VaLM.AplicarValidaciones);
+
+
+
+            if (typeof CodIng != "undefined") {
+                cargador.cargaLC(CodIng);
+            }
+
+            $("#sslOfiDerivacion").trigger("change");
+
+
+
+            $('#falta_doc_no').on('change', function (event) {
+                $("#Divnuevofolio").hide();
+                $("#chk_devuelta_reemplazada").prop("checked", false);
+                $("#pendiente").prop("checked", false);
+                $("#falta_doc_no").prop("checked", true);
+                $("#devuelta").prop("checked", false);
+                $("#notramitada").prop("checked", false);
+                $('.docs-faltantes-op1').hide();
+                $('.docs-obervacion').hide();
+                $('#divdevuelta').hide();
+                $('#divnotramitada').hide();
+                $('#divRN').hide();
+
+
+            })
+
+
+            $('#devuelta').on('change', function (event) {
+                $("#Divnuevofolio").hide();
+                $("#pendiente").prop("checked", false);
+                $("#falta_doc_no").prop("checked", false);
+                $("#devuelta").prop("checked", true);
+                $("#notramitada").prop("checked", false);
+                $('#divRN').show();
+                $('#divfataFirmaemleador').hide();
+                $("#chk_devuelta_reemplazada").prop("checked", false);
+                if ($("#chk_banner_si").prop("checked") == true) {
+
+                    $("#divcartaAutorizacion").hide();
+                }
+                if ($("#chk_banner_no").prop("checked") == true) {
+
+                    $("#divcartaAutorizacion").show();
+                }
+
+
+                var value = $(this).val();
+                if (value == '1') {
+                    $('.docs-faltantes-op1').show();
+                    $('.docs-obervacion').show();
+                    $('#divdevuelta').show();
+                    $('#divdevuelta1').show();
+                    $('#divnotramitada').hide();
+                    $('#divcoforme').show();
+
+
+
+                } else {
+                    $('.docs-faltantes-op1').hide();
+                    $('.docs-obervacion').hide();
+                    $('#divdevuelta').hide();
+                    $('#divnotramitada').hide();
+
+                }
+            })
+
+
+
+            $('#pendiente').on('change', function (event) {
+
+                $("#falta_doc_no").prop("checked", false);
+                $("#pendiente").prop("checked", true);
+                $("#devuelta").prop("checked", false);
+                $("#notramitada").prop("checked", false);
+                $('#divdevuelta').hide();
+                $('#divnotramitada').hide();
+                $('#divRN').hide();
+                $('#divfataFirmaemleador').hide();
+                $("#chk_devuelta_reemplazada").prop("checked", false);
+                $('#divreemplazada').hide();
+                $("#Divnuevofolio").hide();
+                var value = $(this).val();
+                if (value == '1') {
+
+                    $('.docs-faltantes-op1').show();
+                    $('.docs-obervacion').show();
+                    $('#divcoforme').show();
+                    $('#divdevuelta').hide();
+                    $('#divdevuelta1').show();
+                    $('#divreemplazada').show();
+                } else {
+                    $('.docs-faltantes-op1').hide();
+                    $('.docs-obervacion').hide();
+                    $('#divcoforme').hide();
+                    $('#divreemplazada').hide();
+                }
+            })
+
+            $('#notramitada').on('change', function (event) {
+
+                $("#falta_doc_no").prop("checked", false);
+                $("#notramitada").prop("checked", true);
+                $("#pendiente").prop("checked", false);
+                $("#devuelta").prop("checked", false);
+                $("#chk_devuelta_reemplazada").prop("checked", false);
+
+                var value = $(this).val();
+                //if (value == '1') {
+
+                $('.docs-faltantes-op1').show();
+                $('.docs-obervacion').show();
+                $('#divcoforme').hide();
+                $('#divdevuelta1').hide();
+                $('#divdevuelta').hide();                //} else {
+                $('#divnotramitada').show();
+                $('#divRN').hide();
+                $('#divreemplazada').show();
+                $("#Divnuevofolio").hide();
+                //    $('.docs-faltantes-op1').hide();
+                //    $('.docs-obervacion').hide();
+                //    $('#divnotramitada').hide();
+                //}
+            })
+
+            //-----------------check click Reemplazada por una nueva -------------------------------
+
+            $('#chk_devuelta_reemplazada').on('change', function (event) {
+                $("#Divnuevofolio").show();
+                $("#falta_doc_no").prop("checked", false);
+                $("#notramitada").prop("checked", false);
+                $("#pendiente").prop("checked", false);
+                $("#devuelta").prop("checked", false);
+                $("#chk_devuelta_reemplazada").prop("checked", true);
+
+                var value = $(this).val();
+                //if (value == '1') {
+                $('.docs-obervacion').hide();
+                $('.docs-faltantes-op1').hide();
+                $('.docs-obervacion').hide();
+                $('#divcoforme').hide();
+                $('#divdevuelta1').hide();
+                $('#divdevuelta').hide();                //} else {
+                $('#divnotramitada').hide();
+                $('#divRN').hide();
+                $('#divreemplazada').show();
+
+                //    $('.docs-faltantes-op1').hide();
+                //    $('.docs-obervacion').hide();
+                //    $('#divnotramitada').hide();
+                //}
+            })
+
+            //-----------------check click liq licencias -------------------------------
+
+
+            $('#m1').on('change', function (event) {
+
+
+                var value = $(this).val();
+                if ($('#m1').prop('checked'))
+                    value = "1";
+                else
+                    value = "2";
+
+                if (value == '1') {
+
+                    $("#fechaLm1").prop("disabled", false);
+                }
+                else {
+
+                    $("#fechaLm1").prop("disabled", true);
+                }
+
+            })
+
+            $('#m2').on('change', function (event) {
+
+
+
+                var value = $(this).val();
+                if ($('#m2').prop('checked'))
+                    value = "1";
+                else
+                    value = "2";
+
+
+                if (value == '1') {
+
+                    $("#fechaLm2").prop("disabled", false);
+                }
+                else {
+
+                    $("#fechaLm2").prop("disabled", true);
+                }
+
+            })
+            $('#m3').on('change', function (event) {
+
+
+
+                var value = $(this).val();
+                if ($('#m3').prop('checked'))
+                    value = "1";
+                else
+                    value = "2";
+
+
+                if (value == '1') {
+
+                    $("#fechaLm3").prop("disabled", false);
+                }
+                else {
+
+                    $("#fechaLm3").prop("disabled", true);
+                }
+
+            })
+
+            $('#m4').on('change', function (event) {
+
+
+                var value = $(this).val();
+                if ($('#m4').prop('checked'))
+                    value = "1";
+                else
+                    value = "2";
+
+
+
+
+                if (value == '1') {
+
+                    $("#fechaLm4").prop("disabled", false);
+                }
+                else {
+
+                    $("#fechaLm4").prop("disabled", true);
+                }
+
+            })
+
+            $('#m5').on('change', function (event) {
+
+
+                var value = $(this).val();
+                if ($('#m5').prop('checked'))
+                    value = "1";
+                else
+                    value = "2";
+
+
+                if (value == '1') {
+
+                    $("#fechaLm5").prop("disabled", false);
+                }
+                else {
+
+                    $("#fechaLm5").prop("disabled", true);
+                }
+
+            })
+
+            $('#m6').on('change', function (event) {
+
+                var value = $(this).val();
+                if ($('#m6').prop('checked'))
+                    value = "1";
+                else
+                    value = "2";
+
+                if (value == '1') {
+
+                    $("#fechaLm6").prop("disabled", false);
+
+                }
+                else {
+
+                    $("#fechaLm6").prop("disabled", true);
+
+                }
+
+            })
+
+
+            //----------------------------------------------
+            $('#chk_mutual').on('change', function (event) {
+
+
+
+                $("#chk_isapre").prop("checked", false);
+                var value = $(this).val();
+                if (value == '1') {
+
+                }
+                else {
+
+                    $("#chk_mutual").prop("checked", false);
+                }
+
+            })
+
+
+            $('#chk_isapre').on('change', function (event) {
+
+                $("#chk_mutual").prop("checked", false);
+
+                var value = $(this).val();
+                if (value == '1') {
+
+                }
+                else {
+
+                    $("#chk_isapre").prop("checked", false);
+                }
+
+            })
+
+            $('#chk_casilla').on('change', function (event) {
+
+                $("#email").val("");
+                $("#telefono").val("");
+                $("#chk_casilla").prop("checked", true);
+                $("#chk_presencial").prop("checked", false);
+                $("#divopc-casilla").show();
+                $("#tabDatos").show();
+                $("#email").prop("disabled", false);
+                $("#telefono").prop("disabled", false);
+                $("#divdevuelta").hide();
+                //$("#valija").hide();
+                //$("#lblvalija").hide();
+                var value = $(this).val();
+                $("#divdevueltacheck").show();
+                $("#divnotramitadacheck").show();
+                $("#divopc-banner").show();
+                $("#chk_banner_si").prop("checked", false);
+                $("#chk_banner_no").prop("checked", false);
+                $("#chk_trabajador").prop("cheked", false);
+                $("#chk_empleador").prop("checked", false);
+
+
+
+                $("#divdevuelta1").hide();
+            })
+
+
+
+            $('#nuevo_folio').on('blur', function (event) {
+
+                if ($("#chk_devuelta_reemplazada").prop("checked") == true) {
+                    var dato = $('#nuevo_folio').val();
+                    var rut = $('#AfiliadoRut').val();
+                    if (dato == '') {
+
+                        $.niftyNoty({
+                            type: 'danger',
+                            container: 'floating',
+                            html: '<strong>Error</strong> Debe Ingresar Folio Nuevo!!!',
+                            focus: false,
+                            timer: 3000
+                        });
+
+                        $('#nuevo_folio').focus();
+                        return false;
+                    }
+                    if (dato.length != 8) {
+                        $.niftyNoty({
+                            type: 'danger',
+                            container: 'floating',
+                            html: '<strong>Error</strong> Largo de licencia no válido, favor revisar!!',
+                            focus: false,
+                            timer: 3000
+                        });
+
+                        $('#nuevo_folio').focus();
+                        $('#bt-guarda-otra').prop('disabled', true);
+                        return false;
+                    }
+
+                    if (isNaN(dato)) {
+                        $.niftyNoty({
+                            type: 'danger',
+                            container: 'floating',
+                            html: '<strong>Error</strong> Formato de licencia no válido, favor revisar!!',
+                            focus: false,
+                            timer: 3000
+                        });
+                        $('#nuevo_folio').focus();
+                        $('#bt-guarda-otra').prop('disabled', true);
+                        return false;
+                    }
+                    $.SecGetJSON(BASE_URL + "/motor/api/Licencias/Valida-folio-existente", { FolioLicencia: dato, Rut: rut }, function (response) {
+                
+                        if (response == 0) {
+                            $.niftyNoty({
+                                type: 'danger',
+                                container: 'floating',
+                                html: '<strong>Error</strong> Folio No Existe o No Está Asociado al Rut Del Afiliado!!',
+                                focus: false,
+                                timer: 3000
+                            });
+                            $('#nuevo_folio').focus();
+                            $('#bt-guarda-otra').prop('disabled', false);
+                            $('#nuevo_folio_valor').val();
+                            return false;
+
+                        }
+                        else {
+                            $('#nuevo_folio_valor').val(1);
+                        }
+                    });
+
+                }
+            });
+            $('#chk_presencial').on('change', function (event) {
+
+                $("#email").val("");
+                $("#telefono").val("");
+                $("#chk_banner_si").prop("checked", false);
+                $("#chk_banner_no").prop("checked", false);
+                $("#divopc-banner").hide();
+                $("#chk_casilla").prop("checked", false);
+                $("#chk_presencial").prop("checked", true);
+                $("#divopc-casilla").hide();
+                $("#email").prop("disabled", false);
+                $("#telefono").prop("disabled", false);
+                var value = $(this).val();
+                $("#tabDatos").show();
+                $("#divdevuelta").hide();
+                $("#divdevueltacheck").hide();
+                $("#divnotramitadacheck").hide();
+                $("#divcoforme").hide();
+                $("#divdevuelta1").hide();
+                //$("#valija").show();
+                //$("#lblvalija").show();
+
+            })
+
+
+            $('#chk_trabajador').on('change', function (event) {
+                $("#chk_empleador").prop("checked", false);
+                $("#chk_trabajador").prop("checked", true);
+                $("#email").prop("disabled", false);
+                $("#telefono").prop("disabled", false);
+
+
+
+            })
+
+            $('#chk_empleador').on('change', function (event) {
+                $("#chk_empleador").prop("checked", true);
+                $("#chk_trabajador").prop("checked", false);
+                $("#email").prop("disabled", false);
+                $("#telefono").prop("disabled", false);
+            })
+
+
+            $('#radio-formato-manual-lm').on('change', function (event) {
+                $("#FolioLic").prop("disabled", false);
+
+            })
+
+            $('#radio-formato-manual-lm').on('change', function (event) {
+                $("#FolioLic").prop("disabled", false);
+
+            })
+
+            $('#chk_banner_si').on('change', function (event) {
+                $("#chk_banner_si").prop("checked", true);
+                $("#chk_banner_no").prop("checked", false);
+                $("#divcartaAutorizacion").hide();
+
+            })
+
+
+            $('#chk_banner_no').on('change', function (event) {
+                $("#chk_banner_si").prop("checked", false);
+                $("#chk_banner_no").prop("checked", true);
+                $("#divcartaAutorizacion").show();
+            })
+
+            $('#chk_sinCI').on('change', function (event) {
+              
+                if ($('#chk_sinCI').prop("checked") == true) {
+                    $("#chk_sinCI").prop("checked", true);
+                    $("#chk_trabajnuevo").prop("checked", true);
+                }
+                if ($('#chk_sinCI').prop("checked") == false) {
+                    $("#chk_sinCI").prop("checked", false);
+                    $("#chk_trabajnuevo").prop("checked", false);
+                }
+
+            })
+            $('#chk_trabajnuevo').on('change', function (event) {
+                if ($('#chk_trabajnuevo').prop("checked") == true) {
+                    $("#chk_sinCI").prop("checked", true);
+                    $("#chk_trabajnuevo").prop("checked", true);
+                }
+                if ($('#chk_trabajnuevo').prop("checked") == false) {
+                    $("#chk_sinCI").prop("checked", false);
+                    $("#chk_trabajnuevo").prop("checked", false);
+                }
+            })
+
+
+
+            $('#chk_casilla_derivada').on('change', function (event) {
+                if ($('#chk_casilla_derivada').prop("checked") == true) {
+                    $("#chk_casilla_derivada").prop("checked", true);
+                    $("#chk_presencial_derivada").prop("checked", false);
+
+                    $("#lblvalija").hide();
+                    $("#valija").hide();
+                }
+                if ($('#chk_casilla_derivada').prop("checked") == false) {
+                    $("#chk_casilla_derivada").prop("checked", true);
+                }
+            })
+
+            $('#chk_presencial_derivada').on('change', function (event) {
+                if ($('#chk_presencial_derivada').prop("checked") == true) {
+                    $("#chk_casilla_derivada").prop("checked", false);
+                    $("#chk_presencial_derivada").prop("checked", true);
+                    $("#lblvalija").show();
+                    $("#valija").show();
+
+                }
+                if ($('#chk_presencial_derivada').prop("checked") == false) {
+                    $("#chk_presencial_derivada").prop("checked", true);
+                }
+
+            })
+
+
+
+
+
+
+
+        })
+
+
+    </script>
+
+}
+
+
+
+
+
+
+

@@ -1,0 +1,362 @@
+﻿<link href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css" rel="stylesheet">
+<div id="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Comité Paritario, Etapa: Seleccion de Elector</h3>
+                </div>
+                <div class="panel-body">
+                    <bootstrap-table class="table table-striped" :columns="btTable.columns" :data="leads" :options="btTable.options"></bootstrap-table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="modalGestionCPE2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Comité Paritario, Etapa: Seleccion de Elector</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="well">
+                                <div class="row mar-btm">
+                                    <div class="col-lg-6">
+                                        <div class="dd-handle dd-outline dd-anim">
+                                            <div class="media-left">
+                                                <i class="pli-building icon-2x"></i>
+                                            </div>
+                                            <div class="media-body">
+                                                <p class="text-main mar-no">Compañía</p>
+                                                <small class="text-semibold">{{ showInfo.empresaRut }} - {{ showInfo.empresaNombre }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="dd-handle dd-outline dd-anim">
+                                            <div class="media-left">
+                                                <i class="demo-pli-map-2 icon-2x"></i>
+                                            </div>
+                                            <div class="media-body">
+                                                <p class="text-main mar-no">Punto de Atención</p>
+                                                <small class="text-semibold">{{ showInfo.empresaCodigoPuntoAtencion }} - {{ showInfo.empresaNombrePuntoAtencion }} ({{ showInfo.empresaCantidadTrabajadores }} Empleado(s))</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-main h4">Opciones</p>
+                    <form id="datos-gestion" action="#" method="post">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label class="control-label">Indica el interés para el proceso de Votación</label>
+                                    <div class="radio">
+                                        <input type="radio" id="radio_interes_si" name="interesProcesoVotacion" v-model="optionsModel.interes" class="magic-radio" value="SI" />
+                                        <label for="radio_interes_si">Si</label>
+
+                                        <input type="radio" id="radio_interes_no" name="interesProcesoVotacion" v-model="optionsModel.interes" class="magic-radio" value="NO" />
+                                        <label for="radio_interes_no">No</label>
+
+                                        <input type="radio" id="radio_interes_pendiente" name="interesProcesoVotacion" v-model="optionsModel.interes" class="magic-radio" value="PENDIENTE" />
+                                        <label for="radio_interes_pendiente">Pendiente</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" v-if="optionsModel.interes=='SI'">
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label class="control-label">Indica el estado del proceso de Votación</label>
+                                    <div class="radio">
+                                        <input type="radio" id="radio_estado_en_difusion" name="estadoProcesoVotacion" v-model="optionsModel.estado" class="magic-radio" value="EN_DIFUSION" />
+                                        <label for="radio_estado_en_difusion">En Difusión</label>
+
+                                        <input type="radio" id="radio_estado_pendiente" name="estadoProcesoVotacion" v-model="optionsModel.estado" class="magic-radio" value="PENDIENTE" />
+                                        <label for="radio_estado_pendiente">Pendiente</label>
+
+                                        <input type="radio" id="radio_estado_formalizada" name="estadoProcesoVotacion" v-model="optionsModel.estado" class="magic-radio" value="FORMALIZADA" />
+                                        <label for="radio_estado_formalizada">Formalizada</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" v-if="optionsModel.interes=='SI' && optionsModel.estado=='FORMALIZADA'">
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <label class="control-label">Indica el estado concreto del proceso de Votación</label>
+                                    <select class="form-control" v-model="optionsModel.subEstado">
+                                        <option value="">Selecciona</option>
+                                        <option value="EN_GESTION">En Gestión</option>
+                                        <option value="DOCUMENTACION_ENVIADA">Documentación Enviada</option>
+                                        <option value="EN_REVISION_X_FISCALIA">En Revisión (Fiscalía)</option>
+                                        <option value="RECHAZADA">Rechazada</option>
+                                        <option value="APELADA">Apelada</option>
+                                        <option value="APROBADA">Aprobada</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Comentarios</label>
+                                    <textarea class="form-control" v-model="optionsModel.comentarios"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row" v-if="optionsModel.interes=='SI'">
+                            <div class="col-lg-12">
+                                <hr />
+                                <p class="h4">Información del Elector</p>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label" for="elector_rut">Rut</label>
+                                    <input id="elector_rut" type="text" class="form-control" v-model="optionsModel.rutElector" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label" for="elector_nombre">Nombre</label>
+                                    <input id="elector_nombre" type="text" class="form-control" v-model="optionsModel.nombreElector" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label" for="elector_correo">Correo</label>
+                                    <input id="elector_correo" type="text" class="form-control" v-model="optionsModel.correoElector" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label" for="elector_tel">Telefono</label>
+                                    <input id="elector_tel" type="text" class="form-control" v-model="optionsModel.telefonoElector" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label" for="elector_cel">Celular</label>
+                                    <input id="elector_cel" type="text" class="form-control" v-model="optionsModel.celularElector" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="row mar-btm" id="mensajesCPE2"></div>
+                    <button type="button" class="btn btn-default bloquear-onsubmit" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary bloquear-onsubmit" v-on:click="doSubmitForm">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section script{
+
+    <script src="~/Assets/js/vue.js"></script>
+    <!--Bootstrap Table [ OPTIONAL ]-->
+    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table-vue.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+
+    <script>
+
+        var selApp = new Vue({
+            el: '#page-content',
+            components: {
+                'BootstrapTable': BootstrapTable
+            },
+            data: {
+                leads: [],
+                showInfo: {},
+                optionsModel: {
+                    interes: '',
+                    estado: '',
+                    subEstado: '',
+                    comentarios: '',
+                    rutElector: '',
+                    nombreElector: '',
+                    correoElector: '',
+                    telefonoElector: '',
+                    celularElector: '',
+                },
+                btTable: {
+                    columns: [
+                        {
+                            field: 'empresaCodigoPuntoAtencion',
+                            title: 'Código Pto. Atención',
+                            sortable: true,
+                            formatter: function (value, row, index) {
+                                return `<a class="btn-link open-modal" data-toggle="modal" data-target="#modalGestion" :data-lead="${row.id}" href="#">${value}</a>`;
+                            },
+                            events: {
+                                'click .open-modal': function (e, value, row) {
+                                    selApp.doModalOpenClick(row);
+                                }
+                            }
+                        },
+                        {
+                            field: 'empresaRut',
+                            title: 'Rut',
+                            sortable: true
+                        },
+                        {
+                            field: 'empresaNombre',
+                            sortable: true,
+                            title: 'Nombre \ Pto. Atención'
+                        },
+                        {
+                            field: 'empresaCantidadTrabajadores',
+                            sortable: true,
+                            title: 'N° Trabajadores'
+                        },
+                        {
+                            field: 'cantidadComiteParitario',
+                            title: 'N° Directores Laborales',
+                            formatter: function (value, row, index) {
+                                return row.directoresLaborales.length;
+                            }
+                        }
+                    ],
+                    options: {
+                        search: true,
+                        showColumns: false,
+                        pagination: true,
+                        pageSize: 40,
+                        pageList: []
+
+                    }
+                }
+            },
+            methods: {
+                fetchLeads: function () {
+                    let rutEjecutivo = getCookie('Rut');
+                    return fetch(`http://${motor_api_server}:4002/directores-laborales?ejecutivo=${rutEjecutivo}&noaplica=0`, {
+                        method: 'GET',
+                        mode: 'cors',
+                        cache: 'default'
+                    }).then(response => response.json())
+                        .then(leads => this.leads = leads.rows);
+                },
+                populateManagement: function (info) {
+                    this.optionsModel = {
+                        interes: info.interes,
+                        estado: info.estado,
+                        subEstado: info.subEstado,
+                        comentarios: info.comentarios,
+                        rutElector: info.rutElector,
+                        nombreElector: info.nombreElector,
+                        correoElector: info.correoElector,
+                        telefonoElector: info.telefonoElector,
+                        celularElector: info.celularElector
+                    };
+                },
+                doModalOpenClick: function (lead) {
+                    this.showInfo = lead;
+
+                    fetch(`http://${motor_api_server}:4002/directores-laborales/gestion/seleccion-elector/${lead.empresaCodigoPuntoAtencion}`, {
+                        method: 'GET',
+                        mode: 'cors',
+                        cache: 'default'
+                    }).then(response => response.json())
+                      .then(gestion => this.populateManagement(gestion));
+                },
+                doModalOnClose: function () {
+                    this.showInfo = {};
+                    const clear = {
+                        interes: '',
+                        estado: '',
+                        subEstado: '',
+                        comentarios: '',
+                        rutElector: '',
+                        nombreElector: '',
+                        correoElector: '',
+                        telefonoElector: '',
+                        celularElector: '',
+                    };
+                    this.populateManagement(clear);
+                },
+                doSubmitForm: function () {
+                    const model = {
+                        ...this.optionsModel,
+                        rutEmpresa: this.showInfo.empresaRut,
+                        codigoAnexoEmpresa: this.showInfo.empresaCodigoPuntoAtencion,
+                        rutEjecutivo: getCookie('Rut'),
+                        codigoSucursal: getCookie('Oficina')
+                    }
+
+                    fetch(`http://${motor_api_server}:4002/directores-laborales/gestion/seleccion-elector`, {
+                        method: 'POST',
+                        body: JSON.stringify(model),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Token': getCookie('Token')
+                        }
+                    }).then(response => {
+                        console.log({
+                            response
+                        });
+                        if (response.ok) {
+                            $.niftyNoty({
+                                type: 'success',
+                                icon: 'pli-like-2 icon-2x',
+                                message: 'Gestion registrada con éxito.',
+                                container: '#mensajesCPE2'
+                            });
+                        } else {
+                            $.niftyNoty({
+                                type: 'danger',
+                                icon: 'pli-danger icon-2x',
+                                message: 'Ops! Ha ocurrido un problema al intentar guardar tu gestión, por favor intentalo nuevamente.',
+                                container: '#mensajesCPE2'
+                            });
+                        }
+                    });
+
+
+
+
+
+
+                }
+            },
+            computed: {
+
+            },
+            mounted: function () {
+                this.fetchLeads();
+            }
+        });
+
+        $(function () {
+            $('#modalGestionCPE2').on('hidden.bs.modal', function (event) {
+                selApp.doModalOnClose();
+            });
+        })
+    </script>
+}

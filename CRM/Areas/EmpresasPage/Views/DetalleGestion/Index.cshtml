@@ -1,0 +1,512 @@
+﻿
+
+@{
+    Layout = "~/Areas/EmpresasPage/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+<h1 id="tituloEmp">Mantención Gestion </h1>
+
+<div id="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel" style="border-radius: 6px;">
+                <div class="panel-body">
+                    <a href="javascript:history.back()" class="btn btn-default btn-rounded"><i class="ion-arrow-left-a"></i>  Volver a ficha empresa</a>
+                    <div class="text-right no-print" style="margin-top: -31px;">
+                        <a data-target='#demo-lg-modal-new-gestion-detalle' data-toggle='modal' class='btn btn-default btn-rounded'><i class='demo-psi-receipt-4'></i> Nuevo Detalle Mant. Gestion</a>
+                    </div>
+                    <br />
+                    <br />
+                    <h3 class="text-bold text-main mar-no" style="color: #b3b3b3">Datos Mantención Gestion</h3>
+                    <br />
+                    <div class="row" id="divCabecera">
+                    </div>
+                    <h3 class="text-bold text-main mar-no" style="color: #b3b3b3">Detalle Mantención Gestion</h3>
+                    <br />
+                    <div id="divGestion"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="demo-lg-modal-new-gestion-detalle" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 13px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title"><i class="demo-psi-receipt-4 icon-lg" style="margin-left: 10px;"></i>    Agregar detalle Mantención Gestion</h4>
+            </div>
+            <div class="panel-body">
+                <form id="form_gestion_nuevo_detalle_mantencion" action="#" method="post">
+                    <div class="panel panel-bordered-dark" style="border-radius: 8px; border: 1px solid #e5e5e5;">
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="col-md-4 mar-btm">
+                                    <label class="control-label">Tema</label>
+                                    <select id="slTemaGestionNew" class="form-control" name="slTemaGestionNew"></select>
+                                </div>
+                                <div class="col-md-4 mar-btm">
+                                    <label class="control-label">Sub-Tema</label>
+                                    <select id="slSubTemavisitaNew" class="form-control" name="slSubTemavisitaNew"></select>
+                                </div>
+
+                                <div class="col-md-4 mar-btm">
+                                    <label class="control-label">Alerta</label>
+                                    <div class="radio">
+                                        <input id="ckAlertaSIGestion" class="magic-radio" type="radio" name="groupCkeckAlertaGestion" value='SI'>
+                                        <label for="ckAlertaSIGestion">SI</label>
+                                        <input id="ckAlertaNOGestion" class="magic-radio" type="radio" name="groupCkeckAlertaGestion" value='NO' checked>
+                                        <label for="ckAlertaNOGestion">NO</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 mar-btm">
+                                    <label class="control-label">Afiliado Gestionado</label>
+                                    <div class="btn-group bootstrap-select form-control">
+                                        <div class="panel-body">
+                                            <label for="slAfiliadoSelectNew" class="sr-only">Asignar Empresas</label>
+                                            <select id="slAfiliadoSelectNew" name="slAfiliadoSelectNew" data-placeholder="Seleccione a los Afiliados.." multiple tabindex="4"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mar-btm">
+                                    <label class="control-label">Comentarios</label>
+                                    <textarea placeholder="Comentarios" rows="4" class="form-control" id="comentarioGestionNew" name="comentarioGestionNew" style="display: block"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary btn-icon btn-rounded" id="btGuardaDetalleGestionManNew">Guardar Detalle de gestion mantención<i class="demo-psi-add icon-lg" style="margin-left: 10px;"></i></button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="demo-lg-modal-Man-gestion" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 13px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title"><i class="demo-psi-receipt-4 icon-lg" style="margin-left: 10px;"></i>    Modificación Mantención Gestion</h4>
+            </div>
+            <div class="panel-body">
+                <form id="form_gestion_mantencion" action="#" method="post">
+                    <div class="row">
+                        <div class="col-md-6 mar-btm">
+                            <label class="control-label">Tema</label>
+                            <select id="slTemaGestion" class="form-control" name="slTemaGestion"></select>
+                        </div>
+                        <div class="col-md-6 mar-btm">
+                            <label class="control-label">Sub-Tema</label>
+                            <select id="slSubTemaGestion" class="form-control" name="slSubTemaGestion"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mar-btm">
+                            <label class="control-label">Afiliado Gestionado</label>
+                            <div class="btn-group bootstrap-select form-control">
+                                <div class="panel-body">
+                                    <label for="slAfiliadoSelect" class="sr-only">Asignar Empresas</label>
+                                    <select id="slAfiliadoSelect" name="slAfiliadoSelect" data-placeholder="Seleccione a los Afiliados.." multiple tabindex="4"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mar-btm">
+                            <textarea placeholder="Comentarios" rows="4" class="form-control" id="comentarioGestion" name="comentarioGestion" style="display: block"></textarea>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary btn-icon btn-rounded" id="btGuardaGestionMan">Actualizar datos de Mantención Gestion <i class="demo-psi-add icon-lg" style="margin-left: 10px;"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+
+
+    <script type="text/javascript">
+        var IdCabGest = httpGet('IdCabGestion');
+        var rutE = httpGet('RutEmp');
+        var idDGestion = 0;
+        var alertaGestion = 0;
+        $("#tituloEmp").css('font-size', '20px').css('color', '#b3b3b3').css('margin-left', '20px')
+
+        var cargador = {
+            CargaCabeceraGestionMan: function () {
+                $("#divCabecera").html("");
+                $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-cabecera-gestion-mant", { IdCabGesMantencion: IdCabGest }, function (menus) {
+                    $("#divCabecera").addClass('panel panel-bordered-dark').css('border-radius', '6px').css('border', '1px solid #b3b3b3').css('background', 'whitesmoke')
+                        .append(
+                            $("<div>").addClass('row panel-body')
+                                .append(
+                                    $("<div>").addClass('row')
+                                        .append($("<div class='col-md-8 mar-btm'><strong>Fecha: </strong><label class='control-label'>" + menus.FechaIngreso + "</label></div>"))
+                                        .append($("<div class='col-md-4 mar-btm'><strong>Ingresado por: </strong><label class='control-label'>" + menus.NombreEjecutivo.OrdenaNombreCompleto() + "</label></div>"))
+                                ).append("<hr style='margin-top: 1px;'/>")
+                                .append($("<div class='col-md-3 mar-btm'><strong>Tipo Gestion</strong><br /><label class='control-label'>" + menus.Tipo + "</label></div>"))
+                                .append($("<div class='col-md-3 mar-btm'><strong>Rut Empresa</strong><br /><label class='control-label'>" + menus.RutEmpresa + "</label></div>"))
+                                .append($("<div class='col-md-6 mar-btm'><strong>Comentarios</strong><br /><p>" + menus.Comentarios + "</p> </div>"))
+                        )
+                });
+            },
+            CargaDetalleGestionMan: function () {
+                $.ajaxSetup({
+                    async: false
+                });
+
+                $("#divGestion").html("");
+                $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-detalle-mantencion-gestion", { IdCabGesMantencion: IdCabGest }, function (menus) {
+
+                    $.each(menus, function (i, e) {
+                        if (e.FlagActualizacion == 0) {
+                            rutE = e.RutEmpresa
+                            var aler = 0;
+                            var historial = "";
+                            var headTable = "";
+                            var TablaHist = "";
+                            var bodyHist = "";
+                            var SelecAfiliado = "";
+
+                            if (e.Alerta == 1) {
+                                aler = "<span class='pull-center badge badge-success' style='width: 40px;'>SI</span>"
+                            }
+                            else {
+                                aler = "<span class='pull-center badge badge-warning' style='width: 40px;'>NO</span>"
+                            }
+                            headTable = $('<thead>').append($('<tr>')
+                                .append($('<th>').append('Tema'))
+                                .append($('<th>').append('Sub-Tema'))
+                                .append($('<th>').append('Alerta'))
+                                .append($('<th>').append('Comentarios'))
+                                .append($('<th>').append('Ejecutivo Modificante'))
+                                .append($('<th>').append('Fecha Modificación')))
+
+                            $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-mantencion-gestion-historial", { IdGesMantencion: e.IdGesMantencion }, function (menusX) {
+                                $.each(menusX, function (ix, ex) {
+                                    var alert = 0;
+                                    if (e.Alerta == 1) {
+                                        alert = "<span class='pull-center badge badge-success' style='width: 40px;'>SI</span>"
+                                    }
+                                    else {
+                                        alert = "<span class='pull-center badge badge-warning' style='width: 40px;'>NO</span>"
+                                    }
+
+                                    bodyHist += "<tr><td>" + ex.Tema + "</td><td>" + ex.SubTema + "</td><td>" + alert + "</td><td>" + ex.Comentarios + "</td><td>" + ex.NombreEjecutivo.OrdenaNombreCompleto() + "</td><td>" + ex.FechaIngreso.toFechaHoraPrueba() + "</td></tr>'"
+                                });
+
+                            });
+
+                            TablaHist = $("<table style='margin-top: 30px;  font-size: 10px;'>").addClass('table table-bordered table-hover toggle-circle table-striped').append(headTable).append($('<tbody>').append(bodyHist))
+                            historial = $('<div>').addClass('panel panel-bordered-dark col-md-12 mar-btm').css('border-radius', '6px').css('border', '1px solid #b3b3b3').append(
+                                $('<dl>').append($('<dt>').css('margin-top', '9px').append('Desplegar Historial de Modificación')).append($('<dd>').append(TablaHist)))
+
+                            var nomAfi = e.RutAfiliado.split(',')
+                            $.each(nomAfi, function (iq, eq) {
+
+                                SelecAfiliado += "<option>" + eq + "</option>"
+                                console.log(SelecAfiliado)
+                            });
+
+                            $("#divGestion").addClass('panel panel-bordered-dark').css('border-radius', '6px').css('border', '1px solid #b3b3b3')
+                                .append(
+                                    $("<div>").addClass('row panel-body')
+                                        .append(
+                                            $("<div>").addClass('row')
+                                                .append($("<div class='col-md-8 mar-btm'><strong>Fecha: </strong><label class='control-label'>" + e.FechaIngreso.toFechaHoraPrueba() + "</label></div>"))
+                                                .append($("<div class='col-md-4 mar-btm'><strong>Ingresado por: </strong><label class='control-label'>" + e.NombreEjecutivo.OrdenaNombreCompleto() + "</label></div>"))
+                                        ).append("<hr style='margin-top: 0px;'/>")
+                                        .append($("<div class='col-md-2 mar-btm'><strong>Tema</strong> <br /><label class='control-label'>" + e.Tema + "</label></div>"))
+                                        .append($("<div class='col-md-2 mar-btm'><strong>Sub-Tema</strong><br /><label class='control-label'>" + e.SubTema + "</label></div>"))
+                                        .append($("<div class='col-md-4 mar-btm'> <strong>Afiliados</strong><br /><label class='control-label addFecha'><select class='form-control'>" + SelecAfiliado + "</select></label></div>"))
+                                        .append($("<div class='col-md-1 mar-btm'> <strong>Alerta</strong><br /><label class='control-label'>" + aler + "</label></div>"))
+                                        .append($("<div class='col-md-2 mar-btm'><a data-target='#demo-lg-modal-Man-gestion' data-idDetalleEnt=" + e.IdGesMantencion + " data-toggle='modal' class='btn btn-default btn-rounded'><i class='demo-psi-receipt-4'></i> Editar Mant. Gestion</a></div>"))
+                                        .append($("<div class='col-md-12 mar-btm'> <strong>Comentarios</strong><br /><p>" + e.Comentarios + "</p></div>"))
+                                        .append(historial)
+                                ).append("<hr style='border-color: rgb(179, 179, 179); margin-top: 1px'/>")
+                        }
+                    })
+                });
+            }
+        }
+        cargador.CargaCabeceraGestionMan();
+        cargador.CargaDetalleGestionMan();
+
+        $('#demo-lg-modal-Man-gestion').on('show.bs.modal', function (events) {
+            var idGestMan = $(events.relatedTarget);
+            idDGestion = idGestMan.data('iddetalleent')
+
+            $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-detalle-mantencion-gestion-update", { IdGesMantencion: idDGestion }, function (result) {
+                var compromiso = 0;
+                var alerta = 0;
+                $("#slTemaGestion").find('option:contains("' + result.Tema + '")').prop('selected', true);
+                $('#slTemaGestion').trigger('change');
+                $("#slSubTemaGestion").find('option:contains("' + result.SubTema + '")').prop('selected', true);
+                var Afiliados = result.RutAfiliado.split(',')
+                $('#slAfiliadoSelect').val(Afiliados).trigger('chosen:updated');
+                $("#comentarioGestion").val(result.Comentarios)
+
+                if (result.Alerta == 1) {
+                    $("#ckAlertaSIGestion").attr('checked', 'checked');
+                }
+                else {
+                    $("#ckAlertaNOGestion").attr('checked', 'checked');
+                }
+            });
+        });
+
+        $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-tipologia-gestion", function (datos) {
+            $("#slTemaGestion").html("");
+            $("#slTemaGestion").append($("<option>").attr("value", "").html("Seleccione"));
+            $("#slTemaGestionNew").html("");
+            $("#slTemaGestionNew").append($("<option>").attr("value", "").html("Seleccione"));
+            $.each(datos, function (i, e) {
+                $("#slTemaGestion").append($("<option>").attr("value", e.IdTema).html(e.GlosaGestion))
+                $("#slTemaGestionNew").append($("<option>").attr("value", e.IdTema).html(e.GlosaGestion))
+            });
+        });
+
+        $('#slTemaGestion').change(function (e) {
+            e.preventDefault();
+            if ($(this).val() != '') {
+                $("#slSubTemaGestion").attr("disabled", false);
+                $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-tipologia-Subgestion", { IdTema: $(this).val() }, function (datos) {
+                    $("#slSubTemaGestion").html("");
+                    $("#slSubTemaGestion").append($("<option>").attr("value", "").html("Seleccione"));
+                    $.each(datos, function (i, e) {
+                        $("#slSubTemaGestion").append($("<option>").attr("value", e.IdSubTema).html(e.GlosaSubTema))
+                    });
+                });
+            }
+            else {
+                $("#slSubTemaGestion").html("");
+                $("#slSubTemaGestion").attr("disabled", true);
+            }
+        });
+
+        $('#slTemaGestionNew').change(function (e) {
+            e.preventDefault();
+            if ($(this).val() != '') {
+                $("#slSubTemavisitaNew").attr("disabled", false);
+                $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-tipologia-Subgestion", { IdTema: $(this).val() }, function (datos) {
+                    $("#slSubTemavisitaNew").html("");
+                    $("#slSubTemavisitaNew").append($("<option>").attr("value", "").html("Seleccione"));
+                    $.each(datos, function (i, e) {
+                        $("#slSubTemavisitaNew").append($("<option>").attr("value", e.IdSubTema).html(e.GlosaSubTema))
+                    });
+                });
+            }
+            else {
+                $("#slSubTemavisitaNew").html("");
+                $("#slSubTemavisitaNew").attr("disabled", true);
+            }
+        });
+
+
+        $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-afiliado-oficina", { RutEmpresa: rutE }, function (menus) {
+            $.each(menus, function (i, e) {
+                $("#slAfiliadoSelect").append($("<option>").attr("value", e.RutAfiliado).html(e.NombreAfiliado))
+                $("#slAfiliadoSelectNew").append($("<option>").attr("value", e.RutAfiliado).html(e.NombreAfiliado))
+            });
+            $('#demo-chosen-select').chosen();
+            $('#slAfiliadoSelect').chosen({ width: '100%' });
+            $('#slAfiliadoSelectNew').chosen({ width: '100%' });
+        });
+
+
+        $("input:radio[name=groupCkeckAlertaGestion]").click(function () {
+            switch (this.value) {
+                case "SI":
+                    alertaGestion = 1;
+                    break;
+                case "NO":
+                    alertaGestion = 0;
+                    break;
+            }
+        });
+
+        $('#form_gestion_mantencion').bootstrapValidator({
+            excluded: [':disabled', ':not(:visible)'],
+            feedbackIcons: [],
+            fields: {
+                slTemaGestion: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Debe ingresar un Tema'
+                        }
+                    }
+                },
+                slSubTemaGestion: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Debe seleccionar una Sub-Tema'
+                        }
+                    }
+                },
+                slAfiliadoSelect: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Debe ingresar Afiliados'
+                        }
+                    }
+                },
+                comentarioGestion: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Debe ingresar un comentario'
+                        }
+                    }
+                }
+            }
+        }).on('success.form.bv', function (e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            var afi = $('#slAfiliadoSelect').val()
+            var afi2 = afi.join()
+            var rutEmpresa = 0;
+            if (rutE != "" && rutE != 'undefined' && rutE != null) {
+                rutEmpresa = rutE;
+            }
+            else { rutEmpresa = RutEmpAnexo }
+
+            var objeto_envio_gestion_mantencionUp = {
+                IdGesMantencion: idDGestion,
+                RutEmpresa: rutEmpresa,
+                Tema: $('select[id="slTemaGestion"] option:selected').text(),
+                SubTema: $('select[id="slSubTemaGestion"] option:selected').text(),
+                RutAfiliado: afi2,
+                Comentarios: $('#comentarioGestion').val(),
+            }
+            $.SecPostJSON(BASE_URL + "/motor/api/perfil-empresas/actualiza-detalle-mantencion-gestion", objeto_envio_gestion_mantencionUp, function (datos) {
+                $("#form_gestion_mantencion").bootstrapValidator('resetForm', true);
+                $('#demo-lg-modal-Man-gestion').modal('hide');
+                $.niftyNoty({
+                    type: 'success',
+                    icon: 'pli-like-2 icon-2x',
+                    message: 'Se Actualizo Mantención de Gestion Correctamente.',
+                    container: 'floating',
+                    timer: 5000
+                });
+                cargador.CargaDetalleGestionMan();
+
+                $(document).ready(function () {
+                    $("dd").hide();
+                    $("dt").click(function (event) {
+                        var desplegable = $(this).next();
+                        $('dd').not(desplegable).slideUp('fast');
+                        desplegable.slideToggle('fast');
+                        event.preventDefault();
+                    })
+                    $("dt").css({
+                        'cursor': 'pointer'
+                    });
+                });
+
+
+            });
+        });
+
+
+        $('#form_gestion_nuevo_detalle_mantencion').bootstrapValidator({
+            excluded: [':disabled', ':not(:visible)'],
+            feedbackIcons: [],
+            fields: {
+                slTemaGestionNew: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Debe ingresar un Tema'
+                        }
+                    }
+                },
+                slSubTemavisitaNew: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Debe seleccionar una Sub-Tema'
+                        }
+                    }
+                },
+                slAfiliadoSelectNew: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Debe ingresar Afiliados'
+                        }
+                    }
+                },
+                comentarioGestionNew: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Debe ingresar un comentario'
+                        }
+                    }
+                }
+            }
+        }).on('success.form.bv', function (e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            var afi = $('#slAfiliadoSelectNew').val()
+            var afi2 = afi.join()
+            var rutEmpresa = 0;
+            if (rutE != "" && rutE != 'undefined' && rutE != null) {
+                rutEmpresa = rutE;
+            }
+            else { rutEmpresa = RutEmpAnexo }
+
+            var objeto_envio_gestion_mantencion = {
+
+                IdCabGesMantencion: IdCabGest,
+                RutEmpresa: rutEmpresa,
+                Tema: $('select[id="slTemaGestionNew"] option:selected').text(),
+                SubTema: $('select[id="slSubTemavisitaNew"] option:selected').text(),
+                RutAfiliado: afi2,
+                Comentarios: $('#comentarioGestionNew').val(),
+                Alerta: alertaGestion,
+            }
+            $.SecPostJSON(BASE_URL + "/motor/api/perfil-empresas/ingresa-gestion-mantencion", objeto_envio_gestion_mantencion, function (datos) {
+                $("#form_gestion_nuevo_detalle_mantencion").bootstrapValidator('resetForm', true);
+                $('#demo-lg-modal-new-gestion-detalle').modal('hide');
+                $.niftyNoty({
+                    type: 'success',
+                    icon: 'pli-like-2 icon-2x',
+                    message: 'Nuevo mantencion de gestion Creado Correctamente.',
+                    container: 'floating',
+                    timer: 5000
+                });
+                cargador.CargaDetalleGestionMan();
+            });
+        });
+
+        $(document).ready(function () {
+            $("dd").hide();
+            $("dt").click(function (event) {
+                var desplegable = $(this).next();
+                $('dd').not(desplegable).slideUp('fast');
+                desplegable.slideToggle('fast');
+                event.preventDefault();
+            })
+            $("dt").css({
+                'cursor': 'pointer'
+            });
+        });
+
+
+
+    </script>
+}
+
+

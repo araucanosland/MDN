@@ -1,0 +1,52 @@
+﻿
+
+@{
+    ViewBag.Title = "Ingreso";
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+}
+<div id="page-content">
+
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="panel">
+               
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+
+    $(function () {
+       
+        if (window.DOMParser) { // Firefox, Chrome, Opera, etc.
+            parser = new DOMParser();
+           // var Address = parser.ExpandEnvironmentStrings("%username%");
+
+            WshShell = new ActiveXObject("WScript.Shell");
+            WshShell.Run("c:/windows/system32/notepad.exe", 1, false);
+
+           // xmlDoc = parser.parseFromString(xml, "text/xml");
+        }
+        else // Internet Explorer
+        {
+            xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+            xmlDoc.async = false;
+            //xmlDoc.loadXML(xml);
+        } 
+
+        //$.SecGetJSON(BASE_URL + "/motor/api/Licencias/lista-proxy", function (datos) {
+
+        //});
+
+
+
+
+    });
+</script>

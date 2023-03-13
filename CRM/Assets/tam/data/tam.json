@@ -1,0 +1,22 @@
+﻿{
+  "mensajes": {
+    "NO_ENCONTRADO": "No aparece en la base de Afiliados de La Araucana por lo tanto debemos hacer una consulta interna y lo volveremos a llamar.",
+    "SOLICITA_REEMBOLSO": "Durante los próximos días lo  contactaremos para proceder con el reembolso de su tarjeta.",
+    "DEBE_VALIDAR": "Debemos validar la información y lo llamaremos.",
+    "NO_CUMPLE_CON_EDAD": "Para acceder debe tener al menos 65 años de edad cumplidos y según nuestros sistemas eso no se cumple.",
+    "DESISTE_BIP": "Vamos a dejar sin efecto su solicitud de tarjeta BIP Adulto Mayor por preferir la tarjeta TAM Metro. ¿Está de acuerdo?",
+    "COMUNA_INVALIDA": "De acuerdo a lo definido por el Ministerio, sólo pueden acceder a este beneficio personas con residencia en la Región Metropolitana.",
+    "CONTACTO_CUMPLEANOS": "Lo contactaremos cerca de su cumpleaños para recordarle este beneficio.",
+    "FIN_EXITO": "Autenticacion exitosa, le enviaremos BIP Adulto Mayor a domicilio.",
+    "FIN_RECHAZO": "Autenticacion no ha logrado realizarse, debe ir a Sucursal La Araucana cuando se levante la cuarentena.",
+    "LLAMAR_EN_CUMPLE": "Lo contactaremos cerca de su cumpleaños para recordarle este beneficio.",
+    "ENCONTRADO": "Afiliado consultado encontrado la base de datos, acepta para continuar con el proceso.",
+    "COMUNA_INVALIDA_DESP": "El Ministerio no considera su Comuna Válida para envío a domicilio por lo tanto deberá ir a una Sucursal de La Araucana cuando la cuarentena se levante.",
+    "ENV_SUCURSAL": "El Afiliado debe ser enviado a una sucursal."
+  },
+  "scripts": {
+    "GRABACION": "Recuerda que debes obtener consentimiento de la grabación de la llamada.",
+    "CON_TAM": "Afiliado tiene la TAM metro,  explique diferencias entre Tarjetas y que debe renunciar a TAM metro si desea la BIP.",
+    "SIN_TAM": "Afiliado no posee TAM metro,  explique diferencias entre Tajetas."
+  }
+}

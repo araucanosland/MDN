@@ -1,0 +1,328 @@
+﻿
+
+@{ ViewBag.Title = "RetencionPensionados"; }
+<div id="page-content">
+    <div id="contRetencionPen">
+        <div class="row">
+            <div class="tab-base">
+                <ul id="myTab" class="nav nav-tabs">
+
+                    <li class="active">
+                        <a data-toggle="tab" href="#tab-retencion" aria-expanded="true" id="tab_retencion_p" class="tab-principal">RETENCIÓN</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#tab-mis-casos" aria-expanded="true" id="tab_casos" class="tab-principal" v-on:click="cargaMisCasos">CASOS INGRESADOS</a>
+                    </li>
+
+                    <li class="">
+                        <a data-toggle="tab" href="#tab-solicitud-web" aria-expanded="true" id="tab_solicitud-web" class="tab-principal">SOLICITUD WEB</a>
+                    </li>
+
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-retencion" class="tab-pane fade active in">
+                        <div class="row">
+                            <div class="col-sm-12" id="divFormularioPen">
+                                <div class="panel" style="border-radius: 8px;">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">MODULO RETENCIÓN DE PENSIONADOS</h3>
+                                    </div>
+                                    <div class="form-horizontal">
+                                        <div class="panel-body">
+
+                                            <div class="form-group">
+                                                <label for="demo-is-inputnormal" class="col-sm-3 control-label">SUCURSAL</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control limpiar" id="txtSucursal" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="demo-is-inputnormal" class="col-sm-3 control-label">RUT</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control numero limpiar" placeholder="Ingrese RUT sin guión ni dígito verificador. " id="txtRut" maxlength="8">
+                                                    <small class="help-block" style="color: #d23737; display:none;" id="lbRtuAfi">Rut no se encuentra en base..</small>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="demo-is-inputnormal" class="col-sm-3 control-label">NOMBRES</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control limpiar" id="txtNombre" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="demo-is-inputnormal" class="col-sm-3 control-label">FONO CONTACTO</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control limpiar" id="txtFono" maxlength="15">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="demo-is-inputnormal" class="col-sm-3 control-label">EMAIL</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control limpiar" id="txtEmail" maxlength="100">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="demo-is-inputnormal" class="col-sm-3 control-label">DOMICILIO</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control limpiar" id="txtDomicilio" maxlength="60">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="demo-is-inputnormal" class="col-sm-3 control-label">FECHA AFILIACIÓN</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control limpiar" id="txtFechaAfiliacion" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="demo-is-inputnormal" class="col-sm-3 control-label">FECHA ATENCIÓN</label>
+                                                <div class="col-sm-6">
+                                                    <div id="dp-component-pen-retencion">
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control" id="ges_pen-retencion" name="ges_pen-retencion">
+                                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="demo-is-inputnormal" class="col-sm-3 control-label">ESTADO FINAL</label>
+                                                <div class="col-sm-6">
+                                                    <select id="dllEstadoFinal" name="dllEstadoFinal" class="form-control limpiar">
+                                                        <option value="">SELECCIONE...</option>
+                                                        <option value="Retenido">RETENIDO</option>
+                                                        <option value="Desafiliado">DESAFILIADO</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="demo-is-inputnormal" class="col-sm-3 control-label">MOTIVO DESAFILIACIÓN</label>
+                                                <div class="col-sm-6">
+                                                    <select id="dllMotivoDesaf" name="dllMotivoDesaf" class="form-control" v-model="modelos.motivoAfi" disabled>
+                                                        <option value="">SELECCIONE...</option>
+                                                        <option v-for="estadoDesaf in filtros.motivoAfi" :value="estadoDesaf.id">{{estadoDesaf.estado}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="demo-is-inputnormal" class="col-sm-3 control-label">MOTIVO RETENCIÓN</label>
+                                                <div class="col-sm-6">
+                                                    <select id="dllMotivoRetencion" name="dllMotivoRetencion" class="form-control" v-model="modelos.motivoRet" disabled>
+                                                        <option value="">SELECCIONE...</option>
+                                                        <option v-for="estadoRetecion in filtros.motivoRet" :value="estadoRetecion.id">{{estadoRetecion.estado}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="demo-textarea-input">COMENTARIOS</label>
+                                                <div class="col-md-6">
+                                                    <textarea id="txtComentarios" rows="9" class="form-control limpiar"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="msjregsitro"></div>
+                                        <div class="panel-footer">
+                                            <div class="row">
+                                                <div class="col-sm-9 col-sm-offset-3">
+                                                    <button class="btn btn-danger" type="submit" v-on:click="guardaRegistro">GUARDAR</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-5" id="divExt" style="display:none;">
+                                <div class="panel" style="border-radius: 8px;">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">DEUDA EXTERNA</h3>
+                                    </div>
+                                    <div class="form-horizontal">
+                                        <div class="panel-body">
+                                            <div class="pad-all" v-for="ext in dataExt">
+                                                <p class="mar-no">
+                                                    <span class="pull-right text-bold">{{ ext.entidades }}</span>
+                                                    ENTIDADES
+                                                </p>
+                                                <hr />
+                                                <p class="mar-no">
+                                                    <span class="pull-right text-bold">{{ ext.tramo_antiguo }}</span>
+                                                    TRAMO ANTIGUO
+                                                </p>
+                                                <hr />
+                                                <p class="mar-no">
+                                                    <span class="pull-right text-bold">{{ ext.deuda }}</span>
+                                                    DEUDA
+                                                </p>
+                                            </div>
+                                            <hr />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-mis-casos" class="tab-pane fade">
+                        <div class="panel" style="border-radius: 7px;">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="demo-pli-information icon-fw"></i></h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">RUT</label>
+                                            <input id="txtRutFiltro" type="text" placeholder="Ej. 12345678" class="form-control numero" maxlength="8" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">NOMBRE</label>
+                                            <input id="txtNombreFiltro" type="text" class="form-control" maxlength="10" autocomplete="off">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">ESTADO</label>
+                                            <select id="dllEstadoFinalFiltro" name="dllEstadoFinalFiltro" class="form-control limpiar">
+                                                <option value="">TODOS...</option>
+                                                <option value="Retenido">RETENIDO</option>
+                                                <option value="Desafiliado">DESAFILIADO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <label class="control-label">FECHA GESTION</label>
+                                        <div id="dp-component-pen-atencion-filtro">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="ges_pen-atencionFiltro" name="ges_pen-atencionFiltro">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-1 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label"></label>
+                                            <button class="btn btn-primary btn-rounded" v-on:click="cargaMisCasos">FILTRAR</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+         <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel" style="border-radius: 7px;">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">MIS CASOS</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table data-toggle="table"
+                                               data-sort-name="id"
+                                               data-page-list="[]"
+                                               data-page-size="50"
+                                               data-search="false"
+                                               data-pagination="true" id="tblMiscasos" style="font-size: 12px">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="rut" data-sortable="true">RUT</th>
+                                                    <th data-field="nombres" data-sortable="true">NOMBRE</th>
+                                                    <th data-field="estado_final" data-sortable="true">ESTADO</th>
+                                                    <th data-field="fecha_atencion" data-sortable="true">FECHA GESTION</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab-solicitud-web" class="tab-pane fade">
+                        <div class="panel" style="border-radius: 7px;">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">MODULO PENSIONADO WEB</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">RUT</label>
+                                            <input id="txtRutFiltroSolicitudWeb" type="text" placeholder="Ej. 12345678" class="form-control numero" maxlength="8" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">ESTADO</label>
+                                            <select id="dllEstadoGestion" name="dllEstadoGestion" class="form-control limpiar">
+                                                <option value="">TODOS...</option>
+                                                <option value="SIN GESTION">SIN GESTION</option>
+                                                <option value="RETENIDO">RETENIDO</option>
+                                                <option value="DESAFILIADO">DESAFILIADO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-xs-center" style="">
+                                        <div class="form-group">
+                                            <label class="control-label"></label>
+                                            <button class="btn btn-primary btn-rounded" v-on:click="cargaPesionadosWeb">FILTRAR</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel" style="border-radius: 7px;">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">AFILIADOS</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table data-toggle="table"
+                                               data-sort-name="id"
+                                               data-page-list="[]"
+                                               data-page-size="50"
+                                               data-search="false"
+                                               data-pagination="true" id="tblretencionWeb" style="font-size: 12px">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="rut" data-align="left" data-sortable="false" data-formatter="formatoRut">Rut</th>
+                                                    <th data-field="nombre" data-sortable="true">NOMBRE</th>
+                                                    <th data-field="gestion_pensionado" data-sortable="true">ESTADO GESTION</th>
+                                                    <th data-field="fecha_gestion" data-sortable="true" data-formatter="formatoFecha">FECHA GESTION</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section script{
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
+    <script src="~/Assets/js.App/src/retencion-pensionados.js?g=@Guid.NewGuid().ToString()"></script>
+}

@@ -1,0 +1,135 @@
+﻿
+<div id="contactoDiferimiento">
+    <div class="panel" style="border-radius: 7px;">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-3 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label">BUSQUEDA GLOBAL POR RUT</label>
+                        <input id="txtRutGlobal" name="txtRutGlobal" type="text" placeholder="Ej. 12345678" class="form-control" maxlength="8" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-sm-1 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label"></label>
+                        <button class="btn btn-primary btn-rounded" v-on:click="obtenerContactoDiferimiento" style="margin-top: 21px;">BUSCAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel" style="border-radius: 7px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">DATOS REQUERIMIENTO</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="panel" style="border-radius: 7px;">
+                    <div class="panel-body">
+                        <div id="msjContacto"></div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">RUT</label>
+                                    <input class="form-control" type="text" id="txtRutContacto" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <label class="control-label">DV</label>
+                                    <input class="form-control" id="txtDvContacto" type="text" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <label class="control-label">NOMBRE</label>
+                                    <input class="form-control" id="txtNombreContacto" type="text" disabled>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">RUT(Correcto)</label>
+                                    <input class="form-control" id="txtRutClieCoContacto" maxlength="8" type="text">
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">DV(Correcto)</label>
+                                    <input class="form-control" id="txtdvClieCoContacto" maxlength="1" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label class="control-label">FONO</label>
+                                    <input class="form-control" id="txtFonoContacto" type="text">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">EMAIL</label>
+                                    <input class="form-control" id="txtMailContacto" type="text">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label">REQUERIMIENTO</label>
+                                    <input class="form-control" id="txtReqContacto" type="text" disabled>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <button class="btn btn-primary" style="margin-top: 21px;" v-on:click="actualizaContactoDif">ACTUALIZAR CONTACTO</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">DETALLE REQUERIMIENTO</label>
+                            <textarea rows="3" id="txtDetalleContacto" name="txtDetalleContacto" class="form-control" disabled></textarea>
+                        </div>
+                        
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+
+    <div class="panel" style="border-radius: 7px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">ESTADO REQUERIMIENTO</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label">ESTADO</label>
+                        <input class="form-control" id="txtEstadoEstado" type="text" disabled>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label class="control-label">EJECUTIVO</label>
+                        <input class="form-control" id="txtEstadoEjecutivo" type="text" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">OBSERVACION</label>
+                <textarea rows="3" id="txtestadoObs" name="txtestadoObs" class="form-control" disabled></textarea>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+

@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Consulta Capturas Tarjeta TAM";
+}
+<div id="query-app">
+
+    <div class="panel">
+        <div class="panel-heading">
+            <h4 class="panel-title">Búsqueda Tam</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row mar-btm">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="exampleInputAmount" placeholder="Rut Afiliado" v-model="filters.rut">
+                        </div>
+                        <button type="button" class="btn btn-primary" v-on:click="onSearchClick()">Buscar</button>
+                    </div>
+                </form>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Rut</th>
+                        <th>Nombres</th>
+                        <th>Puntaje</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in results">
+                        <td>{{ item.rut_busqueda }}</td>
+                        <td>{{ item.nombre | nombreNoEncontrado }}</td>
+                        <td>{{ item.score_autenticacion | puntaje }}</td>
+                        <td>{{ item.estado_resultante }}</td>
+                        <td>
+                            <a class="btn btn-warning btn-xs" :href="`/motor/App/TamPensionado/${item.rut_busqueda}/resume/${item.id_gestion}`" v-if="isEtapaTransitoria(item.estado_resultante)">Retomar</a>
+                            <a class="btn btn-primary btn-xs" :href="`/motor/App/TamPensionado/query/${item.rut_busqueda}/detail/${item.id_gestion}`">Editar</a>
+                        </td>
+                    </tr>
+                    <tr v-if="results.length == 0">
+                        <td colspan="4">Sin información para mostrar</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+@section script{
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/tam/homologo.js"></script>
+    <script src="~/Assets/tam/deps/vue-form-wizard.js"></script>
+    <script src="~/Assets/tam/deps/moment.js"></script>
+    <script src="~/Assets/tam/deps/lodash.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
+    <script src="~/Assets/tam/deps/vuejs-the-mask.js"></script>
+    <script src="~/Assets/tam/deps/vue-select.js"></script>
+    <script src="~/Assets/tam/shared.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/tam/components.vue.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/tam/queries.app.vue.js?g=@Guid.NewGuid().ToString()"></script>
+}

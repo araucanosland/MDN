@@ -1,0 +1,113 @@
+
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+
+<div id="infoEmpresa">
+    <div class="panel" style="border-radius: 15px;">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="border-radius: 11px;">
+                INFORMACIÓN EMPRESA
+            </h3>
+        </div>
+        <div class="panel-body">
+            <table class="table  table-condensed" style="font-size: 11px;">
+                <thead>
+                    <tr>
+                        <th style="width: 200px; background: #ffa726; border-radius: 5px;">RUT</th>
+                        <th style="background: #ffa726; border-radius: 5px; text-align: center;">
+                            {{dataModal.EMPRESA_RUT}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>EMPRESA</td>
+                        <td style="text-align: center;">{{dataModal.EMPRESA}}</td>
+                    </tr>
+                    <tr>
+                        <td>HOLDING</td>
+                        <td style="text-align: center;">{{dataModal.HOLDING}}</td>
+                    </tr>
+                    @*<tr>
+                        <td>SUCURSAL</td>
+                        <td style="text-align: center;"></td>
+                    </tr>*@
+                    <tr>
+                        <td>TIPO EMPRESA</td>
+                        <td style="text-align: center;">{{dataModal.SEGMENTO_EMPRESA}}</td>
+                    </tr>
+                    <tr>
+                        <td>SECTOR ECONÓMICO</td>
+                        <td style="text-align: center;">{{dataModal.SECTOR_ECONOMICO}}</td>
+                    </tr>
+                    <tr>
+                        <td>TAMAÑO</td>
+                        <td style="text-align: center;">{{dataModal.TAMAÑO_EMPRESA}}</td>
+                    </tr>
+                    <tr>
+                        <td>TRABAJADORES</td>
+                        <td style="text-align: center;">{{dataModal.TRABAJADORES}}</td>
+                    </tr>
+                    <tr>
+                        <td>% PENETRACIÓN</td>
+                        <td style="text-align: center;">{{dataModal.PENETRACION}} %</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr style="background: #949494;" />
+            <table class="table  table-condensed" style="font-size: 11px;">
+                <thead>
+                    <tr>
+                        <th style="width: 200px;">IGN</th>
+                        <th style="background-color: #ef5350; border-radius: 5px; color: white; text-align: center;">{{dataModal.IGN_ACTUAL}} %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>TOTAL NÓMINA</td>
+                        <td style="text-align: center;">{{dataModal.TOTAL_NOMINA}}</td>
+                    </tr>
+                    <tr>
+                        <td>PEND. PAGO</td>
+                        <td style="text-align: center;">{{dataModal.PENDIENTE_PAGO}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr style="background: #949494;" />
+            <table class="table  table-condensed" style="font-size: 11px;">
+                <tbody>
+                    <tr>
+                        <td style="width: 200px;">TOTAL COLACIONES</td>
+                        <td style="text-align: center;">{{dataModal.CREDITOS}}</td>
+                    </tr>
+                    <tr>
+                        <td>COLACIONES VIG. $</td>
+                        <td style="text-align: center;">{{dataModal.DEUDA}}</td>
+                    </tr>
+                    <tr>
+                        <td>MORA + 30 $</td>
+                        <td style="text-align: center;">{{dataModal.MORA_30}}</td>
+                    </tr>
+                    <tr>
+                        <td>INDICE MORA + 30</td>
+                        <td style="text-align: center;">{{dataModal.INDICE_MORA_30}} %</td>
+                    </tr>
+                    <tr>
+                        <td>MORA + 365 $</td>
+                        <td style="text-align: center;">{{dataModal.MORA_365}}</td>
+                    </tr>
+                    <tr>
+                        <td>TASA DE RIESGO</td>
+                        <td style="background-color: #ef5350; border-radius: 5px; color: white; text-align: center;">{{dataModal.TR}} %</td>
+                    </tr>
+                    <tr>
+                        <td>CLASIFICACIÓN</td>
+                        <td style="text-align: center;">{{dataModal.CLASIFICACION_RIESGO}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

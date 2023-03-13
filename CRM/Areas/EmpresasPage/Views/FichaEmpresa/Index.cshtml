@@ -1,0 +1,1468 @@
+﻿
+@{
+    Layout = "~/Areas/EmpresasPage/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Assets/plugins/dropzone/dropzone.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/fullcalendar/nifty-skin/fullcalendar-nifty.min.css" rel="stylesheet">
+
+<link href="~/Assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+
+
+<h1 id="tituloEmp">Ficha de Empresa</h1>
+<div id="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel" style="border-radius: 6px;">
+                <div class="panel-body">
+                    <h2 class="panel-title">
+                        <span class="pull-left badge badge-danger" style="border-radius: 4px; display: none;" id="msjNoMoles">No Molestar</span><span class="pull-left badge badge-success" style="border-radius: 4px; margin-left: 5px; display:none" id="cumpleanos">Afiliado esta de Cumpleaños</span><span class="pull-left badge badge-warning" style="border-radius: 4px; margin-left: 5px; display:none" id="afinuevo">Afi Nuevo</span><span class="pull-left badge badge-success" style="border-radius: 4px; margin-left: 5px;" id="afiVigente"></span><span class="pull-left badge badge-danger" style="border-radius: 4px; margin-left: 5px; display:none" id="afiFallecido "></span><span class="pull-left badge badge-danger" style="border-radius: 4px; margin-left: 5px; display:none" id="afiContac">Actualizar Contactos</span>
+                    </h2>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <div class="panel pos-rel" style="border-radius: 5px;">
+                                    <div class="pad-all text-center">
+                                        <img alt="Profile Picture" class="img-lg img-circle mar-ver" src="~/Assets/img/imgEmpresas.png" />
+                                        <p class="text-lg text-semibold mar-no text-main" id="NombreEmpresaPer" style="font-size: 12px;"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <h5><label class="control-label">Rut</label></h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="RutEmp" id="RutEmp" readonly="readonly" style="font-weight:bold" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3" style="margin-left: 30px;">
+                                        <div class="form-group">
+                                            <h5><label class="control-label">Antiguedad años</label></h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="AntiguedadA" id="AntiguedadA" readonly="readonly" style="font-weight:bold" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <h5><label class="control-label">Segmento</label></h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="SegmentoEmp" id="SegmentoEmp" readonly="readonly" style="font-weight: bold;" />
+                                            <div class="label label-table label-success" style="display:none">Cumpleaños</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3" style="margin-left: 30px;">
+                                        <div class="form-group">
+                                            <h5><label class="control-label">N° Trabajadores</label></h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="nTrabajadores" id="nTrabajadores" readonly="readonly" style="font-weight:bold" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <h5><label class="control-label">Holding</label></h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="HoldingEmp" id="HoldingEmp" readonly="readonly" style="font-weight: bold;" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel" style="border-radius: 6px;">
+
+                <!--Panel heading-->
+                <div class="panel-heading">
+                    <div class="panel-control" style="float:left;">
+                        <ul class="nav nav-tabs">
+                            <li id="liPlanif" class="active">
+                                <a data-toggle="tab" href="#demo-lft-tab-4" aria-expanded="true" id="tab_Planificacion" style="font-weight: bold;">Planificación <span id="ncitas" class="pull-right badge badge-danger" style="margin-top: 12px;">0</span></a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#demo-lft-tab-3" aria-expanded="false" id="tab_anexos" style="font-weight: bold;">Anexos</a>
+                            </li>
+                            <li id="liPlanif" class="" style="display:block;">
+                                <a data-toggle="tab" href="#demo-lft-tab-1" aria-expanded="true" id="tab_comercial" style="font-weight: bold;">Visitas</a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#demo-lft-tab-2" aria-expanded="false" id="tab_oportunidad" style="font-weight: bold;">Oportunidades<span class="badge badge-success" id="cantAlertas"></span></a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#demo-lft-tab-5" aria-expanded="false" id="tab_Licencias" style="font-weight: bold;">Licencias Medicas</a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#demo-lft-tab-6" aria-expanded="false" id="tab_VidaSana" style="font-weight: bold;">Vida Sana</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <h3 class="panel-title" style="color:white">.</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div id="demo-lft-tab-3" class="tab-pane fade">
+                            <div class="panel-body">
+                                <div class="panel panel-bordered-primary" style="border-color: #e6e6e6; display: none; border-radius: 5px;" id="tipoAsignacionEmpresa">
+                                    <div class="panel-body">
+                                        <div class="row">
+
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title" style="font-size: 14px;">Asignar Empresas a ejecutivos</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <label for="demo-cs-multiselectEjeEmpresa" class="sr-only">Asignar Empresas</label>
+                                                <select id="demo-cs-multiselectEjeEmpresa" data-placeholder="Seleccione a los ejecutivos.." multiple tabindex="4"></select>
+                                                <button class="btn btn-primary" id="btAsignaEmpresa" type="submit">Asignar</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="tipoAsignacionAnexo">
+                                    @*Anexo*@
+                                    <a data-target="#demo-lg-modal-newAnexo" data-toggle="modal" id="btNewAnexo" class="btn btn-sm btn-primary btn-icon btn-rounded">Crear Nuevo Anexo<i class="demo-psi-building icon-lg" style="margin-left: 10px;"></i></a>
+                                    <hr />
+                                    <table style="font-size: 12px;" id="tblAnexos" class="table table-hover table-vcenter">
+                                        <thead>
+                                            <tr>
+                                                <th>Rut Empresa</th>
+                                                <th>Nombre Anexo</th>
+                                                <th>N° Trabajadores</th>
+                                                <th>Editar</th>
+                                                <th>Asignar</th>
+                                                <th>Eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="buscar" id="tbdyAnexo"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--VISITAS-->
+                        <div id="demo-lft-tab-1" class="tab-pane fade">
+                            <br />
+                            <a data-target="#demo-lg-modal-entrevista" data-toggle="modal" class="btn btn-sm btn-primary btn-icon btn-rounded">Nueva Gestion<i class="demo-psi-receipt-4 icon-lg" style="margin-left: 10px;"></i></a>
+                            <br />
+                            <br />
+
+                            <div id="radioTablagestiones">
+                                <div class="radio">
+                                    <input id="radioMantenedor" class="magic-radio " type="radio" name="groupCkeckAlerta_visitas" value='Mantenedor' checked>
+                                    <label for="radioMantenedor">Gestion de Mantención realizadas</label>
+
+                                    <input id="radioEntrevistas" class="magic-radio" type="radio" name="groupCkeckAlerta_visitas" value='Visita'>
+                                    <label for="radioEntrevistas">Entrevistas Realizadas</label>
+                                </div>
+                                <hr />
+                            </div>
+                            <div class="panel-group accordion" id="accordion">
+                                <div class="panel">
+                                    <div class="panel-collapse collapse colap1 in" id="collapseOne">
+                                        <div class="panel-body">
+                                            <h3 class="text-bold text-main mar-no" style="color: #b3b3b3">Gestion de Mantención Realizadas</h3>
+                                            <br />
+
+                                            <table style="font-size: 12px;" id="tblGestMan" class="table table-bordered table-hover toggle-circle table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Fecha Ingreso</th>
+                                                        <th>Tipo</th>
+                                                        <th>Comentarios</th>
+                                                        <th>Nombre Ejecutivo Ingreso</th>
+                                                        <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="buscar" id="tbdyGestMan"></tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel" style="margin-top: 0px;">
+                                    <div class="panel-collapse collapse colap2" id="collapseTwo">
+                                        <div class="panel-body">
+                                            <h3 class="text-bold text-main mar-no" style="color: #b3b3b3">Entrevistas Realizadas</h3>
+                                            <br />
+                                            <table style="font-size: 12px;" id="tblEntrevista" class="table table-bordered table-hover toggle-circle table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Fecha Entrevista</th>
+                                                        <th>Tipo</th>
+                                                        <th>Nombre</th>
+                                                        <th>Cargo</th>
+                                                        <th>Estamento</th>
+                                                        <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="buscar" id="tbdyentrevista"></tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="demo-lft-tab-2" class="tab-pane fade">
+                            <div class="panel-body">
+                                <a data-target="#demo-lg-modal-new" data-toggle="modal" class="btn btn-sm btn-primary btn-icon btn-rounded">Nueva Gestion<i class="demo-psi-building icon-lg" style="margin-left: 10px;"></i></a>
+                                <hr />
+                                <table style="font-size: 12px;" id="tblAsigEmp" class="table table-hover table-vcenter">
+                                    <thead>
+                                        <tr>
+                                            <th data-field="state" data-checkbox="true"></th>
+                                            <th hidden></th>
+                                            <th>Rut</th>
+                                            <th>Nombres</th>
+                                            <th>Oferta</th>
+                                            <th>Tipo Oferta</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="buscar" id="tbOportunidad"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div id="demo-lft-tab-4" class="tab-pane fade active in">
+                            <div id="page-content">
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-3">
+                                        <div class="panel" style="border-radius: 9px; border: 1px solid #d8dce0;">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Tipos de Gestion</h3>
+                                            </div>
+                                            <div class="panel-body">
+
+                                                <div id="demo-external-events">
+                                                    <div class="fc-event fc-list">Terreno</div>
+                                                    <div class="fc-event fc-list" data-class="warning">Telefono</div>
+                                                    <div class="fc-event fc-list" data-class="success">Mail</div>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-lg-9">
+                                        <div class="panel" style="border-radius: 9px; border: 1px solid #d8dce0;">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Calendario</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div id='demo-calendar'></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="demo-lft-tab-5" class="tab-pane fade">
+                            <div class="panel-body">
+                                <div class="panel panel-bordered-primary" style="border-color: #e6e6e6; border-radius: 5px;">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title" style="font-size: 14px;">Licencias Médicas Punto</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Afiliado</th>
+                                                            <th>Días desde Presentación</th>
+                                                            <th>Semáforo</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>17.042.783-1, Carlos Antonio Pradenas Pérez</td>
+                                                            <td>3</td>
+                                                            <td>Verde</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!---Vida Sana-->
+                        <div id="demo-lft-tab-6" class="tab-pane fade">
+                            <div class="panel-body">
+                                <div class="panel panel-bordered-primary" style="border-color: #e6e6e6; border-radius: 5px;">
+                                    <div class="panel-body" >
+                                        <div class="row">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title" style="font-size: 14px;">Gestión Vida Sana</h3>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <button class="btn btn-primary btn-rounded" style="margin-top: 22px;" id="btn-gestion-VidaSana">Agregar Gestión</button>
+                                                </div>
+                                            </div>
+
+
+
+                                            <table id="demo-foo-filtering_Vidasana" class="table table-bordered table-hover toggle-circle" data-page-size="20">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-toggle="true">Fecha Gestión</th>
+                                                        <th data-toggle="true">Etapa</th>
+                                                        <th data-hide="phone">Resultado</th>
+                                                        <th data-hide="phone">Próxima Gestión</th>
+                                                        <th data-hide="phone" style="width:40%;">Observaciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="bdy_datos_vidasana"></tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="10">
+                                                            <div class="text-left">
+                                                                <label id="cantLMindex" class="control-label" style="display:none"></label>
+                                                            </div>
+                                                            <div class="text-right">
+                                                                <ul class="pagination"></ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*MODAL DE VISITAS*@
+<div id="demo-lg-modal-entrevista" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 13px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title"><i class="demo-psi-receipt-4 icon-lg" style="margin-left: 10px;"></i>    Ingreso Visita</h4>
+
+            </div>
+            <div class="panel-body">
+                <div id="radioVisitas">
+                    <div class="radio">
+                        <input id="radioVisita" class="magic-radio" type="radio" name="inline-form-radio">
+                        <label for="radioVisita">¿Desea hacer una gestion de Mantención?</label>
+                        <br />
+                        <br />
+                        <input id="radioEntravista" class="magic-radio" type="radio" name="inline-form-radio">
+                        <label for="radioEntravista">¿Desea gestionar una entrevista?</label>
+                    </div>
+                    <hr />
+                </div>
+
+
+                <div class="form-horizontal" style="display: none;" id="divEntrevista">
+                    <h4>Datos de Entrevista</h4>
+                    <form id="form-registro-entrevista" action="#" method="post">
+                        <div class="panel panel-bordered-dark" style="border-radius: 8px; border: 1px solid #e5e5e5;">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Fecha</label>
+                                        <div id="demo-dp-component">
+                                            <div class="input-group date">
+                                                <input class="form-control input-group date" type="text" id="FechaGestges" name="FechaGestges">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Nombre Contacto</label>
+                                        <input type="text" id="nombContacto" name="nombContacto" class="form-control" placeholder="Nombre">
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Estamento</label>
+                                        <select class="form-control" id="slEstamento" tabindex="2" name="slEstamento" required>
+                                            <option value="">Seleccione</option>
+                                            <option value="Empresa">Empresa</option>
+                                            <option value="Sindicato">Sindicato</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Cargo</label>
+                                        <input type="text" id="txtCargo" name="txtCargo" class="form-control selectpicker" placeholder="Cargo">
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Telefono de Contacto</label>
+                                        <input type="text" id="tefContacto" name="tefContacto" class="form-control" placeholder="Telefono">
+                                    </div>
+
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Correo de Contacto</label>
+                                        <input type="text" id="correoContacto" name="correoContacto" class="form-control" placeholder="correo">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8 mar-btm">
+                                        <textarea placeholder="Comentarios" rows="4" class="form-control" id="txtComentariosCab" name="txtComentariosCab" style="height: 62px;"></textarea>
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <input type="hidden" id="ent_oficina" name="ent_oficina" class="oficina" value="">
+                                        <input type="hidden" id="ent_anexo" name="ent_anexo" class="anexo" value="">
+                                        <button class="btn btn-sm btn-primary btn-icon btn-rounded" id="btGuardaCabecera" style="margin-top: 31px;">Guardar Datos de Entrevista<i class="demo-psi-add icon-lg" style="margin-left: 10px;"></i></button>
+                                    </div>
+                                </div>
+                                <div id="msjEntrevistaCab"></div>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <form id="form_entrevista_detalle" action="#" method="post" style="display:none">
+                        <h4>Detalle Entrevista</h4>
+                        <div class="panel panel-bordered-dark" style="border-radius: 8px; border: 1px solid #e5e5e5;">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Tema</label>
+                                        <select id="slTema" class="form-control" name="slTema"></select>
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Sub-Tema</label>
+                                        <select id="slSubTema" class="form-control" name="slSubTema"></select>
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Semaforo Relación</label>
+                                        <select id="slSemaforo" name="slSemaforo" class="form-control" tabindex="-98">
+                                            <option value="">Seleccione</option>
+                                            <option data-content="<span class=&quot;badge badge-success&quot; style='width: 100%; background-color: #8bc34a;'>Verde</span>" value="Verde">Verde</option>
+                                            <option data-content="<span class=&quot;badge badge-warning&quot; style='width: 100%; background-color: #ffb300;'>Amarillo</span>" value="Amarillo">Amarillo</option>
+                                            <option data-content="<span class=&quot;badge badge-danger&quot; style='width: 100%; background-color: #f44336;'>Rojo</span>" value="Rojo">Rojo</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Compromiso</label>
+                                        <div class="radio">
+                                            <input id="ckCompromisoSI" class="magic-radio" type="radio" name="groupCkeckCompromiso" value='SI'>
+                                            <label for="ckCompromisoSI">SI</label>
+                                            <input id="ckCompromisoNO" class="magic-radio" type="radio" name="groupCkeckCompromiso" value='NO' checked>
+                                            <label for="ckCompromisoNO">NO</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mar-btm" style="display: none" id="divFechaResul">
+                                        <label class="control-label">Fecha de Resolución</label>
+                                        <div id="demo-dp-component">
+                                            <div class="input-group date">
+                                                <input class="form-control" type="text" id="FechaResolucion" name="FechaResolucion">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Alerta</label>
+                                        <div class="radio">
+                                            <input id="ckAlertaSI" class="magic-radio" type="radio" name="groupCkeckAlerta" value='SI'>
+                                            <label for="ckAlertaSI">SI</label>
+                                            <input id="ckAlertaNO" class="magic-radio" type="radio" name="groupCkeckAlerta" value='NO' checked>
+                                            <label for="ckAlertaNO">NO</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mar-btm">
+                                        <textarea placeholder="Comentarios" rows="4" class="form-control" id="comentarioDtEn" name="comentarioDtEn"></textarea>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-primary btn-icon btn-rounded" id="btGuardaDetalleEntrevista" disabled>Guardar y Agregar<i class="demo-psi-add icon-lg" style="margin-left: 10px;"></i></button>
+
+                                <div id="msjEntrevistaDet"></div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="form-horizontal" style="display: none;" id="divVisita">
+                    <form id="form_gestion_mantencion" action="#" method="post">
+                        <div class="panel panel-bordered-dark" style="border-radius: 8px; border: 1px solid #e5e5e5;">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Fecha</label>
+                                        <div id="demo-dp-component">
+                                            <div class="input-group date">
+                                                <input class="form-control input-group date" type="text" id="FechaCabeceraGest" name="FechaCabeceraGest">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Tipo</label>
+                                        <div class="btn-group bootstrap-select form-control">
+                                            <select id="slTipoGestion" name="slTipoGestion" class="form-control selectpicker" tabindex="-98">
+                                                <option value="">Seleccione</option>
+                                                <option value="Terreno">Terreno</option>
+                                                <option value="Telefono">Telefono</option>
+                                                <option value="Mail">Mail</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <br />
+                                        <button class="btn btn-sm btn-primary btn-icon btn-rounded" id="btGuardaGestionMan" style="margin-top: 13px;">Guardar datos de gestion mantención<i class="demo-psi-add icon-lg" style="margin-left: 10px;"></i></button>
+                                        <input type="hidden" id="man_oficina" name="man_oficina" class="oficina" value="">
+                                        <input type="hidden" id="man_anexo" name="man_anexo" class="anexo" value="">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mar-btm">
+                                        <label class="control-label">Comentarios</label>
+                                        <textarea placeholder="Comentarios" rows="4" class="form-control" id="comentarioCabeceraGestion" name="comentarioCabeceraGestion" style="display: block"></textarea>
+                                    </div>
+                                </div>
+
+                                <div id="msjMantGestCab"></div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="form_gestion_mantencion_detalle" action="#" method="post" style="display:none">
+                        <div class="panel panel-bordered-dark" style="border-radius: 8px; border: 1px solid #e5e5e5;">
+                            <div class="panel-body">
+
+                                <div class="row">
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Tema</label>
+                                        <select id="slTemaGestion" class="form-control" name="slTema"></select>
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Sub-Tema</label>
+                                        <select id="slSubTemavisita" class="form-control" name="slSubTemavisita"></select>
+                                    </div>
+
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Alerta</label>
+                                        <div class="radio">
+                                            <input id="ckAlertaSIGestion" class="magic-radio" type="radio" name="groupCkeckAlertaGestion" value='SI'>
+                                            <label for="ckAlertaSIGestion">SI</label>
+                                            <input id="ckAlertaNOGestion" class="magic-radio" type="radio" name="groupCkeckAlertaGestion" value='NO' checked>
+                                            <label for="ckAlertaNOGestion">NO</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mar-btm">
+                                        <label class="control-label">Afiliado Gestionado</label>
+                                        <div class="btn-group bootstrap-select form-control">
+                                            <div class="panel-body">
+                                                <label for="slAfiliadoSelect" class="sr-only">Asignar Empresas</label>
+                                                <select id="slAfiliadoSelect" data-placeholder="Seleccione a los Afiliados.." multiple tabindex="4"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mar-btm">
+                                        <label class="control-label">Comentarios</label>
+                                        <textarea placeholder="Comentarios" rows="4" class="form-control" id="comentarioGestion" name="comentarioGestion" style="display: block"></textarea>
+                                    </div>
+                                </div>
+
+                                <div id="msjMantGestDet"></div>
+
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-primary btn-icon btn-rounded" id="btGuardaDetalleGestionMan" disabled>Guardar Detalle de gestion mantención<i class="demo-psi-add icon-lg" style="margin-left: 10px;"></i></button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+@*MODAL DE GESTION*@
+<div id="demo-lg-modal-new" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 13px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title"><i class="demo-psi-building icon-lg" style="margin-left: 10px;"></i>    Nueva Gestion</h4>
+                <i style="float: right; margin-right: 80px; font-style: normal;  margin-top: -18px;"><i class="demo-pli-checked-user icon-lg icon-fw"></i> <span class="label label-info" id="cantAfiScheck" style="margin-right: 15px;">0</span>    Afiliados seleccionados</i>
+            </div>
+            <form id="form-registro-gestion" action="#" method="post">
+                <div class="panel-body">
+                    <div class="panel panel-bordered-primary" style="border-color: #e6e6e6;">
+                        <div class="panel-body">
+                            <div class="form-horizontal">
+
+                                <div class="row">
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Estado</label>
+                                        <select id="selecEstado" class="form-control" name="selecEstado">
+                                            <option value="">Seleccione</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Sub-Estado</label>
+                                        <select id="selecSubEstado" class="form-control" name="selecSubEstado">
+                                            <option value="">Seleccione</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Fecha de compromete</label>
+
+                                        <div id="demo-dp-component">
+                                            <div class="input-group date">
+                                                <input class="form-control" type="text" id="FechaGest" name="FechaGest">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <textarea placeholder="Comentarios" rows="4" class="form-control" id="comentarioGest" name="comentarioGest"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer text-right" style="background-color: #fff;">
+                    <button class="btn btn-success" id="btGuardaGestion">Guardar Gestion</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="demo-lg-modal-newAnexo" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 6px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title">    Nuevo anexo</h4>
+            </div>
+            <form id="form_registro_anexo" action="#" method="post">
+                <div class="panel-body">
+                    <div class="panel panel-bordered-primary" style="border-color: #e6e6e6;">
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Rut Empresa</label>
+                                        <input type="text" class="form-control" id="txRutEmp" disabled name="txRutEmp">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Nombre Empresa</label>
+                                        <input type="text" class="form-control" id="slEmperesa_multiselect" disabled name="slEmperesa_multiselect">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Anexo</label>
+                                        <input type="text" id="anexo" class="form-control" name="anexo">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">N° de Trabajadores</label>
+                                        <input type="text" class="form-control" id="nTrajadores" name="nTrajadores">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Dirección</label>
+                                        <input type="text" class="form-control" id="direccionAnexo" name="direccionAnexo">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Comuna</label>
+                                        <select class="form-control" id="slComuna_multiselect" tabindex="2" name="slComuna_multiselect" required>
+                                            <option value="">Seleccione</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <div class="form-group" id="fpg">
+                                        <label class="control-label">Es Matriz</label>
+                                        <select class="form-control" id="Matriz" name="Matriz">
+                                            <option value="">Seleccione</option>
+                                            <option value="1">Si</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer text-right" style="background-color: #fff;">
+                    <button class="btn btn-success" id="btGuardaEmpresa">Guardar datos empresa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="demo-lg-modal-updateAnexo" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 6px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title">    Actualizar anexo</h4>
+            </div>
+            <form id="form_registro_anexoUp" action="#" method="post">
+                <div class="panel-body">
+
+                    <div class="panel panel-bordered-primary" style="border-color: #e6e6e6;">
+                        <div class="panel-body">
+                            <input type="text" class="form-control" id="ISeMPup" disabled name="ISeMPup" style="display: none;">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Rut Empresa</label>
+                                        <input type="text" class="form-control" id="txRutEmpUp" disabled name="txRutEmpUp">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Nombre Empresa</label>
+                                        <input type="text" class="form-control" id="slEmperesa_multiselectUp" disabled name="slEmperesa_multiselectUp">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Anexo</label>
+                                        <input type="text" id="anexoUp" class="form-control" name="anexoUp">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">N° de Trabajadores</label>
+                                        <input type="text" class="form-control" id="nTrajadoresUp" name="nTrajadoresUp">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Dirección</label>
+                                        <input type="text" class="form-control" id="direccionAnexoUp" name="direccionAnexoUp">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Comuna</label>
+                                        <select class="form-control" id="slComuna_multiselectUp" tabindex="2" name="slComuna_multiselectUp" required>
+                                            <option value="">Seleccione</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Es Matriz</label>
+                                        <select class="form-control" id="MatrizActualizar" name="MatrizActualizar">
+                                            <option value="">Seleccione</option>
+                                            <option value="1">Si</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6" style="margin-top:20px">
+                                    <div class="checkbox">
+                                        <input id="ckCargaAfi" class="magic-checkbox" type="checkbox" name="ckCargaAfi">
+                                        <label for="ckCargaAfi">Cargar archivo con Afiliados</label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div id="dzMain" class="dropzone demo-dropzone" style="display:none;">
+                                <div class="dz-default dz-message">
+                                    <div class="dz-icon">
+                                        <i class="demo-pli-upload-to-cloud icon-5x"></i>
+                                    </div>
+                                    <div>
+                                        <span class="dz-text">
+                                            Haga click para seleccionar manualmente
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer text-right" style="background-color: #fff;">
+                    <button class="btn btn-success" id="btGuardaEmpresaUp">Actualizar datos de Anexo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="demo-lg-modal-AsigEmp" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 6px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title">    Asignación Anexo</h4>
+            </div>
+            <div class="panel-body">
+                <div class="panel panel-bordered-primary" style="border-color: #e6e6e6;">
+                    <div class="panel-body">
+                        <div class="row">
+
+                            <div class="panel-heading">
+                                <h3 class="panel-title" style="font-size: 14px;">Asignar Anexos a ejecutivos</h3>
+                            </div>
+                            <div class="panel-body">
+                                <label for="demo-inline-inputmail" class="sr-only">Asignar Empresas</label>
+                                <select id="demo-cs-multiselectEje" data-placeholder="Seleccione a los ejecutivos.." multiple tabindex="4"></select>
+                                <button class="btn btn-primary" id="btAsigna" type="submit">Asignar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="overlay">
+    <div id="text">Cargando Documento, por favor espera...</div>
+</div>
+<div id="demo-lg-modal-agenda" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 6px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title"><i class="demo-pli-calendar-4 icon-lg" style="margin-left: 10px; margin-top: -2px;"></i>   Ingreso de Citas</h4>
+            </div>
+            <form id="form_registro_agendaEmpresa" action="#" method="post">
+                <div class="panel-body">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha</label>
+                                        <input type="text" class="form-control" id="txtFechacita" name="txtFechacita" placeholder="Fecha" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label class="control-label">Tipo de Visita</label>
+                                        <select id="slTipoVisita" name="slTipoVisita" class="form-control" tabindex="-98">
+                                            <option value="">Seleccione</option>
+                                            <option value="Terreno">Terreno</option>
+                                            <option value="Telefono">Telefono</option>
+                                            <option value="Mail">Mail</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea placeholder="Observación" style="height: 80px;" rows="13" id="txtObsCita" name="txtObsCita" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div id="divPeriodico" style="display: block;">
+                                <h4 id="tituloFecuencia">Frecuencia</h4>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Sucede</label>
+                                            <select id="slFrecuencia" name="slFrecuencia" class="form-control" tabindex="-98">
+                                                <option value="">Seleccione</option>
+                                                <option value="Diaria">Diaria</option>
+                                                <option value="Semanal">Semanal</option>
+                                                <option value="Quincenal">Quincenal</option>
+                                                <option value="Mensual">Mensual</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <hr style="margin-top: 1px;" />
+                                <div style="display:block;">
+                                    <div class="panel panel-bordered-info" id="divSemanal" style="display:none;">
+                                        <div class="panel-body">
+                                            <div class="form-group pad-ver">
+                                                <label class="col-md-2 control-label" style="margin-top: 10px;  color: black;">Seleccione los dias</label>
+                                                <div class="col-md-9">
+                                                    <div class="checkbox">
+                                                        <input id="checkbox-lunes" class="magic-checkbox" type="checkbox" name="groupCkeckDias[]" value='Lunes'>
+                                                        <label for="checkbox-lunes">Lunes</label>
+
+                                                        <input id="checkbox-martes" class="magic-checkbox" type="checkbox" name="groupCkeckDias[]" value='Martes'>
+                                                        <label for="checkbox-martes">Martes</label>
+
+                                                        <input id="checkbox-miercoles" class="magic-checkbox" type="checkbox" name="groupCkeckDias[]" value='Miércoles'>
+                                                        <label for="checkbox-miercoles">Miercoles</label>
+
+                                                        <input id="checkbox-jueves" class="magic-checkbox" type="checkbox" name="groupCkeckDias[]" value='Jueves'>
+                                                        <label for="checkbox-jueves">Jueves</label>
+
+                                                        <input id="checkbox-viernes" class="magic-checkbox" type="checkbox" name="groupCkeckDias[]" value='Viernes'>
+                                                        <label for="checkbox-viernes">Viernes</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="display:none;" id="divMensual">
+                                            <div class="form-group">
+                                                <label class="control-label">Dia</label>
+                                                <select id="slDiasMensual" name="slDiasMensual" class="form-control" tabindex="-98">
+                                                    <option value="">Seleccione</option>
+                                                    <option value="Lunes">Lunes</option>
+                                                    <option value="Martes">Martes</option>
+                                                    <option value="Miércoles">Miércoles</option>
+                                                    <option value="Jueves">Jueves</option>
+                                                    <option value="Viernes">Viernes</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3" style="display: none;" id="divDiario">
+                                            <div class="form-group">
+                                                <label class="control-label">Repetir Cada</label>
+                                                <select id="slSucedeDia" name="slSucedeDia" class="form-control" tabindex="-98">
+                                                    <option value="">Seleccione</option>
+                                                    <option value="0">Solo una vez</option>
+                                                    <option value="2">Cada 2 Dias</option>
+                                                    <option value="3">Cada 3 Dias</option>
+                                                    <option value="4">Cada 4 Dias</option>
+                                                    <option value="1">Todos los Dias laborales</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Comienza</label>
+                                                <div class="input-group date">
+                                                    <select id="slComienzaDia" name="slComienzaDia" class="form-control" tabindex="-98">
+                                                        <option value="">Seleccione</option>
+                                                        <option value="09:00">9:00 hrs.</option>
+                                                        <option value="09:30">9:30 hrs.</option>
+                                                        <option value="10:00">10:00 hrs.</option>
+                                                        <option value="10:30">10:30 hrs.</option>
+                                                        <option value="11:00">11:00 hrs.</option>
+                                                        <option value="11:30">11:30 hrs.</option>
+                                                        <option value="12:00">12:00 hrs.</option>
+                                                        <option value="12:30">12:30 hrs.</option>
+                                                        <option value="13:00">13:00 hrs.</option>
+                                                        <option value="13:30">13:30 hrs.</option>
+                                                        <option value="14:00">14:00 hrs.</option>
+                                                        <option value="14:30">14:30 hrs.</option>
+                                                        <option value="15:00">15:00 hrs.</option>
+                                                        <option value="15:30">15:30 hrs.</option>
+                                                        <option value="16:00">16:00 hrs.</option>
+                                                        <option value="16:30">16:30 hrs.</option>
+                                                        <option value="17:00">17:00 hrs.</option>
+                                                        <option value="17:30">17:30 hrs.</option>
+                                                        <option value="18:00">18:00 hrs.</option>
+                                                        <option value="18:30">18:30 hrs.</option>
+                                                        <option value="19:00">19:00 hrs.</option>
+                                                        <option value="19:30">19:30 hrs.</option>
+                                                        <option value="20:00">20:00 hrs.</option>
+                                                        <option value="20:30">20:30 hrs.</option>
+                                                        <option value="21:00">21:00 hrs.</option>
+                                                    </select>
+                                                    <span class="input-group-addon"><i class="demo-pli-clock"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Duración</label>
+                                                <div class="input-group date">
+                                                    <select id="slDuracionDia" name="slDuracionDia" class="form-control" tabindex="-98">
+                                                        <option value="00:30">30 Minutos</option>
+                                                        <option value="01:00">1 Hora</option>
+                                                        <option value="02:00">2 Horas</option>
+                                                        <option value="03:00">3 Horas</option>
+                                                        <option value="04:00">4 Horas</option>
+                                                    </select>
+                                                    <span class="input-group-addon"><i class="demo-pli-clock"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Hora finalización</label>
+                                                <input type="text" class="form-control" id="txtHoraFin" name="txtHoraFin" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer text-right" style="background-color: #fff;">
+                            <button class="btn btn-success" id="btGuardaCita">Agendar Cita</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="demo-lg-modal-agenda_update" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 6px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" id="nomEmpCita"><i class="demo-pli-calendar-4 icon-lg" style="margin-left: 10px; margin-top: -2px;"></i></h4>
+            </div>
+            <form id="form_registro_agendaEmpresa_update" action="#" method="post">
+                <div class="panel-body">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="col-md-12" id="pnl_mensajes"></div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label class="control-label">Fecha</label>
+                                        <div id="demo-dp-component">
+                                            <div class="input-group date">
+                                                <input class="form-control input-group date" type="text" id="txtFechacita_update" name="txtFechacita_update">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label class="control-label">Tipo de Visita</label>
+                                        <select id="slTipoVisita_update" name="slTipoVisita_update" class="form-control" tabindex="-98">
+                                            <option value="">Seleccione</option>
+                                            <option value="Terreno">Terreno</option>
+                                            <option value="Telefono">Telefono</option>
+                                            <option value="Mail">Mail</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <textarea placeholder="Observación" style="height: 80px;" rows="13" id="txtObsCita_update" name="txtObsCita_update" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div id="divPeriodico_update" style="display: block;">
+                                <h4 id="tituloFecuencia_update">Frecuencia</h4>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Sucede</label>
+                                            <select id="slFrecuencia_update" name="slFrecuencia_update" class="form-control" tabindex="-98" disabled>
+                                                <option value="">Seleccione</option>
+                                                <option value="Diaria">Diaria</option>
+                                                <option value="Semanal">Semanal</option>
+                                                <option value="Quincenal">Quincenal</option>
+                                                <option value="Mensual">Mensual</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="margin-top: 1px;" />
+                                <div style="display:block;">
+                                    <div class="panel panel-bordered-info" id="divSemanal_update" style="display:none;">
+                                        <div class="panel-body">
+                                            <div class="form-group pad-ver">
+                                                <label class="col-md-2 control-label" style="margin-top: 10px;  color: black;">Seleccione los dias</label>
+                                                <div class="col-md-9">
+                                                    <div class="checkbox">
+                                                        <input id="checkbox-lunes_update" class="magic-checkbox" type="checkbox" name="groupCkeckDias_update[]" value='Lunes' disabled>
+                                                        <label for="checkbox-lunes_update">Lunes</label>
+
+                                                        <input id="checkbox-martes_update" class="magic-checkbox" type="checkbox" name="groupCkeckDias_update[]" value='Martes' disabled>
+                                                        <label for="checkbox-martes_update">Martes</label>
+
+                                                        <input id="checkbox-miercoles_update" class="magic-checkbox" type="checkbox" name="groupCkeckDias_update[]" value='Miércoles' disabled>
+                                                        <label for="checkbox-miercoles_update">Miercoles</label>
+
+                                                        <input id="checkbox-jueves_update" class="magic-checkbox" type="checkbox" name="groupCkeckDias_update[]" value='Jueves' disabled>
+                                                        <label for="checkbox-jueves_update">Jueves</label>
+
+                                                        <input id="checkbox-viernes_update" class="magic-checkbox" type="checkbox" name="groupCkeckDias_update[]" value='Viernes' disabled>
+                                                        <label for="checkbox-viernes_update">Viernes</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="display:none;" id="divMensual_update">
+                                            <div class="form-group">
+                                                <label class="control-label">Dia</label>
+                                                <select id="slDiasMensual_update" name="slDiasMensual_update" class="form-control" tabindex="-98">
+                                                    <option value="">Seleccione</option>
+                                                    <option value="Lunes">Lunes</option>
+                                                    <option value="Martes">Martes</option>
+                                                    <option value="Miércoles">Miércoles</option>
+                                                    <option value="Jueves">Jueves</option>
+                                                    <option value="Viernes">Viernes</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3" style="display: none;" id="divDiario_update">
+                                            <div class="form-group">
+                                                <label class="control-label">Repetir Cada</label>
+                                                <select id="slSucedeDia_update" name="slSucedeDia_update" class="form-control" tabindex="-98" disabled>
+                                                    <option value="">Seleccione</option>
+                                                    <option value="0">Solo una vez</option>
+                                                    <option value="2">Cada 2 Dias</option>
+                                                    <option value="3">Cada 3 Dias</option>
+                                                    <option value="4">Cada 4 Dias</option>
+                                                    <option value="1">Todos los Dias laborales</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Comienza</label>
+                                                <div class="input-group date">
+                                                    <select id="slComienzaDia_update" name="slComienzaDia_update" class="form-control" tabindex="-98">
+                                                        <option value="">Seleccione</option>
+                                                        <option value="09:00">9:00 hrs.</option>
+                                                        <option value="09:30">9:30 hrs.</option>
+                                                        <option value="10:00">10:00 hrs.</option>
+                                                        <option value="10:30">10:30 hrs.</option>
+                                                        <option value="11:00">11:00 hrs.</option>
+                                                        <option value="11:30">11:30 hrs.</option>
+                                                        <option value="12:00">12:00 hrs.</option>
+                                                        <option value="12:30">12:30 hrs.</option>
+                                                        <option value="13:00">13:00 hrs.</option>
+                                                        <option value="13:30">13:30 hrs.</option>
+                                                        <option value="14:00">14:00 hrs.</option>
+                                                        <option value="14:30">14:30 hrs.</option>
+                                                        <option value="15:00">15:00 hrs.</option>
+                                                        <option value="15:30">15:30 hrs.</option>
+                                                        <option value="16:00">16:00 hrs.</option>
+                                                        <option value="16:30">16:30 hrs.</option>
+                                                        <option value="17:00">17:00 hrs.</option>
+                                                        <option value="17:30">17:30 hrs.</option>
+                                                        <option value="18:00">18:00 hrs.</option>
+                                                        <option value="18:30">18:30 hrs.</option>
+                                                        <option value="19:00">19:00 hrs.</option>
+                                                        <option value="19:30">19:30 hrs.</option>
+                                                        <option value="20:00">20:00 hrs.</option>
+                                                        <option value="20:30">20:30 hrs.</option>
+                                                        <option value="21:00">21:00 hrs.</option>
+                                                    </select>
+                                                    <span class="input-group-addon"><i class="demo-pli-clock"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Duración</label>
+                                                <div class="input-group date">
+                                                    <select id="slDuracionDia_update" name="slDuracionDia_update" class="form-control" tabindex="-98">
+                                                        <option value="00:30">30 Minutos</option>
+                                                        <option value="01:00">1 Hora</option>
+                                                        <option value="02:00">2 Horas</option>
+                                                        <option value="03:00">3 Horas</option>
+                                                        <option value="04:00">4 Horas</option>
+                                                    </select>
+                                                    <span class="input-group-addon"><i class="demo-pli-clock"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="control-label">Hora finalización</label>
+                                                <input type="text" class="form-control" id="txtHoraFin_update" name="txtHoraFin_update" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer text-right" style="background-color: #fff;">
+                            <button class="btn btn-warning " name="btCita_update_frecuente" id="btCita_update_frecuente" type="button" style="margin-right:10px;display:none">Actualizar Cita</button>
+                            <button class="btn btn-primary " name="btCita_update_cita" id="btCita_update_cita" type="button" style="margin-right:10px;display:none">Actualizar Cita</button>
+                            <button class="btn btn-danger " name="btCita_update_cancelar" id="btCita_update_cancelar" type="button" style="margin-right:10px;display:none">Cancelar</button>
+                            <button class="btn btn-success" name="btCita_update" id="btCita_update" type="button">Modificar Cita</button>
+                            <button class="btn btn-danger" name="btCita_elimina" id="btCita_elimina" type="button"> Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+@*MODAL DE LICENCIA MEDICA*@
+<div id="modal-licencia_medica" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 13px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title"><i class="demo-psi-building icon-lg" style="margin-left: 10px;"></i>    Licencia Medica</h4>
+            </div>
+            <form id="form-registro-gestion" action="#" method="post">
+                <div class="panel-body">
+                    <div class="panel panel-bordered-primary" style="border-color: #e6e6e6;">
+                        <div class="panel-body">
+                            <div class="form-horizontal">
+
+                                <div class="row">
+                                    <div class="col-md-3 mar-btm">
+                                        <label class="control-label">Rut</label>
+                                        <input type="text" class="form-control" id="RutAfiLC" name="RutAfiLC">
+                                    </div>
+                                    <div class="col-md-3 mar-btm">
+                                        <label class="control-label">Nombre</label>
+                                        <input type="text" class="form-control" id="nomnbreAfiLC" name="nomnbreAfiLC">
+                                    </div>
+                                    <div class="col-md-3 mar-btm">
+                                        <label class="control-label">N° Licencia</label>
+                                        <input type="text" class="form-control" id="NumeroLicencia" name="NumeroLicencia">
+                                    </div>
+
+
+                                    <div class="col-md-3 mar-btm">
+                                        <label class="control-label">Resolución</label>
+                                        <input type="text" class="form-control" id="diaDisponbleAfiLC" name="diaDisponbleAfiLC">
+                                    </div>
+
+                                </div>
+
+                                <div id="divLicPendientes" style="display:none">
+                                    <div class="row">
+                                        <div class="col-md-4 mar-btm">
+                                            <label class="control-label">Fecha Inicio</label>
+                                            <input type="text" class="form-control" id="fechaIniAfiLC" name="fechaIniAfiLC" disabled>
+                                        </div>
+                                        <div class="col-md-4 mar-btm">
+                                            <label class="control-label">Fecha Fin</label>
+                                            <input type="text" class="form-control" id="fechaFinAfiLC" name="fechaFinAfiLC" disabled>
+                                        </div>
+                                        <div class="col-md-4 mar-btm">
+                                            <label class="control-label">Dias Licencias</label>
+                                            <input type="text" class="form-control" id="diasAfiLicencia" name="diasAfiLicencia">
+                                        </div>
+                                    </div>
+
+                                    <textarea placeholder="Comentarios" rows="4" class="form-control" id="comentarioGest" name="comentarioGest"></textarea>
+                                </div>
+
+                                <div id="divLicDisponible" style="display:none">
+
+                                    <div class="row">
+                                        <div class="col-md-4 mar-btm">
+                                            <label class="control-label">Fecha Inicio</label>
+                                            <input type="text" class="form-control" id="fechaIniAfiLC" name="fechaIniAfiLC">
+                                        </div>
+                                        <div class="col-md-4 mar-btm">
+                                            <label class="control-label">Fecha Fin</label>
+                                            <input type="text" class="form-control" id="fechaFinAfiLC" name="fechaFinAfiLC">
+                                        </div>
+                                        <div class="col-md-4 mar-btm">
+                                            <label class="control-label">Fecha de Pago </label>
+                                            <input type="text" class="form-control" id="diasAfiLicencia" name="diasAfiLicencia">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4 mar-btm">
+                                            <label class="control-label">Dias Licencia</label>
+                                            <input type="text" class="form-control" id="diaDisponbleAfiLC" name="diaDisponbleAfiLC">
+                                        </div>
+                                        <div class="col-md-4 mar-btm">
+                                            <label class="control-label">Dias a Pago</label>
+                                            <input type="text" class="form-control" id="diasPagoAfiLC" name="diasPagoAfiLC">
+                                        </div>
+                                        <div class="col-md-4 mar-btm">
+                                            <label class="control-label">Monto Pago</label>
+                                            <input type="text" class="form-control" id="montoPagoAfiLC" name="montoPagoAfiLC">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer text-right" style="background-color: #fff;">
+                    <button class="btn btn-success" id="btGuardaGestion">Guardar Gestion</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@*MODAL DE VIDA SANA*@
+<div id="modal-Vida-sana" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-hidden="true">
+    <input type="hidden" id="hdnIdPadre" />
+    <input type="hidden" id="hdnpopup" />
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title"><i class="demo-psi-building icon-lg" style="margin-left: 10px;"></i> Etapa  <label id="lbletapaActual">    </label> </h4>
+            </div>
+            <form id="form_registro">
+                <div class="panel-body" id="pnlBodyVidaSana">
+
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Estado Gestión</label>
+                            <select class="form-control" id="ddlsubEstados" name="ddlsubEstados"></select>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3" id="divproxgestion" style="display:none">
+                        <div class="form-group">
+                            <label class="control-label">Fecha Próxima Gestión</label>
+                            <div id="index-dp-component">
+                                <div class="input-group date">
+                                    <input type="text" class="form-control" id="dt_fecha_prox_gestion" name="dt_fecha_prox_gestion">
+                                    <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row mar-top docs-obervacion">
+                        <div class="col-md-12">
+                            <label for="comentarios">Comentarios</label>
+                            <textarea id="Obervaciones" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                    <button type="button" class="btn btn-primary" id="bt_guardargestion_Vidasana">Guardar</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+
+    #overlay {
+        position: fixed; /* Sit on top of the page content */
+        display: none; /* Hidden by default */
+        width: 100%; /* Full width (cover the whole page) */
+        height: 100%; /* Full height (cover the whole page) */
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+        z-index: 9999; /* Specify a stack order in case you're using a different order for other elements */
+        cursor: pointer; /* Add a pointer on hover */
+    }
+
+
+    #text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 40px;
+        color: white;
+        transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+    }
+</style>
+@section script{
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+
+    <script src="~/Assets/js.App/ficha-empresa.min.js"></script>
+    <script src="~/Assets/js.App/src/ficha-empresa.js?g=@Guid.NewGuid().ToString()"></script>
+
+}
+
+
+
+
+

@@ -1,0 +1,180 @@
+
+@{
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+
+}
+
+<div id="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="tab-base">
+
+                <!--Nav Tabs-->
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a data-toggle="tab" href="#tab-2" aria-expanded="true" id="tab_visados" class="tab-principal"><strong>Directores Laborales</strong></a>
+                    </li>
+                </ul>
+
+                <!--Tabs Content-->
+                <div class="tab-content">
+                    <div id="tab-2" class="tab-pane fade active in">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table class="table table-striped" id="tabla_fidelizacion">
+                                        <thead>
+                                            <tr>
+                                                <th>Código Pto. Atención</th>
+                                                <th>Rut</th>
+                                                <th>Nombre \ Pto. Atención</th>
+                                                <th>N° Trabajadores</th>
+                                                <th>N° Directores Laborales</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="item in leads">
+                                                <td><a class="btn-link" data-toggle="modal" data-target="#modalGestion" :data-lead="item.id" href="#">{{ item.empresaCodigoPuntoAtencion }}</a></td>
+                                                <td>{{ item.empresaRut }}</td>
+                                                <td>{{ item.empresaNombre }} \ {{ item.empresaNombrePuntoAtencion }}</td>
+                                                <td>{{ item.empresaCantidadTrabajadores }}</td>
+                                                <td>{{ item.directoresLaborales.length }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="modalGestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Ingreso de Comité Paritario</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="well">
+                                <div class="row mar-btm">
+                                    <div class="col-lg-6">
+                                        <div class="dd-handle dd-outline dd-anim">
+                                            <div class="media-left">
+                                                <i class="pli-building icon-2x"></i>
+                                            </div>
+                                            <div class="media-body">
+                                                <p class="text-main mar-no">Compañía</p>
+                                                <small class="text-semibold">{{ leadModal.empresaRut }} - {{ leadModal.empresaNombre }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="dd-handle dd-outline dd-anim">
+                                            <div class="media-left">
+                                                <i class="demo-pli-map-2 icon-2x"></i>
+                                            </div>
+                                            <div class="media-body">
+                                                <p class="text-main mar-no">Punto de Atención</p>
+                                                <small class="text-semibold">{{ leadModal.empresaCodigoPuntoAtencion }} - {{ leadModal.empresaNombrePuntoAtencion }} ({{ leadModal.empresaCantidadTrabajadores }} Empleados)</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                            <div class="well well-sm">
+                                <p class="h4">Miembros Ingresados</p>
+                                <p v-show="leadModal.directoresLaborales.length===0" class="text-muted">No hay registros..</p>
+                                <div class="row mar-btm" v-for="directivo in leadModal.directoresLaborales">
+                                    
+                                    <div class="col-lg-12">
+                                        <div class="dd-handle dd-outline dd-anim">
+                                            <div class="media-left">
+                                                <i class="ion-ios-person icon-2x"></i>
+                                            </div>
+                                            <div class="media-body">
+                                                <p class="text-main mar-no">{{directivo.nombre}} ({{directivo.cargo}})</p>
+                                                <small class="text-semibold"><span v-show="directivo.telefonoFijo.length>0"><b>Tel:</b> {{directivo.telefonoFijo}} | </span><span v-show="directivo.telefonoCelular.length>0"><b>Cel:</b> {{directivo.telefonoCelular}} | </span><span v-show="directivo.correo.length>0"><b>Mail:</b> {{directivo.correo}}</span> </small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>                                
+                            </div>
+                             
+                        </div>
+                    </div>
+
+                    <p class="text-main h4">Formulario de Ingreso</p>
+                    <form id="datos-gestion" action="#" method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><strong>Nombre</strong></label>
+                                    <input type="text" class="form-control" v-model="modeloFormulario.nombre">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><strong>Cargo</strong></label>
+                                    <select class="form-control" v-model="modeloFormulario.cargo">
+                                        <option value="">Selecciona</option>
+                                        <option value="Presidente">Presidente</option>
+                                        <option value="Secretario">Secretario</option>
+                                        <option value="Director">Director</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label><strong>Correo</strong></label>
+                                    <input type="text" class="form-control" v-model="modeloFormulario.correo">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label><strong>Teléfono</strong></label>
+                                    <input type="text" class="form-control" v-model="modeloFormulario.telefonoFijo">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label><strong>Celular</strong></label>
+                                    <input type="text" class="form-control" v-model="modeloFormulario.telefonoCelular">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="row mar-btm" id="mensajes"></div>
+                    <button type="button" class="btn btn-default bloquear-onsubmit" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary bloquear-onsubmit" v-on:click="agregaDirectivo">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section script{
+
+    <!--Bootstrap Table [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/js.App/src/empresas.inicio.directores-laborales.js"></script>
+}

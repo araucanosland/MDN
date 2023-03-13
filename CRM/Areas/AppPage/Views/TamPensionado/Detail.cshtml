@@ -1,0 +1,293 @@
+﻿@{
+    ViewBag.Title = "Flujo Captura Tarjeta TAM";
+}
+<link href="~/Assets/tam/deps/vue-form-wizard.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/vue-select@latest/dist/vue-select.css">
+<div id="detail-app">
+    <div>
+        <afiliado-info :lead="afiliadoEncontrado" :score="score" v-model="model.anotaciones"></afiliado-info>
+
+        <div class="panel">
+            <div class="panel-heading">
+                <h4 class="panel-title">Buscar Afiliado</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Rut</label>
+                            <the-mask :mask="['#.###.###-X', '##.###.###-X']" type="text" class="form-control" v-model="model.rut" tabindex="1" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Fecha de Nacimiento</label>
+                            <the-mask mask="##-##-####" class="form-control" type="text" placeholder="dd-mm-yyyy" v-model="model.fechaNacimiento" tabindex="2"></the-mask>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Opción Afiliado</label>
+                            <select class="form-control" v-model="model.opcion" tabindex="3">
+                                <option value="">Selecciona</option>
+                                <option value="R">Reembolso Telefónico</option>
+                                <option value="T">Tarjeta Telefónico</option>
+                                <option value="RP">Reembolso Presencial</option>
+                                <option value="TP">Tarjeta Presencial</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Celular</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">+56 9</span>
+                                <input type="text" class="form-control" v-model="model.celular" tabindex="4" v-mask="'########'">
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <select class="form-control" v-model="model.celularOperador">
+                                        <option value="">Operador</option>
+                                        <option>Entel</option>
+                                        <option>Wom</option>
+                                        <option>Movistar</option>
+                                        <option>Claro</option>
+                                        <option>Virgin</option>
+                                        <option>Vtr</option>
+                                        <option>Colo Colo</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <select class="form-control" v-model="model.celularTipoContrato">
+                                        <option value="">Tipo Contrato</option>
+                                        <option>Plan</option>
+                                        <option>Prepago</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Tel. Secundario (No Obligatorio)</label>
+                            <input type="text" class="form-control" v-model="model.telefono" tabindex="6">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Email (No Obligatorio)</label>
+                            <input type="text" class="form-control" v-model="model.email" tabindex="8">
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <h5>Contacto de Emergencia (No Obligatorio)</h5>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Nombre</label>
+                            <input type="text" class="form-control" v-model="model.contactoEmergencia.nombre" tabindex="55">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Teléfono</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">+56</span>
+                                <input type="text" class="form-control" v-model="model.contactoEmergencia.telefono" tabindex="56" v-mask="'#########'">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Relación</label>
+                            <input type="text" class="form-control" v-model="model.contactoEmergencia.relacion" tabindex="57">
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <h5>Direccion de Residencia</h5>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Calle</label>
+                            <input type="text" class="form-control" autocomplete="off" v-model="model.direcciones.residencia.calle" tabindex="10">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">Nro</label>
+                            <input type="text" class="form-control" v-model="model.direcciones.residencia.numero" tabindex="11">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Comuna</label>
+                            <v-select label="nombre" :options="comunas" :reduce="residencia => residencia.id" v-model="model.direcciones.residencia.comuna" :tabindex="12"></v-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label class="control-label">Casa Interior / Departamento</label>
+                            <input type="text" class="form-control" v-model="model.direcciones.residencia.numeracionInterior">
+                        </div>
+                    </div>
+                </div>
+
+                <h5>Direccion Laboral (No Obligatorio)</h5>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Calle</label>
+                            <input type="text" class="form-control" autocomplete="off" v-model="model.direcciones.laboral.calle" tabindex="16">
+
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">Nro</label>
+                            <input type="text" class="form-control" v-model="model.direcciones.laboral.numero" tabindex="17">
+
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Comuna</label>
+                            <v-select label="nombre" :options="comunas" :reduce="laboral => laboral.id" v-model="model.direcciones.laboral.comuna" :tabindex="18"></v-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading">
+                <h4 class="panel-title">Elección de Tarjeta</h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Elección del Afiliado</label>
+                    <div class="col-lg-7">
+                        <div class="radio">
+
+                            <input v-if="afiliadoEncontrado.flagTamMetro == 1" id="demo-radio-2" class="magic-radio" type="radio" name="eleccionAfiliado" value="mantiene_tam" v-model="model.eleccionTarjeta">
+                            <label v-if="afiliadoEncontrado.flagTamMetro == 1" for="demo-radio-2">Mantener TAM-Metro (antigua)</label>
+
+                            <input v-if="afiliadoEncontrado.flagTamMetro == 0" id="demo-radio-3" class="magic-radio" type="radio" name="eleccionAfiliado" value="prefiere_tam" v-model="model.eleccionTarjeta">
+                            <label v-if="afiliadoEncontrado.flagTamMetro == 0" for="demo-radio-3">Prefiere TAM-Metro (antigua)</label>
+
+                            <input id="demo-radio-1" class="magic-radio" type="radio" name="eleccionAfiliado" value="acepta_bip" v-model="model.eleccionTarjeta">
+                            <label for="demo-radio-1">Acepta BIP AD (Nueva)</label>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading">
+                <h4 class="panel-title">Despacho</h4>
+            </div>
+            <div class="panel-body">
+
+                <h5>Direccion de Despacho</h5>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Calle</label>
+                            <input type="text" class="form-control" autocomplete="off" v-model="model.direcciones.despacho.calle" :readonly="model.direcciones.residenciaIgualDespacho == true">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label class="control-label">Nro</label>
+                            <input type="text" class="form-control" v-model="model.direcciones.despacho.numero" :readonly="model.direcciones.residenciaIgualDespacho == true">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Comuna</label>
+                            <v-select label="nombre" :options="comunas" :reduce="despacho => despacho.id" v-model="model.direcciones.despacho.comuna" v-if="!model.direcciones.residenciaIgualDespacho"></v-select>
+                            <input type="text" class="form-control" v-model="model.direcciones.despacho.comuna.nombre" v-if="model.direcciones.residenciaIgualDespacho" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label class="control-label">Casa Interior / Departamento</label>
+                            <input type="text" class="form-control" v-model="model.direcciones.despacho.numeracionInterior">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel" v-if="areAnswersEnabled">
+            <div class="panel-heading">
+                <h4 class="panel-title">Preguntas Autenticación</h4>
+            </div>
+            <div class="panel-body">
+                <div class="alert alert-success" v-if="score >= 3">Afiliado cumple con Score Minimo, ya puedes finalizar!!</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Pregunta</th>
+                            <th>Check</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(pregunta, index) in preguntas">
+                            <td>
+                                <p><b>{{ pregunta.preguntaTexto }}</b></p>
+                                <small>{{ pregunta.criterioTexto }}</small>
+                            </td>
+                            <td>
+                                <div class="radio">
+                                    <input :id="'si' + pregunta.preguntaId" class="magic-radio" type="radio" :name="pregunta.preguntaId" :value="1" v-model="model.respuestas[index]" v-on:change="onAuthenticationItemChange">
+                                    <label :for="'si' + pregunta.preguntaId">Califica</label>
+                                    <input :id="'no' + pregunta.preguntaId" class="magic-radio" type="radio" :name="pregunta.preguntaId" :value="0" v-model="model.respuestas[index]" v-on:change="onAuthenticationItemChange">
+                                    <label :for="'no' + pregunta.preguntaId">No califica</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-body">
+                <button type="button" class="btn btn-primary" v-on:click="onSaveInfo($event)">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script>
+        var rutAfiliado = '@ViewBag.rut';
+        var idGestion = @ViewBag.id;
+    </script>
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/tam/homologo.js"></script>
+    <script src="~/Assets/tam/deps/vue-form-wizard.js"></script>
+    <script src="~/Assets/tam/deps/moment.js"></script>
+    <script src="~/Assets/tam/deps/lodash.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
+    <script src="~/Assets/tam/deps/vuejs-the-mask.js"></script>
+    <script src="~/Assets/tam/deps/vue-select.js"></script>
+    <script src="~/Assets/tam/shared.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/tam/components.vue.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/tam/detail.app.vue.js?g=@Guid.NewGuid().ToString()"></script>
+}
+
+

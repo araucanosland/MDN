@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://delegate.webservices.capaservicios.laaraucana.cl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" name="AutenticarLdapService" targetNamespace="http://delegate.webservices.capaservicios.laaraucana.cl/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="AutenticarLdapService_schema1.xsd" namespace="http://delegate.webservices.capaservicios.laaraucana.cl/" />
+    </xsd:schema>
+  </types>
+  <message name="autenticarUsuario">
+    <part name="parameters" element="tns:autenticarUsuario" />
+  </message>
+  <message name="autenticarUsuarioResponse">
+    <part name="parameters" element="tns:autenticarUsuarioResponse" />
+  </message>
+  <portType name="AutenticarLdapDelegate">
+    <operation name="autenticarUsuario">
+      <input wsam:Action="http://delegate.webservices.capaservicios.laaraucana.cl/AutenticarLdapDelegate/autenticarUsuarioRequest" message="tns:autenticarUsuario" />
+      <output wsam:Action="http://delegate.webservices.capaservicios.laaraucana.cl/AutenticarLdapDelegate/autenticarUsuarioResponse" message="tns:autenticarUsuarioResponse" />
+    </operation>
+  </portType>
+  <binding name="AutenticarLdapPortBinding" type="tns:AutenticarLdapDelegate">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="autenticarUsuario">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="AutenticarLdapService">
+    <port name="AutenticarLdapPort" binding="tns:AutenticarLdapPortBinding">
+      <soap:address location="http://146.83.1.144:9080/InterfazServiciosCredEspecial/AutenticarLdapService" />
+    </port>
+  </service>
+</definitions>

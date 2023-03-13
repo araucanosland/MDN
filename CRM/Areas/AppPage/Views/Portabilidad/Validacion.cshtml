@@ -1,0 +1,507 @@
+﻿
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/select2/css/select2.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+
+<div id="page-title">
+    <h1 class="page-header text-overflow">Portabilidad</h1>
+    <br />
+</div>
+<div id="page-content">
+    <div class="tab-base" id="MDL_Primario_portabilidad" style="margin-bottom: 0px !important;">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a data-toggle="tab" href="#tab-autentificacion_port" aria-expanded="false">AUTENTIFICACION</a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#tab-historial-port-val" aria-expanded="false">HISTORIAL</a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#tab-auditor-port-val" aria-expanded="false">AUDITOR</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="box-shadow: 0 0 0 !important;">
+            <div id="tab-autentificacion_port" class="tab-pane fade active in">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel" style="border-radius: 10px;">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="control-label">RUT</label>
+                                            <input type="text" class="form-control limpia" id="txtrutValidacion" maxlength="10">
+                                        </div>
+                                    </div>
+                                    <div class="form-inline">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label"></label>
+                                                <button class="btn btn-primary" style="border-radius: 6px; margin-top: 22px;" type="submit" v-on:click="obtenerLeadValidacion">BUSCAR</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="text-main text-bold mar-no">NOMBRE:</p>
+                                        <p id="nom">{{dataValidacion.nombre}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="text-main text-bold mar-no">OFERTA:</p>
+                                        <p>{{oferta}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="text-main text-bold mar-no">SEGMENTO:</p>
+                                        <p>{{dataValidacion.segmento}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="msj-ing-val"></div>
+                <div id="demo-bv-wz">
+                    <div class="wz-heading pad-top">
+                        <ul class="row wz-step wz-icon-bw wz-nav-off mar-top">
+                            <li class="col-xs-3">
+                                <a data-toggle="tab" href="#demo-bv-tab1">
+                                    <span class="text-primary"><i class="demo-pli-male icon-2x"></i></span>
+                                    <p class="text-semibold mar-no">AUTENTICACIÓN</p>
+                                </a>
+                            </li>
+                            <li class="col-xs-2">
+                                <a data-toggle="tab" href="#demo-bv-tab2">
+                                    <span class="text-primary"><i class="demo-pli-home icon-2x"></i></span>
+                                    <p class="text-semibold mar-no">CONTACTO</p>
+                                </a>
+                            </li>
+                            <li class="col-xs-2">
+                                <a data-toggle="tab" href="#demo-bv-tab3">
+                                    <span class="text-primary"><i class="pli-factory icon-2x"></i></span>
+                                    <p class="text-semibold mar-no">INSTITUCIÓN</p>
+                                </a>
+                            </li>
+                            <li class="col-xs-3">
+                                <a data-toggle="tab" href="#demo-bv-tab4">
+                                    <span class="text-primary"><i class="ion-clipboard icon-2x"></i></span>
+                                    <p class="text-semibold mar-no">AUTORIZACIÓN</p>
+                                </a>
+                            </li>
+                            <li class="col-xs-2">
+                                <a data-toggle="tab" href="#demo-bv-tab5">
+                                    <span class="text-danger"><i class="ion-ios-list-outline  icon-2x"></i></span>
+                                    <p class="text-semibold mar-no">GESTION</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!--progress bar-->
+                    <div class="progress progress-xs">
+                        <div class="progress-bar progress-bar-primary"></div>
+                    </div>
+                    <!--Form-->
+                    <form id="demo-bv-wz-form" class="form-horizontal">
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div id="demo-bv-tab1" class="tab-pane">
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">Preguntas Autenticación</h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="alert alert-success" v-if="score >= 3">Afiliado cumple con Score Minimo, ya puedes continuar!!</div>
+                                            @*<div class="alert alert-warning" v-if="score_n >= 3">Afiliado cumple con Score Minimo, ya puedes finalizar!!</div>*@
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Pregunta</th>
+                                                        <th>Check</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="pregunta_ in preguntas">
+                                                        <td>
+                                                            <p><b>{{ pregunta_.pregunta }}</b></p>
+                                                            <small>{{ pregunta_.respuesta }}</small>
+                                                        </td>
+                                                        <td>
+                                                            <div class="radio">
+                                                                <input :id="'si' + pregunta_.id_pregunta" class="magic-radio" type="radio" :name="pregunta_.id_pregunta" value="Califica" v-on:change="onAuthenticationItemChange(pregunta_.id_pregunta, 'si' + pregunta_.id_pregunta)" @*v-model="model.respuestas[index]" v-on:change="onAuthenticationItemChange"*@>
+                                                                <label :for="'si' + pregunta_.id_pregunta">Califica</label>
+                                                                <input :id="'no' + pregunta_.id_pregunta" class="magic-radio" type="radio" :name="pregunta_.id_pregunta" value="No Califica" v-on:change="onAuthenticationItemChange(pregunta_.id_pregunta, 'si' + pregunta_.id_pregunta)" @*v-model="model.respuestas[index]" v-on:change="onAuthenticationItemChange"*@>
+                                                                <label :for="'no' + pregunta_.id_pregunta">No califica</label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="demo-bv-tab2" class="tab-pane fade">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">DIRECCIÓN</label>
+                                        <div class="col-lg-9 pad-no">
+                                            <div class="clearfix">
+                                                <div class="col-lg-4">
+                                                    <input type="text" id="txtDireccion" class="form-control limpia">
+                                                </div>
+                                                <div class="col-lg-3 text-lg-right"><label class="control-label">NUMERO</label></div>
+                                                <div class="col-lg-4"><input type="text" id="txtNumero" name="txtNumero" class="form-control limpia"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">DEPTO</label>
+                                        <div class="col-lg-9 pad-no">
+                                            <div class="clearfix">
+                                                <div class="col-lg-4">
+                                                    <input type="text" id="txtDpto" class="form-control limpia">
+                                                </div>
+                                                <div class="col-lg-3 text-lg-right">
+                                                    <label class="control-label">CORREO</label>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <input type="text" id="txtmail" name="txtmail" class="form-control limpia">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">TELEFONO</label>
+                                        <div class="col-lg-9 pad-no">
+                                            <div class="clearfix">
+                                                <div class="col-lg-4">
+                                                    <input type="text" id="txtfono" name="txtfono" class="form-control limpia">
+                                                </div>
+                                                <div class="col-lg-3 text-lg-right"><label class="control-label">COMUNA</label></div>
+                                                <div class="col-lg-4"><input type="text" id="txtComuna" name="txtComuna" class="form-control limpia"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div id="demo-bv-tab3" class="tab-pane fade">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Institución</th>
+                                                <th>Opciones</th>
+                                                <th>Tarjetas</th>
+                                                <th class="tarjOtra" style="display:none">Tarjeta (Otra)</th>
+                                                <th>Monto Tajetas</th>
+                                                <th>Linea de Credito</th>
+                                                <th>Credito Consumo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="pregunta_ in dataInstitucion">
+                                                <td>
+                                                    <p><b>{{ pregunta_.institucion }}</b></p>
+                                                </td>
+                                                <td>
+                                                    <div class="checkbox" style="font-size: 10px;">
+                                                        <input :id="'tiene' + pregunta_.institucion_id" class="magic-checkbox clear_ck" type="checkbox" value="tiene" v-on:change="onTieneItemChange(pregunta_.institucion_id)">
+                                                        <label :for="'tiene' + pregunta_.institucion_id">Tiene</label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="checkbox" style="font-size: 10px;">
+                                                        <input :id="'visa' + pregunta_.institucion_id" class="magic-checkbox clear_ck" type="checkbox" disabled :name="pregunta_.institucion_id" value="visa" v-on:change="onInstitucionItemChange(pregunta_.institucion_id)">
+                                                        <label :for="'visa' + pregunta_.institucion_id">Visa</label>
+                                                        <input :id="'master' + pregunta_.institucion_id" class="magic-checkbox clear_ck" type="checkbox" disabled :name="pregunta_.institucion_id" value="master" v-on:change="onInstitucionItemChange(pregunta_.institucion_id)">
+                                                        <label :for="'master' + pregunta_.institucion_id">Master</label>
+                                                        <input :id="'otra' + pregunta_.institucion_id" class="magic-checkbox clear_ck" type="checkbox" disabled :name="pregunta_.institucion_id" value="otra" v-on:change="onInstitucionItemChange(pregunta_.institucion_id)">
+                                                        <label :for="'otra' + pregunta_.institucion_id">Otra</label>
+                                                    </div>
+                                                </td>
+                                                <td class="tdOtra" style="display:none">
+                                                    <p><b><input type="text" class="form-control limpia2" :id="'tarjOtra' + pregunta_.institucion_id" maxlength="200"></b></p>
+                                                </td>
+                                                <td>
+                                                    <p><b><input type="text" class="form-control limpia2" :id="'montTarj' + pregunta_.institucion_id" maxlength="10" value="0"></b></p>
+                                                </td>
+                                                <td>
+                                                    <p><b><input type="text" class="form-control limpia2" style="border-color: #398439;" :id="'linea' + pregunta_.institucion_id" maxlength="10" value="0"></b></p>
+                                                </td>
+                                                <td>
+                                                    <p><b><input type="text" class="form-control limpia2" style="border-color: #398439;" :id="'consumo' + pregunta_.institucion_id" maxlength="10" value="0"></b></p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="panel" style="border-radius: 10px;">
+                                                <div class="panel-body">
+                                                    <label class="control-label">RESUMEN DICOM</label>
+                                                    <table data-toggle="table"
+                                                           data-sort-name="id"
+                                                           data-page-list="[]"
+                                                           data-page-size="50"
+                                                           data-search="false"
+                                                           data-pagination="true" id="tblDicom" style="font-size: 12px">
+
+                                                        <thead>
+                                                            <tr>
+                                                                <th data-field="tipo" data-sortable="true">TIPO</th>
+                                                                <th data-field="entidad" data-sortable="true">ENTIDAD</th>
+                                                                <th data-field="MONTO" data-formatter="formatoMoney" data-sortable="true">MONTO</th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="demo-bv-tab4" class="tab-pane fade">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="panel" style="border-radius: 10px;">
+                                                <div class="panel-body">
+                                                    <div class="checkbox">
+                                                        <input id="ckCertificadoDeuda" class="magic-checkbox clear_ck" type="checkbox">
+                                                        <label for="ckCertificadoDeuda">Autoriza pedir certificado de deuda</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <input id="ckpagoDeuda" class="magic-checkbox clear_ck" type="checkbox">
+                                                        <label for="ckpagoDeuda">Autoriza pago de deuda</label>
+                                                    </div>
+
+                                                    <div class="form-group pad-ver" style="margin-right: 323px;">
+                                                        <label class="col-md-3 control-label">Compromiso de uso o no uso</label>
+                                                        <div class="col-md-9">
+                                                            <div class="radio">
+                                                                <input id="rbCompromisoSi" class="magic-radio clear_ck" type="radio" name="radioAut" value="SI">
+                                                                <label for="rbCompromisoSi">SI</label>
+
+                                                                <input id="rbCompromisoNo" class="magic-radio clear_ck" type="radio" name="radioAut" value="NO">
+                                                                <label for="rbCompromisoNo">NO</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel" id="panelAut" style="display:none;">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">Autorización</h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Institución</th>
+                                                        <th>Tarjeta</th>
+                                                        <th>Linea</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="pregunta_ in dataInstitucion">
+                                                        <td>
+                                                            <p><b>{{ pregunta_.institucion }}</b></p>
+                                                        </td>
+                                                        <td>
+                                                            <div class="checkbox">
+                                                                <input :id="'tarjeta-si' + pregunta_.institucion_id" class="magic-checkbox clear_ck" type="checkbox" v-on:change="onAutorizacionItemChange(pregunta_.institucion_id)">
+                                                                <label :for="'tarjeta-si' + pregunta_.institucion_id"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="checkbox">
+                                                                <input :id="'linea-si' + pregunta_.institucion_id" class="magic-checkbox clear_ck" type="checkbox" v-on:change="onAutorizacionItemChange(pregunta_.institucion_id)">
+                                                                <label :for="'linea-si' + pregunta_.institucion_id"></label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="demo-bv-tab5" class="tab-pane  mar-btm text-center">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">ESTADO</label>
+                                        <div class="col-lg-9 pad-no">
+                                            <div class="clearfix">
+                                                <div class="col-lg-5">
+                                                    <select class="form-control" id="slEstadoVal" name="slEstadoVal" v-model="modelos.estados" v-on:change="eventoCambiaValidacionEstados">
+                                                        <option value="">SELECCIONE...</option>
+                                                        <option v-for="estadoVal in filtros.estados" :value="estadoVal.id">{{estadoVal.nombre}}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-3 text-lg-right"><label class="control-label">SUB-ESTADO</label></div>
+                                                <div class="col-lg-4">
+                                                    <select class="form-control" id="slSubEstadoVal" name="slSubEstadoVal" v-model="modelos.subEstados">
+                                                        <option value="">SELECCIONE...</option>
+                                                        <option v-for="subEstadoVal in filtros.subEstados" :value="subEstadoVal.nombre">{{subEstadoVal.nombre}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">OBSERVACION</label>
+                                        <div class="col-lg-9">
+                                            <textarea rows="3" id="txtobservacionPort" name="txtobservacionPort" class="form-control limpia" style="border-radius: 6px;"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer text-right">
+                            <div class="box-inline">
+                                <button type="button" class="previous btn btn-primary">Anterior</button>
+                                <button type="button" class="next btn btn-primary">Siguiente</button>
+                                <button type="button" class="finish btn btn-warning" v-on:click="saveGestion" disabled>Guardar Gestión</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="tab-historial-port-val" class="tab-pane fade">
+                <div class="list-group" style="min-height:290px;">
+                    <div v-for="gestion in dataHist">
+                        <a href="#">
+                            <h4 class="list-group-item-heading"><strong>Gestor: </strong>{{gestion.ejecutivo != undefined && gestion.ejecutivo}}</h4>
+                            <p class="list-group-item-text">
+                                <strong>Fecha Gestión: </strong>{{gestion.fecha_gestion != undefined && gestion.fecha_gestion.toFechaHoraPrueba()}}
+                            </p>
+                            <p class="list-group-item-text">
+                                <strong>Estado: </strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado: '------'}}
+                                <strong>Sub-Estado: </strong>{{gestion.sub_estado != undefined && gestion.sub_estado != null ? gestion.sub_estado: '------'}}
+                            </p>
+                            <p class="list-group-item-text">
+                                <strong>Validación: </strong>{{gestion.validacion}}
+                            </p>
+                            <p class="list-group-item-text">
+                                <strong>Comentarios: </strong> {{gestion.observacion}}
+                            </p>
+                        </a>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+            <div id="tab-auditor-port-val" class="tab-pane fade">
+                <div class="panel" style="border-radius: 7px;">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel" style="border-radius: 10px;">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">RUT</label>
+                                                    <input type="text" class="form-control limpia" id="txtRutAuditor" maxlength="10">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label"></label>
+                                                    <button class="btn btn-primary" style="border-radius: 6px; margin-top: 22px;" type="submit" v-on:click="obtenerLeadAuditor">BUSCAR</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <p class="text-main text-bold mar-no">NOMBRE:</p>
+                                                <p id="nom_au">{{dataAuditor.nombre}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <p class="text-main text-bold mar-no">OFERTA:</p>
+                                                <p>{{ofertaAu}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <p class="text-main text-bold mar-no">SEGMENTO:</p>
+                                                <p>{{dataAuditor.segmento}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="msj_au"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel" style="border-radius: 10px;">
+                                    <div class="panel-body">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">ESTADO</label>
+                                                <select class="form-control" id="slEstadoAu" name="slEstadoAu" v-model="modelos.estados_auditor" v-on:change="eventoCambiaValidacionEstadosAuditor">
+                                                    <option value="">SELECCIONE...</option>
+                                                    <option v-for="estadoPort in filtros.estados_auditor" :value="estadoPort.id">{{estadoPort.nombre}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">SUB-ESTADO</label>
+                                                <select class="form-control" id="slSubEstadoAu" name="slSubEstadoAu" v-model="modelos.subEstados_auditor">
+                                                    <option value="">Seleccione...</option>
+                                                    <option v-for="subEstadoPortM in filtros.subEstados_auditor" :value="subEstadoPortM.nombre">{{subEstadoPortM.nombre}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label class="control-label">OBSERVACION</label>
+                                                <textarea rows="3" id="txtobservacionAu" name="txtobservacionAu" class="form-control limpia" style="border-radius: 6px;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer text-right">
+                                        <button class="btn btn-success" type="submit" v-on:click="saveGestionAuditor">INGRESAR GESTION</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section script{
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/select2/js/select2.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+    <script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
+    <script src="~/Assets/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="~/Assets/js.App/src/validacion-portabilidad.js?g=@Guid.NewGuid().ToString()"></script>
+
+}
+
+
+

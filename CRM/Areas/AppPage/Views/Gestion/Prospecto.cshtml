@@ -1,0 +1,124 @@
+﻿
+<div id="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel" style="border-radius: 7px;">
+                <div class="panel-heading">
+                    <div class="panel-control">
+                        <a href="#fakelink" class="add-tooltip demo-pli-question-circle icon-lg unselectable" data-html="true" data-title="<h4>Información</h4><p style='width:150px'>Ingreso de los datos de contacto u otros del prospecto pensionados.</p>" data-original-title="" title=""></a>
+                    </div>
+                    <h3 class="panel-title">DATOS DEL PROSPECTO</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="msjSaveProspecto"></div>
+                    <div class="row">
+                        <form id="frm_prospecto" action="#" method="post">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-2 mar-btm">
+                                        <label class="control-label">Rut</label>
+                                        <input type="text" class="form-control" id="propRut" name="propRut" placeholder="Rut" maxlength="10">
+                                    </div>
+                                    <div class="col-md-5 mar-btm">
+                                        <label class="control-label">Nombres</label>
+                                        <input type="text" class="form-control" id="propNombres" name="propNombres" placeholder="Nombres">
+                                    </div>
+                                    <div class="col-md-2 mar-btm">
+                                        <label class="control-label">Edad</label>
+                                        <input type="text" class="form-control" id="propEdad" name="propEdad" placeholder="Edad">
+                                    </div>
+                                    <div class="col-md-3 mar-btm">
+                                        <label class="control-label">Renta Aprox.</label>
+                                        <input type="text" class="form-control" id="propRenta" name="propRenta" placeholder="Renta aproximada">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 mar-btm">
+                                        <label class="control-label">Caja de Origen</label>
+                                        <select class="form-control" id="slpropCajaOrigen" name="slpropCajaOrigen">
+                                            <option value="">Seleccione</option>
+                                            <option value="Sin Caja de Compensación">Sin Caja de Compensación</option>
+                                            <option value="Los Andes">Los Andes</option>
+                                            <option value="Los Heroes">Los Heroes</option>
+                                            <option value="18 de Septiembre">18 de Septiembre</option>
+                                            <option value="IPS">IPS</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 mar-btm">
+                                        <label class="control-label">Celular</label>
+                                        <input type="text" class="form-control" id="propCelular" name="propCelular" placeholder="Celular" maxlength="12">
+                                    </div>
+                                    <div class="col-md-3 mar-btm">
+                                        <label class="control-label">Fono fijo</label>
+                                        <input type="text" class="form-control" id="propFono" name="propFono" placeholder="Fono fijo" maxlength="12">
+                                    </div>
+                                    <div class="col-md-3 mar-btm">
+                                        <label class="control-label">Email</label>
+                                        <input type="text" class="form-control" id="propEmail" name="propEmail" placeholder="Email">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Calle</label>
+                                        <input type="text" class="form-control" id="propCalle" name="propCalle" placeholder="Calle">
+                                    </div>
+                                    <div class="col-md-2 mar-btm">
+                                        <label class="control-label">N° dirección</label>
+                                        <input type="text" class="form-control" id="propDirNumero" name="propDirNumero" placeholder="Numero dirección" maxlength="10">
+                                    </div>
+                                    <div class="col-md-3 mar-btm">
+                                        <label class="control-label">Dpto.</label>
+                                        <input type="text" class="form-control" id="propDirDpto" name="propDirDpto" placeholder="Dpto" maxlength="15">
+                                    </div>
+                                    <div class="col-md-3 mar-btm">
+                                        <label class="control-label">Comuna</label>
+                                        <select class="form-control" id="slpropComuna" tabindex="2" name="slpropComuna" required>
+                                            <option value="">Seleccione</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer text-right">
+                                <button class="btn btn-primary" id="btn_save_contact_pensionado" type="submit">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="panel" style="border-radius: 7px;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">LISTADO DE PROSPECTOS</h3>
+                </div>
+
+                <script>
+                    function formatNombre(value, row, index) {
+                        return value.OrdenaNombre()
+                    }
+                </script>
+
+                <div class="panel-body">
+                    <table data-toggle="table"
+                           data-search="true"
+                           data-sort-name="id"
+                           data-page-list="[]"
+                           data-page-size="25"
+                           data-pagination="true" id="tblLisprospecto">
+                        <thead>
+                            <tr>
+                                <th data-field="Rut_Pensionado" data-sortable="true">RUT</th>
+                                <th data-field="Nombre" data-sortable="true">NOMBRES</th>
+                                <th data-field="Caja_Origen" data-sortable="true">CAJA ORIGEN</th>
+                                <th data-field="Renta_Aproximada" data-sortable="true" data-formatter="formateaRenta">RENTA APROX.</th>
+                                @*<th data-field="Renta_Aproximada" data-sortable="true">RENTA APROX.</th>*@
+                                <th data-field="Comuna" data-sortable="true">COMUNA</th>
+                                <th data-field="Celular" data-sortable="true">CELULAR</th>
+                                <th data-field="Fono_Fijo" data-sortable="true">FONO FIJO</th>
+                                <th data-field="Nombre_ejecutivo" data-sortable="true" data-formatter="formatNombre">EJE. INGRESO</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

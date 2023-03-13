@@ -1,0 +1,66 @@
+﻿<div id="contImpagas">
+    <div class="panel" style="border-radius: 7px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">FILTROS</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-3 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label">ESTADO</label>
+                        <select class="form-control" id="dllEstadoImp" name="dllEstadoImp" v-on:change="eventoCambiaEstadoImp" v-model="modelos.estadosImp">
+                            <option value="">TODOS...</option>
+                            <option v-for="eEstadoImp in filtros.estadosImp" :value="eEstadoImp.id">{{eEstadoImp.nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label">SUB-ESTADO</label>
+                        <select class="form-control" id="dllSubEstadoImp" name="dllSubEstadoImp" v-model="modelos.subEstadosImp">
+                            <option value="">TODOS...</option>
+                            <option v-for="eSubEstadoImp in filtros.subEstadosImp" :value="eSubEstadoImp.id">{{eSubEstadoImp.nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-1 text-xs-center">
+                    <div class="form-group">
+                        <label class="control-label"></label>
+                        <button class="btn btn-primary btn-rounded" v-on:click="cargaLeadFiltroCotizacionImpaga" style="margin-top: 21px;">FILTRAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel" style="border-radius: 7px;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">DATOS</h3>
+                </div>
+                <div class="panel-body">
+                    <table data-toggle="table"
+                           data-sort-name="id"
+                           data-page-list="[]"
+                           data-page-size="50"
+                           data-search="false"
+                           data-pagination="true" id="tbImpagas" style="font-size: 11px">
+                        <thead>
+                            <tr>
+                                <th data-field="rut_empresa" data-sortable="true" data-formatter="formaterRutImpagos">RUT</th>
+                                <th data-field="razon_social" data-sortable="true">RAZON SOCIAL</th>
+                                <th data-field="ultima_cotizacion_pagada" data-sortable="true">ULTIMA COTIZACION PAGADA</th>
+                                <th data-field="n_trabajadores" data-sortable="true">N° TRABAJADORES</th>
+                                <th data-field="monto_cotizacion" data-sortable="true" data-formatter="formaterNum">MONTO COTIZACION</th>
+                                <th data-field="meses_impagos" data-sortable="true">MESES IMPAGOS</th>
+                                <th data-field="ultimaGestion.estado" data-sortable="true">ESTADO</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

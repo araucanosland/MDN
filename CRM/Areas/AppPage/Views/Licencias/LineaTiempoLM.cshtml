@@ -1,0 +1,167 @@
+﻿
+
+@{
+    ViewBag.Title = "Ingreso";
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!--Magic Checkbox [ OPTIONAL ]-->
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
+
+
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+
+
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Bitácora Licencia Médica</h3>
+                </div>
+
+                <!--Block Styled Form -->
+                <!--===================================================-->
+                <form id="frm-data-lc">
+                    <div class="panel-body">
+
+                        <div class="col-lg-4">
+
+                            <h4>Datos de la Licencia </h4>
+
+                            <table class="table text-left">
+                                <tr>
+                                    <td><strong>Folio Licencia</strong></td>
+                                    <td><label id="lblfolic"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Rut Afiliado</strong></td>
+                                    <td><label id="lblRutAfiliado"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fecha Ingreso</strong></td>
+                                    <td><label id="lblfechaingreso"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Oficina</strong></td>
+                                    <td><label id="lbloficina"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Formato </strong></td>
+                                    <td><label id="lblformato"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Quien Envía </strong></td>
+                                    <td><label id="lblquienenvia"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Teléfono o Celular  </strong></td>
+                                    <td><label id="lbltelefono"></label></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Correo electrónico </strong></td>
+                                    <td><label id="lblcorreo"></label></td>
+                                </tr>
+
+                            </table>
+                        </div>
+
+                        <div class="col-lg-7 col-lg-offset-1">
+                            <h4>Seguimiento de Licencia Médica</h4>
+                            <!-- Timeline -->
+                            <!--===================================================-->
+                            <div class="timeline  contenedor-folios">
+
+
+                            </div>
+                            <!--===================================================-->
+                            <!-- End Timeline -->
+
+                        </div>
+                    </div>
+
+                </form>
+                <!--===================================================-->
+                <!--End Block Styled Form -->
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+<!--===================================================-->
+<!--End page content-->
+
+
+@section script{
+
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <!--Masked Input [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/masked-input/jquery.maskedinput.min.js"></script>
+
+
+    <script>
+
+
+        $(function () {
+
+            var CodIng = httpGet("ci");
+
+
+            $('.contenedor-folios').html("");
+            $.SecGetJSON(BASE_URL + "/motor/api/Licencias/listar-Bitacora", { codIngreso: CodIng }, function (datos) {
+
+                $("#lblfolic").text('');
+                $("#lblRutAfiliado").text('');
+                $("#lblfechaingreso").text('');
+                $("#lblformato").text('');
+                $("#lbloficina").text('');
+                $("#lblquienenvia").text('');
+                $("#lbltelefono").text('');
+                $("#lblcorreo").text('');
+
+                $.each(datos, function (i, licencia) {
+
+                    $("#trTipoLM").show();
+                    $("#trFechaInicioLM").show();
+                    $("#trFechaTerminoLM").show();
+                    $("#trCantidadDiasLM").show();
+                    $("#lblfolic").text(licencia.FolioLicencia);
+                    $("#lblRutAfiliado").text(licencia.RutAfiliado);
+                    $("#lblfechaingreso").text(licencia.FechaIngreso.toFecha());
+                    $("#lblformato").text(licencia.FormatoLM);
+                    $("#lblCantidadDiasLM").text(licencia.DiasAutorizados);
+                    $("#lblfechaInicioLM").text(licencia.FechaInicioLM.toFecha());
+                    $("#lblfechaTerminoLM").text(licencia.FechaHastaLM.toFecha());
+                    $("#lbltipoLM").text(licencia.TipoLM);
+                    $("#lbloficina").text(licencia.Oficina);
+                    $("#lblquienenvia").text(licencia.Quienenvia);
+                    $("#lbltelefono").text(licencia.Telefono);
+                    $("#lblcorreo").text(licencia.Email);
+
+
+                });
+
+            });
+
+        });
+
+    </script>
+
+
+}

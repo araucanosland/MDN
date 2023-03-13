@@ -1,0 +1,417 @@
+﻿@{
+    Layout = null;
+}
+<div id="page-prospectos-visados">
+    <div class="row">
+
+        <div class="col-md-3 pull-right slSucVisado">
+            <div class="form-group">
+                <label class="control-label">Sucursal</label>
+                <select class="form-control" v-on:change="handleSucursalesChange" v-model="sucursalSeleccionada">
+                    <option value="">Selecciona</option>
+                    <option v-for="suc in sucursales" :value="suc.Id">{{ suc.Nombre }}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-3 pull-right">
+            <div class="form-group">
+                <label class="control-label">Clasificaci&oacute;n</label>
+                <select class="form-control" v-on:change="handleFilterTable" v-model="filtros.clase">
+                    <option value="">Selecciona</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3 pull-right">
+            <div class="form-group">
+                <label class="control-label">Estado</label>
+                <select class="form-control" v-on:change="handleFilterTable" v-model="filtros.estadoGestion">
+                    <option value="">Selecciona</option>
+                    <option value="No Gestionado">No Gestionados</option>
+                    <option value="Gestionado">Gestionados</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3 pull-right">
+            <div class="form-group">
+                <label class="control-label">Compromiso Primera Gesti&oacute;n</label>
+                <div id="demo-dp-range">
+                    <div class="input-daterange input-group" id="datepicker">
+                        <input type="text" class="form-control" name="start" id="f-start" v-model="filtros.fechaInicioCompromiso">
+                        <span class="input-group-addon">a</span>
+                        <input type="text" class="form-control" name="end" id="f-end" v-model="filtros.fechaFinCompromiso">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 pull-right">
+            <div class="form-group">
+                <label class="control-label">B&uacute;squeda</label>
+                <input type="text" class="form-control" v-model="filtros.busquedaEmpresa" v-on:keyup="handleFilterTable">
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row" v-if="vistaElevada">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label">Ejecutivo</label>
+                <select class="form-control" id="filtrar-ejecutivo" v-model="filtros.rutEjecutivo" v-on:change="handleFilterTable">
+                    <option value="">Todos</option>
+                    <option :value="rutLogeado">Mios</option>
+                    <option v-for="ejecutivo in ejecutivos" :value="ejecutivo.Rut" v-if="ejecutivo.Rut != rutLogeado">{{ ejecutivo.Nombre }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row mar-btm">
+        <div class="col-md-3">
+            <button type="button" class="btn btn-primary" v-on:click="resetFilters">Limpiar Filtros</button>
+        </div>
+    </div>
+    <table id="table-conche"
+           class="table table-striped"
+           data-search="false"
+           data-show-refresh="false"
+           data-show-toggle="false"
+           data-show-columns="false"
+           data-page-list="[]"
+           data-page-size="40"
+           data-pagination="true"
+           data-side-pagination="server"
+           data-show-pagination-switch="false"
+           data-locale="es-CL">
+        <thead>
+            <tr>
+                <th data-sortable="true" data-field="empresa.rut" data-formatter="prospectosVisados_formatRut">Rut</th>
+                <th data-sortable="true" data-field="empresa.nombre">Razon Social</th>
+                <th data-sortable="true" data-field="empresa.cantidadEmpleados">Nro. de Empleados</th>
+                <th data-sortable="true" data-field="clase">Clasificacion</th>
+                <th data-sortable="true" data-field="cajaOrigen">Caja Origen</th>
+                <th data-sortable="true" data-field="fechaCompromisoPrimeraGestion" data-formatter="prospectosVisados_formatPrimerCompromiso">Comp. Primera Gesti&oacute;n</th>
+                <th data-sortable="false" data-field="estado" data-formatter="prospectosVisados_formatBanderaGestion">Gestionado</th>
+                <th data-sortable="false" data-visible="false" data-formatter="prospectosVisados_formatNombreEjecutivoAsignado" data-field="ejecutivo">Ejecutivo</th>
+            </tr>
+        </thead>
+    </table>
+    <!-- Modal -->
+    <div class="modal fade" id="modalGestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Gestión de Prospectos Visados</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <div>
+
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#company-data" aria-controls="company-data" role="tab" data-toggle="tab">Empresa</a></li>
+                                    <li role="presentation"><a href="#company-topics" aria-controls="company-topics" role="tab" data-toggle="tab">Tópicos</a></li>
+                                    <li role="presentation"><a href="#history-info" aria-controls="history-info" role="tab" data-toggle="tab">Historial de Gestión</a></li>
+                                    <li role="presentation"><a href="#contact-info" aria-controls="contact-info" role="tab" data-toggle="tab">Contactos</a></li>
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="company-data">
+                                        <div class="row mar-top">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label><strong>Rut</strong></label>
+                                                    <input type="text" class="form-control" v-bind:value="seleccionadoModal.empresa.rut" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label><strong>Razón Social</strong></label>
+                                                    <input type="text" class="form-control" v-bind:value="seleccionadoModal.empresa.nombre" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label><strong>Nro. Empleados</strong></label>
+                                                    <input type="text" class="form-control" v-bind:value="seleccionadoModal.empresa.cantidadEmpleados" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label><strong>Caja Actual</strong></label>
+                                                    <input type="text" class="form-control" v-bind:value="seleccionadoModal.cajaOrigen" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label><strong>Holding</strong></label>
+                                                    <input type="text" class="form-control" v-bind:value="seleccionadoModal.empresa.nombreHolding" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label><strong>Segmento</strong></label>
+                                                    <input type="text" class="form-control" v-bind:value="seleccionadoModal.empresa.segmento" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label><strong>Rubro</strong></label>
+                                                    <input type="text" class="form-control" v-bind:value="seleccionadoModal.empresa.rubro" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="company-topics">
+                                        <div class="row mar-top">
+                                            <div v-for="topico in toipics.vista" class="form-group pad-ver">
+                                                <label class="col-md-2 control-label mar-top">{{ topico.nombre }}</label>
+                                                <div class="col-md-10">
+                                                    <div class="radio">
+                                                        <input :id="'tema_' + topico.id + '_nota_na'" class="magic-radio" value="na" type="radio" :name="'radio_' + topico.id" checked>
+                                                        <label :for="'tema_' + topico.id + '_nota_na'">N/A</label>
+
+                                                        <input :id="'tema_' + topico.id + '_nota_1'" class="magic-radio" value="1" type="radio" :name="'radio_' + topico.id">
+                                                        <label :for="'tema_' + topico.id + '_nota_1'">1</label>
+
+                                                        <input :id="'tema_' + topico.id + '_nota_2'" class="magic-radio" value="2" type="radio" :name="'radio_' + topico.id">
+                                                        <label :for="'tema_' + topico.id + '_nota_2'">2</label>
+
+                                                        <input :id="'tema_' + topico.id + '_nota_3'" class="magic-radio" value="3" type="radio" :name="'radio_' + topico.id">
+                                                        <label :for="'tema_' + topico.id + '_nota_3'">3</label>
+
+                                                        <input :id="'tema_' + topico.id + '_nota_4'" class="magic-radio" value="4" type="radio" :name="'radio_' + topico.id">
+                                                        <label :for="'tema_' + topico.id + '_nota_4'">4</label>
+
+                                                        <input :id="'tema_' + topico.id + '_nota_5'" class="magic-radio" value="5" type="radio" :name="'radio_' + topico.id">
+                                                        <label :for="'tema_' + topico.id + '_nota_5'">5</label>
+                                                    </div>
+                                                    <div>
+                                                        <input type="text" :id="'text_' + topico.id" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="history-info">
+                                        <div class="row mar-top">
+
+                                            <div class="col-md-12">
+                                                <ul class="list-group">
+                                                    <li v-for="gestion in seleccionadoModal.gestiones" class="list-group-item">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="padding-right: 5px;"><strong>Ejecutivo</strong></td>
+                                                                <td style="padding-right: 5px;">:</td>
+                                                                <td>{{ gestion.ejecutivoIngresoRut }} | {{ gestion.ejecutivoIngresoNombre }}</td>
+                                                            </tr>
+                                                        </table>
+                                                        <p class="mar-top text-muted">{{ gestion.comentarios }}</p>
+                                                        <div class="bord-top mar-top pad-top">
+                                                            <span class="label label-primary">{{ gestion.resultado.resultadoPadre.nombre }} \ {{ gestion.resultado.nombre }}</span>
+                                                            <span class="label label-default">FG: {{ gestion.fechaCreacion | formatDate }}</span>
+                                                            <span class="label label-warning" v-show="gestion.fechaProximaGestion !== null">FC: {{ gestion.fechaProximaGestion | formatDate }}</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="contact-info">
+                                        <div class="row pull-right">
+                                            <button class="btn btn-primary" id="bt-nuevo-contacto">Nuevo</button>
+                                            <button class="btn btn-primary" id="bt-nuevo-contacto-volver" style="display:none;">Volver</button>
+                                        </div>
+                                        <div class="row" id="wrap-contactos">
+                                            <ul class="media-list">
+                                                <li v-for="itmContacto in participees.contactos" class="media">
+                                                    <div class="media-left" v-show="!itmContacto.global">
+                                                        <a href="#">
+                                                            <img class="media-object" style="width: 54px; height: 54px;" src="/Motor/Assets/img/profile-photos/1.png" alt="...">
+                                                        </a>
+                                                    </div>
+                                                    <div class="media-body" v-show="!itmContacto.global">
+                                                        <h4 class="media-heading">{{ itmContacto.nombre }} ({{ itmContacto.cargo }})</h4>
+                                                        <table style="width: 90%;">
+                                                            <tr>
+                                                                <td><strong>Telefonos</strong></td>
+                                                                <td>:</td>
+                                                                <td>{{ itmContacto.telefono }} / {{ itmContacto.celular }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>Email</strong></td>
+                                                                <td>:</td>
+                                                                <td>{{ itmContacto.correo }}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                        <div class="row" id="wrap-add-contactos" style="display:none;">
+                                            <form>
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Cargo</label>
+                                                            <select class="form-control" v-model="formularioContacto.cargo">
+                                                                <option value="">Selecciona</option>
+                                                                <option value="Gerente General">Gerente General</option>
+                                                                <option value="Gerente RRHH">Gerente RRHH</option>
+                                                                <option value="Directiva Sindical">Directiva Sindical</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Nombre</label>
+                                                            <input type="text" class="form-control" v-model="formularioContacto.nombre" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Correo</label>
+                                                            <input type="text" class="form-control" v-model="formularioContacto.correo" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Telefono</label>
+                                                            <input type="text" class="form-control" v-model="formularioContacto.telefono" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Celular</label>
+                                                            <input type="text" class="form-control" v-model="formularioContacto.celular" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <button class="btn btn-primary" id="bt-guardar-contacto" type="button" v-on:click="handleContactSubmit">Guardar</button>
+                                                    </div>
+                                                </div>
+                                                <div class="row mar-top" id="mensajes_contacto">
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="row">
+                                <div v-bind:class="clasificacionClass">
+                                    <p class="text-center">Clasificación</p>
+                                    <p class="text-center" style="font-size:22px !important;">{{ seleccionadoModal.clase }}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="alert alert-info">
+                                    <p class="text-center">Fase</p>
+                                    <p class="text-center" style="font-size:18px !important;">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <form id="datos-gestion" action="#" method="post">
+                        <div class="row" style="text-align: left;">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Canal de Gestión</label>
+                                    <div>
+                                        <div class="checkbox">
+                                            <template v-for="chnl in canales">
+                                                <input :id="chnl.id+'Type'" class="magic-checkbox" type="checkbox" :value="chnl.id" v-model="formulario.canales">
+                                                <label :for="chnl.id+'Type'">{{ chnl.nombre }}</label>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="text-align: left;">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Participantes</label>
+                                    <select id="managementQuorum" data-placeholder="Selecciona a los prticipantes de esta gestión..." multiple>
+                                        <option v-for="aitmContacto in participees.contactos" v-bind:value="aitmContacto.id">{{ aitmContacto.nombre }} ({{ aitmContacto.cargo }})</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="text-align: left;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Estado</label>
+                                    <select v-model="formulario.estado" class="form-control" id="parentStatus" name="parentStatus" v-on:change="handleResultadosHijos($event.target.value)">
+                                        <option value="">Seleccione</option>
+                                        <option v-for="padre in resultados.resultadosPadres" :value="padre.id">{{ padre.nombre }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Sub Estado</label>
+                                    <select v-model="formulario.subEstado" class="form-control" id="childStatus" name="childStatus">
+                                        <option value="">Seleccione</option>
+                                        <option v-for="hijo in resultados.resultadosHijos" :value="hijo.id">{{ hijo.nombre }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group" id="fpg">
+                                    <label class="control-label">Fecha Próxima Gestión</label>
+                                    <div id="dp-fecha-proxima-gestion">
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control" id="nextCommitmentDate" name="nextCommitmentDate">
+                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="text-align: left;">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Comentarios</label>
+                                    <textarea v-model="formulario.comentarios" placeholder="Comentarios" rows="3" class="form-control" id="comments" name="comments"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="mensajes" class="mar-btm"></div>
+                        <button type="button" class="btn btn-default bloquear-onsubmit" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary bloquear-onsubmit" v-on:click="handleSubmit">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

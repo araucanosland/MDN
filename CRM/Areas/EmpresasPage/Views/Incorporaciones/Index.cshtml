@@ -1,0 +1,332 @@
+
+@{
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+
+}
+
+<div id="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="tab-base">
+
+                <!--Nav Tabs-->
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a data-toggle="tab" href="#tab-prospecciones" aria-expanded="true" id="tab_prospecciones" class="tab-principal" style="font-weight: bold;">Prospectos</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#tab-2" aria-expanded="false" id="tab_visados" class="tab-principal"><strong>Prospectos Visados</strong></a>
+                    </li>
+
+                    <li class="">
+                        <a data-toggle="tab" href="#tab-3" aria-expanded="false" id="tab_visados_reasigna" class="tab-principal" style="display: none;"><strong>Reasignaciones</strong></a>
+                    </li>
+
+                    <li class="">
+                        <a data-toggle="tab" href="#tab-4" aria-expanded="false" id="tab_proceso_incorporacion" class="tab-principal"><strong>Proceso Incorporaci&oacute;n</strong></a>
+                    </li>
+                </ul>
+
+                <!--Tabs Content-->
+                <div class="tab-content">
+                    <div id="tab-prospecciones" class="tab-pane fade active in">
+                        <div class="panel-body">
+                            <div class="row listado-prospectos">
+                                <div class="col-lg-12">
+
+                                    <div class="mar-btm" style="display:none">
+                                        <button type="button" id="nuevo-prospecto" class="btn btn-primary">
+                                            <i class="ion-plus-circled"></i>
+                                            Nuevo
+                                        </button>
+                                    </div>
+
+                                    <div class="col-sm-3 ">
+                                        <div class="form-group">
+                                            <label class="control-label">Ingrese dato a buscar</label>
+                                            <input id="footable_filtering" type="text" placeholder="Palabra Clave" class="form-control" autocomplete="off">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-3 pull-left">
+                                        <div class="form-group">
+                                            <label class="control-label">Estados</label>
+                                            <select class="form-control" id="cmb_estados">
+                                                <option value="">Todos</option>
+                                                <option value="1">Pendiente</option>
+                                                <option value="2">Visado</option>
+                                                <option value="3">Rechazado </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3" style="margin-top: 23px;">
+                                            <button type="button" id="buscar-prospecto" class="btn btn-primary">
+                                                <i class="pli-search-on-cloud"></i> Buscar
+                                            </button>
+                                        </div>
+
+
+                                    </div>
+
+                                    @*<table class="table">*@
+                                    <table id="demo-foo-filtering" data-page-size="20" class="table table-bordered table-hover toggle-circle" style="font-size: 11px;">
+                                        <thead>
+                                            <tr>
+                                                <th>Rut</th>
+                                                <th>Nombre</th>
+                                                <th>Holding</th>
+                                                <th>Caja Origen</th>
+                                                <th>Estado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody_prospectos"></tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="5">
+                                                    <div class="text-right">
+                                                        <ul class="pagination"></ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+
+                                </div>
+                            </div>
+                            <div class="row detalle-prospectos" style="display:none;">
+                                <div class="col-lg-12">
+                                    <form name="form-ingreso-prospecto" id="form-ingreso-prospecto" data-method="post" action="#" method="post">
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <label class="control-label">Rut Empresa</label>
+                                                    <input type="text" class="form-control" id="rut" name="rut" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Razón Social</label>
+                                                    <input type="text" class="form-control inusable" id="nombre" name="nombre" required>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <label class="control-label">Rut Holding</label>
+                                                    <input type="text" class="form-control inusable" name="rutHolding" id="rutHolding">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Nombre Holding</label>
+                                                    <input type="text" class="form-control inusable" name="nombreHolding" id="nombreHolding">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">Región</label>
+                                                    <select id="region" name="region" class="form-control">
+                                                        <option value="">Selecciona</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">Comuna</label>
+                                                    <select id="comuna" name="comuna" class="form-control">
+                                                        <option value="">Selecciona</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">Dirección</label>
+                                                    <input type="text" class="form-control" name="direccion" id="direccion">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="row prospecciones">
+
+                                            <div class="col-sm-12 pad-no">
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Dotación (Aproximada)</label>
+                                                        <input type="text" class="form-control" id="cantidadTrabajadores" name="cantidadTrabajadores">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Caja Origen</label>
+                                                        <select class="form-control" id="cajaOrigen" name="cajaOrigen" required>
+                                                            <option value="">Seleccione</option>
+                                                            <option value="Los Andes">Los Andes</option>
+                                                            <option value="Los Heroes">Los Heroes</option>
+                                                            <option value="18 de Septiembre">18 de Septiembre</option>
+                                                            <option value="IPS">IPS</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Segmento</label>
+                                                        <select class="form-control" id="segmento" name="segmento" required>
+                                                            <option value="">Seleccione</option>
+                                                            <option value="Publica">Pública</option>
+                                                            <option value="Privada">Privada</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Categoria</label>
+                                                        <select class="form-control" id="categoria" name="categoria" disabled>
+                                                            <option value="">Seleccione</option>
+                                                            <option value="Afecta">Afecta</option>
+                                                            <option value="NoAfecta">No Afecta</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">Rubro</label>
+                                                    <select class="form-control" id="rubro" name="rubro" required>
+                                                        <option value="">Seleccione</option>
+                                                        <option value="Construccion">Construcción</option>
+                                                        <option value="Educacion">Educación</option>
+                                                        <option value="Financiero">Financiero</option>
+                                                        <option value="Mineria">Minería</option>
+                                                        <option value="Produccion">Producción</option>
+                                                        <option value="Salud">Salud</option>
+                                                        <option value="Servicios">Servicios</option>
+                                                        <option value="Ventas">Ventas</option>
+                                                        <option value="Retail">Retail</option>
+                                                        <option value="Otro">Otro</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 otro-rubro" style="display:none;">
+                                                <div class="form-group">
+                                                    <label class="control-label">Cual es?</label>
+                                                    <input type="text" class="form-control" id="otroRubro" name="otroRubro">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row listado-contactos">
+                                            <div class="col-sm-12">
+                                                <h4>Contactos</h4>
+                                                <div class="bord-all">
+                                                    <table class="table table-hover table-vcenter">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center" style="width:20%;">Cargo</th>
+                                                                <th class="text-center" style="width:25%;">Nombre</th>
+                                                                <th class="text-center" style="width:20%;">Email</th>
+                                                                <th class="text-center" style="width:20%;">Celular</th>
+                                                                <th class="text-center" style="width:20%;">Telefono</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tbody-contactos"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row mar-top acciones">
+                                            <div class="col-lg-12">
+                                                <button class="btn btn-primary" type="button" id="bt-cancelar">Cancelar</button>
+                                                <button class="btn btn-info" type="button" id="bt-contacto" data-toggle="modal" data-target="#modal-contactos">Agregar Contacto</button>
+                                                <button class="btn btn-info hidden" type="button" id="bt-gestion" data-toggle="modal" data-target="#modal-gestion">Registrar Gestión</button>
+                                                <button class="btn btn-success" id="bt-guardar">Guardar Cambios</button>
+
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-2" class="tab-pane fade">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    @Html.Partial("Partials/ProspectosVisados")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-3" class="tab-pane fade">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    @Html.Partial("Partials/Reasignaciones")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-4" class="tab-pane fade">
+                        <div class="panel-body">
+                            <div class="row">
+                                <!--<div class="embed-responsive embed-responsive-4by3" style="height: 1200px;">-->
+                                <div class="embed-responsive embed-responsive-4by3" style="height: 1200px;">
+                                    <iframe class="embed-responsive-item" src="http://motordenegocios/front/proceso-incorporacion-empresas"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+
+    <!--Bootstrap Table [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <!--Bootstrap Wizard [ OPTIONAL ]-->
+    @*<script src="~/Assets/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>*@
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/js.App/src/empresas.incorporaciones.prospectos-visados.js"></script>
+    <script src="~/Assets/js.App/src/empresas.incorporaciones.prospectos-visados.reasignacion.js"></script>
+    <script src="~/Assets/js.App/src/empresas-prospectos.js"></script>
+
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script>
+        $(function () {
+
+            //getCookie('Oficina');
+            //getCookie('Cargo');
+            //13115389-9 -- 14211768-1 -- 16455469-4 -- 8398979-3
+            if ((getCookie('Oficina') === '992' && getCookie('Cargo') === 'Agente') || getCookie('Cargo') === 'Administrador Sistema') {
+                $('#tab_visados_reasigna').show();
+            }
+
+
+        });
+    </script>
+}

@@ -1,0 +1,105 @@
+﻿
+@{
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div id="page-content">
+    <h2>COSAL</h2>
+    <div class="panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">Ingreso de datos</h3>
+        </div>
+        <div class="panel-body">
+            <form id="form-cosal" action="#" method="post" class="form-inline">
+                <div class="row">
+                    <div class="col-md-4 mar-btm">
+                        <div class="form-group has-feedback">
+                            <label for="demo-oi-definput" class="control-label text-semibold">Ingrese Rut</label>
+                            <input type="text" id="txtRut" name="txtRut" class="form-control" maxlength="10">
+                            <i class="demo-pli-male icon-lg form-control-feedback"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-1 mar-btm">
+                        <button class="btn btn-primary" type="submit" id="btGuardaCosal">Guardar</button>
+                    </div>
+                    <div class="col-md-1 mar-btm">
+                        <button class="btn btn-danger btn-icon btn-circle" id="btAlertNO" style="display:none;"><i class="ion-close-round"></i></button>
+                        <button class="btn btn-success btn-icon btn-circle" id="btAlertSI" style="display:none;"><i class="ion-checkmark-round"></i></button>
+                    </div>
+
+                    <div class="col-md-5 mar-btm" style="display:none;">
+                        <h5 class="text-bold" style="color: #e33a4b; display:none;" id="lbmensaje">Rut ya fue ingresado.</h5>
+                    </div>
+
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section script{
+    <script src="~/Assets/js/jquery.rut.chileno.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script>
+        $('#form-cosal').bootstrapValidator({
+            excluded: [':disabled', ':not(:visible)'],
+            feedbackIcons: [],
+            fields: {
+                txtRut: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Debe ingresar un rut'
+                        },
+                        callback: {
+                            message: 'Rut Invalido',
+                            callback: function (value, validator, $field) {
+                                return $.rut.validar($.rut.formatear(value));
+                            }
+                        }
+                    }
+                }
+            }
+        }).on('success.form.bv', function (e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            var objetoCosal = {
+                Rut_Afiliado: $('#txtRut').val(),
+                Oficina: getCookie("Oficina"),
+                Ejecutivo_ingreso: getCookie("Rut"),
+            }
+
+            $.SecPostJSON(BASE_URL + "/motor/api/cosal/guardar-cosal", objetoCosal, function (respuesta) {
+                if (respuesta.Estado === "OK") {
+                    $('#btAlertNO').css('display', 'none');
+                    $('#lbmensaje').css('display', 'none');
+                    $('#btAlertSI').css('display', 'block');
+                    $('#txtRut').val("");
+                    $("#txtRut").focus();
+                    setTimeout(function () {
+                        $('#btAlertSI').css('display', 'none');
+                    }, 3000);
+
+                } else if (respuesta.Estado === "ERROR") {
+                    $('#btAlertSI').css('display', 'none');
+                    $('#btAlertNO').css('display', 'block');
+                    $('#lbmensaje').css('display', 'block');
+                    $('#txtRut').val("");
+                    $("#txtRut").focus();
+                    setTimeout(function () {
+                        $('#btAlertNO').css('display', 'none');
+                        //$('#lbmensaje').css('display', 'none');
+                    }, 5000);
+                }
+            });
+        });
+
+    </script>
+
+}
+
+
+

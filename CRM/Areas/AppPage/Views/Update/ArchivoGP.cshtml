@@ -1,0 +1,157 @@
+﻿@{
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ArchivoGP";
+}
+
+
+<link href="~/Assets/plugins/dropzone/dropzone.min.css" rel="stylesheet">
+<script src="~/Assets/plugins/dropzone/dropzone.min.js"></script>
+
+<div id="page-content">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Archivo GP</h3>
+                </div>
+                <div class="panel-body">
+
+                    <!--Dropzonejs using Bootstrap theme-->
+                    <!--===================================================-->
+                    <p>Presione el boton Cargar Archivo, seleccione el archivo y presionar boton Guardar.</p>
+
+
+
+                    <div class="bord-top pad-ver">
+                        <!-- The fileinput-button span is used to style the file input field as button -->
+                        <span class="btn btn-success fileinput-button dz-clickable">
+                            <i class="fa fa-plus"></i>
+                            <span>Cargar Archivo...</span>
+                        </span>
+
+                        <div class="btn-group pull-right">
+                            <button id="dz-upload-btn" class="btn btn-primary" type="submit" disabled>
+                                <i class="fa fa-upload-cloud"></i> Guardar
+                            </button>
+                            <button id="dz-remove-btn" class="btn btn-danger cancel" type="reset" disabled>
+                                <i class="demo-pli-cross"></i>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div id="dz-previews">
+                        <div id="dz-template" class="pad-top bord-top">
+                            <div class="media">
+                                <div class="media-body">
+                                    <!--This is used as the file preview template-->
+                                    <div class="media-block">
+                                        <div class="media-left">
+                                            <img class="dz-img" data-dz-thumbnail>
+                                        </div>
+                                        <div class="media-body">
+                                            <p class="text-main text-bold mar-no text-overflow" data-dz-name></p>
+                                            <span class="dz-error text-danger text-sm" data-dz-errormessage></span>
+                                            <p class="text-sm" data-dz-size></p>
+                                            <div id="dz-total-progress" style="opacity:0">
+                                                <div class="progress progress-xs active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                                    <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="media-right">
+                                    <button data-dz-remove class="btn btn-xs btn-danger dz-cancel"><i class="demo-pli-cross"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var previewNode = document.querySelector("#dz-template");
+    previewNode.id = "";
+    var previewTemplate = previewNode.parentNode.innerHTML;
+    previewNode.parentNode.removeChild(previewNode);
+
+    var uplodaBtn = $('#dz-upload-btn');
+    var removeBtn = $('#dz-remove-btn');
+    var myDropzone = new Dropzone(document.body, {
+        url: "/motor/App/Update/Upload",
+        thumbnailWidth: 50,
+        thumbnailHeight: 50,
+        parallelUploads: 1,
+        previewTemplate: previewTemplate,
+        autoQueue: false,
+        previewsContainer: "#dz-previews",
+        clickable: ".fileinput-button"
+    });
+
+    myDropzone.on("addedfile", function (file) {
+        if (file.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+            uplodaBtn.prop('disabled', false);
+            removeBtn.prop('disabled', false);
+        }
+        else {
+            $.niftyNoty({
+                type: 'warning',
+                message: 'ARCHIVO DEBE SER EN FORMATO EXCEL..',
+                container: 'floating',
+                timer: 5000
+            });
+        }
+    });
+    myDropzone.on("totaluploadprogress", function (progress) {
+        $("#dz-total-progress .progress-bar").css({ 'width': progress + "%" });
+    });
+
+    myDropzone.on("sending", function (file) {
+        document.querySelector("#dz-total-progress").style.opacity = "1";
+    });
+
+    myDropzone.on("success", function (file, o) {
+        $.niftyNoty({
+            type: 'success',
+            message: 'SE CARGO EL ARCHIVO CORRECTAMENTE.',
+            container: 'floating',
+        });
+    });
+
+    myDropzone.on("error", function (file) {
+        $.niftyNoty({
+            type: 'warning',
+            icon: 'pli-like-2 icon-2x',
+            message: 'ERROR AL CARGAR ARCHIVO.',
+            container: 'floating',
+            timer: 5000
+        });
+    });
+
+    myDropzone.on("queuecomplete", function (progress) {
+        document.querySelector("#dz-total-progress").style.opacity = "0";
+        myDropzone.removeAllFiles(true);
+    });
+
+    uplodaBtn.on('click', function () {
+        myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
+    });
+
+    removeBtn.on('click', function () {
+        myDropzone.removeAllFiles(true);
+        uplodaBtn.prop('disabled', true);
+        removeBtn.prop('disabled', true);
+    });
+
+
+
+</script>
+
+
+

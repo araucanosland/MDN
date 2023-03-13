@@ -1,0 +1,2633 @@
+﻿@{ Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml"; }
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="tab-base">
+                <!--Nav Tabs-->
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a data-toggle="tab" href="#demo-lft-tab-1" aria-expanded="true" id="tab_preaprobados" class="tab-principal">Comercial <span class="badge badge-purple" style="display:none;">15</span></a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#demo-lft-tab-2" aria-expanded="false" id="tab_recuperaciones" class="tab-principal">Normalización <span class="badge badge-purple" style="display:none;">5</span></a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#demo-lft-tab-8" aria-expanded="false" id="tab_acuerdo_pago" class="tab-principal">Acuerdo de Pago <span class="badge badge-purple" style="display:none;"></span></a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#demo-lft-tab-4" aria-expanded="false" id="tab_segcesantia" class="tab-principal">Seg. Cesantía</a>
+                    </li>
+
+                    <li class="">
+                        <a data-toggle="tab" href="#demo-lft-tab-5" aria-expanded="false" id="tab_derivaciones" class="tab-principal">Derivaciones</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#demo-lft-tab-9" aria-expanded="false" id="tab_ing" class="tab-principal">IGN</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#demo-lft-tab-6" aria-expanded="false" id="tab_pensionados" class="tab-principal">Pensionados</a>
+                    </li>
+                    <li class="" style="display:none;">
+                        <a data-toggle="tab" href="#demo-lft-tab-7" aria-expanded="false" id="tab_referidos" class="tab-principal">Referidos</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#demo-lft-tab-beneficios" aria-expanded="false" id="tab_beneficios" class="tab-principal">Beneficios</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#demo-lft-tab-10" aria-expanded="false" id="tab_cobranza" class="tab-principal">Cobranza</a>
+                    </li>
+                </ul>
+
+                <!--Tabs Content-->
+                <div class="tab-content">
+
+                    <div id="demo-lft-tab-1" class="tab-pane fade active in">
+                        <div class="panel-body">
+                            <div class="pad-btm">
+                                <div class="row">
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Estado</label>
+                                            <select id="demo-foo-filter-status" class="form-control">
+                                                <option value="">Todos</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Sub Estado</label>
+                                            <select id="demo-foo-filter-statusSub" class="form-control">
+                                                <option value="">Todos</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-xs-center" style="width: 130px;">
+                                        <div class="form-group">
+                                            <label class="control-label">Marcas</label>
+                                            <select id="demo-foo-filter-statusMarca" class="form-control">
+                                                <option value="">Seleccione</option>
+                                                <option value="Pensionados">Pensionados Nuevos</option>
+                                                <option value="Cumpleanos">Cumpleaños</option>
+                                                <option value="Cartera">Compra Cartera Inter-Caja</option>
+                                                <option value="BNF">Beneficios</option>
+                                                <option value="carteraExterna">Compra Catera Externa</option>
+                                                @* <option value="PDG">Prioridad Gestión</option>*@
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Prioridad</label>
+                                            <select id="slPrioridad" class="form-control selectpicker">
+                                                <option value="">Todos</option>
+                                                <option data-content='<span class="badge badge-success">1</span>'>1</option>
+                                                <option data-content='<span class="badge badge-yelow">2</span>'>2</option>
+                                                <option data-content='<span class="badge badge-warning">3</span>'>3</option>
+                                                <option data-content='<span class="badge badge-danger">4</span>'>4</option>
+                                                <option data-content='<span class="badge badge-purple">5</span>'>5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Segmento</label>
+                                            <select id="slSegmento" class="form-control">
+                                                <option value="">Todos</option>
+                                                <option value="Pensionados">Pensionados</option>
+                                                <option value="Privados">Privados</option>
+                                                <option value="Publicos">Públicos</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Tipo</label>
+                                            <select id="slTipo" class="form-control">
+                                                <option value="">Todos</option>
+                                                <option value="NUEVOS">Nuevos</option>
+                                                <option value="PARALELO">Paralelo</option>
+                                                <option value="RENEGOCIACION">Renegociación</option>
+                                                <option value="PENSIONADOS TARGET">Pensionados Target</option>
+                                                <option value="PORTABILIDAD">Portabilidad</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Vencimiento</label>
+                                            <select id="flt_vencidos" class="form-control">
+                                                <option value="">Todos</option>
+                                                <option value="AYER">Vencidos</option>
+                                                <option value="HOY">Vence Hoy</option>
+                                                <option value="PROX5DIAS">Prox. 5 días</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center" style="">
+                                        <div class="form-group">
+                                            <label class="control-label">Busqueda por Empresa</label>
+                                            <select id="demo-chosen-select" tabindex="2"></select>
+                                        </div>
+                                    </div>
+                                    <div id="oficina_comercial" style="display:none;" class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Oficina</label>
+                                            <select class="form-control" id="ddloatcomercial"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2 text-xs-center">
+                                        <label class="control-label">Rut</label>
+                                        <div class="input-group mar-btm">
+                                            <input id="demo-foo-search" type="text" placeholder="Ej. 11.111.111-1" class="form-control" autocomplete="off">
+                                            @*<input id="filtrar" type="text" class="form-control" placeholder="Buscar...">*@
+                                            <div class="input-group-btn">
+                                                <button data-target="#demo-lg-modal-search" data-toggle="modal" class="btn btn-primary" type="button">
+                                                    <i class="pli-search-on-cloud"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <button id="button" class="btn btn-default">Filtrar</button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h4>Para visualizar datos debe presionar el botón filtrar.</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-bordered table-hover toggle-circle" id="tabla_comercial" style="font-size: 11px;"></table>
+                        </div>
+                    </div>
+
+                    <div id="demo-lft-tab-8" class="tab-pane fade">
+                        <div class="panel-body">
+                            <div class="pad-btm">
+                                <div class="row">
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Causa</label>
+                                            <select class="form-control" v-model="modelos.causa">
+                                                <option value="">Todos</option>
+                                                <option v-for="causa in filtros.causas" :value="causa.id">{{causa.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Estado</label>
+                                            <select id="flt_estado_acuerdo" class="form-control" v-on:change="eventoCambiaEstado" v-model="modelos.estado">
+                                                <option value="">Todos</option>
+                                                <option v-for="estado in filtros.estados" :value="estado.id">{{estado.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Sub-Estados</label>
+                                            <select class="form-control" v-model="modelos.subEstado">
+                                                <option value="">Todos</option>
+                                                <option v-for="sEstado in filtros.subEstados" :value="sEstado.id">{{sEstado.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Prioridad</label>
+                                            <select class="form-control" v-model="modelos.prioridad">
+                                                <option value="">Todos</option>
+                                                <option v-for="prio in filtros.prioridad" :data-content="`<span class='${prio.color}'>${prio.id}</span>`">{{prio.glosa}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Estado Cliente</label>
+                                            <select class="form-control" v-model="modelos.estadoCliente">
+                                                <option value="">Todos</option>
+                                                <option v-for="estadoCli in filtros.estadoCliente" :value="estadoCli.id">{{estadoCli.estado}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Tipo Campaña</label>
+                                            <select class="form-control" v-model="modelos.tipoCampana">
+                                                <option value="">Todos</option>
+                                                <option v-for="tipoCamp in filtros.tipoCampana" :value="tipoCamp.id">{{tipoCamp.glosa}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Derivación</label>
+                                            <select class="form-control" v-model="modelos.derivacion">
+                                                <option value="">Ninguno</option>
+                                                <option v-for="deriv in filtros.derivacion" :value="deriv.id">{{deriv.glosa}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 text-xs-center">
+                                    <div class="form-group">
+                                        <label class="control-label">Vencimiento</label>
+                                        <select id="vencidos_acuerdo_pago" class="form-control">
+                                            <option value="">Todos</option>
+                                            <option value="AYER">Vencidos</option>
+                                            <option value="HOY">Vence Hoy</option>
+                                            <option value="PROX5DIAS">Prox. 5 dias</option>
+                                        </select>
+                                    </div>
+
+                                   
+                                </div>
+
+
+
+                                <div class="row" style="margin-top: 23px;">
+
+                                    <div id="oficina_acuerdopago" style="margin-top: -22px;display:none;" class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Oficina</label>
+                                            <select class="form-control" id="ddloatacuerdopago"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <button id="btn_recuperaciones_acuerdo" class="btn btn-default" v-on:click="handleEventoClickFiltrar">Filtrar</button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h4>Para visualizar datos debe presionar el botón filtrar.</h4>
+                                    </div>
+                                </div>
+
+
+                              
+
+                            </div>
+                            <div class="form-group pull-right" style="margin-top: 10px;">
+                                <button data-target="#demo-lg-modal-search" data-toggle="modal" class="btn btn-primary" type="button">
+                                    <i class="pli-search-on-cloud"></i>
+                                </button>
+                            </div>
+
+                                       <span class="counter pull-right"></span>
+                            <table id="tabla_recuperaciones_acuerdo"
+                                   class="table table-bordered table-hover toggle-circle"
+                                   data-search="true"
+                                   data-show-refresh="false"
+                                   data-show-toggle="false"
+                                   data-show-columns="false"
+                                   data-page-list="[]"
+                                   data-page-size="50"
+                                   data-pagination="true"
+                                   data-side-pagination="client"
+                                   data-show-pagination-switch="false"
+                                   data-locale="es-CL" style="font-size: 11px;">
+                                <thead>
+                                    <tr>
+                                        <th data-field="rut" data-sortable="true" data-formatter="AcuerdoPagoLinkFormatter">Rut Cliente</th>
+                                        <th data-field="afiliado.nombres" data-sortable="true" data-formatter="AcuerdoPagoNombresFormatter">Nombres Cliente</th>
+                                        <th data-field="montoTotal" data-sortable="true" data-formatter="formatoMoneyFormatterAcuerdo">Total Deuda</th>
+                                        <th data-field="totalCapital" data-sortable="true" data-formatter="formatoMoneyFormatterAcuerdo">Total Capital</th>
+                                        <th data-field="ofertaPagoTotal" data-sortable="true" data-formatter="formatoMoneyFormatterAcuerdo">Oferta Pago Total</th>
+                                        <th data-field="OfertaAcuerdoPago" data-sortable="true" data-formatter="formatoMoneyFormatterAcuerdo">Oferta Acuerdo Pago</th>
+                                        <th data-field="rutempresa" data-sortable="true" data-formatter="AcuerdoPagoEstadoAfiliadoFormatter">Estado Cliente</th>
+                                        <th data-field="rutempresa" data-sortable="true" data-formatter="AcuerdoPagoFechaCompromisoAfiliadoFormatter">Prox Gestión</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="demo-lft-tab-2" class="tab-pane fade">
+                        <div class="panel-body">
+                            <div class="pad-btm">
+                                <div class="row">
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Causa</label>
+                                            <select class="form-control" v-model="modelos.causa">
+                                                <option value="">Todos</option>
+                                                <option v-for="causa in filtros.causas" :value="causa.id">{{causa.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Estado</label>
+                                            <select class="form-control" v-on:change="eventoCambiaEstado" v-model="modelos.estado">
+                                                <option value="">Todos</option>
+                                                <option v-for="estado in filtros.estados" :value="estado.id">{{estado.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Sub-Estados</label>
+                                            <select class="form-control" v-model="modelos.subEstado">
+                                                <option value="">Todos</option>
+                                                <option v-for="sEstado in filtros.subEstados" :value="sEstado.id">{{sEstado.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Prioridad</label>
+                                            <select class="form-control" v-model="modelos.prioridad">
+                                                <option value="">Todos</option>
+                                                <option v-for="prio in filtros.prioridad" :data-content="`<span class='${prio.color}'>${prio.id}</span>`">{{prio.glosa}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Tipo Campaña</label>
+                                            <select class="form-control" v-model="modelos.tipoCampana">
+                                                <option value="">Todos</option>
+                                                <option v-for="tipoCamp in filtros.tipoCampana" :value="tipoCamp.id">{{tipoCamp.glosa}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Estado Cliente</label>
+                                            <select class="form-control" v-model="modelos.estadoCliente">
+                                                <option value="">Todos</option>
+                                                <option v-for="estadoCli in filtros.estadoCliente" :value="estadoCli.id">{{estadoCli.estado}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Derivación</label>
+                                            <select class="form-control" v-model="modelos.derivacion">
+                                                <option value="">Ninguno</option>
+                                                <option v-for="deriv in filtros.derivacion" :value="deriv.id">{{deriv.glosa}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <div class="row">
+                                    <div id="oficina_normalizacion" style="display:none" class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Oficina</label>
+                                            <select class="form-control" id="ddloatnormalizacion">
+                                           </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3" style="margin-top:25px">
+                                        <button id="btn_recuperaciones" class="btn btn-default" v-on:click="handleEventoClickFiltrar">Filtrar</button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h4>Para visualizar datos debe presionar el botón filtrar.</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group pull-right" style="margin-top: 10px;">
+                                <button data-target="#demo-lg-modal-search" data-toggle="modal" class="btn btn-primary" type="button">
+                                    <i class="pli-search-on-cloud"></i>
+                                </button>
+                            </div>
+                            <span class="counter pull-right"></span>
+                            <table id="tabla_recuperaciones"
+                                   class="table table-bordered table-hover toggle-circle results"
+                                   data-search="true"
+                                   data-show-refresh="false"
+                                   data-show-toggle="false"
+                                   data-show-columns="false"
+                                   data-page-list="[]"
+                                   data-page-size="50"
+                                   data-pagination="true"
+                                   data-side-pagination="client"
+                                   data-show-pagination-switch="false"
+                                   data-locale="es-CL">
+                                <thead>
+                                    <tr>
+                                        <th data-field="rut" data-sortable="true" data-formatter="normalizacionLinkFormatter">Rut</th>
+                                        <th data-field="afiliado.nombres" data-sortable="true" data-formatter="normalizacionNombresFormatter">Nombres</th>
+                                        <th data-field="empresa.nombre" data-sortable="true">Nom. Empresa</th>
+                                        <th data-field="montoAdeudado" data-sortable="true" data-formatter="formatoMoneyFormatter">Monto Adeudado</th>
+                                        <th data-field="prioridad" data-sortable="true" data-formatter="normalizacionPrioridadFormatter">Prioridad</th>
+                                        <th data-field="gestiones.causaBasal" data-sortable="true" data-formatter="normalizacionFormaterBasal">Causa Basal</th>
+                                        <th data-field="gestiones.estadoCliente" data-sortable="true" data-formatter="normalizacionFormaterEstado">Estado Cliente</th>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div id="demo-lft-tab-4" class="tab-pane fade">
+                        <div class="panel-body">
+                            <div class="pad-btm">
+                                <div class="row">
+
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Estado</label>
+                                            <select class="form-control" v-on:change="eventoCambiaEstado" v-model="modelos.estado">
+                                                <option value="">Todos</option>
+                                                <option v-for="estado in filtros.estados" :value="estado.id">{{estado.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Sub Estado</label>
+                                            <select class="form-control" v-model="modelos.subEstado" id="subEstadoSeguro">
+                                                <option value="">Todos</option>
+                                                <option v-for="sEstado in filtros.subEstados" :value="sEstado.id">{{sEstado.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Vencimiento</label>
+                                            <select id="flt_vencidos_sc" class="form-control">
+                                                <option value="">Todos</option>
+                                                <option value="AYER">Vencidos</option>
+                                                <option value="HOY">Vence Hoy</option>
+                                                <option value="PROX5DIAS">Prox. 5 días</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Lista de Trabajo</label>
+                                            <select class="form-control" v-model="modelos.listatrabajo">
+                                                <option value="">Todos</option>
+                                                <option v-for="listaTra in filtros.listatrabajo" :value="listaTra.id">{{listaTra.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label class="control-label">Rut</label>
+                                        <div class="input-group mar-btm">
+                                            <input id="flt_rut_sc" type="text" placeholder="Ej. 11.111.111-1" class="form-control" autocomplete="off">
+                                            <div class="input-group-btn">
+                                                <button data-target="#demo-lg-modal-search" data-toggle="modal" class="btn btn-primary" type="button">
+                                                    <i class="pli-search-on-cloud"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div id="oficina_segurocesantia" style="display:none;" class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Oficina</label>
+                                            <select class="form-control" id="ddloatsrgurocesantia"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <button class="btn btn-default" style="margin-top: 25px;" v-on:click="handleEventoClickFiltrar">Filtrar</button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h4>Para visualizar datos debe presionar el botón filtrar.</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="counter pull-right"></span>
+                            <table id="tabla_seguro_cesantia"
+                                   class="table table-bordered table-hover toggle-circle results"
+                                   data-search="true"
+                                   data-show-refresh="false"
+                                   data-show-toggle="false"
+                                   data-show-columns="false"
+                                   data-page-list="[]"
+                                   data-page-size="50"
+                                   data-pagination="true"
+                                   data-side-pagination="client"
+                                   data-show-pagination-switch="false"
+                                   data-locale="es-CL">
+                                <thead>
+                                    <tr>
+                                        <th data-field="rut" data-sortable="true" data-formatter="seguroCesantiaLinkFormatter">Rut</th>
+                                        <th data-field="afiliado.nombres" data-sortable="true" data-formatter="seguroCesantiaNombresFormatter">Nombres</th>
+                                        <th data-field="empresa.nombre" data-sortable="true">N° de Creditos</th>
+                                        <th data-field="prioridad" data-sortable="true" data-formatter="seguroCesantiaPrioridadFormatter">Prioridad</th>
+                                        <th data-field="ultimaGestion.fechaCompromiso" data-sortable="true">Prox. Gestion</th>
+                                        <th data-field="gestiones" data-formatter="subEstadoAfiliadoFormatterSeguroC" data-sortable="true">Estado</th>
+                                        <th data-field="gestiones.estado" data-formatter="estadoAfiliadoFormatterSeguroC" data-sortable="true">Sub-Estado</th>
+                                        <th data-field="listaTrabajo.nombre" data-sortable="true">Lista Trabajo</th>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div id="demo-lft-tab-5" class="tab-pane fade">
+                        <div class="panel-body">
+
+                            <div class="pad-btm">
+                                <div class="row">
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Estado</label>
+                                            <select id="demo-foo-filter-statusDR" class="form-control">
+                                                <option value="">Todos</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Sub Estado</label>
+                                            <select id="demo-foo-filter-statusSubDR" class="form-control">
+                                                <option value="">Todos</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Prioridad</label>
+                                            <select id="slPrioridadDR" class="form-control selectpicker">
+                                                <option value="">Todos</option>
+                                                <option data-content='<span class="badge badge-success">1</span>'>1</option>
+                                                <option data-content='<span class="badge badge-yelow">2</span>'>2</option>
+                                                <option data-content='<span class="badge badge-warning">3</span>'>3</option>
+                                                <option data-content='<span class="badge badge-danger">4</span>'>4</option>
+                                                <option data-content='<span class="badge badge-purple">5</span>'>5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Segmento</label>
+                                            <select id="slSegmentoDR" class="form-control">
+                                                <option value="">Todos</option>
+                                                <option value="Pensionados">Pensionados</option>
+                                                <option value="Privados">Privados</option>
+                                                <option value="Publicos">Públicos</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Tipo</label>
+                                            <select id="slTipoDR" class="form-control">
+                                                <option value="">Todos</option>
+                                                <option value="NUEVOS">Nuevos</option>
+                                                <option value="PARALELO">Paralelo</option>
+                                                <option value="RENEGOCIACION">Renegociación</option>
+                                                <option value="PORTABILIDAD">Portabilidad</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Vencimiento</label>
+                                            <select id="flt_vencidos_dr" class="form-control">
+                                                <option value="">Todos</option>
+                                                <option value="AYER">Vencidos</option>
+                                                <option value="HOY">Vence Hoy</option>
+                                                <option value="PROX5DIAS">Prox. 5 días</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Tipo Derivación</label>
+                                            <select class="form-control" id="ddltipoDerivacion"></select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <label class="control-label">Rut</label>
+                                        <input id="demo-foo-searchDR" type="text" placeholder="Ej. 11.111.111-1" class="form-control" autocomplete="off">
+                                    </div>
+                                    <div id="oficina_derivaciones" style="display:none;" class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Oficina</label>
+                                            <select class="form-control" id="ddloatderivaciones"></select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                       
+                                        <button id="btn_derivaciones" class="btn btn-default">Filtrar</button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h4>Para visualizar datos debe presionar el botón filtrar.</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <table class="table table-bordered table-hover toggle-circle" id="tabla_derivaciones"></table>
+                        </div>
+                    </div>
+
+                    <div id="demo-lft-tab-6" class="tab-pane fade">
+                        @Html.Partial("Pensionados")
+                    </div>
+
+                    <div id="demo-lft-tab-7" class="tab-pane fade">
+                        @Html.Partial("Prospecto")
+                    </div>
+
+                    <div id="demo-lft-tab-9" class="tab-pane fade">
+                        @Html.Partial("Ign")
+                    </div>
+
+                    <div id="demo-lft-tab-beneficios" class="tab-pane fade">
+                        @Html.Partial("Beneficios")
+                    </div>
+
+
+
+                    <div id="demo-lft-tab-10" class="tab-pane fade">
+                        <div class="panel-body">
+                            <div class="pad-btm">
+                                <div class="row">
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Causa </label>
+                                            <select class="form-control" v-model="modelos.causa">
+                                                <option value="">Todos</option>
+                                                <option v-for="causa in filtros.causas" :value="causa.id">{{causa.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Estado</label>
+                                            <select class="form-control" v-on:change="eventoCambiaEstado" v-model="modelos.estado_cobranza">
+                                                <option value="">Todos</option>
+                                                <option v-for="estado in filtros.estados" :value="estado.id">{{estado.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Sub-Estados</label>
+                                            <select class="form-control" v-model="modelos.subEstado_cobranza">
+                                                <option value="">Todos</option>
+                                                <option v-for="sEstado in filtros.subEstados" :value="sEstado.id">{{sEstado.nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Prioridad</label>
+                                            <select class="form-control" v-model="modelos.prioridad_cobranza">
+                                                <option value="">Todos</option>
+                                                <option v-for="prio in filtros.prioridad" :data-content="`<span class='${prio.color}'>${prio.id}</span>`">{{prio.glosa}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Tipo Campaña</label>
+                                            <select class="form-control" v-model="modelos.tipoCampana_cobranza">
+                                                <option value="">Todos</option>
+                                                <option v-for="tipoCamp in filtros.tipoCampana" :value="tipoCamp.id">{{tipoCamp.glosa}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Estado Cliente</label>
+                                            <select class="form-control" v-model="modelos.estadoCliente_cobranza">
+                                                <option value="">Todos</option>
+                                                <option v-for="estadoCli in filtros.estadoCliente" :value="estadoCli.id">{{estadoCli.estado}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-xs-center">
+                                        <div class="form-group">
+                                            <label class="control-label">Derivación</label>
+                                            <select class="form-control" v-model="modelos.derivacion_cobranza">
+                                                <option value="">Ninguno</option>
+                                                <option v-for="deriv in filtros.derivacion" :value="deriv.id">{{deriv.glosa}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <button id="btn_recuperaciones" class="btn btn-default" v-on:click="handleEventoClickFiltrarCobranza">Filtrar</button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h4>Para visualizar datos debe presionar el botón filtrar.</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group pull-right" style="margin-top: 10px;">
+                                <button data-target="#demo-lg-modal-search" data-toggle="modal" class="btn btn-primary" type="button">
+                                    <i class="pli-search-on-cloud"></i>
+                                </button>
+                            </div>
+                            <span class="counter pull-right"></span>
+                            <table id="tabla_cobranza"
+                                   class="table table-bordered table-hover toggle-circle results"
+                                   data-search="true"
+                                   data-show-refresh="false"
+                                   data-show-toggle="false"
+                                   data-show-columns="false"
+                                   data-page-list="[]"
+                                   data-page-size="50"
+                                   data-pagination="true"
+                                   data-side-pagination="client"
+                                   data-show-pagination-switch="false"
+                                   data-locale="es-CL">
+                                <thead>
+                                    <tr>
+                                        <th data-field="rut" data-sortable="true" data-formatter="cobranzaLinkFormatter">Rut</th>
+                                        <th data-field="afiliado.nombres" data-sortable="true" data-formatter="normalizacionNombresFormatter">Nombres</th>
+                                        <th data-field="empresa.nombre" data-sortable="true">Nom. Empresa</th>
+                                        <th data-field="montoAdeudado" data-sortable="true" data-formatter="formatoMoneyFormatter">Monto Adeudado</th>
+                                        <th data-field="prioridad" data-sortable="true" data-formatter="normalizacionPrioridadFormatter">Prioridad</th>
+                                        <th data-field="gestiones.causaBasal" data-sortable="true" data-formatter="normalizacionFormaterBasal">Causa Basal</th>
+                                        <th data-field="gestiones.estadoCliente" data-sortable="true" data-formatter="normalizacionFormaterEstado">Estado Cliente</th>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="demo-lg-modal-search" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                        <h4 class="modal-title" id="myLargeModalLabel-search">Buscar Afiliado</h4>
+                    </div>
+                    <div class="modal-body" id="bdy_busqueda">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <label class="control-label">Rut Afiliado</label>
+                                    <input class="form-control" id="afi_rut_busc" type="text">
+                                    <input class="form-control" id="afi_rut_busc_b" type="text" style="display:none;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Modal footer-->
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                        <button class="btn btn-primary" id="btn_buscar_otr" type="submit">Buscar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mdl_data" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                        <h4 class="modal-title" id="myLargeModalLabel">Gestión</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="tab-base" id="MDL_Primario" style="margin-bottom: 0px !important;">
+                            <!--Nav Tabs-->
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a data-toggle="tab" href="#tab-gestion-1" id="tab_contacti" aria-expanded="true">Contacto</a>
+                                </li>
+                                <li class="">
+                                    <a data-toggle="tab" href="#tab-gestion-2" aria-expanded="false">Historial de Gestión</a>
+                                </li>
+                                <li class="">
+                                    <a data-toggle="tab" id="tabContacComercial" href="#tab-gestion-3" aria-expanded="false">Contactabilidad</a>
+                                </li>
+                                <li class="">
+                                    <a data-toggle="tab" href="#tab-gestion-4" aria-expanded="false">Filtros</a>
+                                </li>
+                            </ul>
+
+                            <!--Tabs Content-->
+                            <div class="tab-content" style="box-shadow: 0 0 0 !important;">
+                                <div id="tab-gestion-1" class="tab-pane fade active in">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <label class="control-label">Rut</label>
+                                                    <input class="form-control" id="afi_rut" type="text" value="17.024.783-1" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-group">
+                                                    <label class="control-label">Nombres</label>
+                                                    <input class="form-control" id="afi_nombres" type="text" value="Carlos Antonio Pradenas Pérez" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <label class="control-label segmento_texto">Segmento</label>
+                                                    <input class="form-control" id="afi_segmento" type="text" value="Privados" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">Oficina Asignación</label>
+                                                    <input class="form-control" id="OficinaAsig" type="text" value="OficinaAsig" readonly="readonly">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="control-label" id="labelrutempresa">Rut Empresa</label>
+                                                    <input class="form-control" id="afi_empresa_rut" type="text" value="99.999.999-9" readonly="readonly">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6" id="morf_cnvs">
+                                                <div class="form-group">
+                                                    <label class="control-label" id="labelempresa">Empresa</label>
+                                                    <input class="form-control" type="text" id="afi_empresa_nombre" value="La Araucana C.C.A.F." readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group has-success">
+                                                    <label class="control-label" id="morfeable_monto">Monto Pre Aprobado</label>
+                                                    <div class="input-group mar-btm">
+                                                        <span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+                                                        <input class="form-control text-lg-right" id="afi_preaprobado" type="text" value="4.300.000" readonly="readonly">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <div class="form-group">
+                                                    <label class="control-label">Entidades con Mora</label>
+                                                    <input class="form-control" id="afi_entidad_mora" type="text" readonly="readonly">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Mora más Antigua</label>
+                                                    <input class="form-control" type="text" id="afi_mora_antigua" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group has-warning">
+                                                    <label class="control-label">Montos Deudas</label>
+                                                    <div class="input-group mar-btm">
+                                                        <span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+                                                        <input class="form-control text-lg-right" id="afi_monto_deudas" type="text" readonly="readonly">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+
+                                        <div class="row" style="display:none;">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">Emails</label>
+                                                    <button class="btn btn-xs btn-rounded btn-default" type="button" data-clipboard-action="copy" id="btn_copiar">copiar seleccionado</button>
+                                                    <div class="input-group mar-btm multicontrol-mail">
+                                                        <div class="input-group-btn">
+                                                            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button" style="height: 34px; margin-right:0px;">
+                                                                <i class="pli-mail-2"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <li class="forma-uno-mail"><a href="#" id="correos_Malo">Marcar como Malo</a></li>
+                                                                <li class="divider desaparecible-mail"></li>
+                                                                <li class="forma-dos-mail"><a href="#" id="correos_Nuevo">Agregar Nuevo</a></li>
+                                                            </ul>
+                                                        </div>
+                                                        <select class="form-control" id="afi_correos" readonly="readonly"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">Celulares</label>
+                                                    <div class="input-group mar-btm multicontrol-cel">
+                                                        <div class="input-group-btn">
+                                                            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button" style="height: 34px; margin-right:0px;">
+                                                                <i class="pli-smartphone-3"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <li class="forma-uno-cel"><a href="#" id="celulares_Malo">Marcar como Malo</a></li>
+                                                                <li class="divider desaparecible-cel"></li>
+                                                                <li class="forma-dos-cel"><a href="#" id="celulares_Nuevo">Agregar Nuevo</a></li>
+                                                            </ul>
+                                                        </div>
+                                                        <select class="form-control" id="afi_celulares" readonly="readonly"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div style="display:none;" class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">Telefonos</label>
+                                                    <div class="input-group mar-btm multicontrol">
+
+                                                        <div class="input-group-btn">
+                                                            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button" style="height: 34px; margin-right:0px;">
+                                                                <i class="pli-phone-2"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <li class="forma-uno"><a href="#" id="telefonos_Malo">Marcar como Malo</a></li>
+                                                                <li class="divider desaparecible"></li>
+                                                                <li class="forma-dos"><a href="#" id="telefonos_Nuevo">Agregar Nuevo</a></li>
+                                                            </ul>
+                                                        </div>
+                                                        <select class="form-control" id="afi_telefonos" readonly="readonly"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">Oficina Preferencia</label>
+                                                    <div class="input-group mar-btm">
+
+                                                        <select class="form-control" id="afi_oficina_preferencia" readonly="readonly"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">Horario Preferencia</label>
+                                                    <div class="input-group mar-btm">
+                                                        <select class="form-control" id="afi_horario_preferencia" readonly="readonly">
+                                                            <option value="">Seleccione</option>
+                                                            <optgroup label="Generales">
+                                                                <option>Durante la Mañana</option>
+                                                                <option>Durante la Tarde</option>
+                                                                <option>Cualquier Horario</option>
+                                                            </optgroup>
+                                                            <optgroup label="Especificas">
+                                                                <option>09:00-11:00</option>
+                                                                <option>11:00-13:00</option>
+                                                                <option>13:00-15:00</option>
+                                                                <option>15:00-17:00</option>
+                                                                <option>17:00-19:00</option>
+                                                            </optgroup>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3" style="border-radius: 9px; font-size: 11px">
+                                                <div class="row msjCovid" style="display:none; margin-top: 14px;">
+                                                    <div class="col-sm-12 covidNTFContainer">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3" style="border-radius: 9px; font-size: 11px">
+                                                <div class="row msjCovidEmp" style="display:none; margin-top: 14px;">
+                                                    <div class="col-sm-12 covidEmpNTFContainer">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        @*<div class="alert alert-purple" style="border-radius: 5px; display:none" id="lbMensajeEncuesta">
+                                                Afiliado no ha realizado la encuesta. "Enfermedades Cronicas y Medicamentos" <strong><u><a style="color: #076fc7;" id="linkencuesta" href="/motor/App/DatosAfiliados?RutBuscar=" target="_blank">  ir a encuesta! </a></u></strong>
+                                            </div>*@
+
+                                        <div class="row charlyNTF" style="display:none;">
+                                            <div class="col-sm-12 charlyNTFContainer">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row sergioNTF" style="display:none;">
+                                            <div class="col-sm-12 sergioNTFContainer">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row contingenciaNTF" style="display:none;">
+                                            <div class="col-sm-12 contingenciaNTFContainer">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row psuNTF" style="display:none;">
+                                            <div class="col-sm-12 psuNTFContainer">
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row NotfGenerica" style="display:none;">
+                                            <div class="col-sm-12 NotfGenericaContainer">
+                                                <br />
+                                            </div>
+                                        </div>
+
+
+
+                                    </form>
+                                </div>
+                                <div id="tab-gestion-2" class="tab-pane fade">
+                                    <div class="list-group" id="gestiones_realizadas" style="min-height:290px;">
+                                    </div>
+                                </div>
+                                <div id="tab-gestion-3" class="tab-pane fade">
+                                    <div class="alert alert-warning" id="msjContactComercial" style="display:none;">
+                                        <strong>Contacto!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                                    </div>
+                                    <div class="row">
+                                        <button type="button" id="btn-add-contac" class="btn btn-primary btn-xs">+</button>
+                                    </div>
+                                    <div class="mar-btm" style="display: none;" id="formulario-contac">
+                                        <form id="form-registro-contacto" action="#" method="post">
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <div class="btn-group bootstrap-select">
+                                                            <label class="control-label">Tipo de Contacto</label>
+                                                            <select class="selectpicker" id="cbtippContac" name="cbtippContac">
+                                                                <option value="">Seleccione..</option>
+                                                                <option value="1">Celular</option>
+                                                                <option value="2">Teléfono</option>
+                                                                <option value="3">Mail</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <div class="btn-group bootstrap-select">
+                                                            <label class="control-label">Clasificación de Contacto</label>
+                                                            <select class="selectpicker" id="cbClasificacionConctac" name="cbClasificacionConctac">
+                                                                <option value="">Seleccione..</option>
+                                                                <option value="1">Personal</option>
+                                                                <option value="2">Comercial</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Datos de Contacto</label>
+                                                        <input class="form-control" id="afi_NewContacto" type="text" value="" maxlength="150" name="afi_NewContacto">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button class="btn btn-primary" id="btGuardaContacto" type="submit">Guardar Contacto</button>
+
+                                        </form>
+                                    </div>
+
+                                    <div class="row">
+
+
+                                        <table class="table table-hover table-vcenter" style="font-size: 11px;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Gestión</th>
+                                                    <th>Datos Contacto</th>
+                                                    <th>Tipo contacto</th>
+                                                    <th>Indice</th>
+                                                    <th>Ultimo Contacto Valido</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="bdy_datos_contactos"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div id="tab-gestion-4" class="tab-pane fade">
+                                    <div class="table-responsive" style="overflow:scroll; height:350px;">
+                                        <table class="table table-striped">
+                                            <tbody id="letable"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Modal footer-->
+                    <div class="modal-footer" id="mensahes-must">
+                        <form id="datos-gestion" action="#" method="post" style="display:none;">
+                            <div class="row esconder" style="text-align: left;">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Estado</label>
+                                        <select class="form-control" id="ges_estado" name="ges_estado">
+                                            <option value="">Seleccione</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Sub Estado</label>
+                                        <select class="form-control" id="ges_subestado" name="ges_subestado" disabled="disabled">
+                                            <option value="">Seleccione</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group" id="fpg">
+                                        <label class="control-label">Fecha Próxima Gestión</label>
+                                        <div id="demo-dp-component">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="ges_prox_gestion" name="ges_prox_gestion">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*SERGIO*@
+                            <div id="divBancos" style="display:none">
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">BANCO</label>
+                                            <select class="form-control" id="afi_banco" name="afi_banco" v-model="modelos.banco">
+                                                <option value="">Seleccione...</option>
+                                                <option v-for="bancos in filtros.banco" :value="bancos.nombre_banco">{{bancos.nombre_banco}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">TIPO CUENTA</label>
+                                            <select class="form-control" id="afi_tipo_cuenta" name="afi_tipo_cuenta">
+                                                <option value="">Seleccione...</option>
+                                                <option value="CUENTA DE AHORRO">CUENTA DE AHORRO</option>
+                                                <option value="CUENTA CORRIENTE">CUENTA CORRIENTE</option>
+                                                <option value="CUENTA VISTA">CUENTA VISTA</option>
+                                                <option value="CUENTA RUT">CUENTA RUT</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">N° CUENTA</label>
+                                            <input class="form-control" id="afi_n_cuenta" neme="afi_n_cuenta" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">EMAIL</label>
+                                            <input class="form-control" id="afi_email_banco" neme="afi_email_banco" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">TELEFONO</label>
+                                            <input class="form-control" id="afi_fono_banco" neme="afi_fono_banco" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row esconder" style="text-align: left;">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Comentarios</label>
+                                        <textarea placeholder="Comentarios" rows="3" class="form-control" id="ges_comentarios" name="ges_comentarios"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <input type="hidden" id="ges_id_asignacion" name="ges_id_asignacion" value="" />
+
+                            <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                            <button class="btn btn-primary esconder" id="btn_savear" type="submit">Guardar</button>
+                        </form>
+                        <form id="datos-gestion-sc" action="#" method="post" style="display:none;">
+                            <div class="row esconder" style="text-align: left;">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Estado</label>
+                                        <select class="form-control" id="ges_estadoSC" name="ges_estadoSC">
+                                            <option value="">Seleccione</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Sub Estado</label>
+                                        <select class="form-control" id="ges_subestadoSC" name="ges_subestadoSC" disabled="disabled">
+                                            <option value="">Seleccione</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group" id="fpgSC">
+                                        <label class="control-label">Fecha Próxima Gestión</label>
+                                        <div id="demo-dp-componentSC">
+                                            <div class="input-group date">
+                                                <input type="text" class="form-control" id="ges_prox_gestionSC" name="ges_prox_gestionSC">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row esconder" style="text-align: left;">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Comentarios</label>
+                                        <textarea placeholder="Comentarios" rows="3" class="form-control" id="ges_comentariosSC" name="ges_comentariosSC"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <input type="hidden" id="ges_id_asignacionSC" name="ges_id_asignacionSC" value="" />
+
+                            <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                            <button class="btn btn-primary esconder" id="btn_savear_sc" type="submit">Guardar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="PrincipalTabActivo" value="1" />
+    </div>
+</div>
+
+<!--MODAL PARA SEGURO CESANTIA-->
+<div id="mdl_data_seguro_cesantia" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" id="myLargeModalLabel">Gestión Seguro Cesantia ------ Folio Credito:  <label id="estadoClieSeguroCesantia"></label>{{dataModal.folio}}</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="tab-base" id="MDL_Primario_seguro_cesantia" style="margin-bottom: 0px !important;">
+                    <!--Nav Tabs-->
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-seguro_cesantia-1" id="tab_contacti_seguro_cesantia" aria-expanded="true">Contacto</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-seguro_cesantia-2" aria-expanded="false">Historial de Gestión</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" id="tabContacSeguro" href="#tab-seguro_cesantia-3" aria-expanded="false">Contactabilidad</a>
+                        </li>
+                        <li class="" style="display:none;">
+                            <a data-toggle="tab" href="#tab-seguro_cesantia-4" aria-expanded="false">Filtros</a>
+                        </li>
+                    </ul>
+
+                    <!--Tabs Content-->
+                    <div class="tab-content msjSeguroCesantia" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-seguro_cesantia-1" class="tab-pane fade active in">
+                            <form id="form-registros-seguro-cesantia" action="#" method="post">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Rut</label>
+                                            <input class="form-control" id="txtRutAfiSegC" type="text" :value="dataModal.rut" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label class="control-label">Nombres</label>
+                                            <input class="form-control" type="text" :value="dataModal.afiliado && dataModal.afiliado.nombres + ' ' + dataModal.afiliado.apellidos" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">Fecha Colocación</label>
+                                            <input class="form-control" type="text" :value="dataModal.fechaColocacion" readonly="readonly">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Oficina</label>
+                                            <input class="form-control" type="text" :value="dataModal.oficina" readonly="readonly">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label" id="labelrutempresa">Rut Empresa</label>
+                                            <input class="form-control" id="afi_empresa_rut" type="text" :value="dataModal.rutempresa" readonly="readonly">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6" id="morf_cnvs">
+                                        <div class="form-group">
+                                            <label class="control-label" id="labelempresa">Empresa</label>
+                                            <input class="form-control" type="text" id="afi_empresa_nombre" :value="dataModal.empresa && dataModal.empresa.nombre" readonly="readonly">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group has-success">
+                                            <label class="control-label" id="morfeable_monto">Monto Adeudado</label>
+                                            <div class="input-group mar-btm">
+                                                <span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+                                                <input class="form-control text-lg-right" type="text" :value="dataModal.montoAdeudado" readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="tab-seguro_cesantia-2" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div v-for="gestion in dataModal.gestiones">
+                                    <a href="#">
+                                        <h4 class="list-group-item-heading"><strong>Gestor:</strong>{{gestion.nombreEjecutivo != undefined && gestion.nombreEjecutivo.OrdenaNombre()}}</h4>
+                                        <p class="list-group-item-text">
+                                            <strong>Fecha Gestión: </strong> {{gestion.fechaGestion != undefined && gestion.fechaGestion.toFechaHoraPrueba()}}, <strong>Fecha Prox. Gestión: </strong>
+                                            {{gestion.fechaCompromiso != undefined && gestion.fechaCompromiso.toFechaHoraPrueba()}}
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Estado:</strong>{{gestion.estado.padre != undefined && gestion.estado.padre != null ? gestion.estado.padre.nombre: '------'}}
+                                            <strong>Sub-Estado:</strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado.nombre: '------'}}
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Comentario:</strong> {{gestion.comentarios}}
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-seguro_cesantia-3" class="tab-pane fade">
+
+                            <div class="alert alert-warning" id="msjContactSeguro" style="display:none;">
+                                <strong>Contacto!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                            </div>
+
+                            <div class="row">
+                                <button type="button" id="btn-add-contac-seguro_cesantia" class="btn btn-primary btn-xs">+</button>
+                            </div>
+                            <div class="mar-btm" style="display: none;" id="formulario-contac_seguro_cesantia">
+                                <form id="form-registro-contacto_seguro-cesantia" action="#" method="post">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Tipo de Contacto</label>
+                                                    <select class="selectpicker" id="cbtippContac_seg" name="cbtippContac_seg">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Celular</option>
+                                                        <option value="2">Teléfono</option>
+                                                        <option value="3">Mail</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Clasificación de Contacto</label>
+                                                    <select class="selectpicker" id="cbClasificacionConctac_seg" name="cbClasificacionConctac_seg">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Personal</option>
+                                                        <option value="2">Comercial</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Datos de Contacto</label>
+                                                <input class="form-control" id="afi_NewContacto_seg" type="text" value="" maxlength="150" name="afi_NewContacto_seg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" id="btGuardaContacto_seguro-cesantia" type="submit">Guardar Contacto</button>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <table class="table table-hover table-vcenter" style="font-size: 11px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Gestión</th>
+                                            <th>Datos Contacto Nor</th>
+                                            <th>Tipo contacto</th>
+                                            <th>Indice</th>
+                                            <th>Ultimo Contacto Valido</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bdy_datos_contactos_seguro_cesantia"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="tab-seguro_cesantia-4" class="tab-pane fade">
+                            <div class="table-responsive" style="overflow:scroll; height:350px;">
+                                <table class="table table-striped">
+                                    <tbody id="letable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Modal footer-->
+            <div class="modal-footer" id="mensahes-must">
+
+                <form id="new_datos-gestion_seguro-cesantia" action="#" method="post">
+                    <div class="row esconder" style="text-align: left;">
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Estado</label>
+                                <select class="form-control" v-on:change="eventoCambiaEstadoModal" v-model="modelosModal.estado">
+                                    <option value="">Seleccione</option>
+                                    <option v-for="estadoModal in filtrosModal.estadosModal" :value="estadoModal.id">{{estadoModal.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Sub Estado</label>
+                                <select class="form-control" id="slSubEstadoScesantia" v-on:change="manejarVisibilidadCalendario" v-model="modelosModal.subEstado">
+                                    <option value="">Seleccione</option>
+                                    <option v-for="sEstadoModal in filtrosModal.subEstadosModal" :value="sEstadoModal.id">{{sEstadoModal.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" v-if="comportamientos.mostrarProximaGestion">
+                            <div class="form-group" id="fpg_seguroCesantia">
+                                <label class="control-label">Fecha Próxima Gestión</label>
+                                <div id="demo-dp-component_seguro-cesantia">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" v-model="modelosModal.fechaCompromiso">
+                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row esconder" style="text-align: left;">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Comentarios</label>
+                                <textarea placeholder="Comentarios" rows="3" class="form-control" v-model="modelosModal.comentarios"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <input type="hidden" id="ges_id_asignacion_seguro-cesantia" name="ges_id_asignacion_seguro-cesantia" value="" />
+
+                    <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                    <button id="btGestSeguroCesantia" class="btn btn-primary esconder" v-on:click="handleSubmitSeguroCesantia" type="button">Guardar</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL PARA NORAMALIZACION-->
+<div id="mdl_data_normalizacion" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" id="myLargeModalLabel">Gestión Normalización ------ Folio Credito:  <label id="estadoClieModalNorm"></label>{{dataModal.folioCredito}}</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="tab-base" id="MDL_Primario_normalizacion" style="margin-bottom: 0px !important;">
+                    <!--Nav Tabs-->
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-normalizacion-1" id="tab_contacti_normalizacion" aria-expanded="true">Contacto</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-normalizacion-2" aria-expanded="false">Historial de Gestión</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" id="tabNormContact" href="#tab-normalizacion-3" aria-expanded="false">Contactabilidad</a>
+                        </li>
+                        <li class="" style="display:none;">
+                            <a data-toggle="tab" href="#tab-normalizacion-4" aria-expanded="false">Filtros</a>
+                        </li>
+                    </ul>
+
+                    <!--Tabs Content-->
+                    <div class="tab-content msjNormalizacion" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-normalizacion-1" class="tab-pane fade active in">
+                            <form id="form-registro-contacto-nomalizacion" action="#" method="post">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Rut</label>
+                                            <input class="form-control" id="txtRutAfiNorm" type="text" :value="dataModal.rut" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class="form-group">
+                                            <label class="control-label">Nombres</label>
+                                            <input class="form-control" type="text" :value="dataModal.afiliado && dataModal.afiliado.nombres + ' ' + dataModal.afiliado.apellidos" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group has-success">
+                                            <label class="control-label" id="morfeable_monto">Monto Adeudado</label>
+                                            <div class="input-group mar-btm">
+                                                <span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+                                                <input class="form-control text-lg-right" type="text" :value="dataModal.montoAdeudado" readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label" id="labelrutempresa">Rut Empresa</label>
+                                            <input class="form-control" id="afi_empresa_rut" type="text" :value="dataModal.rutempresa" readonly="readonly">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-9" id="morf_cnvs">
+                                        <div class="form-group">
+                                            <label class="control-label" id="labelempresa">Empresa</label>
+                                            <input class="form-control" type="text" id="afi_empresa_nombre" :value="dataModal.empresa && dataModal.empresa.nombre" readonly="readonly">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="tab-normalizacion-2" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div v-for="gestion in dataModal.gestiones">
+                                    <a href="#">
+                                        <h4 class="list-group-item-heading"><strong>Gestor:</strong>{{gestion.nombreEjecutivo != undefined && gestion.nombreEjecutivo.OrdenaNombre()}}</h4>
+                                        <p class="list-group-item-text">
+                                            <strong>Fecha Gestión: </strong> {{gestion.fechaGestion != undefined && gestion.fechaGestion.toFechaHoraPrueba()}}, <strong>Fecha Prox. Gestión: </strong>
+                                            {{gestion.fechaCompromiso != undefined && gestion.fechaCompromiso.toFechaHoraPrueba()}}
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Causa basal:</strong>
+                                            {{gestion.causaBasal != undefined && gestion.causaBasal != null ? gestion.causaBasal.nombre : 'No Seleccionado'}}
+                                            <strong>Estado:</strong>{{gestion.estado.padre != undefined && gestion.estado.padre != null ? gestion.estado.padre.nombre: '------'}}
+                                            <strong>Sub-Estado:</strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado.nombre: '------'}}
+                                            <strong>Estado Cliente: </strong><span :class="gestion.estadoCliente.color"> {{gestion.estadoCliente.estado}}</span>
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Comentario:</strong> {{gestion.comentarios}}
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-normalizacion-3" class="tab-pane fade">
+
+                            <div class="alert alert-warning" id="msjContactNormalizacion" style="display:none;">
+                                <strong>Warning!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                            </div>
+
+                            <div class="row">
+                                <button type="button" id="btn-add-contac-normalizacion" class="btn btn-primary btn-xs">+</button>
+                            </div>
+                            <div class="mar-btm" style="display: none;" id="formulario-contac_normalizacion">
+                                <form id="form-registro-contacto_norm" action="#" method="post">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Tipo de Contacto</label>
+                                                    <select class="selectpicker" id="cbtippContac_norm" name="cbtippContac_norm">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Celular</option>
+                                                        <option value="2">Teléfono</option>
+                                                        <option value="3">Mail</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Clasificación de Contacto</label>
+                                                    <select class="selectpicker" id="cbClasificacionConctac_norm" name="cbClasificacionConctac_norm">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Personal</option>
+                                                        <option value="2">Comercial</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Datos de Contacto</label>
+                                                <input class="form-control" id="afi_NewContacto_norm" type="text" value="" maxlength="150" name="afi_NewContacto_norm">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" id="btGuardaContacto_norm" type="submit">Guardar Contacto</button>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <table class="table table-hover table-vcenter" style="font-size: 11px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Gestión</th>
+                                            <th>Datos Contacto Nor</th>
+                                            <th>Tipo contacto</th>
+                                            <th>Indice</th>
+                                            <th>Ultimo Contacto Valido</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bdy_datos_contactos_normalizacion"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="tab-normalizacion-4" class="tab-pane fade">
+                            <div class="table-responsive" style="overflow:scroll; height:350px;">
+                                <table class="table table-striped">
+                                    <tbody id="letable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Modal footer-->
+            <div class="modal-footer" id="mensahes-must">
+
+                <form id="new_datos-gestion_normalizacion" action="#" method="post">
+                    <div class="row esconder" style="text-align: left;">
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Estado</label>
+                                <select class="form-control" id="slEstadoModNormalizacion" v-on:change="eventoCambiaEstadoModal" v-model="modelosModal.estado">
+                                    <option value="">Seleccione</option>
+                                    <option v-for="estadoModal in filtrosModal.estadosModal" :value="estadoModal.id">{{estadoModal.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Sub Estado</label>
+                                <select class="form-control subEstado" id="subEstado" v-on:change="manejarVisibilidadCalendario" v-model="modelosModal.subEstado">
+                                    <option value="">Seleccione</option>
+                                    <option v-for="sEstadoModal in filtrosModal.subEstadosModal" :value="sEstadoModal.id">{{sEstadoModal.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Causa</label>
+                                <select class="form-control limpiar" id="slBasalModNormalizacion" v-model="modelosModal.causaBasal" disabled>
+                                    <option value="">Seleccione</option>
+                                    <option v-for="causaModal in filtrosModal.causasModal" :value="causaModal.id">{{causaModal.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" v-if="comportamientos.mostrarProximaGestion">
+                            <div class="form-group" id="fpg_normalizacion">
+                                <label class="control-label">Fecha Próxima Gestión</label>
+                                <div id="demo-dp-component_normalizacion">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" v-model="modelosModal.fechaCompromiso">
+                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row esconder" style="text-align: left;">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Comentarios</label>
+                                <textarea placeholder="Comentarios" rows="3" class="form-control" v-model="modelosModal.comentarios"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <input type="hidden" id="ges_id_asignacion_normalizacion" name="ges_id_asignacion_normalizacion" value="" />
+
+                    <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                    <button id="btGestNormalizacion" class="btn btn-primary esconder" v-on:click="handleSubmitNormalizacion" type="button">Guardar</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL PARA ACUERDO DE PAGO-->
+<div id="mdl_data_acuerdo_pago" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" id="myLargeModalLabelAcuerdo">Gestión Acuerdo de Pago ------ Estado Cliente:  <label id="estadoClieModal"></label></h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="tab-base" id="MDL_Primario_acuerdo_pago" style="margin-bottom: 0px !important;">
+                    <!--Nav Tabs-->
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-acuerdo_pago-1" id="tab_contacti_acuerdo_pago" aria-expanded="true">Contacto</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-acuerdo_pago-2" aria-expanded="false">Historial de Gestión</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" id="tabContacAcuerdo" href="#tab-acuerdo_pago-3" aria-expanded="false">Contactabilidad</a>
+                        </li>
+                    </ul>
+
+                    <!--Tabs Content-->
+                    <div class="tab-content msjAcuerdo_pago" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-acuerdo_pago-1" class="tab-pane fade active in">
+                            <form>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label">Rut</label>
+                                            <input class="form-control" id="txtRutAfiAcuerdo" type="text" :value="dataModal.rut" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <div class="form-group">
+                                            <label class="control-label">Nombres</label>
+                                            <input class="form-control" type="text" :value="dataModal.afiliado && dataModal.afiliado.nombres + ' ' + dataModal.afiliado.apellidos" readonly="readonly">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group has-success">
+                                            <label class="control-label" id="morfeable_monto">Total Deuda</label>
+                                            <div class="input-group mar-btm">
+                                                <span class="input-group-addon" style="color: #000000; background-color: rgb(255, 179, 174); border-color: #3c763d;"><i class="demo-pli-wallet-2"></i></span>
+                                                <input class="form-control text-lg-right" type="text" :value="dataModal.montoTotal !== undefined && dataModal.montoTotal.toMoney(0)" readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group has-success">
+                                            <label class="control-label" id="morfeable_monto">Total Capital</label>
+                                            <div class="input-group mar-btm">
+                                                <span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+                                                <input class="form-control text-lg-right" type="text" :value="dataModal.totalCapital !== undefined && dataModal.totalCapital.toMoney(0)" readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group has-success">
+                                            <label class="control-label" id="morfeable_monto">Oferta Pago Total</label>
+                                            <div class="input-group mar-btm">
+                                                <span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+                                                <input class="form-control text-lg-right" type="text" :value="dataModal.ofertaPagoTotal !== undefined && dataModal.ofertaPagoTotal.toMoney(0)" readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group has-success">
+                                            <label class="control-label" id="morfeable_monto">Oferta Acuerdo Pago</label>
+                                            <div class="input-group mar-btm">
+                                                <span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+                                                <input class="form-control text-lg-right" type="text" :value="dataModal.OfertaAcuerdoPago !== undefined && dataModal.OfertaAcuerdoPago.toMoney(0)" readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="tab-acuerdo_pago-2" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div v-for="gestion in dataModal.gestiones">
+                                    <a href="#">
+                                        <h4 class="list-group-item-heading"><strong>Gestor: </strong> {{gestion.nombreEjecutivo != undefined && gestion.nombreEjecutivo.OrdenaNombre()}}</h4>
+                                        <p class="list-group-item-text">
+                                            <strong>Fecha Gestión: </strong>{{gestion.fechaGestion != undefined && gestion.fechaGestion.toFechaHoraPrueba()}}, <strong>Fecha Prox. Gestión: </strong>
+                                            {{gestion.fechaCompromiso != undefined && gestion.fechaCompromiso.toFechaHoraPrueba()}}
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Causa basal: </strong>
+                                            {{gestion.causaBasal != undefined && gestion.causaBasal != null ? gestion.causaBasal.nombre : 'No Seleccionado'}}
+                                            <strong>Estado: </strong>{{gestion.estado.padre != undefined && gestion.estado.padre != null ? gestion.estado.padre.nombre: '------'}}
+                                            <strong>Sub-Estado: </strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado.nombre: '------'}}
+                                            <strong>Estado Cliente: </strong><span :class="gestion.estadoCliente.color"> {{gestion.estadoCliente.estado}}</span>
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Comentario: </strong> {{gestion.comentarios}}
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-acuerdo_pago-3" class="tab-pane fade">
+                            <div class="alert alert-warning" id="msjContactAcuerdoP" style="display:none;">
+                                <strong>Contacto!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                            </div>
+                            <div class="row">
+                                <button type="button" id="btn-add-contac_acuerdo_pago" class="btn btn-primary btn-xs">+</button>
+                            </div>
+                            <div class="mar-btm" style="display: none;" id="formulario-contac_acuerdo_pago">
+                                <form id="form-registro-contacto_acuerdo_pago" action="#" method="post">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Tipo de Contacto</label>
+                                                    <select class="selectpicker" id="cbtippContac_acuerdo_pago" name="cbtippContac_acuerdo_pago">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Celular</option>
+                                                        <option value="2">Teléfono</option>
+                                                        <option value="3">Mail</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Clasificación de Contacto</label>
+                                                    <select class="selectpicker" id="cbClasificacionConctac_acuerdo_pago" name="cbClasificacionConctac_acuerdo_pago">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Personal</option>
+                                                        <option value="2">Comercial</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Datos de Contacto</label>
+                                                <input class="form-control" id="afi_NewContacto_acuerdo_pago" type="text" value="" maxlength="150" name="afi_NewContacto_acuerdo_pago">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" id="btGuardaContacto_acuerdo_pago" type="submit">Guardar Contacto</button>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <table class="table table-hover table-vcenter" style="font-size: 11px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Gestión</th>
+                                            <th>Datos Contacto</th>
+                                            <th>Tipo contacto</th>
+                                            <th>Indice</th>
+                                            <th>Ultimo Contacto Valido</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bdy_datos_contactos_acuerdo_pago"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Modal footer-->
+            <div class="modal-footer" id="mensahes-must">
+                <form id="new_datos-gestion_acuerdo_pago" action="#" method="post">
+                    <div class="row esconder" style="text-align: left;">
+
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label class="control-label">Estado</label>
+                                <select class="form-control" v-on:change="eventoCambiaEstadoModal" v-model="modelosModal.estado" id="slEstadoAcuerdoPago">
+                                    <option value="">Seleccione</option>
+                                    <option v-for="estadoModal in filtrosModal.estadosModal" :value="estadoModal.id">{{estadoModal.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Sub Estado</label>
+                                <select class="form-control" id="slSubEstadoAcuerdoP" v-on:change="manejarVisibilidadCalendario" v-model="modelosModal.subEstado">
+                                    <option value="">Seleccione</option>
+                                    <option v-for="sEstadoModal in filtrosModal.subEstadosModal" :value="sEstadoModal.id">{{sEstadoModal.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Causa</label>
+                                <select class="form-control" v-model="modelosModal.causaBasal" id="slBasalAcuerdoPago" disabled>
+                                    <option value="">Seleccione</option>
+                                    <option v-for="causaModal in filtrosModal.causasModal" :value="causaModal.id">{{causaModal.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2" v-show="comportamientos.mostrarProximaGestion">
+                            <div class="form-group" id="fpg_acuerdo">
+                                <label class="control-label">Fec. Próx. Gestión</label>
+                                <div id="demo-dp-component_acuerdo_pago">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" v-model="modelosModal.fechaCompromiso">
+                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row esconder" style="text-align: left;">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Comentarios</label>
+                                <textarea placeholder="Comentarios" rows="3" class="form-control" v-model="modelosModal.comentarios"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="ges_id_asignacion_Acuerdo_pago" name="ges_id_asignacion_Acuerdo_pago" value="" />
+                    <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                    <button class="btn btn-primary esconder" id="btGestAcuerdoPago" v-on:click="handleSubmitAcuerdoPago" type="button">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL BENEFICIOS-->
+<div id="modal_beneficios" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header" style="background: #337ab7;">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" style="color: #f1f1f1;">GESTION BENEFICIOS</h4>
+            </div>
+            <div id="msjIgn"></div>
+            <div class="modal-body">
+                <div class="tab-base" style="margin-bottom: 0px !important;">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-gestion-bnf" aria-expanded="false">GESTION</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-historial-bnf" aria-expanded="false">HISTORIAL</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" id="tabContacBeneficio" href="#tab-contabilidad-bnf" aria-expanded="false">CONTACTABILIDAD</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-gestion-bnf" class="tab-pane fade active in">
+                            <div id="msjBnf"></div>
+                            <div class="panel-body">
+                                <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0;">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">RUT</label>
+                                                    <input class="form-control" id="txtRutBnf" type="text" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">NOMBRE</label>
+                                                    <input class="form-control" type="text" id="txtNombreBnf" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group has-success">
+                                                    <label class="control-label">OFERTA</label>
+                                                    <div class="input-group mar-btm">
+                                                        <span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+                                                        <input class="form-control text-lg-right" id="txtOfertaBnf" type="text" readonly="readonly">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">CAMPAÑA BENEFICIO</label>
+                                                    <input class="form-control" id="txtCampBenf" type="text" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="control-label">FECHA NACIMIENTO</label>
+                                                    <input class="form-control" type="text" id="txtFechaNacBenf" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">CARGAS</label>
+                                                    <input class="form-control" type="text" id="txtCargasBnf" readonly="readonly">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0;">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><strong>SEGMENTO</strong></label>
+                                                            <select id="dllSegmentoBenf" class="form-control">
+                                                                <option value="">Todos</option>
+                                                                <option value="PENSIONADOS">PENSIONADOS</option>
+                                                                <option value="PRIVADOS">PRIVADOS</option>
+                                                                <option value="PUBLICOS">PÚBLICOS</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><strong>USO REEMB. MEDICO</strong></label>
+                                                            <input class="form-control" type="text" id="txtRemMedicoBnf">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label class="control-label"><strong>USOS FARMACIA</strong></label>
+                                                            <input class="form-control" type="text" id="txtUsoFarmBnf">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; height: 200px;">
+                                            <div class="form-group pad-ver">
+                                                <label class="col-md-4 control-label"> <strong>Estado</strong> </label>
+                                                <div class="panel-body">
+                                                    <div class="col-md-10" id="dvRbEstadoBnf"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; height: 200px;">
+                                            <div class="form-group pad-ver">
+                                                <label class="col-md-5 control-label"> <strong>Sub-Estado</strong> </label>
+                                                <div class="panel-body">
+                                                    <div class="col-md-10" id="dvRbSubEstadoBnf"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0;">
+                                            <div class="form-group pad-ver">
+                                                <label class="col-md-7 control-label"><strong>Preguntas</strong> </label>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <label class="control-label">Casado (Fecha de aniversario)</label>
+                                                    </div>
+                                                    <div class="col-sm-7">
+                                                        <div id="dp-component-fecha-ani" style="width: 200px;">
+                                                            <div class="input-group date">
+                                                                <input type="text" class="form-control" id="dpFechaAniversario" name="dpFechaAniversario">
+                                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group pad-ver">
+                                                    <label class="col-md-3 control-label" style="margin-top: 9px;">Postuló a becas</label>
+                                                    <div class="col-md-9">
+                                                        <div class="radio">
+                                                            <input id="ckbox_beca_si" class="magic-radio" type="radio" name="rbBecas" value="SI">
+                                                            <label for="ckbox_beca_si" class="titulo_beca">SI</label>
+
+                                                            <input id="ckbox_beca_no" class="magic-radio" type="radio" name="rbBecas" value="NO" checked>
+                                                            <label for="ckbox_beca_no" class="titulo_beca">NO</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group pad-ver">
+                                                    <label class="col-md-3 control-label" style="margin-top: 9px;">Uso Gas</label>
+                                                    <div class="col-md-9">
+                                                        <div class="radio">
+                                                            <input id="ckbox_beca_caneria" class="magic-radio" type="radio" name="rbGas" value="CAÑERIA">
+                                                            <label for="ckbox_beca_caneria" class="titulo_gas">CAÑERIA</label>
+
+                                                            <input id="ckbox_beca_cilindro" class="magic-radio" type="radio" name="rbGas" value="CILINDRO">
+                                                            <label for="ckbox_beca_cilindro" class="titulo_gas">CILINDRO</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group pad-ver">
+                                                    <label class="col-md-3 control-label" style="margin-top: 9px;">Cía. Celular</label>
+                                                    <div class="col-md-9">
+                                                        <div class="radio">
+                                                            <input id="ckbox_entel" class="magic-radio" type="radio" name="rbentel" value="ENTEL">
+                                                            <label for="ckbox_entel" class="titulo_gas">ENTEL</label>
+                                                            <input id="ckbox_celular_otro" class="magic-radio" type="radio" name="rbentel" value="OTRO">
+                                                            <label for="ckbox_celular_otro" class="titulo_gas">OTRO</label>
+                                                        </div>
+                                                    </div>
+                                                    <div id="tipo_plan_entel" style="display:none;">
+                                                        <label class="col-md-3 control-label" style="margin-top: 9px;">Tipo Plan</label>
+                                                        <div class="col-md-9">
+                                                            <div class="radio">
+                                                                <input id="ckbox_entel_contrato" class="magic-radio" type="radio" name="rbentelTipo" value="CONTRATO">
+                                                                <label for="ckbox_entel_contrato" class="titulo_gas">Contrato</label>
+                                                                <input id="ckbox_entel_prepago" class="magic-radio" type="radio" name="rbentelTipo" value="PRE-PAGO">
+                                                                <label for="ckbox_entel_prepago" class="titulo_gas">Pre-pago</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="panel panel-bordered-success" style="border-radius: 6px; border: 1px solid #e0e0e0; height: 88px;">
+                                            <div class="form-group pad-ver">
+                                                <label class="col-md-3 control-label"><strong>Beneficios Comodin</strong></label>
+                                                <div class="col-md-9">
+                                                    <div id="dvComodin" class="checkbox" style="margin-top: 0px;">
+                                                        <input class="magic-checkbox" type="checkbox" id="comodin_Telemedicina">
+                                                        <label class="titulo_r" for="comodin_Telemedicina">Telemedicina</label>
+
+                                                        <input class="magic-checkbox" type="checkbox" id="comodin_Farmacias">
+                                                        <label class="titulo_r" for="comodin_Farmacias">Uso Farmacias</label>
+
+                                                        <input class="magic-checkbox" type="checkbox" id="despacho_m">
+                                                        <label class="titulo_r" for="despacho_m">Despacho medicamentos (RM)</label>
+
+                                                        <input class="magic-checkbox" type="checkbox" id="comodin_Alimentos">
+                                                        <label class="titulo_r" for="comodin_Alimentos">Caja Alimentos</label>
+
+                                                        <input class="magic-checkbox" type="checkbox" id="uno_salud">
+                                                        <label class="titulo_r" for="uno_salud">Campaña Uno Salud</label>
+
+                                                        <input class="magic-checkbox" type="checkbox" id="reembolso_m">
+                                                        <label class="titulo_r" for="reembolso_m">Uso reembolso médico</label>
+
+                                                        <input class="magic-checkbox" type="checkbox" id="convenios_c">
+                                                        <label class="titulo_r" for="convenios_c">Convenios (Pullman, Bionet, Ópticas Schilling, Gaes, Auditrón, Ortopedia Más Vida.)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="form-group pad-ver">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+
+                                                <textarea placeholder="Observación" rows="3" id="txtObservacionBnf" name="txtObservacionBnf" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+
+                                                <textarea placeholder="Sugerencia" rows="3" id="txtSugenrenciaBnf" name="txtSugenrenciaBnf" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+
+                                        <div class="col-sm-10">
+                                            <div class="form-group">
+                                                <div id="btComercialBnf"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <button class="btn btn-primary" style="border-radius: 8px;" v-on:click="handleSubmitGestionBnf" id="btn_save_bnf" type="submit">Guardar Gestion</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-historial-bnf" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div class="list-group" style="min-height:290px;">
+                                    <div v-for="gestion in dataModalBnf">
+                                        <a href="#">
+                                            <h4 class="list-group-item-heading"><strong>Gestor: </strong>{{gestion.rutEjecutivo != undefined && gestion.rutEjecutivo}}</h4>
+                                            <p class="list-group-item-text">
+                                                <strong>Fecha Gestión: </strong>{{gestion.fechaGestion != undefined && gestion.fechaGestion.toFechaHoraPrueba()}}
+                                            </p>
+                                            <p class="list-group-item-text">
+                                                <strong>Estado: </strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado: '------'}}
+                                                <strong>Sub-Estado: </strong>{{gestion.subEstado != undefined && gestion.subEstado != null ? gestion.subEstado: '------'}}
+                                            </p>
+                                            <p class="list-group-item-text">
+                                                <strong>Observación: </strong> {{gestion.observacion}}
+                                            </p>
+                                            <p class="list-group-item-text">
+                                                <strong>Sugerencias: </strong> {{gestion.sugerencia}}
+                                            </p>
+                                        </a>
+                                        <hr />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tab-contabilidad-bnf" class="tab-pane fade">
+                            <div class="alert alert-warning" id="msjContactBeneficio" style="display:none;">
+                                <strong>Contacto!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                            </div>
+                            <div class="row">
+                                <button type="button" id="btn-add-contac_beneficio" class="btn btn-primary btn-xs">+</button>
+                            </div>
+                            <div class="mar-btm" style="display: none;" id="formulario-contac_beneficio">
+                                <form id="form-registro-bnf" action="#" method="post">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Tipo de Contacto</label>
+                                                    <select class="selectpicker" id="cbtippContac_beneficio" name="cbtippContac_beneficio">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Celular</option>
+                                                        <option value="2">Teléfono</option>
+                                                        <option value="3">Mail</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Clasificación de Contacto</label>
+                                                    <select class="selectpicker" id="cbClasificacionConctac_beneficio" name="cbClasificacionConctac_beneficio">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Personal</option>
+                                                        <option value="2">Comercial</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Datos de Contacto</label>
+                                                <input class="form-control" id="afi_NewContacto_beneficio" type="text" value="" maxlength="150" name="afi_NewContacto_beneficio">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" id="btGuardaContacto_beneficio" type="submit">Guardar Contacto</button>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <table class="table table-hover table-vcenter" style="font-size: 11px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Gestión</th>
+                                            <th>Datos Contacto</th>
+                                            <th>Tipo contacto</th>
+                                            <th>Indice</th>
+                                            <th>Ultimo Contacto Valido</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bdy_datos_contactos_beneficio"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--MODAL PARA COBRANZA-->
+<div id="mdl_data_cobranza" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" id="myLargeModalLabel">Gestión Cobranza </h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="tab-base" id="MDL_Primario_cobranza" style="margin-bottom: 0px !important;">
+                    <!--Nav Tabs-->
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-cobranza-1" id="tab_contacti_cobranza" aria-expanded="true">Contacto</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-cobranza-2" aria-expanded="false">Historial de Gestión</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" id="tabNormContact" href="#tab-cobranza-3" aria-expanded="false">Contactabilidad</a>
+                        </li>
+                        <li class="" style="display:none;">
+                            <a data-toggle="tab" href="#tab-normalizacion-4" aria-expanded="false">Filtros</a>
+                        </li>
+                    </ul>
+
+                    <!--Tabs Content-->
+                    <div class="tab-content msjCobranza" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-cobranza-1" class="tab-pane fade active in">
+                            <form id="form-registro-contacto-cobranza" action="#" method="post">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Rut</label>
+                                            <input class="form-control" id="txtRutAfiNormcobranza" type="text" :value="dataModal.rut" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class="form-group">
+                                            <label class="control-label">Nombres</label>
+                                            <input class="form-control" type="text" :value="dataModal.afiliado && dataModal.afiliado.nombres + ' ' + dataModal.afiliado.apellidos" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group has-success">
+                                            <label class="control-label" id="morfeable_monto">Monto Adeudado</label>
+                                            <div class="input-group mar-btm">
+                                                <span class="input-group-addon"><i class="demo-pli-wallet-2"></i></span>
+                                                <input class="form-control text-lg-right" type="text" :value="dataModal.montoAdeudado" readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="control-label" id="labelrutempresa">Rut Empresa</label>
+                                            <input class="form-control" id="afi_empresa_rut" type="text" :value="dataModal.rutempresa" readonly="readonly">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-9" id="morf_cnvs">
+                                        <div class="form-group">
+                                            <label class="control-label" id="labelempresa">Empresa</label>
+                                            <input class="form-control" type="text" id="afi_empresa_nombre" :value="dataModal.empresa && dataModal.empresa.nombre" readonly="readonly">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="tab-cobranza-2" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div v-for="gestion in dataModal.gestiones">
+                                    <a href="#">
+                                        <h4 class="list-group-item-heading"><strong>Gestor:</strong>{{gestion.nombreEjecutivo != undefined && gestion.nombreEjecutivo.OrdenaNombre()}}</h4>
+                                        <p class="list-group-item-text">
+                                            <strong>Fecha Gestión: </strong> {{gestion.fechaGestion != undefined && gestion.fechaGestion.toFechaHoraPrueba()}}, <strong>Fecha Prox. Gestión: </strong>
+                                            
+                                        </p>
+                                        <p class="list-group-item-text">
+                                                                                   </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Comentario:</strong> {{gestion.comentarios}}
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-cobranza-3" class="tab-pane fade">
+
+                            <div class="alert alert-warning" id="msjContactNormalizacion" style="display:none;">
+                                <strong>Warning!</strong> Marque el numero de contacto al cual se comunico o ingrese un nuevo contacto.
+                            </div>
+
+                            <div class="row">
+                                <button type="button" id="btn-add-contac-normalizacion" class="btn btn-primary btn-xs">+</button>
+                            </div>
+                            <div class="mar-btm" style="display: none;" id="formulario-contac_normalizacion">
+                                <form id="form-registro-contacto_norm" action="#" method="post">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Tipo de Contacto</label>
+                                                    <select class="selectpicker" id="cbtippContac_norm" name="cbtippContac_norm">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Celular</option>
+                                                        <option value="2">Teléfono</option>
+                                                        <option value="3">Mail</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Clasificación de Contacto</label>
+                                                    <select class="selectpicker" id="cbClasificacionConctac_norm" name="cbClasificacionConctac_norm">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Personal</option>
+                                                        <option value="2">Comercial</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Datos de Contacto</label>
+                                                <input class="form-control" id="afi_NewContacto_norm" type="text" value="" maxlength="150" name="afi_NewContacto_norm">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" id="btGuardaContacto_norm" type="submit">Guardar Contacto</button>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <table class="table table-hover table-vcenter" style="font-size: 11px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Gestión</th>
+                                            <th>Datos Contacto Nor</th>
+                                            <th>Tipo contacto</th>
+                                            <th>Indice</th>
+                                            <th>Ultimo Contacto Valido</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bdy_datos_contactos_cobranza"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="tab-cobranza-4" class="tab-pane fade">
+                            <div class="table-responsive" style="overflow:scroll; height:350px;">
+                                <table class="table table-striped">
+                                    <tbody id="letable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Modal footer-->
+            <div class="modal-footer" id="mensahes-must">
+
+                <form id="new_datos-gestion_cobranza" action="#" method="post">
+                    <div class="row esconder" style="text-align: left;">
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Estado</label>
+                                <select class="form-control" id="slEstadoModcobranza" v-on:change="eventoCambiaEstadoModal">
+                                    <option value="">Seleccione</option>
+                                    <option v-for="estadoModal in filtrosModal.estadosModal" :value="estadoModal.id">{{estadoModal.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Sub Estado</label>
+                                <select class="form-control subEstadoCobranza" id="subEstadoCobranza" v-on:change="manejarVisibilidadCalendarioCobranza" v-model="modelosModal.subEstado">
+                                    <option value="">Seleccione</option>
+                                    <option v-for="sEstadoModal in filtrosModal.subEstadosModal" :value="sEstadoModal.id">{{sEstadoModal.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Causa</label>
+                                <select class="form-control limpiar" id="slBasalModcobranza" v-model="modelosModal.causaBasal" disabled>
+                                    <option value="">Seleccione</option>
+                                    <option v-for="causaModal in filtrosModal.causasModal" :value="causaModal.id">{{causaModal.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" v-if="comportamientos.mostrarProximaGestionCobranza">
+                            <div class="form-group" id="fpg_cobranza">
+                                <label class="control-label">Fecha Próxima Gestión</label>
+                                <div id="demo-dp-component_cobranza">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" v-model="modelosModal.fechaCompromiso">
+                                        <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row esconder" style="text-align: left;">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Comentarios</label>
+                                <textarea placeholder="Comentarios" rows="3" class="form-control" v-model="modelosModal.comentarios"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <input type="hidden" id="ges_id_asignacion_normalizacion" name="ges_id_asignacion_normalizacion" value="" />
+
+                    <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                    <button id="btGestCobranza" class="btn btn-primary esconder" v-on:click="handleSubmitcobranza" type="button">Guardar</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section script{
+
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/js.App/gestion.min.js?g=@Guid.NewGuid().ToString()"></script>
+    @*<script src="~/Assets/js.App/printThis.js"></script>
+        <script src="~/Assets/js.App/src/index.js"></script>*@
+
+
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/js.App/printThis.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
+    <script src="~/Assets/js.App/src/acuerdo_pagos.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/js.App/src/index.js?g=@Guid.NewGuid().ToString()"></script>
+    <!--<script src="~/Assets/js.App/gestion/index.js?v=@Html.Raw(ViewBag.hash)"></script>-->
+    <script src="~/Assets/js.App/src/normalizacion.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/js.App/src/seguro_cesantia.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/js.App/src/pensionados.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/js.App/src/ign.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/js.App/src/beneficios.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/js.App/src/venta-remota.js?g=@Guid.NewGuid().ToString()"></script>
+    <script src="~/Assets/js.App/src/cobranza.js?g=@Guid.NewGuid().ToString()"></script>
+}
+

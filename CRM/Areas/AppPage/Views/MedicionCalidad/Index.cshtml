@@ -1,0 +1,358 @@
+﻿@{
+
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/morris-js/morris.min.css" rel="stylesheet">
+
+<div id="page-content">
+    <div class="tab-base">
+        <!--Nav Tabs-->
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a data-toggle="tab" href="#tab-evaluar" aria-expanded="true" id="tab_diferimiento" class="tab-principal">EVALUAR</a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#tab-mis-evaluaciones" aria-expanded="true" id="tab_busqueda" class="tab-principal" v-on:click="cargaMisEvaluaciones">MIS EVALUACIONES</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="tab-evaluar" class="tab-pane fade active in">
+                <div class="panel" style="border-radius: 7px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">INICIO EVALUACIÓN</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="msjCalidad"></div>
+                        <div class="row">
+                            <div class="col-sm-3 text-xs-center">
+                                <div class="form-group">
+                                    <label class="control-label">SUCURSAL</label>
+                                    <select class="form-control" id="dllOficina" name="dllOficina" v-on:change="eventoCambOficina" v-model="modelos.oficina">
+                                        <option value="">Seleccione...</option>
+                                        <option v-for="oficinaCalidad in filtros.oficina" :value="oficinaCalidad.Cod_Oficina">{{oficinaCalidad.Oficina}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 text-xs-center">
+                                <div class="form-groupsubEstadosIgn">
+                                    <label class="control-label">EJECUTIVO</label>
+                                    <select class="form-control" id="dllOEjecutivo" name="dllOEjecutivo" v-model="modelos.ejecutivos">
+                                        <option value="">Seleccione...</option>
+                                        <option v-for="ejeCalidad in filtros.ejecutivos" :value="ejeCalidad.Rut">{{ejeCalidad.Nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group" id="fpg_acuerdo">
+                                    <label class="control-label">FECHA EVALUACIÓN</label>
+                                    <div id="demo-dp-component_evaluacion">
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control" id="dpfechaEva">
+                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-3 text-xs-center">
+                                <div class="form-group">
+                                    <label class="control-label">RUT AFILIADO</label>
+                                    <input id="txtRutAfi" type="text" placeholder="Ej. 12345678-0" maxlength="10" autocomplete="off" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-3 text-xs-center">
+                                <div class="form-groupsubEstadosIgn">
+                                    <label class="control-label">FONO AFILIADO</label>
+                                    <input id="txtFonoAfi" type="text"  maxlength="13" autocomplete="off" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-1 text-xs-center">
+                                <div class="form-group">
+                                    <label class="control-label"></label>
+                                    <button class="btn btn-primary btn-rounded" v-on:click="handleSubmitIniciaEvaluacion" id="btnInicia">INICIAR LA EVALUACIÓN</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="contPreguntas" style="display:none;">
+                    <div class="panel" style="border-radius: 7px;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Preguntas Autenticación</h4>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 300px;">ACCIONES</th>
+                                        <th style="width: 200px;">EJEMPLO</th>
+                                        <th>PROCESO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="pregunta_ in preguntas_medicion">
+                                        <td>
+                                            <p><b>{{ pregunta_.accion }}</b></p>
+                                        </td>
+                                        <td>
+                                            <small>{{ pregunta_.ejemplo }}</small>
+                                        </td>
+                                        <td>
+                                            <p><b>{{ pregunta_.proceso }}</b></p>
+                                        </td>
+                                        <td>
+                                            <div class="radio">
+                                                <input :id="'presente' + pregunta_.id" class="magic-radio clear_rb" type="radio" :name="pregunta_.id" value="PRESENTE" v-on:change="onAuthenticationItemChange(pregunta_.proceso, pregunta_.id, pregunta_.id_pregunta)" />
+                                                <label :for="'presente' + pregunta_.id" style="color: red;">PRESENTE</label>
+
+                                                <input :id="'ocacion' + pregunta_.id" class="magic-radio clear_rb" type="radio" :name="pregunta_.id" value="EN OCASIONES" v-on:change="onAuthenticationItemChange(pregunta_.proceso, pregunta_.id, pregunta_.id_pregunta)" />
+                                                <label :for="'ocacion' + pregunta_.id" style="color: red;">EN OCASIONES</label>
+
+                                                <input :id="'ausente' + pregunta_.id" class="magic-radio clear_rb" type="radio" :name="pregunta_.id" value="AUSENTE" v-on:change="onAuthenticationItemChange(pregunta_.proceso, pregunta_.id, pregunta_.id_pregunta)" />
+                                                <label :for="'ausente' + pregunta_.id" style="color: red;">AUSENTE</label>
+
+                                                <input :id="'noAplica' + pregunta_.id" class="magic-radio clear_rb" type="radio" :name="pregunta_.id" value="NO APLICA" v-on:change="onAuthenticationItemChange(pregunta_.proceso, pregunta_.id, pregunta_.id_pregunta)" />
+                                                <label :for="'noAplica' + pregunta_.id" style="color: red;">NO APLICA</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel" style="border-radius: 7px;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">TRANSVERSAL:<small> Es lo que debe estar presente en toda la llamada</small></h4>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 300px;">ACCIONES</th>
+                                        <th style="width: 200px;">EJEMPLO</th>
+                                        <th>PROCESO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="pregunta_t in preguntas_transversal">
+                                        <td>
+                                            <p><b>{{ pregunta_t.accion }}</b></p>
+                                        </td>
+                                        <td>
+                                            <small>{{ pregunta_t.ejemplo }}</small>
+                                        </td>
+                                        <td>
+                                            <p><b>{{ pregunta_t.proceso }}</b></p>
+                                        </td>
+                                        <td>
+                                            <div class="radio">
+                                                <input :id="'presente_t' + pregunta_t.id" class="magic-radio clear_rb" type="radio" :name="pregunta_t.id + 't'" value="PRESENTE" v-on:change="onAuthenticationItemChange(pregunta_t.proceso, pregunta_t.id + 't', pregunta_t.id_pregunta)" />
+                                                <label :for="'presente_t' + pregunta_t.id" style="color: red;">PRESENTE</label>
+
+                                                <input :id="'ocacion_t' + pregunta_t.id" class="magic-radio clear_rb" type="radio" :name="pregunta_t.id + 't'" value="EN OCASIONES" v-on:change="onAuthenticationItemChange(pregunta_t.proceso, pregunta_t.id + 't', pregunta_t.id_pregunta)" />
+                                                <label :for="'ocacion_t' + pregunta_t.id" style="color: red;">EN OCASIONES</label>
+
+                                                <input :id="'ausente_t' + pregunta_t.id" class="magic-radio clear_rb" type="radio" :name="pregunta_t.id + 't'" value="AUSENTE" v-on:change="onAuthenticationItemChange(pregunta_t.proceso, pregunta_t.id + 't', pregunta_t.id_pregunta)" />
+                                                <label :for="'ausente_t' + pregunta_t.id" style="color: red;">AUSENTE</label>
+
+                                                <input :id="'noAplica_t' + pregunta_t.id" class="magic-radio clear_rb" type="radio" :name="pregunta_t.id + 't'" value="NO APLICA" v-on:change="onAuthenticationItemChange(pregunta_t.proceso, pregunta_t.id + 't', pregunta_t.id_pregunta)" />
+                                                <label :for="'noAplica_t' + pregunta_t.id" style="color: red;">NO APLICA</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-success btn-rounded" v-on:click="handleSubmitGrabaEvaluacion">GUARDAR EVALUACIÓN</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="dvEval" style="display:none;">
+                    <div class="col-lg-6">
+                        <div class="panel" style="border-radius: 7px;">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">RESULTADO EVALUCIÓN</h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item"><span class="badge badge-primary" style=" width: 50px;">{{datos_eva.cercania != undefined && datos_eva.cercania != null ? datos_eva.cercania: '0'}}</span>Cercanía</li>
+                                    <li class="list-group-item"><span class="badge badge-primary" style=" width: 50px;">{{datos_eva.exploracion != undefined && datos_eva.exploracion != null ? datos_eva.exploracion: '0'}}</span>Exploración</li>
+                                    <li class="list-group-item"><span class="badge badge-primary" style=" width: 50px;">{{datos_eva.entrega != undefined && datos_eva.entrega != null ? datos_eva.entrega: '0'}}</span>Entrega de buenas noticias</li>
+                                    <li class="list-group-item"><span class="badge badge-primary" style=" width: 50px;">{{datos_eva.objeciones != undefined && datos_eva.objeciones != null ? datos_eva.objeciones: '0'}}</span>Manejo objeciones</li>
+                                    <li class="list-group-item"><span class="badge badge-primary" style=" width: 50px;">{{datos_eva.cierre != undefined && datos_eva.cierre != null ? datos_eva.cierre: '0'}}</span>Cierre</li>
+                                    <li class="list-group-item"><span class="badge badge-primary" style=" width: 50px;">{{datos_eva.efectividad != undefined && datos_eva.efectividad != null ? datos_eva.efectividad: '0'}}</span>Efectividad</li>
+                                </ul>
+                                <ul class="list-group">
+                                    <li class="list-group-item"><span class="badge badge-success" style=" width: 50px;">{{datos_eva.promedio != undefined && datos_eva.promedio != null ? datos_eva.promedio: '0'}}</span>Promedio General</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="panel" style="border-radius: 7px;">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">GRAFICO EVALUCIÓN</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="demo-morris-bar" style="height:212px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="tab-mis-evaluaciones" class="tab-pane fade">
+
+                <div class="panel" style="border-radius: 7px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">FILTROS</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="msjCalidad"></div>
+                        <div class="row">
+                            <div class="col-sm-3 text-xs-center">
+                                <div class="form-group">
+                                    <label class="control-label">SUCURSAL</label>
+                                    <select class="form-control" id="dllOficinaF" name="dllOficinaF" v-on:change="eventoCambOficinaF" v-model="modelos.oficinaF">
+                                        <option value="">Todos...</option>
+                                        <option v-for="oficinaCalidad in filtros.oficinaF" :value="oficinaCalidad.Cod_Oficina">{{oficinaCalidad.Oficina}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 text-xs-center">
+                                <div class="form-groupsubEstadosIgn">
+                                    <label class="control-label">EJECUTIVO</label>
+                                    <select class="form-control" id="dllOEjecutivoF" name="dllOEjecutivoF" v-model="modelos.ejecutivosF">
+                                        <option value="">Todos...</option>
+                                        <option v-for="ejeCalidad in filtros.ejecutivosF" :value="ejeCalidad.Rut">{{ejeCalidad.Nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group" id="fpg_acuerdo">
+                                    <label class="control-label">FECHA EVALUACIÓN</label>
+                                    <div id="demo-dp-component_evaluacion">
+                                        <div class="input-group date">
+                                            <input type="text" class="form-control" id="dpfechaEvaF">
+                                            <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-1 text-xs-center">
+                                <div class="form-group">
+                                    <label class="control-label"></label>
+                                    <button class="btn btn-primary btn-rounded" v-on:click="cargaMisEvaluaciones">FILTRAR</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel" style="border-radius: 7px;">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">DATOS</h3>
+                            </div>
+                            <div class="panel-body">
+                                <table data-toggle="table"
+                                       data-sort-name="id"
+                                       data-page-list="[]"
+                                       data-page-size="50"
+                                       data-search="false"
+                                       data-pagination="true" id="tblEvaluaciones" style="font-size: 12px">
+                                    <thead>
+                                        <tr>
+                                            <th data-field="rut_evaluado" data-sortable="true" data-formatter="formaterRut">RUT</th>
+                                            <th data-field="nombre_evaluado" data-sortable="true">NOMBRE</th>
+                                            <th data-field="fecha_evaluacion" data-sortable="true">FECHA EVALUACION</th>
+                                            <th data-field="promedio" data-sortable="true">PROMEDIO EVALUACION</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal_evaluacion" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="border-radius: 9px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                    <h4 class="modal-title" style="color: #337ab7;">EJECUTIVO: {{datos_evaM.nombre_evaluado}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="panel" style="border-radius: 7px;">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">RESULTADO EVALUACIÓN</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><span class="badge badge-primary" style=" width: 50px;">{{datos_evaM.cercania}}</span>Cercanía</li>
+                                        <li class="list-group-item"><span class="badge badge-primary" style=" width: 50px;">{{datos_evaM.exploracion}}</span>Exploración</li>
+                                        <li class="list-group-item"><span class="badge badge-primary" style=" width: 50px;">{{datos_evaM.entrega}}</span>Entrega de buenas noticias</li>
+                                        <li class="list-group-item"><span class="badge badge-primary" style=" width: 50px;">{{datos_evaM.objeciones}}</span>Manejo objeciones</li>
+                                        <li class="list-group-item"><span class="badge badge-primary" style=" width: 50px;">{{datos_evaM.cierre}}</span>Cierre</li>
+                                        <li class="list-group-item"><span class="badge badge-primary" style=" width: 50px;">{{datos_evaM.efectividad}}</span>Efectividad</li>
+                                    </ul>
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><span class="badge badge-success" style=" width: 50px;">{{datos_evaM.promedio}}</span>Promedio General</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="panel" style="border-radius: 7px;">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">GRAFICO EVALUACIÓN</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div id="demo-morris-bar2" style="height:212px"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section script{
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/select2/js/select2.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+    <script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
+    <script src="~/Assets/plugins/morris-js/morris.min.js"></script>
+    <script src="~/Assets/plugins/morris-js/raphael-js/raphael.min.js"></script>
+    <script src="~/Assets/js.App/src/calidad.js?g=@Guid.NewGuid().ToString()"></script>
+
+}

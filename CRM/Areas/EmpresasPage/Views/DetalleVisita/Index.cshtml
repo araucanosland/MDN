@@ -1,0 +1,658 @@
+﻿
+@{
+    Layout = "~/Areas/EmpresasPage/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<h1 id="tituloEmp">Detalle de Entrevistas</h1>
+<div id="page-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel" style="border-radius: 6px;">
+                <div class="panel-body">
+                    <a href="javascript:history.back()" class="btn btn-default btn-rounded"><i class="ion-arrow-left-a"></i>  Volver a ficha empresa</a>
+                    <div class="text-right no-print" style="margin-top: -31px;">
+                        <a data-target='#demo-lg-modal-entrevista' data-toggle='modal' class='btn btn-default btn-rounded'><i class='demo-psi-receipt-4'></i> Nuevo Detalle Entrevista</a>
+                    </div>
+                    <br />
+                    <br />
+                    <h3 class="text-bold text-main mar-no" style="color: #b3b3b3">Datos de Entrevista</h3>
+                    <br />
+                    <div class="row" id="divCabecera">
+                    </div>
+                    <h3 class="text-bold text-main mar-no" style="color: #b3b3b3">Detalle Entrevista</h3>
+                    <br />
+                    <div id="divDetalleEntrevista">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*MODAL DE INSERTA VISITAS*@
+<div id="demo-lg-modal-entrevista" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 13px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title"><i class="demo-psi-receipt-4 icon-lg" style="margin-left: 10px;"></i>    Ingreso Detalle Entrevista</h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-horizontal" style="display: block;" id="divEntrevista">
+                    <form id="form_entrevista_detalle" action="#" method="post">
+                        <div class="panel panel-bordered-dark" style="border-radius: 8px; border: 1px solid #e5e5e5;">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Tema</label>
+                                        <select id="slTema" class="form-control" name="slTema"></select>
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Sub-Tema</label>
+                                        <select id="slSubTema" class="form-control" name="slSubTema"></select>
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Semaforo Relación</label>
+                                        <select id="slSemaforo" name="slSemaforo" class="form-control" tabindex="-98">
+                                            <option value="">Seleccione</option>
+                                            <option data-content="<span class=&quot;badge badge-success&quot; style='width: 100%; background-color: #8bc34a;'>Verde</span>" value="Verde">Verde</option>
+                                            <option data-content="<span class=&quot;badge badge-warning&quot; style='width: 100%; background-color: #ffb300;'>Amarillo</span>" value="Amarillo">Amarillo</option>
+                                            <option data-content="<span class=&quot;badge badge-danger&quot; style='width: 100%; background-color: #f44336;'>Rojo</span>" value="Rojo">Rojo</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Compromiso</label>
+                                        <div class="radio">
+                                            <input id="ckCompromisoSI" class="magic-radio" type="radio" name="groupCkeckCompromiso" value='SI'>
+                                            <label for="ckCompromisoSI">SI</label>
+                                            <input id="ckCompromisoNO" class="magic-radio" type="radio" name="groupCkeckCompromiso" value='NO' checked>
+                                            <label for="ckCompromisoNO">NO</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mar-btm" style="display: none" id="divFechaResul">
+                                        <label class="control-label">Fecha de Resolución</label>
+                                        <div id="demo-dp-component">
+                                            <div class="input-group date">
+                                                <input class="form-control" type="text" id="FechaResolucion" name="FechaResolucion">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Alerta</label>
+                                        <div class="radio">
+                                            <input id="ckAlertaSI" class="magic-radio" type="radio" name="groupCkeckAlerta" value='SI'>
+                                            <label for="ckAlertaSI">SI</label>
+                                            <input id="ckAlertaNO" class="magic-radio" type="radio" name="groupCkeckAlerta" value='NO' checked>
+                                            <label for="ckAlertaNO">NO</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mar-btm">
+                                        <textarea placeholder="Comentarios" rows="4" class="form-control" id="comentarioDetalle" name="comentarioDetalle"></textarea>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-primary btn-icon btn-rounded" id="btGuardaDetalleEntrevista">Guardar Detalle Entrevista<i class="demo-psi-add icon-lg" style="margin-left: 10px;"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*MODAL DE ACTUALIZA VISITAS*@
+<div id="demo-lg-modal-entrevista_actualiza" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 13px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title"><i class="demo-psi-receipt-4 icon-lg" style="margin-left: 10px;"></i>    Actualiza Detalle Entrevista</h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-horizontal" style="display: block;" id="divEntrevista">
+                    <form id="form_entrevista_detalle_actualiza" action="#" method="post">
+                        <div class="panel panel-bordered-dark" style="border-radius: 8px; border: 1px solid #e5e5e5;">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Tema</label>
+                                        <select id="slTema_actualiza" class="form-control" name="slTema_actualiza">
+                                            <option value="">Seleccione</option>
+                                            <option value="Creditos">Creditos</option>
+                                            <option value="Licencia Medicas">Licencia Medicas</option>
+                                            <option value="Asig Familiar">Asig. Familiar</option>
+                                            <option value="Seguros">Seguros</option>
+                                            <option value="Cheques">Cheques</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Sub-Tema</label>
+                                        <select id="slSubTema_actualiza" class="form-control" name="slSubTema_actualiza"></select>
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Semaforo Relación</label>
+                                        <select id="slSemaforo_actualiza" name="slSemaforo_actualiza" class="form-control" tabindex="-98">
+                                            <option value="">Seleccione</option>
+                                            <option data-content="<span class=&quot;badge badge-success&quot; style='width: 100%; background-color: #8bc34a;'>Verde</span>" value="Verde">Verde</option>
+                                            <option data-content="<span class=&quot;badge badge-warning&quot; style='width: 100%; background-color: #ffb300;'>Amarillo</span>" value="Amarillo">Amarillo</option>
+                                            <option data-content="<span class=&quot;badge badge-danger&quot; style='width: 100%; background-color: #f44336;'>Rojo</span>" value="Rojo">Rojo</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Compromiso</label>
+                                        <div class="radio">
+                                            <input id="ckCompromisoSI_actualiza" class="magic-radio" type="radio" name="groupCkeckCompromiso_actualiza" value='SI'>
+                                            <label for="ckCompromisoSI_actualiza">SI</label>
+                                            <input id="ckCompromisoNO_actualiza" class="magic-radio" type="radio" name="groupCkeckCompromiso_actualiza" value='NO' checked>
+                                            <label for="ckCompromisoNO_actualiza">NO</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mar-btm" style="display: none" id="divFechaResul_actualiza">
+                                        <label class="control-label">Fecha de Resolución</label>
+                                        <div id="demo-dp-component">
+                                            <div class="input-group date">
+                                                <input class="form-control" type="text" id="FechaResolucion_actualiza" name="FechaResolucion_actualiza">
+                                                <span class="input-group-addon"><i class="demo-pli-calendar-4"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mar-btm">
+                                        <label class="control-label">Alerta</label>
+                                        <div class="radio">
+                                            <input id="ckAlertaSI_actualiza" class="magic-radio" type="radio" name="groupCkeckAlerta_actualiza" value='SI'>
+                                            <label for="ckAlertaSI_actualiza">SI</label>
+                                            <input id="ckAlertaNO_actualiza" class="magic-radio" type="radio" name="groupCkeckAlerta_actualiza" value='NO' checked>
+                                            <label for="ckAlertaNO_actualiza">NO</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mar-btm">
+                                        <textarea placeholder="Comentarios" rows="4" class="form-control" id="comentarioDetalle_actualiza" name="comentarioDetalle_actualiza"></textarea>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-primary btn-icon btn-rounded" id="btGuardaDetalleEntrevista_actualiza">Actualiza Detalle Entrevista<i class="demo-psi-add icon-lg" style="margin-left: 10px;"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section script{
+
+    <script type="text/javascript">
+        var IdEtvta = httpGet('IdEntrevista');
+        var compromiso = 0;
+        var alerta = 0;
+        var compromiso_actualiza = 0;
+        var alerta_actualiza = 0;
+        var idDetEntrevista = 0;
+        var idDEnt = 0;
+
+        $("#tituloEmp").css('font-size', '20px').css('color', '#b3b3b3').css('margin-left', '20px')
+        $('#demo-dp-component .input-group.date').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            language: "es"
+        });
+        $('#FechaResolucion').val('01-01-1900')
+
+
+        $("#divCabecera").html("");
+        $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-cabecera-vista", { IdEntrevista: IdEtvta }, function (menus) {
+            $("#divCabecera").addClass('panel panel-bordered-dark').css('border-radius', '6px').css('border', '1px solid #b3b3b3').css('background', 'whitesmoke')
+                .append(
+                    $("<div>").addClass('row panel-body')
+                        .append(
+                            $("<div>").addClass('row')
+                                .append($("<div class='col-md-8 mar-btm'><strong>Fecha: </strong><label class='control-label'>" + menus[0].FechaEntrevista + "</label></div>"))
+                                .append($("<div class='col-md-4 mar-btm'><strong>Ingresado por: </strong><label class='control-label'>" + menus[0].NombreEjecutivo.OrdenaNombreCompleto() + "</label></div>"))
+                        ).append("<hr style='margin-top: 1px;'/>")
+                        .append($("<div class='col-md-3 mar-btm'><strong>Nombre Contacto</strong><br /><label class='control-label'>" + menus[0].NombreContacto + "</label></div>"))
+                        .append($("<div class='col-md-3 mar-btm'><strong>Cargo</strong><br /><label class='control-label'>" + menus[0].Cargo + "</label></div>"))
+                        .append($("<div class='col-md-3 mar-btm'><strong>Fono Contacto</strong><br /><label class='control-label'>" + menus[0].TelefonoContacto + "</label></div>"))
+                        .append($("<div class='col-md-3 mar-btm'><strong>Mail Contacto</strong><br /><label class='control-label'>" + menus[0].CorreoContacto + "</label></div>"))
+                        .append($("<div class='col-md-3 mar-btm'><strong>Estamento</strong><br /><label class='control-label'>" + menus[0].Estamento + "</label></div>"))
+                        .append($("<div class='col-md-3 mar-btm'><strong>Comentarios</strong><br /><p>" + menus[0].Comentarios + "</p> </div>"))
+                )
+        });
+
+        var cargador = {
+            CargaDetalleEntrevista: function () {
+
+                $.ajaxSetup({
+                    async: false
+                });
+                $("#divDetalleEntrevista").html("");
+                $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-detalle-cabecera-vista", { IdEntrevista: IdEtvta }, function (menus) {
+                    $.each(menus, function (i, e) {
+                        if (e.FlagActualizacion == 0) {
+                            var semaforo = "";
+                            var comp = 0;
+                            var aler = 0;
+                            var historial = "";
+                            var headTable = "";
+                            var TablaHist = "";
+                            var bodyHist = "";
+                            var fechaCompromiso = e.FechaResolucion
+                            if (e.Semaforo == 'Verde') {
+                                semaforo = "<div class='col-md-4 mar-btm'><strong>Semaforo Relación: </strong><label class='control-label'><span class='badge badge-success' style='width: 120px;'>" + e.Semaforo + "</span></label> </div>"
+                            }
+                            else if (e.Semaforo == 'Amarillo') {
+                                semaforo = "<div class='col-md-4 mar-btm'><strong>Semaforo Relación: </strong><label class='control-label'><span class='badge badge-warning' style='width: 120px;'>" + e.Semaforo + "</span></label> </div>"
+                            }
+                            else if (e.Semaforo == 'Rojo') {
+                                semaforo = "<div class='col-md-4 mar-btm'><strong>Semaforo Relación: </strong><label class='control-label'><span class='badge badge-danger' style='width: 120px;'>" + e.Semaforo + "</span></label> </div>"
+                            }
+
+                            if (e.Compromiso == 1) {
+                                comp = 'SI'
+                            }
+                            else {
+                                comp = 'NO'
+                                fechaCompromiso = '----------------------------'
+                            }
+                            if (e.Alerta == 1) {
+                                aler = "<span class='pull-center badge badge-success' style='width: 40px;'>SI</span>"
+                            }
+                            else {
+                                aler = "<span class='pull-center badge badge-warning' style='width: 40px;'>NO</span>"
+                            }
+
+
+                            headTable = $('<thead>').append($('<tr>')
+                                .append($('<th>').append('Tema'))
+                                .append($('<th>').append('Sub-Tema'))
+                                .append($('<th>').append('Compromiso'))
+                                .append($('<th>').append('F. Resolución'))
+                                .append($('<th>').append('Alerta'))
+                                .append($('<th>').append('Comentarios'))
+                                .append($('<th>').append('Ejecutivo Modificante'))
+                                .append($('<th>').append('Fecha Modificación')))
+
+                            $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-detalle-entrevista-historial", { IdDetalleEntrevista: e.IdDetalleEntrevista }, function (menusX) {
+                                $.each(menusX, function (ix, ex) {
+                                    var alert = 0;
+                                    var compX = 0;
+                                    var fechaCompromiso = ex.FechaResolucion.toFecha()
+                                    if (ex.Compromiso == 1) {
+                                        compX = 'SI'
+                                    }
+                                    else {
+                                        compX = 'NO'
+                                        fechaCompromiso = '------'
+                                    }
+
+                                    if (ex.Alerta == 1) {
+                                        alert = "<span class='pull-center badge badge-success' style='width: 40px;'>SI</span>"
+                                    }
+                                    else {
+                                        alert = "<span class='pull-center badge badge-warning' style='width: 40px;'>NO</span>"
+                                    }
+
+                                    bodyHist += "<tr><td>" + ex.Tema + "</td><td>" + ex.SubTema + "</td><td>" + compX + "</td><td>" + fechaCompromiso + "</td><td>" + alert + "</td><td>" + ex.Comentarios + "</td><td>" + ex.NombreEjecutivo.OrdenaNombreCompleto() + "</td><td>" + ex.FechaIngreso.toFechaHoraPrueba() + "</td></tr>'"
+                                });
+
+                            });
+
+                            TablaHist = $("<table style='margin-top: 30px; font-size: 10px;'>").addClass('table table-bordered table-hover toggle-circle table-striped').append(headTable).append($('<tbody>').append(bodyHist))
+
+                            historial = $('<div>').addClass('panel panel-bordered-dark col-md-12 mar-btm').css('border-radius', '6px').css('border', '1px solid #b3b3b3').append(
+                                $('<dl>').append($('<dt>').css('margin-top', '9px').append('Desplegar Historial de Modificación')).append($('<dd>').append(TablaHist)))
+
+                            $("#divDetalleEntrevista").addClass('panel panel-bordered-dark').css('border-radius', '6px').css('border', '1px solid #b3b3b3')
+                                .append(
+                                    $("<div>").addClass('row panel-body')
+                                        .append(
+                                            $("<div>").addClass('row')
+                                                .append($("<div class='col-md-4 mar-btm'><strong>Fecha: </strong><label class='control-label'>" + e.FechaIngreso.toFechaHoraPrueba() + "</label></div>"))
+                                                .append(semaforo)
+                                                .append($("<div class='col-md-4 mar-btm'><strong>Ingresado por: </strong><label class='control-label'>" + e.NombreEjecutivo.OrdenaNombreCompleto() + "</label></div>"))
+                                        ).append("<hr style='margin-top: 0px;'/>")
+                                        .append($("<div class='col-md-2 mar-btm'><strong>Tema</strong> <br /><label class='control-label'>" + e.Tema + "</label></div>"))
+                                        .append($("<div class='col-md-2 mar-btm'><strong>Sub-Tema</strong><br /><label class='control-label'>" + e.SubTema + "</label></div>"))
+                                        .append($("<div class='col-md-2 mar-btm'><strong>Compromiso</strong> <br /><label class='control-label'>" + comp + "</label></div>"))
+                                        .append($("<div class='col-md-2 mar-btm'> <strong>Fecha Resolución</strong><br /><label class='control-label addFecha'>" + fechaCompromiso + "</label></div>"))
+                                        .append($("<div class='col-md-2 mar-btm'> <strong>Alerta</strong><br /><label class='control-label'>" + aler + "</label></div>"))
+                                        .append($("<div class='col-md-2 mar-btm'><a data-target='#demo-lg-modal-entrevista_actualiza' data-idDetalleEnt=" + e.IdDetalleEntrevista + " data-toggle='modal' class='btn btn-default btn-rounded'><i class='demo-psi-receipt-4'></i> Editar Registro</a></div>"))
+                                        .append($("<div class='col-md-12 mar-btm'> <strong>Comentarios</strong><br /><p>" + e.Comentarios + "</p></div>"))
+                                        .append(historial)
+                                ).append("<hr style='border-color: rgb(179, 179, 179); margin-top: 1px'/>")
+                        }
+                    })
+                });
+            }
+        }
+
+        cargador.CargaDetalleEntrevista();
+
+        $('#demo-lg-modal-entrevista_actualiza').on('show.bs.modal', function (events) {
+            var idEntrDet = $(events.relatedTarget);
+            idDEnt = idEntrDet.data('iddetalleent')
+            $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/obtiene-detalle-entrev", { idDetalleEntrevista: idDEnt }, function (result) {
+                var compromiso = 0;
+                var alerta = 0;
+                $("#slTema_actualiza").find('option:contains("' + result.Tema + '")').prop('selected', true);
+                $('#slTema_actualiza').trigger('change');
+                $("#slSubTema_actualiza").find('option:contains("' + result.SubTema + '")').prop('selected', true);
+                $("#slSemaforo_actualiza").val(result.Semaforo)
+                $("#FechaResolucion_actualiza").val(result.FechaResolucion)
+                $("#comentarioDetalle_actualiza").val(result.Comentarios)
+                if (result.Compromiso == 1) {
+                    $("#ckCompromisoSI_actualiza").attr('checked', 'checked');
+                    $("#divFechaResul_actualiza").css('display', 'block')
+                }
+                else {
+                    $("#ckCompromisoNO_actualiza").attr('checked', 'checked');
+                    $("#divFechaResul_actualiza").css('display', 'none')
+                }
+                if (result.Alerta == 1) {
+                    $("#ckAlertaSI_actualiza").attr('checked', 'checked');
+                }
+                else {
+                    $("#ckAlertaNO_actualiza").attr('checked', 'checked');
+                }
+
+
+            });
+
+        });
+
+
+
+
+        $('#form_entrevista_detalle').bootstrapValidator({
+            excluded: [':disabled', ':not(:visible)'],
+            feedbackIcons: [],
+            fields: {
+                slTema: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Seleccionar un Tema'
+                        }
+                    }
+                },
+                slSubTema: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Seleccionar un Sub-Tema'
+                        }
+                    }
+                },
+                slSemaforo: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Seleccionar un color de Semaforo'
+                        }
+                    }
+                },
+                comentarioDtEn: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Debe ingresar un comentario'
+                        }
+                    }
+                }
+            }
+        }).on('success.form.bv', function (e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            var objeto_detalle_entrevista = {
+                IdEntrevista: IdEtvta,
+                Tema: $('select[id="slTema"] option:selected').text(),
+                SubTema: $('select[id="slSubTema"] option:selected').text(),
+                Semaforo: $('#slSemaforo').val(),
+                Alerta: alerta,
+                FechaResolucion: $('#FechaResolucion').val(),
+                Comentarios: $('#comentarioDetalle').val(),
+                Compromiso: compromiso,
+            }
+            $.SecPostJSON(BASE_URL + "/motor/api/perfil-empresas/ingresa-detalle-entrevista", objeto_detalle_entrevista, function (datos) {
+                $("#form_entrevista_detalle").bootstrapValidator('resetForm', true);
+                $("#demo-lg-modal-entrevista").modal('hide');
+                cargador.CargaDetalleEntrevista();
+                $.niftyNoty({
+                    type: 'success',
+                    icon: 'pli-like-2 icon-2x',
+                    message: 'Detalle Entrevista Guardada Correctamente.',
+                    container: 'floating',
+                    timer: 5000
+                });
+            });
+        });
+
+
+        $('#form_entrevista_detalle_actualiza').bootstrapValidator({
+            excluded: [':disabled', ':not(:visible)'],
+            feedbackIcons: [],
+            fields: {
+                slTema_actualiza: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Seleccionar un Tema'
+                        }
+                    }
+                },
+                slSubTema_actualiza: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Seleccionar un Sub-Tema'
+                        }
+                    }
+                },
+                slSemaforo_actualiza: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Seleccionar un color de Semaforo'
+                        }
+                    }
+                },
+                comentarioDtEn_actualiza: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Debe ingresar un comentario'
+                        }
+                    }
+                }
+            }
+        }).on('success.form.bv', function (e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            var objeto_detalle_entrevista_actualiza = {
+                IdDetalleEntrevista: idDEnt,
+                IdEntrevista: IdEtvta,
+                Tema: $('select[id="slTema_actualiza"] option:selected').text(),
+                SubTema: $('select[id="slSubTema_actualiza"] option:selected').text(),
+                Semaforo: $('#slSemaforo_actualiza').val(),
+                Alerta: alerta,
+                FechaResolucion: $('#FechaResolucion_actualiza').val(),
+                Comentarios: $('#comentarioDetalle_actualiza').val(),
+                Compromiso: compromiso,
+            }
+            $.SecPostJSON(BASE_URL + "/motor/api/perfil-empresas/actualiza-detalle-entrevista", objeto_detalle_entrevista_actualiza, function (datos) {
+                $("#form_entrevista_detalle_actualiza").bootstrapValidator('resetForm', true);
+                $("#demo-lg-modal-entrevista_actualiza").modal('hide');
+                cargador.CargaDetalleEntrevista();
+                $.niftyNoty({
+                    type: 'success',
+                    icon: 'pli-like-2 icon-2x',
+                    message: 'Detalle Entrevista Actualizada Correctamente.',
+                    container: 'floating',
+                    timer: 5000
+                });
+            });
+
+            $(document).ready(function () {
+                $("dd").hide();
+                $("dt").click(function (event) {
+                    var desplegable = $(this).next();
+                    $('dd').not(desplegable).slideUp('fast');
+                    desplegable.slideToggle('fast');
+                    event.preventDefault();
+                })
+                $("dt").css({
+                    'cursor': 'pointer'
+                });
+            });
+
+        });
+
+
+        $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-tipologia-gestion", { tipoCampagna: 1, padre: 0 }, function (datos) {
+            $("#slTema_actualiza").html("");
+            $("#slTema_actualiza").append($("<option>").attr("value", "").html("Seleccione"));
+            $("#slTema").html("");
+            $("#slTema").append($("<option>").attr("value", "").html("Seleccione"));
+            $.each(datos, function (i, e) {
+                $("#slTema_actualiza").append($("<option>").attr("value", e.IdTema).html(e.GlosaGestion))
+                $("#slTema").append($("<option>").attr("value", e.IdTema).html(e.GlosaGestion))
+            });
+        });
+
+        $('#slTema_actualiza').change(function (e) {
+            e.preventDefault();
+            if ($(this).val() != '') {
+                $("#slSubTema_actualiza").attr("disabled", false);
+                $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-tipologia-Subgestion", { IdTema: $(this).val() }, function (datos) {
+                    $("#slSubTema_actualiza").html("");
+                    $("#slSubTema_actualiza").append($("<option>").attr("value", "").html("Seleccione"));
+                    $.each(datos, function (i, e) {
+                        $("#slSubTema_actualiza").append($("<option>").attr("value", e.IdSubTema).html(e.GlosaSubTema))
+                    });
+                });
+            }
+            else {
+                $("#slSubTema_actualiza").html("");
+                $("#slSubTema_actualiza").attr("disabled", true);
+            }
+        });
+
+        $('#slTema').change(function (e) {
+            e.preventDefault();
+            if ($(this).val() != '') {
+                $("#slSubTema").attr("disabled", false);
+                $.SecGetJSON(BASE_URL + "/motor/api/perfil-empresas/lista-tipologia-Subgestion", { IdTema: $(this).val() }, function (datos) {
+                    $("#slSubTema").html("");
+                    $("#slSubTema").append($("<option>").attr("value", "").html("Seleccione"));
+                    $.each(datos, function (i, e) {
+                        $("#slSubTema").append($("<option>").attr("value", e.IdSubTema).html(e.GlosaSubTema))
+                    });
+                });
+            }
+            else {
+                $("#slSubTema").html("");
+                $("#slSubTema").attr("disabled", true);
+            }
+        });
+
+
+        $("input:radio[name=groupCkeckAlerta]").click(function () {
+            switch (this.value) {
+                case "SI":
+                    //alert(this.value);
+                    alerta = 1;
+                    //$("#divFechaResul").css('display', 'block')
+                    //$("#comentarioResultado").css('display', 'block')
+                    break;
+                case "NO":
+                    //alert(this.value);
+                    alerta = 0;
+                    //$("#divFechaResul").css('display', 'none')
+                    //$("#comentarioResultado").css('display', 'none')
+                    break;
+            }
+        });
+
+        $("input:radio[name=groupCkeckCompromiso_actualiza]").click(function () {
+            switch (this.value) {
+                case "SI":
+                    //alert(this.value);
+                    compromiso_actualiza = 1;
+                    //alert(compromiso);
+                    $("#divFechaResul_actualiza").css('display', 'block')
+                    $("#comentarioResultado_actualiza").css('display', 'block')
+                    break;
+                case "NO":
+                    //alert(this.value);
+                    compromiso_actualiza = 0;
+                    //alert(compromiso);
+                    $("#divFechaResul_actualiza").css('display', 'none')
+                    $("#comentarioResultado_actualiza").css('display', 'none')
+                    $('#FechaResolucion_actualiza').val('01-01-1900')
+
+                    break;
+            }
+        });
+
+
+        $("input:radio[name=groupCkeckAlerta_actualiza]").click(function () {
+            switch (this.value) {
+                case "SI":
+                    //alert(this.value);
+                    alerta_actualiza = 1;
+                    //$("#divFechaResul").css('display', 'block')
+                    //$("#comentarioResultado").css('display', 'block')
+                    break;
+                case "NO":
+                    //alert(this.value);
+                    alerta_actualiza = 0;
+                    //$("#divFechaResul").css('display', 'none')
+                    //$("#comentarioResultado").css('display', 'none')
+                    break;
+            }
+        });
+
+        $("input:radio[name=groupCkeckCompromiso]").click(function () {
+            switch (this.value) {
+                case "SI":
+                    //alert(this.value);
+                    compromiso = 1;
+                    //alert(compromiso);
+                    $("#divFechaResul").css('display', 'block')
+                    $("#comentarioResultado").css('display', 'block')
+                    break;
+                case "NO":
+                    //alert(this.value);
+                    compromiso = 0;
+                    //alert(compromiso);
+                    $("#divFechaResul").css('display', 'none')
+                    $("#comentarioResultado").css('display', 'none')
+                    $('#FechaResolucion').val('01-01-1900')
+
+                    break;
+            }
+        });
+
+        $(document).ready(function () {
+            $("dd").hide();
+            $("dt").click(function (event) {
+                var desplegable = $(this).next();
+                $('dd').not(desplegable).slideUp('fast');
+                desplegable.slideToggle('fast');
+                event.preventDefault();
+            })
+            $("dt").css({
+                'cursor': 'pointer'
+            });
+        });
+
+
+    </script>
+}
+
+

@@ -1,0 +1,712 @@
+﻿
+@{
+
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/morris-js/morris.min.css" rel="stylesheet">
+
+
+<div id="page-content">
+    <div class="tab-base">
+        <!--Nav Tabs-->
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a data-toggle="tab" href="#tab-diferencia-carga" aria-expanded="true" id="tab_carga" class="tab-principal">CARGA DATOS</a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#tab-diferencia-cotiz" aria-expanded="true" id="tab_diferenciaCotiz" class="tab-principal">DIFERENCIAS DE COTIZACIONES</a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#tab-cotiz-impagas" aria-expanded="true" id="tab_busqueda" class="tab-principal">COTIZACIONES IMPAGAS</a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#tab-cotiz-declaradas" aria-expanded="true" id="tab_busqueda" class="tab-principal">COTIZACIONES DECLARADAS Y NO PAGADAS</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="tab-diferencia-carga" class="tab-pane fade active in">
+                <div class="panel" style="border-radius: 7px;">
+                    <button id="btn_carga" class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#md-carga-Datos" data-backdrop="static" data-keyboard="false">Proceso de Carga</button>
+                </div>
+            </div>
+
+            <div id="tab-diferencia-cotiz" class="tab-pane">
+                <div class="panel" style="border-radius: 7px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">FILTROS</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="msjCalidad"></div>
+                        <div class="row">
+                            <div class="col-sm-3 text-xs-center">
+                                <div class="form-group">
+                                    <label class="control-label">ESTADO</label>
+                                    <select class="form-control" id="dllEstado" name="dllEstado" v-on:change="eventoCambiaEstadoCobranza" v-model="modelos.estados">
+                                        <option value="">TODOS...</option>
+                                        <option v-for="eEstado in filtros.estados" :value="eEstado.id">{{eEstado.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 text-xs-center">
+                                <div class="form-groupsubEstadosIgn">
+                                    <label class="control-label">SUB-ESTADO</label>
+                                    <select class="form-control" id="dllSubEstado" name="dllSubEstado" v-model="modelos.subEstados">
+                                        <option value="">TODOS...</option>
+                                        <option v-for="eSubEstado in filtros.subEstados" :value="eSubEstado.id">{{eSubEstado.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-1 text-xs-center">
+                                <div class="form-group">
+                                    <label class="control-label"></label>
+                                    <button class="btn btn-primary btn-rounded" v-on:click="cargaLeadFiltroDiferenciCotizacion" id="btnInicia" style="margin-top: 21px;">FILTRAR</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel" style="border-radius: 7px;">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">DATOS</h3>
+                            </div>
+                            <div class="panel-body">
+                                <table data-toggle="table"
+                                       data-sort-name="id"
+                                       data-page-list="[]"
+                                       data-page-size="50"
+                                       data-search="false"
+                                       data-pagination="true" id="tbDiferencia" style="font-size: 11px">
+                                    <thead>
+                                        <tr>
+                                            <th data-field="rut" data-sortable="true" data-formatter="formaterRut">RUT</th>
+                                            <th data-field="razon_social" data-sortable="true">RAZON SOCIAL</th>
+                                            <th data-field="diferencia_cotizacion" data-sortable="true">DIFER. COTIZA.</th>
+                                            <th data-field="saldo_favor_caja" data-sortable="true" data-formatter="formaterNum">SALDO FAVOR CAJA</th>
+                                            <th data-field="deuda_generada" data-sortable="true" data-formatter="formaterNum">DEUDA GENERADA</th>
+                                            <th data-field="ultimaGestion.estado" data-sortable="true">ESTADO</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="tab-cotiz-impagas" class="tab-pane fade">
+                @Html.Partial("cotizacionesImpagas")
+            </div>
+            <div id="tab-cotiz-declaradas" class="tab-pane fade">
+                @Html.Partial("ctzDeclaradaNoPagada")
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal_cobranza" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header" style="background: #337ab7;">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" style="color: #f1f1f1;">GESTION DIFERENCIA COTIZACIONES</h4>
+            </div>
+            <div id="msCall"></div>
+            <div class="modal-body">
+                <div class="tab-base" id="MDL_Primario_cobranza" style="margin-bottom: 0px !important;">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-gestion-cobranza" aria-expanded="false">Gestión</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-historial-cobranza" aria-expanded="false">Historial</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-gestion-cobranza" class="tab-pane fade active in">
+                            <div class="panel" style="border-radius: 7px;">
+                                <div class="panel-body">
+                                    <div id="msjCall"></div>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label">RUT</label>
+                                                <input class="form-control" :value="dataModal.rut" id="txtRutDif" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        -
+                                        <div class="col-sm-1">
+                                            <div class="form-group">
+                                                <label class="control-label">DV</label>
+                                                <input class="form-control" :value="dataModal.dv" id="txtDvDif" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <label class="control-label">RAZON SOCIAL</label>
+                                                <input class="form-control" :value="dataModal.razon_social" id="txtRazonSocial" type="text" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">ASFAM AUTORIZADA CAJA</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.asfam_autorizada" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Asfam Informada Empresa (A)</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.asfan_informada" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">ASFAM Aceptado Liquidado Caja (B)</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.asfan_aceptado" disabled>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Diferencia ASFAM (B-A)</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.diferencia_asfan" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Cotización Informada Empresa (C)</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.cotizacion_informada" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Cotización Calculada Caja (D)</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.cotizacion_calculada" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Diferencia Cotización (C-D)</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.diferencia_cotizacion" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Saldo a Favor Caja Pagado por empresa</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.saldo_favor_caja" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">Deuda Generada (A-B)- (C-D)</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.deuda_generada" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel" style="border-radius: 7px;">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">ESTADO</label>
+                                                <select class="form-control" id="dllEstadoCBModal" name="dllEstadoCBModal" v-on:change="eventoCambiaEstadoCobranzaModal" v-model="modelos.estadosModal">
+                                                    <option value="">Seleccione...</option>
+                                                    <option v-for="estadoCall in filtros.estadosModal" :value="estadoCall.id">{{estadoCall.nombre}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">SUB-ESTADO</label>
+                                                <select class="form-control" id="dllSubEstadoCbModal" name="dllSubEstadoCbModal" v-model="modelos.subEstadosModal">
+                                                    <option value="">Seleccione...</option>
+                                                    <option v-for="subEstadoModal in filtros.subEstadosModal" :value="subEstadoModal.id">{{subEstadoModal.nombre}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">OBSERVACION</label>
+                                        <textarea rows="3" id="txtobservacionDiferencia" name="txtobservacionDiferencia" class="form-control"></textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                                <button class="btn btn-primary" v-on:click="handleSubmitGuadarGestion">Guardar</button>
+                            </div>
+                        </div>
+                        <div id="tab-historial-cobranza" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div v-for="gestion in dataModalHist">
+                                    <a href="#">
+                                        <h4 class="list-group-item-heading"><strong>Gestor: </strong>{{gestion.rut_ejecutivo != undefined && gestion.rut_ejecutivo}}</h4>
+                                        <p class="list-group-item-text">
+                                            <strong>Fecha Gestión: </strong>{{gestion.fecha_gestion != undefined && gestion.fecha_gestion.toFechaHoraPrueba()}}, @*<strong>Fecha Compromiso: </strong>
+                                                {{gestion.fechaCompromiso != undefined && gestion.fechaCompromiso !=null ? gestion.fechaCompromiso: '------'}}*@
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Estado: </strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado: '------'}}
+                                            <strong>Sub-Estado: </strong>{{gestion.subEstado != undefined && gestion.subEstado != null ? gestion.subEstado: '------'}}
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Comentarios: </strong> {{gestion.observacion}}
+                                        </p>
+                                    </a>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal_impagas" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header" style="background: #337ab7;">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" style="color: #f1f1f1;">GESTION COTIZACIONES IMPAGAS</h4>
+            </div>
+            <div id="msCall"></div>
+            <div class="modal-body">
+                <div class="tab-base" id="MDL_Primario_cobranza" style="margin-bottom: 0px !important;">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-gestion-impago" aria-expanded="false">Gestión</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-historial-impago" aria-expanded="false">Historial</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-gestion-impago" class="tab-pane fade active in">
+                            <div class="panel" style="border-radius: 7px;">
+                                <div class="panel-body">
+                                    <div id="msjCall"></div>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label">RUT</label>
+                                                <input class="form-control" :value="dataModal.rut" id="txtRutImp" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <div class="form-group">
+                                                <label class="control-label">DV</label>
+                                                <input class="form-control" :value="dataModal.dv" id="txtDvImp" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <div class="form-group">
+                                                <label class="control-label">RAZON SOCIAL</label>
+                                                <input class="form-control" :value="dataModal.razon_social" id="txtRazonSocialImp" type="text" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">ULTIMA COTIZACION PAGADA</label>
+                                                <input class="form-control" type="text" :value="dataModal.ultima_cotizacion_pagada" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">N° TRABAJADORES</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.n_trabajadores" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">MONTO COTIZACION</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.monto_cotizacion" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">MESES IMPAGOS</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.meses_impagos" disabled>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">SUCURSAL</label>
+                                                <input class="form-control" type="text" :value="dataModal.nombre_oficina" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="panel" style="border-radius: 7px;">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">ESTADO</label>
+                                                <select class="form-control" id="dllEstadoCBModalImp" name="dllEstadoCBModalImp" v-on:change="eventoCambiaEstadoCobranzaModal" v-model="modelos.estadosModal">
+                                                    <option value="">Seleccione...</option>
+                                                    <option v-for="estadoCall in filtros.estadosModal" :value="estadoCall.id">{{estadoCall.nombre}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">SUB-ESTADO</label>
+                                                <select class="form-control" id="dllSubEstadoCbModalImp" name="dllSubEstadoCbModalImp" v-model="modelos.subEstadosModal">
+                                                    <option value="">Seleccione...</option>
+                                                    <option v-for="subEstadoModal in filtros.subEstadosModal" :value="subEstadoModal.id">{{subEstadoModal.nombre}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">OBSERVACION</label>
+                                        <textarea rows="3" id="txtobservacionImp" name="txtobservacionImp" class="form-control"></textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                                <button class="btn btn-primary" v-on:click="handleSubmitGuadarGestionImp">Guardar</button>
+                            </div>
+                        </div>
+                        <div id="tab-historial-impago" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div v-for="gestion in dataModalHist">
+                                    <a href="#">
+                                        <h4 class="list-group-item-heading"><strong>Gestor: </strong>{{gestion.rut_ejecutivo != undefined && gestion.rut_ejecutivo}}</h4>
+                                        <p class="list-group-item-text">
+                                            <strong>Fecha Gestión: </strong>{{gestion.fecha_gestion != undefined && gestion.fecha_gestion.toFechaHoraPrueba()}}, @*<strong>Fecha Compromiso: </strong>
+                                                {{gestion.fechaCompromiso != undefined && gestion.fechaCompromiso !=null ? gestion.fechaCompromiso: '------'}}*@
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Estado: </strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado: '------'}}
+                                            <strong>Sub-Estado: </strong>{{gestion.subEstado != undefined && gestion.subEstado != null ? gestion.subEstado: '------'}}
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Comentarios: </strong> {{gestion.observacion}}
+                                        </p>
+                                    </a>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal_declarada" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header" style="background: #337ab7;">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" style="color: #f1f1f1;">GESTION COTIZACIONES DECLARADAS Y NO PAGADAS</h4>
+            </div>
+            <div class="modal-body">
+                <div class="tab-base" id="MDL_Primario_declarada" style="margin-bottom: 0px !important;">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-gestion-declarada" aria-expanded="false">Gestión</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-historial-declarada" aria-expanded="false">Historial</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-gestion-declarada" class="tab-pane fade active in">
+                            <div class="panel" style="border-radius: 7px;">
+                                <div class="panel-body">
+                                    <div id="msjCall"></div>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label class="control-label">RUT</label>
+                                                <input class="form-control" :value="dataModal.rut" id="txtRutDec" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <div class="form-group">
+                                                <label class="control-label">DV</label>
+                                                <input class="form-control" :value="dataModal.dv" id="txtDvDec" type="text" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-9">
+                                            <div class="form-group">
+                                                <label class="control-label">RAZON SOCIAL</label>
+                                                <input class="form-control" :value="dataModal.nombre_empresa" id="txtRazonSocialDec" type="text" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">FOLIO CARATULA</label>
+                                                <input class="form-control" type="text" :value="dataModal.folio_caratula" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">COD. BARRA</label>
+                                                <input class="form-control" type="text" :value="dataModal.cod_barra" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">PERIODO COTIZACION</label>
+                                                <input class="form-control" type="text" :value="dataModal.periodo_cot" disabled>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">FECHA DECLARACION</label>
+                                                <input class="form-control" type="text" :value="dataModal.fecha_declaracion" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">RENTA FONASA</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.renta_fonasa" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">RENTA ISAPRE</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.renta_isapre" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">RENTAL TOTAL</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.renta_total" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">MONTO COTIZACION</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.monto_cotizacion" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">TOTAL ASFAM</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.total_asfam" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">SALDO CAJA PLAN</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.saldo_caja_plan" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">MONTO DECLARADO</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.monto_declarado" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">TOTAL TRABAJADORES</label>
+                                                <input class="form-control numero" type="text" :value="dataModal.total_trabajador" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">ESTADO</label>
+                                                <input class="form-control" type="text" :value="dataModal.estado" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="panel" style="border-radius: 7px;">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">ESTADO</label>
+                                                <select class="form-control" id="dllEstadoCBModalDec" name="dllEstadoCBModalDec" v-on:change="eventoCambiaEstadoDecModal" v-model="modelos.estadosModal">
+                                                    <option value="">Seleccione...</option>
+                                                    <option v-for="estadoCall in filtros.estadosModal" :value="estadoCall.id">{{estadoCall.nombre}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">SUB-ESTADO</label>
+                                                <select class="form-control" id="dllSubEstadoCbModalDec" name="dllSubEstadoCbModalDec" v-model="modelos.subEstadosModal">
+                                                    <option value="">Seleccione...</option>
+                                                    <option v-for="subEstadoModal in filtros.subEstadosModal" :value="subEstadoModal.id">{{subEstadoModal.nombre}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">OBSERVACION</label>
+                                        <textarea rows="3" id="txtobservacionDec" name="txtobservacionDec" class="form-control"></textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">Cerrar</button>
+                                <button class="btn btn-primary" v-on:click="handleSubmitGuadarGestionDec">Guardar</button>
+                            </div>
+                        </div>
+                        <div id="tab-historial-declarada" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div v-for="gestion in dataModalHist">
+                                    <a href="#">
+                                        <h4 class="list-group-item-heading"><strong>Gestor: </strong>{{gestion.rut_ejecutivo != undefined && gestion.rut_ejecutivo}}</h4>
+                                        <p class="list-group-item-text">
+                                            <strong>Fecha Gestión: </strong>{{gestion.fecha_gestion != undefined && gestion.fecha_gestion.toFechaHoraPrueba()}}, @*<strong>Fecha Compromiso: </strong>
+                                                {{gestion.fechaCompromiso != undefined && gestion.fechaCompromiso !=null ? gestion.fechaCompromiso: '------'}}*@
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Estado: </strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado: '------'}}
+                                            <strong>Sub-Estado: </strong>{{gestion.subEstado != undefined && gestion.subEstado != null ? gestion.subEstado: '------'}}
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Comentarios: </strong> {{gestion.observacion}}
+                                        </p>
+                                    </a>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="md-carga-Datos" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 6px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title">Cargar Proceso COMPIN</h4>
+            </div>
+            <form id="form_registro_anexoUpCompin" action="#" method="post">
+                <div class="panel-body">
+                    <div class="panel panel-bordered-primary" id="panel_Carga" style="border-color: #e6e6e6;">
+                        <div class="panel-body">
+
+                            <div id="dzMainCompin" class="dropzone demo-dropzone">
+                                <div class="dz-default dz-message">
+                                    <div class="dz-icon">
+                                        <i class="demo-pli-upload-to-cloud icon-5x"></i>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/select2/js/select2.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+    <script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
+    <script src="~/Assets/plugins/morris-js/morris.min.js"></script>
+    <script src="~/Assets/plugins/morris-js/raphael-js/raphael.min.js"></script>
+    <script src="~/Assets/js.App/src/cobranza-previsional.js?g=@Guid.NewGuid().ToString()"></script>
+
+
+}<script>
+    //----------------DROP ZONE TATA
+    Dropzone.autoDiscover = false;
+    var myDropzone = new Dropzone("div#dzMain", {
+        url: "#",
+        maxFiles: 1,
+        uploadMultiple: false,
+        maxFilesize: 15,
+        acceptedFiles: '.csv'
+    });
+    myDropzone.on("addedfile", function (file) {
+        document.getElementById("overlay").style.display = "block";
+    });
+
+    myDropzone.on("complete", function (file) {
+
+        document.getElementById("overlay").style.display = "none";
+        myDropzone.removeFile(file);
+
+        $("#pnl-carga-busqueda").show();
+        //$("#panel_Carga_Excel").hide();
+        $('#demo-lg-modal-CargaExcel').modal('hide');
+        cargador.CargaDatosTablaTab2ExcelRRLL("", "Todos");
+
+    });
+
+    $('#md-carga-Datos').on('show.bs.modal', function (event) {
+
+        myDropzone2.options.url = "/motor/api/Licencias/carga-Compin-dropzone";
+
+    });
+
+
+    </script>

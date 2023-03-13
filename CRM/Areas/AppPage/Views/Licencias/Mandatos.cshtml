@@ -1,0 +1,380 @@
+﻿
+@{
+
+    Layout = "~/Areas/AppPage/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/Assets/plugins/switchery/switchery.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/chosen/chosen.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+<link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+
+<div id="page-content">
+    <div id="contMandato">
+        <div class="panel" style="border-radius: 7px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">FILTROS MANDATOS</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+
+                    <div class="col-sm-2 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">TIENE MANDATOS</label>
+                            <select class="form-control" id="dllTienMandatos">
+                                <option value="">TODOS...</option>
+                                <option value="SI">SI</option>
+                                <option value="NO">NO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">CALIDAD DEL MANDATO</label>
+                            <select class="form-control" id="slCalidadMandato">
+                                <option value="">TODOS...</option>
+                                <option value="ACTIVO">ACTIVO</option>
+                                <option value="RECHAZADO">RECHAZADO</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 text-xs-center" style="display:none;">
+                        <div class="form-group">
+                            <label class="control-label">GRUPO</label>
+                            <select class="form-control" id="slGrupo">
+                                <option value="">TODOS...</option>
+                                <option value="EMPRESA">EMPRESA</option>
+                                <option value="PTO. ATENCIÓN">PTO. ATENCIÓN</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">CAMPAÑAS</label>
+                            <select class="form-control" id="slCampana">
+                                <option value="">TODOS...</option>
+                                <option value="CADUCADOS">CADUCADOS</option>
+                                <option value="FALTA DOCUMENTACION">FALTA DOCUMENTACIÓN</option>
+                                <option value="DISPONIBLE A PAGO">DISPONIBLE A PAGO</option>
+                                <option value="SIN CAMPAÑA">SIN CAMPAÑA</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">EMPRESAS CON MANDATOS</label>
+                            <select class="form-control" id="slEmpMandatos" name="slEmpMandatos" v-model="modelos.empresas">
+                                <option value="">TODOS...</option>
+                                <option v-for="emp in filtros.empresas" :value="emp.empresa">{{emp.empresa}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label">ESTADO</label>
+                            <select class="form-control" id="slEstadoFil" name="slEstadoFil" v-model="modelos.estado">
+                                <option value="">TODOS...</option>
+                                <option v-for="est in filtros.estado" :value="est.nombre">{{est.nombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1 text-xs-center">
+                        <div class="form-group">
+                            <label class="control-label"></label>
+                            <button class="btn btn-primary btn-rounded" v-on:click="cargalistaMandatos" style="margin-top: 21px;">Filtrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel" style="border-radius: 7px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">DATOS MANDATOS</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table data-toggle="table"
+                               data-sort-name="id"
+                               data-page-list="[]"
+                               data-page-size="50"
+                               data-search="false"
+                               data-pagination="true" id="tblMandatos" style="font-size: 10px">
+
+                            <thead>
+                                <tr>
+                                    <th data-field="nombre" data-sortable="true" data-formatter="idFormatterRut">NOMBRE</th>
+                                    <th data-field="rut" data-sortable="true">RUT</th>
+                                    <th data-field="empresa" data-sortable="true">EMPRESA </th>
+                                    <th data-field="anexo_punto_atencion" data-sortable="true">ANEXO (PUNTO ATENCIÓN)</th>
+                                    <th data-field="fono_1" data-sortable="true">FONO</th>
+                                    <th data-field="mail_1" data-sortable="true">MAIL</th>
+                                    <th data-field="motivo_rechazo" data-sortable="true">MOTIVO RECHAZO</th>
+                                    <th data-field="campana" data-sortable="true">CAMPAÑA</th>
+                                    <th data-field="ultimaGestion.estado" data-formatter="idFormatterEstado" data-sortable="true">ESTADO</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modal_mandato" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 9px;">
+            <div class="modal-header" style="background: #337ab7;">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title" style="color: #f1f1f1;">GESTIÓN MANDATOS</h4>
+            </div>
+            <div id="msjIgn"></div>
+            <div class="modal-body">
+                <div class="tab-base" id="MDL_Primario_mandato" style="margin-bottom: 0px !important;">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-gestion-mandato" aria-expanded="false">Gestión</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-historial-mandato" aria-expanded="false">Historial</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-contactabiliadad" aria-expanded="false">Contactabilidad</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content msjMandato" style="box-shadow: 0 0 0 !important;">
+                        <div id="tab-gestion-mandato" class="tab-pane fade active in">
+                            <div class="panel-body">
+                                <div id="msjMan"></div>
+                                <form id="form-info-pensionado" action="#" method="post">
+                                    <div class="row">
+                                        <input class="form-control" :value="dataModal.id" id="txtid" type="text" disabled style="display:none;">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">NOMBRE</label>
+                                                <input class="form-control" :value="dataModal.nombre" id="txtNombre" type="text" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">RUT</label>
+                                                <input class="form-control" :value="dataModal.rut" id="txtRut" type="text" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="control-label">EMPRESA</label>
+                                                <input class="form-control" :value="dataModal.empresa" id="txtEmpresa" type="text" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">RUT EMPRESA</label>
+                                                <input class="form-control" :value="dataModal.rut_empresa" id="txtRutEmp" type="text" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">ANEXO (PUNTO ATENCIÓN)</label>
+                                                <input class="form-control" :value="dataModal.anexo_punto_atencion" type="text" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">FONO 1</label>
+                                                <input class="form-control" :value="dataModal.fono_1" type="text" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label class="control-label">FONO 2</label>
+                                                <input class="form-control" :value="dataModal.fono_2" type="text" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">MAIL 1</label>
+                                                <input class="form-control" :value="dataModal.mail_1" type="text" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">MAIL 2</label>
+                                                <input class="form-control" :value="dataModal.mail_2" type="text" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">MOTIVO RECHAZO</label>
+                                                <input class="form-control" :value="dataModal.motivo_rechazo" type="text" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label class="control-label">CAMPAÑA</label>
+                                                <input class="form-control" :value="dataModal.campana" type="text" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-4 text-xs-center">
+                                    <div class="form-group">
+                                        <label class="control-label">ESTADO</label>
+                                        <select class="form-control" id="dllEstadoMandato" name="dllEstadoMandato" v-on:change="eventoCambiaSubEstado" v-model="modelos.estado">
+                                            <option value="">SELECCIONE...</option>
+                                            <option v-for="estMand in filtros.estado" :value="estMand.id">{{estMand.nombre}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 text-xs-center">
+                                    <div class="form-group">
+                                        <label class="control-label">SUB-ESTADO</label>
+                                        <select class="form-control" v-model="modelos.subEstado" id="slSubEstadoMandato" name="slSubEstadoMandato">
+                                            <option value="">SELECCIONE...</option>
+                                            <option v-for="subEstMand in filtros.subEstado" :value="subEstMand.id">{{subEstMand.nombre}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label class="control-label">Observación</label>
+                                <textarea placeholder="Observación" rows="3" id="txtObservacion" name="txtObservacion" class="form-control"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">CERRAR</button>
+                                <button class="btn btn-primary" v-on:click="handleSubmitGestionMandatos">GUARDAR</button>
+                            </div>
+                        </div>
+                        <div id="tab-historial-mandato" class="tab-pane fade">
+                            <div class="list-group" style="min-height:290px;">
+                                <div v-for="gestion in dataModalMan">
+                                    <a href="#">
+                                        <h4 class="list-group-item-heading"><strong>Gestor: </strong> {{gestion.rut_ejecutivo != undefined && gestion.rut_ejecutivo}}</h4>
+                                        <p class="list-group-item-text">
+                                            <strong>Fecha Gestión: </strong>{{gestion.fecha_gestion != undefined && gestion.fecha_gestion.toFecha()}},
+                                        </p>
+                                        <p class="list-group-item-text">
+
+                                            <strong>Estado: </strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado: '------'}}
+                                            <strong>Sub-Estado: </strong>{{gestion.sub_estado != undefined && gestion.sub_estado != null ? gestion.sub_estado: '------'}}
+                                        </p>
+                                        <p class="list-group-item-text">
+                                            <strong>Comentarios: </strong> {{gestion.observacion}}
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-contactabiliadad" class="tab-pane fade">
+                            <div class="row">
+                                <button type="button" id="btn-add-contac_mandato" class="btn btn-primary btn-xs">+</button>
+                            </div>
+                            <div class="mar-btm" style="display: none;" id="formulario-contac_mandato">
+                                <form id="form-registro-contacto_mandato" action="#" method="post">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Tipo de Contacto</label>
+                                                    <select class="selectpicker" id="cbtippContac_mandato" name="cbtippContac_mandato">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Celular</option>
+                                                        <option value="2">Teléfono</option>
+                                                        <option value="3">Mail</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="btn-group bootstrap-select">
+                                                    <label class="control-label">Clasificación de Contacto</label>
+                                                    <select class="selectpicker" id="cbClasificacionConctac_mandato" name="cbClasificacionConctac_mandato">
+                                                        <option value="">Seleccione..</option>
+                                                        <option value="1">Personal</option>
+                                                        <option value="2">Comercial</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Datos de Contacto</label>
+                                                <input class="form-control" id="afi_NewContacto_mandato" type="text" value="" maxlength="150" name="afi_NewContacto_mandato">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary" id="btGuardaContacto_mandato" type="submit">Guardar Contacto</button>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <table class="table table-hover table-vcenter" style="font-size: 11px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Gestión</th>
+                                            <th>Datos Contacto</th>
+                                            <th>Tipo contacto</th>
+                                            <th>Indice</th>
+                                            <th>Ultimo Contacto Valido</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bdy_datos_contactos_mandato"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+    <script src="~/Assets/js/vue.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/fooTable/dist/footable.all.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
+    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
+    <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/Assets/tam/deps/sweetalert.js"></script>
+    <script src="~/Assets/js.App/src/mandatosLM.js?g=@Guid.NewGuid().ToString()"></script>
+
+}
+
