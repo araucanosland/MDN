@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A7D68C0B-7DC5-4C92-85D6-098A3B7EECDC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CRM.Business.Entity</RootNamespace>
+    <AssemblyName>CRM.Business.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Afiliados\AfiliadosEntity.cs" />
+    <Compile Include="AgendaEntity.cs" />
+    <Compile Include="AmbitosareaEntity.cs" />
+    <Compile Include="AmbitosfidelizacionEntity.cs" />
+    <Compile Include="AreasEntity.cs" />
+    <Compile Include="AsignacionEntity.cs" />
+    <Compile Include="AsignacionRechazos.cs" />
+    <Compile Include="AuditoriaLicenciasEntity.cs" />
+    <Compile Include="AusenciaEntity.cs" />
+    <Compile Include="BaseCampagnaEntity.cs" />
+    <Compile Include="BusquedaLicenciasEntity.cs" />
+    <Compile Include="CampanaDiplomadoEntity.cs" />
+    <Compile Include="CargaExcelRRLLEntity.cs" />
+    <Compile Include="CargasFamiliaresEntity.cs" />
+    <Compile Include="CarteraFFVVEntity.cs" />
+    <Compile Include="ContrasenaEntity.cs" />
+    <Compile Include="CargoEntity.cs" />
+    <Compile Include="CarteraEmpresaEntity.cs" />
+    <Compile Include="Clases\CallBase.cs" />
+    <Compile Include="Clases\BaseCampagna.cs" />
+    <Compile Include="Clases\BaseDotacion.cs" />
+    <Compile Include="Clases\BaseLicencia.cs" />
+    <Compile Include="Clases\CarteraEmpresa.cs" />
+    <Compile Include="Clases\ContactoBase.cs" />
+    <Compile Include="Clases\Ejecutivo.cs" />
+    <Compile Include="Clases\Gestion.cs" />
+    <Compile Include="Clases\Oficina.cs" />
+    <Compile Include="Clases\ResultadoBase.cs" />
+    <Compile Include="Clases\ResumenAusencias.cs" />
+    <Compile Include="Clases\WebCall.cs" />
+    <Compile Include="Clases\WebCarteraEmpresa.cs" />
+    <Compile Include="Clases\WebGestion.cs" />
+    <Compile Include="Clases\WebInstalador.cs" />
+    <Compile Include="Clases\WebLicencia.cs" />
+    <Compile Include="ConfirmDotacion.cs" />
+    <Compile Include="Contactabilidad\ContactabilidadEntity.cs" />
+    <Compile Include="ContactoafiliadoEntity.cs" />
+    <Compile Include="ContactoEntity.cs" />
+    <Compile Include="Contracts\IResultado.cs" />
+    <Compile Include="CosalEntity.cs" />
+    <Compile Include="CuestionarioEntity.cs" />
+    <Compile Include="DesarrolloEntity.cs" />
+    <Compile Include="DigitalizacionEntity.cs" />
+    <Compile Include="DocumentosFaltantesLM.cs" />
+    <Compile Include="DotacionEntity.cs" />
+    <Compile Include="Empresa.cs" />
+    <Compile Include="EmpresaEntity.cs" />
+    <Compile Include="Empresas\AmbitosretencionEntity.cs" />
+    <Compile Include="Empresas\DireccionEmpresa.cs" />
+    <Compile Include="Empresas\GestionprospeccionEntity.cs" />
+    <Compile Include="Empresas\GestionretencionEntity.cs" />
+    <Compile Include="Empresas\ProspeccionEntity.cs" />
+    <Compile Include="Empresas\RetencionEntity.cs" />
+    <Compile Include="EncabezadoEntity.cs" />
+    <Compile Include="Estadolicencia.cs" />
+    <Compile Include="EstadosYTiposEntity.cs" />
+    <Compile Include="Features\Notificacion.cs" />
+    <Compile Include="Features\TasaGestion.cs" />
+    <Compile Include="Feriados.cs" />
+    <Compile Include="FFVVBaseEntity.cs" />
+    <Compile Include="Fidelizacion.cs" />
+    <Compile Include="FidelizacionEntity.cs" />
+    <Compile Include="FiltrosrsgEntity.cs" />
+    <Compile Include="GestionEmpresas\GestionEmpresasEntity.cs" />
+    <Compile Include="GestionEntity.cs" />
+    <Compile Include="GestionOficinaEntity.cs" />
+    <Compile Include="IngresoCarteraEmpresa.cs" />
+    <Compile Include="Ingresolicencia.cs" />
+    <Compile Include="InstaladorEntity.cs" />
+    <Compile Include="LicenciaEntity.cs" />
+    <Compile Include="LicenciasDevueltas.cs" />
+    <Compile Include="LicenciasLMTimeLine.cs" />
+    <Compile Include="Log\LogcalculadoraEntity.cs" />
+    <Compile Include="Maestros\EmpresasEntity.cs" />
+    <Compile Include="NormalizacionEntity.cs" />
+    <Compile Include="NoticiaEntity.cs" />
+    <Compile Include="NotificacionAsignacionEntity.cs" />
+    <Compile Include="NuberespuestasEntity.cs" />
+    <Compile Include="DotacionAgenteEntity.cs" />
+    <Compile Include="OficinaEntity.cs" />
+    <Compile Include="PensionadosEntity.cs" />
+    <Compile Include="PeriodoEntity.cs" />
+    <Compile Include="PreferenciaAfiliadoEntity.cs" />
+    <Compile Include="PreguntaEntity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepresentanteempresaEntity.cs" />
+    <Compile Include="RespuestaEntity.cs" />
+    <Compile Include="ResultadogestionEntity.cs" />
+    <Compile Include="SeguimientoArticulosOficinaEntity.cs" />
+    <Compile Include="SucursalEntity.cs" />
+    <Compile Include="TipoausenciaEntity.cs" />
+    <Compile Include="TrackingEntity.cs" />
+    <Compile Include="UsuarioEntity.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{65C16573-233D-4A91-9224-610389F67D5C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CRM.Business.Data</RootNamespace>
+    <AssemblyName>CRM.Business.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AfiliadoDataAccess.cs" />
+    <Compile Include="AgendaDataAccess.cs" />
+    <Compile Include="AmbitosareaDataAccess.cs" />
+    <Compile Include="AmbitosfidelizacionDataAccess.cs" />
+    <Compile Include="AreasDataAccess.cs" />
+    <Compile Include="AsignacionDataAccess.cs" />
+    <Compile Include="AusenciaDataAccess.cs" />
+    <Compile Include="BaseCampagnaDataAccess.cs" />
+    <Compile Include="CampanaDiplomadoDataAccess.cs" />
+    <Compile Include="CargasFamiliaresDataAccess.cs" />
+    <Compile Include="CarteraEmpresaDataAccess.cs" />
+    <Compile Include="CarteraFFVVDataAccess.cs" />
+    <Compile Include="ConfirmDotacionDataAccess.cs" />
+    <Compile Include="ContactabilidadDataAccess\ContactabilidadDataAccess.cs" />
+    <Compile Include="ContactoafiliadoDataAccess.cs" />
+    <Compile Include="ContactoDataAccess.cs" />
+    <Compile Include="CosalDataAccess.cs" />
+    <Compile Include="CuestionarioDataAccess.cs" />
+    <Compile Include="DesarrolloDataAccess.cs" />
+    <Compile Include="DigitalizacionDataAccess.cs" />
+    <Compile Include="DocumentosFaltantesLMDataAccess.cs" />
+    <Compile Include="DotacionDataAccess.cs" />
+    <Compile Include="EmpresaDataAccess.cs" />
+    <Compile Include="EmpresasDataAccess__.cs" />
+    <Compile Include="Empresas\AmbitosretencionDataAccess.cs" />
+    <Compile Include="Empresas\GestionprospeccionDataAccess.cs" />
+    <Compile Include="Empresas\GestionretencionDataAccess.cs" />
+    <Compile Include="Empresas\ProspeccionDataAccess.cs" />
+    <Compile Include="Empresas\RetencionDataAccess.cs" />
+    <Compile Include="EncabezadoDataAccess.cs" />
+    <Compile Include="EstadolicenciaDataAccess.cs" />
+    <Compile Include="EstadosyTiposDataAccess.cs" />
+    <Compile Include="FeriadosDataAccess.cs" />
+    <Compile Include="FFVVBaseDataAccess.cs" />
+    <Compile Include="FidelizacionDataAccess.cs" />
+    <Compile Include="FiltrosrsgDataAccess.cs" />
+    <Compile Include="DotacionAgenteDataAccess.cs" />
+    <Compile Include="GestionDataAccess.cs" />
+    <Compile Include="InformesDataAccess.cs" />
+    <Compile Include="IngresoCarteraEmpresaDataAccess.cs" />
+    <Compile Include="IngresolicenciaDataAccess.cs" />
+    <Compile Include="MantenedoresDataAccess.cs" />
+    <Compile Include="PensionadosDataAccess.cs" />
+    <Compile Include="PerfilEmpresasDataAccess.cs" />
+    <Compile Include="InstalacionDataAccess.cs" />
+    <Compile Include="LicenciaDataAccess.cs" />
+    <Compile Include="Log\LogcalculadoraDataAccess.cs" />
+    <Compile Include="Maestros\EmpresasDataAccess.cs" />
+    <Compile Include="Mail\DbMailDataAccess.cs" />
+    <Compile Include="NoticiaDataAccess.cs" />
+    <Compile Include="NotificacionAsignacionDataAccess.cs" />
+    <Compile Include="NuberespuestasDataAccess.cs" />
+    <Compile Include="PeriodoDataAccess.cs" />
+    <Compile Include="PreferenciaAfiliadoDataAccess.cs" />
+    <Compile Include="PreguntaDataAccess.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepresentanteempresaDataAccess.cs" />
+    <Compile Include="RespuestaDataAccess.cs" />
+    <Compile Include="ResultadogestionDataAccess.cs" />
+    <Compile Include="ResumenesDataAccess.cs" />
+    <Compile Include="SeguimientoArticulosOficinaDataAccess.cs" />
+    <Compile Include="SucursalDataAccess.cs" />
+    <Compile Include="TipoausenciaDataAccess.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CDK\CDK.csproj">
+      <Project>{6765a812-8ae2-4200-9bb0-c77b2fa4c9fb}</Project>
+      <Name>CDK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CRM.Business.Entity\CRM.Business.Entity.csproj">
+      <Project>{a7d68c0b-7dc5-4c92-85d6-098a3b7eecdc}</Project>
+      <Name>CRM.Business.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
