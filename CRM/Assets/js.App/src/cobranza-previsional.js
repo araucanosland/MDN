@@ -31,6 +31,7 @@ var appCobranzaPrev = new Vue({
     methods: {
 
         obtenerEstados() {
+            debugger;
             let padre = 0;
             fetch(`http://${motor_api_server}:4002/cobranza-previsional/lista-estados/${padre}`, {
                 method: 'GET',
@@ -43,6 +44,7 @@ var appCobranzaPrev = new Vue({
                 });
         },
         obtenerSubEstados(padre) {
+            debugger;
             fetch(`http://${motor_api_server}:4002/cobranza-previsional/lista-estados/${padre}`, {
                 method: 'GET',
                 mode: 'cors',
@@ -206,11 +208,12 @@ var appModalDiferencia = new Vue({
     data: {
         filtros: {
             estadosModal: [],
-            subEstadosModal: [],
+            subEstadosModal: []
         },
         modelos: {
             estadosModal: '',
-            subEstadosModal: '',
+            subEstadosModal: ''
+
         },
         dataModal: {},
         dataModalHist: {},
@@ -221,6 +224,7 @@ var appModalDiferencia = new Vue({
     methods: {
 
         obtenerEstados() {
+
             let padre = 0;
             fetch(`http://${motor_api_server}:4002/cobranza-previsional/lista-estados/${padre}`, {
                 method: 'GET',
@@ -233,6 +237,7 @@ var appModalDiferencia = new Vue({
                 });
         },
         obtenerSubEstados(padre) {
+
             fetch(`http://${motor_api_server}:4002/cobranza-previsional/lista-estados/${padre}`, {
                 method: 'GET',
                 mode: 'cors',
@@ -246,6 +251,7 @@ var appModalDiferencia = new Vue({
         eventoCambiaEstadoCobranzaModal() {
             this.obtenerSubEstados(this.modelos.estadosModal)
         },
+
         obtenerLeadDiferencia(rut) {
             fetch(`http://${motor_api_server}:4002/cobranza-previsional/detalle-lead-diferencia/${rut}`, {
                 method: 'GET',
@@ -290,6 +296,20 @@ var appModalDiferencia = new Vue({
                 return false;
             }
 
+
+            if ($("#dllSubEstadoCbModal").val() == 103 || $("#dllSubEstadoCbModal").val() == 106) {
+                if ($('select[name="dllSubEstadoCbModal2"] option:selected').text() == "Seleccione...") {
+                    $(Swal.fire({
+                        title: 'Debe seleccionar subestado 2',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    }));
+                    $("#dllSubEstadoCbModal2").focus();
+                    return false;
+                }
+            }
+
+
             if ($('#txtobservacionDiferencia').val() == '') {
                 $(Swal.fire({
                     title: 'Debe ingresar una observación',
@@ -308,30 +328,55 @@ var appModalDiferencia = new Vue({
                 observacion: $('#txtobservacionDiferencia').val(),
                 rut_ejecutivo: getCookie('Rut'),
                 oficina: parseInt(getCookie('Oficina')),
+                subestado2: $('select[name="dllSubEstadoCbModal2"] option:selected').text(),
             };
 
-            fetch(`http://${motor_api_server}:4002/cobranza-previsional/guarda-gestion-diferencia-cotizacion`, {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Token': getCookie('Token')
-                }
-            }).then(async (response) => {
-                if (!response.ok) {
-                    $(Swal.fire({
-                        title: 'Error al guardar gestion',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    }));
-                    return false;
-                }
+            debugger;
+            $.SecPostJSON(BASE_URL + "/motor/api/CobranzaPrevisional/guarda-gestion-diferencia-cotizacion", formData, function (respuesta) {
+                debugger;
                 Swal.fire({
                     title: 'Gestion ingresada correctamente!',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 })
+
+                $("#divSubEstado2").css("display", "none");
+                $("#dllSubEstadoCbModal2").val(-1);
+
+            }).fail(function (errMsg) {
+                debugger;
+                $.niftyNoty({
+                    type: "warning",
+                    container: "floating",
+                    title: "Avance Tareas",
+                    message: "Tarea No Finalizada, contacte a Soporte!",
+                    closeBtn: true,
+                    timer: 5000
+                });
+
             });
+            //fetch(`http://${motor_api_server}:4002/cobranza-previsional/guarda-gestion-diferencia-cotizacion`, {
+            //    method: 'POST',
+            //    body: JSON.stringify(formData),
+            //    headers: {
+            //        'Content-Type': 'application/json',
+            //        'Token': getCookie('Token')
+            //    }
+            //}).then(async (response) => {
+            //    if (!response.ok) {
+            //        $(Swal.fire({
+            //            title: 'Error al guardar gestion',
+            //            icon: 'error',
+            //            confirmButtonText: 'OK'
+            //        }));
+            //        return false;
+            //    }
+            //    Swal.fire({
+            //        title: 'Gestion ingresada correctamente!',
+            //        icon: 'success',
+            //        confirmButtonText: 'OK'
+            //    })
+            //});
 
 
             setTimeout(function () {
@@ -465,6 +510,19 @@ var appModalImpagas = new Vue({
                 return false;
             }
 
+            debugger;
+            if ($("#dllSubEstadoCbModalImp").val() == 103 || $("#dllSubEstadoCbModalImp").val() == 106) {
+                if ($('select[name="dllSubEstadoCbModalImp2"] option:selected').text() == "Seleccione...") {
+                    $(Swal.fire({
+                        title: 'Debe seleccionar subestado 2',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    }));
+                    $("#dllSubEstadoCbModalImp2").focus();
+                    return false;
+                }
+            }
+
             if ($('#txtobservacionImp').val() == '') {
                 $(Swal.fire({
                     title: 'Debe ingresar una observación',
@@ -473,6 +531,7 @@ var appModalImpagas = new Vue({
                 }));
                 return false;
             }
+          
 
             const formData = {
                 rut: $('#txtRutImp').val(),
@@ -482,10 +541,35 @@ var appModalImpagas = new Vue({
                 subEstado: $('select[name="dllSubEstadoCbModalImp"] option:selected').text(),
                 observacion: $('#txtobservacionImp').val(),
                 rut_ejecutivo: getCookie('Rut'),
-                oficina: parseInt(getCookie('Oficina')),
+                subestado2: $('select[name="dllSubEstadoCbModalImp2"] option:selected').text(),
             };
 
-            fetch(`http://${motor_api_server}:4002/cobranza-previsional/guarda-gestion-cotizaciones-impagas`, {
+            debugger;
+            $.SecPostJSON(BASE_URL + "/motor/api/CobranzaPrevisional/guarda-gestion-cotizaciones-impagas", formData, function (respuesta) {
+                debugger;
+                Swal.fire({
+                    title: 'Gestion ingresada correctamente!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                })
+
+                $("#divImpagasSubEstado2").css("display", "none");
+                $("#dllSubEstadoCbModalImp2").val(-1);
+
+            }).fail(function (errMsg) {
+                debugger;
+                $.niftyNoty({
+                    type: "danger",
+                    container: "floating",
+                    title: "Avance Tareas",
+                    message: "Tarea No Finalizada, contacte a Soporte!",
+                    closeBtn: true,
+                    timer: 5000
+                });
+
+            });
+
+           /* fetch(`http://${motor_api_server}:4002/cobranza-previsional/guarda-gestion-cotizaciones-impagas`, {
                 method: 'POST',
                 body: JSON.stringify(formData),
                 headers: {
@@ -507,7 +591,7 @@ var appModalImpagas = new Vue({
                     confirmButtonText: 'OK'
                 })
             });
-
+            */
 
             setTimeout(function () {
                 appModalImpagas.obtenerHistorialImpagas($('#txtRutImp').val())
@@ -631,6 +715,19 @@ var appModalDeclarado = new Vue({
                 return false;
             }
 
+
+            if ($("#dllSubEstadoCbModalDec").val() == 103 || $("#dllSubEstadoCbModalDec").val() == 106) {
+                if ($('select[name="dllSubEstadoCbModalDec2"] option:selected').text() == "Seleccione...") {
+                    $(Swal.fire({
+                        title: 'Debe seleccionar subestado 2',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    }));
+                    $("#dllSubEstadoCbModalDec2").focus();
+                    return false;
+                }
+            }
+
             if ($('#txtobservacionDec').val() == '') {
                 $(Swal.fire({
                     title: 'Debe ingresar una observación',
@@ -649,30 +746,55 @@ var appModalDeclarado = new Vue({
                 observacion: $('#txtobservacionDec').val(),
                 rut_ejecutivo: getCookie('Rut'),
                 oficina: parseInt(getCookie('Oficina')),
+                subestado2: $('select[name="dllSubEstadoCbModalDec2"] option:selected').text(),
             };
 
-            fetch(`http://${motor_api_server}:4002/cobranza-previsional/guarda-gestion-cotizaciones-declaradas`, {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Token': getCookie('Token')
-                }
-            }).then(async (response) => {
-                if (!response.ok) {
-                    $(Swal.fire({
-                        title: 'Error al guardar gestion',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    }));
-                    return false;
-                }
+            debugger;
+            $.SecPostJSON(BASE_URL + "/motor/api/CobranzaPrevisional/guarda-gestion-cotizaciones-no-declaradas", formData, function (respuesta) {
+                debugger;
                 Swal.fire({
                     title: 'Gestion ingresada correctamente!',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 })
+                $("#divDecSubEstado2").css("display", "none");
+                $("#dllSubEstadoCbModalDec2").val(-1);
+
+            }).fail(function (errMsg) {
+                debugger;
+                $.niftyNoty({
+                    type: "warning",
+                    container: "floating",
+                    title: "Avance Tareas",
+                    message: "Tarea No Finalizada, contacte a Soporte!",
+                    closeBtn: true,
+                    timer: 5000
+                });
+
             });
+
+            //fetch(`http://${motor_api_server}:4002/cobranza-previsional/guarda-gestion-cotizaciones-declaradas`, {
+            //    method: 'POST',
+            //    body: JSON.stringify(formData),
+            //    headers: {
+            //        'Content-Type': 'application/json',
+            //        'Token': getCookie('Token')
+            //    }
+            //}).then(async (response) => {
+            //    if (!response.ok) {
+            //        $(Swal.fire({
+            //            title: 'Error al guardar gestion',
+            //            icon: 'error',
+            //            confirmButtonText: 'OK'
+            //        }));
+            //        return false;
+            //    }
+            //    Swal.fire({
+            //        title: 'Gestion ingresada correctamente!',
+            //        icon: 'success',
+            //        confirmButtonText: 'OK'
+            //    })
+            //});
 
 
             setTimeout(function () {

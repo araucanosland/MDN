@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net45\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
       <Private>True</Private>
@@ -618,7 +621,7 @@
     <Content Include="Areas\EmpresasPage\Views\ComiteParitario\SeleccionElector.cshtml" />
     <Content Include="Areas\EmpresasPage\Views\Contactabilidad\index.cshtml" />
     <Content Include="Assets\js.App\src\vue-chosen.vue" />
-    <Content Include="Areas\AppPage\Views\CarteraFFVV\Index.cshtml" />
+    <Content Include="Areas\AppPage\Views\CarteraEmpresas\CarteraFFVV\Index.cshtml" />
     <Content Include="Areas\AppPage\Views\Gestion\Ign.cshtml" />
     <Content Include="Areas\AppPage\Views\Seguros\Index.cshtml" />
     <Content Include="Areas\AppPage\Views\Configuraciones\FugaEmpresas.cshtml" />
@@ -790,6 +793,9 @@
     <Folder Include="Areas\EmpresasPage\SampleGeneration\" />
     <Folder Include="Assets\AfiliadoExcel\" />
     <Folder Include="Assets\CargaExcelRRLL\EnvioTaTa\" />
+    <Folder Include="Assets\cobranzaPrevisional\CotImp\" />
+    <Folder Include="Assets\cobranzaPrevisional\DifCot\" />
+    <Folder Include="Assets\cobranzaPrevisional\NoPagadas\" />
     <Folder Include="Views\Afiliados\" />
     <Folder Include="Views\ArchivoGP\" />
     <Folder Include="Views\Buscar\" />

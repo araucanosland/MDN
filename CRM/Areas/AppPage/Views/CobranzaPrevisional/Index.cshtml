@@ -12,13 +12,44 @@
 <link href="~/Assets/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
 <link href="~/Assets/plugins/morris-js/morris.min.css" rel="stylesheet">
 
+<link href="~/Assets/plugins/dropzone/dropzone.min.css" rel="stylesheet">
+<script src="~/Assets/plugins/dropzone/dropzone.min.js"></script>
 
+
+<style>
+
+
+    #overlay {
+        position: fixed; /* Sit on top of the page content */
+        display: none; /* Hidden by default */
+        width: 100%; /* Full width (cover the whole page) */
+        height: 100%; /* Full height (cover the whole page) */
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+        z-index: 9999; /* Specify a stack order in case you're using a different order for other elements */
+        cursor: pointer; /* Add a pointer on hover */
+    }
+
+
+    #text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 40px;
+        color: white;
+        transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+    }
+</style>
 <div id="page-content">
     <div class="tab-base">
         <!--Nav Tabs-->
         <ul class="nav nav-tabs">
             <li class="active">
-                <a data-toggle="tab" href="#tab-diferencia-carga" aria-expanded="true" id="tab_carga" class="tab-principal">CARGA DATOS</a>
+                <a data-toggle="tab" href="#tab-proceso-carga" aria-expanded="true" id="tab_carga" class="tab-principal">CARGA DE NOMINAS</a>
             </li>
             <li class="">
                 <a data-toggle="tab" href="#tab-diferencia-cotiz" aria-expanded="true" id="tab_diferenciaCotiz" class="tab-principal">DIFERENCIAS DE COTIZACIONES</a>
@@ -31,12 +62,186 @@
             </li>
         </ul>
         <div class="tab-content">
-            <div id="tab-diferencia-carga" class="tab-pane fade active in">
+            <div id="tab-proceso-carga" class="tab-pane fade active in">
                 <div class="panel" style="border-radius: 7px;">
-                    <button id="btn_carga" class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#md-carga-Datos" data-backdrop="static" data-keyboard="false">Proceso de Carga</button>
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Proceso de Carga</h3>
+                    </div>
+
+
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#tab-diferencia-carga" aria-expanded="true" id="tab-diferencia" class="tab-principal">Carga Diferencias de cotizaciones</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-impagas-carga" aria-expanded="true" id="tab-impagas" class="tab-principal">Carga Cotizaciones Impagas</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-no-declaradas-carga" aria-expanded="true" id="tab-no-declaradas" class="tab-principal"> Carga Cotizaciones declaradas y no pagadas</a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab-diferencia-carga" class="tab-pane fade active in">
+                            <hr />
+                            <div class="row">
+
+
+                                <input id="radio-diferencias-actualizar-carga" class="magic-radio" type="radio" name="radio-diferencias-actulizar-carga">
+                                <label for="radio-diferencias-actualizar-carga">Actualizar Carga</label>
+
+                                <input id="radio-diferencias-nueva-carga" class="magic-radio" type="radio" name="radio-diferencias-nueva-carga">
+                                <label for="radio-diferencias-nueva-carga">Nueva Carga</label>
+                                <div class="col-lg-12" style="margin-top: -20px; margin-left: 250px;">
+                                    <div class="input-group">
+                                        <button id="btn_carga_Dif_Cotizaciones" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#md-carga-Datos" data-backdrop="static" data-keyboard="false">Diferencia Cotizaciones</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <hr />
+                                <div class="pad-btm">
+
+                                    <div id="pnl-carga" class="col-lg-12">
+                                        <div class="col-lg-12" style="margin-top:20px;">
+                                            <h4>Resumen de Carga</h4>
+                                        </div>
+                                        <table id="tabla-cobranza-previsional" class="table table-bordered table-hover toggle-circle" data-page-size="10">
+                                            <thead>
+                                                <tr>
+                                                    @*<th data-hide="phone">Período Cargado</th>*@
+                                                    <th data-hide="phone">Registros Cargados</th>
+                                                    <th data-hide="phone">Nombre Ejecutivo</th>
+                                                    <th data-hide="phone">Fecha Carga</th>
+                                                    @*<th data-hide="phone">Estado</th>*@
+                                                </tr>
+                                            </thead>
+                                            <tbody id="bdy_datos" style="margin-top:37px"></tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="10">
+
+                                                        <div class="text-right">
+                                                            <ul class="pagination"></ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tab-impagas-carga" class="tab-pane fade">
+                            <hr />
+                            <div class="row">
+
+
+                                <input id="radio-cot-impagas-actualizar-carga" class="magic-radio" type="radio" name="radio-cot-impagas-actualizar-carga">
+                                <label for="radio-cot-impagas-actualizar-carga">Actualizar Carga</label>
+
+                                <input id="radio-cot-impagas-nueva-carga" class="magic-radio" type="radio" name="radio-cot-impagas-nueva-carga">
+                                <label for="radio-cot-impagas-nueva-carga">Nueva Carga</label>
+                                <div class="col-lg-12" style="margin-top: -20px; margin-left: 250px;">
+                                    <div class="input-group">
+                                        <button id="btn_carga_Cot_impagas" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#md-carga-Datos-cot-impagas" data-backdrop="static" data-keyboard="false">Cotizaciones Impagas</button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="panel-body">
+                                <hr />
+                                <div class="pad-btm">
+
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12" style="margin-top:20px;">
+                                            <h4>Resumen de Carga</h4>
+                                        </div>
+                                        <table id="tabla-cot-impagas" class="table table-bordered table-hover toggle-circle" data-page-size="10">
+                                            <thead>
+                                                <tr>
+                                                    @*<th data-hide="phone">Período Cargado</th>*@
+                                                    <th data-hide="phone">Registros Cargados</th>
+                                                    <th data-hide="phone">Nombre Ejecutivo</th>
+                                                    <th data-hide="phone">Fecha Carga</th>
+                                                    @*<th data-hide="phone">Estado</th>*@
+                                                </tr>
+                                            </thead>
+                                            <tbody id="bdy_datos_cot_imp" style="margin-top:37px"></tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="10">
+
+                                                        <div class="text-right">
+                                                            <ul class="pagination"></ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tab-no-declaradas-carga" class="tab-pane fade">
+                            <hr />
+                            <div class="row">
+
+
+                                <input id="radio-no-declaradas-actualizar-carga" class="magic-radio" type="radio" name="radio-no-declaradas-actualizar-carga">
+                                <label for="radio-no-declaradas-actualizar-carga">Actualizar Carga</label>
+
+                                <input id="radio-no-declaradas-nueva-carga" class="magic-radio" type="radio" name="radio-no-declaradas-nueva-carga">
+                                <label for="radio-no-declaradas-nueva-carga">Nueva Carga</label>
+                                <div class="col-lg-12" style="margin-top: -20px; margin-left: 250px;">
+                                    <div class="input-group">
+                                        <button id="btn_carga_no_declaradas" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#md-carga-Datos-no-declaradas" data-backdrop="static" data-keyboard="false">Cotizaciones No Declaradas</button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="panel-body">
+                                <hr />
+                                <div class="pad-btm">
+
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12" style="margin-top:20px;">
+                                            <h4>Resumen de Carga</h4>
+                                        </div>
+                                        <table id="tabla-no-declaradas" class="table table-bordered table-hover toggle-circle" data-page-size="10">
+                                            <thead>
+                                                <tr>
+                                                    @*<th data-hide="phone">Período Cargado</th>*@
+                                                    <th data-hide="phone">Registros Cargados</th>
+                                                    <th data-hide="phone">Nombre Ejecutivo</th>
+                                                    <th data-hide="phone">Fecha Carga</th>
+                                                    @*<th data-hide="phone">Estado</th>*@
+                                                </tr>
+                                            </thead>
+                                            <tbody id="bdy_datos_no_declaradas" style="margin-top:37px"></tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="10">
+
+                                                        <div class="text-right">
+                                                            <ul class="pagination"></ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
             <div id="tab-diferencia-cotiz" class="tab-pane">
                 <div class="panel" style="border-radius: 7px;">
                     <div class="panel-heading">
@@ -173,9 +378,7 @@
                                                 <input class="form-control numero" type="text" :value="dataModal.asfan_aceptado" disabled>
                                             </div>
                                         </div>
-
                                     </div>
-
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="form-group">
@@ -183,7 +386,6 @@
                                                 <input class="form-control numero" type="text" :value="dataModal.diferencia_asfan" disabled>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label class="control-label">Cotización Informada Empresa (C)</label>
@@ -197,7 +399,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="form-group">
@@ -235,18 +436,25 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label class="control-label">SUB-ESTADO</label>
-                                                <select class="form-control" id="dllSubEstadoCbModal" name="dllSubEstadoCbModal" v-model="modelos.subEstadosModal">
+                                                <select class="form-control" id="dllSubEstadoCbModal" name="dllSubEstadoCbModal"  v-model="modelos.subEstadosModal" >
                                                     <option value="">Seleccione...</option>
                                                     <option v-for="subEstadoModal in filtros.subEstadosModal" :value="subEstadoModal.id">{{subEstadoModal.nombre}}</option>
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-sm-4" id="divSubEstado2" style="display:none">
+                                            <div class="form-group">
+                                                <label class="control-label">SUB-ESTADO 2</label>
+                                                <select class="form-control" id="dllSubEstadoCbModal2" name="dllSubEstadoCbModal2" >
+                                                </select>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">OBSERVACION</label>
                                         <textarea rows="3" id="txtobservacionDiferencia" name="txtobservacionDiferencia" class="form-control"></textarea>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -281,6 +489,7 @@
         </div>
     </div>
 </div>
+
 <div id="modal_impagas" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="border-radius: 9px;">
@@ -349,9 +558,7 @@
                                                 <input class="form-control numero" type="text" :value="dataModal.meses_impagos" disabled>
                                             </div>
                                         </div>
-
                                     </div>
-
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="form-group">
@@ -360,7 +567,6 @@
                                             </div>
                                         </div>
                                     </div>
-
 
                                 </div>
                             </div>
@@ -385,12 +591,17 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-sm-4" id="divImpagasSubEstado2" style="display:none">
+                                            <div class="form-group">
+                                                <label class="control-label">SUB-ESTADO 2</label>
+                                                <select class="form-control" id="dllSubEstadoCbModalImp2" name="dllSubEstadoCbModalImp2"></select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">OBSERVACION</label>
                                         <textarea rows="3" id="txtobservacionImp" name="txtobservacionImp" class="form-control"></textarea>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -425,6 +636,7 @@
         </div>
     </div>
 </div>
+
 <div id="modal_declarada" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="border-radius: 9px;">
@@ -486,9 +698,7 @@
                                                 <input class="form-control" type="text" :value="dataModal.periodo_cot" disabled>
                                             </div>
                                         </div>
-
                                     </div>
-
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="form-group">
@@ -496,7 +706,6 @@
                                                 <input class="form-control" type="text" :value="dataModal.fecha_declaracion" disabled>
                                             </div>
                                         </div>
-
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label class="control-label">RENTA FONASA</label>
@@ -510,7 +719,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="form-group">
@@ -531,7 +739,6 @@
                                             </div>
                                         </div>
                                     </div>
-
 
                                     <div class="row">
                                         <div class="col-sm-4">
@@ -559,7 +766,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="panel" style="border-radius: 7px;">
@@ -583,12 +789,18 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-sm-4" id="divDecSubEstado2" style="display:none">
+                                            <div class="form-group">
+                                                <label class="control-label">SUB-ESTADO 2</label>
+                                                <select class="form-control" id="dllSubEstadoCbModalDec2" name="dllSubEstadoCbModalDec2" ></select>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">OBSERVACION</label>
                                         <textarea rows="3" id="txtobservacionDec" name="txtobservacionDec" class="form-control"></textarea>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -624,40 +836,102 @@
     </div>
 </div>
 
-<div id="md-carga-Datos" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-hidden="true">
 
+
+
+<div id="md-carga-Datos" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="border-radius: 6px;">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
-                <h4 class="modal-title">Cargar Proceso COMPIN</h4>
+                <h4 class="modal-title">Cargar Proceso Diferencia de Cotizaciones </h4>
             </div>
-            <form id="form_registro_anexoUpCompin" action="#" method="post">
+            <form id="form_registro_anexoUp" action="#" method="post">
                 <div class="panel-body">
+
                     <div class="panel panel-bordered-primary" id="panel_Carga" style="border-color: #e6e6e6;">
                         <div class="panel-body">
-
-                            <div id="dzMainCompin" class="dropzone demo-dropzone">
+                            <div id="dzMain" class="dropzone demo-dropzone">
                                 <div class="dz-default dz-message">
                                     <div class="dz-icon">
                                         <i class="demo-pli-upload-to-cloud icon-5x"></i>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
 
 
-
-
                 </div>
-
             </form>
         </div>
     </div>
 </div>
 
+
+<div id="md-carga-Datos-cot-impagas" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 6px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title">Cargar Proceso Cotizaciones Impagas </h4>
+            </div>
+            <form id="form_registro_cot_impagas" action="#" method="post">
+                <div class="panel-body">
+
+                    <div class="panel panel-bordered-primary" style="border-color: #e6e6e6;">
+                        <div class="panel-body">
+                            <div id="dzMainImpagas" class="dropzone demo-dropzone">
+                                <div class="dz-default dz-message">
+                                    <div class="dz-icon">
+                                        <i class="demo-pli-upload-to-cloud icon-5x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="md-carga-Datos-no-declaradas" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 6px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
+                <h4 class="modal-title">Cargar Proceso Cotizaciones No Declaradas </h4>
+            </div>
+            <form id="form_registro_no_declaradas" action="#" method="post">
+                <div class="panel-body">
+
+                    <div class="panel panel-bordered-primary" style="border-color: #e6e6e6;">
+                        <div class="panel-body">
+                            <div id="dzMainNodeclaradas" class="dropzone demo-dropzone">
+                                <div class="dz-default dz-message">
+                                    <div class="dz-icon">
+                                        <i class="demo-pli-upload-to-cloud icon-5x"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="overlay">
+    <div id="text">Validando Informe, por favor espere...</div>
+</div>
 @section script{
     <script src="~/Assets/js/vue.js"></script>
     <script src="~/Assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
@@ -667,24 +941,125 @@
     <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
     <script src="~/Assets/plugins/bootstrap-table/bootstrap-table.min.js"></script>
     <script src="~/Assets/plugins/bootstrap-table/locale/bootstrap-table-es-ES.min.js"></script>
-    <script src="~/Assets/plugins/chosen/chosen.jquery.min.js"></script>
     <script src="~/Assets/plugins/switchery/switchery.min.js"></script>
     <script src="~/Assets/plugins/bootbox/bootbox.min.js"></script>
     <script src="~/Assets/tam/deps/sweetalert.js"></script>
     <script src="~/Assets/plugins/morris-js/morris.min.js"></script>
     <script src="~/Assets/plugins/morris-js/raphael-js/raphael.min.js"></script>
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <script src="~/Assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
     <script src="~/Assets/js.App/src/cobranza-previsional.js?g=@Guid.NewGuid().ToString()"></script>
 
+}
+<script>
 
-}<script>
-    //----------------DROP ZONE TATA
+    var carga = {
+        cargaListaResumen: function (codigo, estado) {
+            $("#bdy_datos").html("");
+            $.SecGetJSON(BASE_URL + "/motor/api/CobranzaPrevisional/lista-Resumen", { codigo, estado }, function (respuesta) {
+
+                $.each(respuesta, function (i, e) {
+
+                    $("#bdy_datos").append(
+                        $("<tr>")
+                            //.append($("<td>").html(e.Periodo))
+                            .append($("<td>").html(e.Linea))
+                            .append($("<td>").html(e.NombreEjecutivo))
+                            .append($("<td>").html(e.FechaCarga.toFecha()))
+                            //.append($("<td>").html(e.Falla))
+
+
+
+                    );
+
+                });
+
+            });
+
+        },
+        cargaListaResumenCotImpagas: function (codigo, estado) {
+            $("#bdy_datos_cot_imp").html("");
+            $.SecGetJSON(BASE_URL + "/motor/api/CobranzaPrevisional/lista-Resumen", { codigo, estado }, function (respuesta) {
+                $.each(respuesta, function (i, e) {
+                    $("#bdy_datos_cot_imp").append(
+                        $("<tr>")
+                            //.append($("<td>").html(e.Periodo))
+                            .append($("<td>").html(e.Linea))
+                            .append($("<td>").html(e.NombreEjecutivo))
+                            .append($("<td>").html(e.FechaCarga.toFecha()))
+                            //.append($("<td>").html(e.Falla))
+                    );
+                });
+            });
+        },
+        cargaListaResumenNoPagadas: function (codigo, estado) {
+            $("#bdy_datos_no_declaradas").html("");
+            $.SecGetJSON(BASE_URL + "/motor/api/CobranzaPrevisional/lista-Resumen", { codigo, estado }, function (respuesta) {
+                $.each(respuesta, function (i, e) {
+                    $("#bdy_datos_no_declaradas").append(
+                        $("<tr>")
+                            //.append($("<td>").html(e.Periodo))
+                            .append($("<td>").html(e.Linea))
+                            .append($("<td>").html(e.NombreEjecutivo))
+                            .append($("<td>").html(e.FechaCarga.toFecha()))
+                            //.append($("<td>").html(e.Falla))
+                    );
+                });
+            });
+        },
+        CargaComboSubEstados: function (IdSubPadre) {
+            debugger;
+            $.SecGetJSON(BASE_URL + "/motor/api/CobranzaPrevisional/lista-subMenu-2",{ IdSubPadre }, function (datos) {
+                debugger;
+                $("#dllSubEstadoCbModal2").html("");
+                $("#dllSubEstadoCbModal2").append($("<option>").val("-1").html("Seleccione...").data("id", "-1").data("nombre", "Seleccione..."));
+                $.each(datos, function (i, estado) {
+
+                    $("#dllSubEstadoCbModal2").append($("<option>").val(estado.Id).html(estado.Nombre).data("id", estado.Id).data("nombre", estado.Nombre));
+                });
+
+            });
+        },
+        CargaComboSubEstadosImpagas: function (IdSubPadre) {
+            debugger;
+            $.SecGetJSON(BASE_URL + "/motor/api/CobranzaPrevisional/lista-subMenu-2", { IdSubPadre }, function (datos) {
+                debugger;
+                $("#dllSubEstadoCbModalImp2").html("");
+                $("#dllSubEstadoCbModalImp2").append($("<option>").val("-1").html("Seleccione...").data("id", "-1").data("nombre", "Seleccione..."));
+                $.each(datos, function (i, estado) {
+
+                    $("#dllSubEstadoCbModalImp2").append($("<option>").val(estado.Id).html(estado.Nombre).data("id", estado.Id).data("nombre", estado.Nombre));
+                });
+
+            });
+        },
+        CargaComboSubEstadosNoDeclaradas: function (IdSubPadre) {
+            debugger;
+            $.SecGetJSON(BASE_URL + "/motor/api/CobranzaPrevisional/lista-subMenu-2", { IdSubPadre }, function (datos) {
+                
+                $("#dllSubEstadoCbModalDec2").html("");
+                $("#dllSubEstadoCbModalDec2").append($("<option>").val("-1").html("Seleccione...").data("id", "-1").data("nombre", "Seleccione..."));
+                $.each(datos, function (i, estado) {
+                    debugger;
+                    $("#dllSubEstadoCbModalDec2").append($("<option>").val(estado.Id).html(estado.Nombre).data("id", estado.Id).data("nombre", estado.Nombre));
+                });
+
+            });
+        },
+    }
+
+
+
+    //----------------DROP ZONE Diferencia cotizacion
+
     Dropzone.autoDiscover = false;
     var myDropzone = new Dropzone("div#dzMain", {
         url: "#",
         maxFiles: 1,
         uploadMultiple: false,
         maxFilesize: 15,
-        acceptedFiles: '.csv'
+        acceptedFiles: '.csv',
+
     });
     myDropzone.on("addedfile", function (file) {
         document.getElementById("overlay").style.display = "block";
@@ -692,21 +1067,552 @@
 
     myDropzone.on("complete", function (file) {
 
+        var hoy = new Date();
+        var periodo = (hoy.getMonth() + 1).toString().paddingLeft("00") + hoy.getFullYear().toString();
         document.getElementById("overlay").style.display = "none";
         myDropzone.removeFile(file);
+        $('#md-carga-Datos').modal('hide');
 
-        $("#pnl-carga-busqueda").show();
-        //$("#panel_Carga_Excel").hide();
-        $('#demo-lg-modal-CargaExcel').modal('hide');
-        cargador.CargaDatosTablaTab2ExcelRRLL("", "Todos");
+        let mensajeValidacion = ""
+
+        if ($('#radio-diferencias-actualizar-carga').prop('checked')) {
+            mensajeValidacion = "Al realizar una nueva carga se reemplazarán los datos actuales. La información actual quedará en una tabla histórica.";
+        }
+
+        if ($('#radio-diferencias-nueva-carga').prop('checked')) {
+            mensajeValidacion = "Al actualizar la carga se modifican los datos actuales y se agregan registros de empresas no cargados anteriormente.";
+
+        }
+
+
+        bootbox.confirm({
+            size: "medium",
+            title: "Validación de Informe Correcta",
+            message: `${mensajeValidacion}`,
+            buttons: {
+                confirm: {
+                    label: 'Si, estoy seguro/a ',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No, no estoy seguro/a',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                debugger;
+                var tipoProceso = "";
+                if ($('#radio-diferencias-actualizar-carga').prop('checked') == true) {
+                    tipoProceso = "Actualizar";
+                } else {
+                    tipoProceso = "Nueva";
+                }
+
+
+                if (result) {
+                    var WebProceso = {
+                        Codigo: 1,
+                        Token: getCookie("Token"),
+                        TipoProceso: tipoProceso
+                    }
+
+                    $.SecPostJSON(BASE_URL + "/motor/api/CobranzaPrevisional/proceso-carga-diferencias", WebProceso, function (respuesta) {
+
+                        $.niftyNoty({
+                            type: 'success',
+                            icon: 'pli-like-2 icon-2x',
+                            message: 'Informe Diferencia Cotizaciones Cargado Correctamente.',
+                            container: 'floating',
+                            timer: 3000,
+                            onHidden: function () {
+                                carga.cargaListaResumen(1, "Todas");
+                            }
+                        });
+                    });
+
+                }
+            }
+        });
 
     });
 
-    $('#md-carga-Datos').on('show.bs.modal', function (event) {
+    myDropzone.on("error", function (file, response) {
 
-        myDropzone2.options.url = "/motor/api/Licencias/carga-Compin-dropzone";
+        document.getElementById("overlay").style.display = "none";
+        myDropzone.removeFile(file);
+        $('#md-carga-Datos').modal('hide');
+
+        if (response == "You can't upload files of this type.") {
+            $.niftyNoty({
+                type: 'danger',
+                message: '<strong>Error..</strong><li>El Archivo debe tener formato csv</li>',
+                container: 'floating',
+                timer: 4000
+            });
+        } else {
+            $.niftyNoty({
+                type: 'danger',
+                message: `<strong>Error..</strong>${response.Message}`,
+                container: 'floating',
+                timer: 10000
+            });
+        }
+
 
     });
 
 
-    </script>
+    //----------------DROP ZONE cotizacon Impagas
+
+    Dropzone.autoDiscover = false;
+    var myDropzoneImpagas = new Dropzone("div#dzMainImpagas", {
+        url: "#",
+        maxFiles: 1,
+        uploadMultiple: false,
+        maxFilesize: 15,
+        acceptedFiles: '.csv'
+    });
+    myDropzoneImpagas.on("addedfile", function (file) {
+        document.getElementById("overlay").style.display = "block";
+    });
+
+    myDropzoneImpagas.on("complete", function (file) {
+        debugger;
+        var hoy = new Date();
+        var periodo = (hoy.getMonth() + 1).toString().paddingLeft("00") + hoy.getFullYear().toString();
+        document.getElementById("overlay").style.display = "none";
+        myDropzoneImpagas.removeFile(file);
+        $('#md-carga-Datos-cot-impagas').modal('hide');
+
+
+        let mensajeValidacion = ""
+
+        if ($('#radio-cot-impagas-actualizar-carga').prop('checked')) {
+            mensajeValidacion = "Al realizar una nueva carga se reemplazarán los datos actuales. La información actual quedará en una tabla histórica.";
+        }
+
+        if ($('#radio-cot-impagas-nueva-carga').prop('checked')) {
+            mensajeValidacion = "Al actualizar la carga se modifican los datos actuales y se agregan registros de empresas no cargados anteriormente.";
+
+        }
+
+
+        bootbox.confirm({
+            size: "medium",
+            title: "Validación Correcta",
+            message: `${mensajeValidacion}`,
+            buttons: {
+                confirm: {
+                    label: 'Si, estoy seguro/a ',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No, no estoy seguro/a',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                debugger;
+                var tipoProceso = "";
+                if ($('#radio-cot-impagas-actualizar-carga').prop('checked') == true) {
+                    tipoProceso = "Actualizar";
+                } else {
+                    tipoProceso = "Nueva";
+                }
+                if (result) {
+                    var WebProceso = {
+                        Codigo: 2,
+                        Token: getCookie("Token"),
+                        TipoProceso : tipoProceso
+                    }
+                    debugger;
+                    $.SecPostJSON(BASE_URL + "/motor/api/CobranzaPrevisional/proceso-carga-datos-cot-impagas", WebProceso, function (respuesta) {
+
+                        $.niftyNoty({
+                            type: 'success',
+                            icon: 'pli-like-2 icon-2x',
+                            message: 'Informe Cotizaciones Impagas Cargado Correctamente.',
+                            container: 'floating',
+                            timer: 3000,
+                            onHidden: function () {
+                                carga.cargaListaResumenCotImpagas(2, "Todas");
+                            }
+                        });
+                    });
+
+                }
+            }
+        });
+
+    });
+
+    myDropzoneImpagas.on("error", function (file, response) {
+
+        document.getElementById("overlay").style.display = "none";
+        myDropzoneImpagas.removeFile(file);
+        $('#md-carga-Datos-cot-impagas').modal('hide');
+        if (response == "You can't upload files of this type.") {
+            $.niftyNoty({
+                type: 'danger',
+                message: '<strong>Error..</strong><li>El Archivo debe tener formato csv</li>',
+                container: 'floating',
+                timer: 4000
+            });
+        } else {
+            
+            $.niftyNoty({
+                type: 'danger',
+                message: `<strong>Error..</strong>${response.Message}`,
+                container: 'floating',
+                timer: 10000
+            });
+        }
+    });
+
+
+
+    //----------------DROP ZONE cotizacon No declaradas
+
+    Dropzone.autoDiscover = false;
+    var myDropzoneNoDeclaradas = new Dropzone("div#dzMainNodeclaradas", {
+        url: "#",
+        maxFiles: 1,
+        uploadMultiple: false,
+        maxFilesize: 15,
+        acceptedFiles: '.csv'
+    });
+    myDropzoneNoDeclaradas.on("addedfile", function (file) {
+        document.getElementById("overlay").style.display = "block";
+    });
+
+    myDropzoneNoDeclaradas.on("complete", function (file) {
+        debugger;
+        var hoy = new Date();
+        var periodo = (hoy.getMonth() + 1).toString().paddingLeft("00") + hoy.getFullYear().toString();
+        document.getElementById("overlay").style.display = "none";
+        myDropzoneNoDeclaradas.removeFile(file);
+        $('#md-carga-Datos-no-declaradas').modal('hide');
+
+        
+        let mensajeValidacion = ""
+
+        if ($('#radio-no-declaradas-actualizar-carga').prop('checked')) {
+            mensajeValidacion = "Al realizar una nueva carga se reemplazarán los datos actuales. La información actual quedará en una tabla histórica.";
+        }
+
+        if ($('#radio-no-declaradas-nueva-carga').prop('checked')) {
+            mensajeValidacion = "Al actualizar la carga se modifican los datos actuales y se agregan registros de empresas no cargados anteriormente.";
+
+        }
+
+
+        bootbox.confirm({
+            size: "medium",
+            title: "Validación Correcta",
+            message: `${mensajeValidacion}`,
+            buttons: {
+                confirm: {
+                    label: 'Si, estoy seguro/a ',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'No, no estoy seguro/a',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                debugger;
+                var tipoProceso = "";
+                if ($('#radio-no-declaradas-actualizar-carga').prop('checked') == true) {
+                    tipoProceso = "Actualizar";
+                } else {
+                    tipoProceso = "Nueva";
+                }
+                if (result) {
+                    var WebProceso = {
+                        Codigo: 3,
+                        Token: getCookie("Token"),
+                        TipoProceso: tipoProceso
+                    }
+                    debugger;
+                    $.SecPostJSON(BASE_URL + "/motor/api/CobranzaPrevisional/proceso-carga-no-declaradas", WebProceso, function (respuesta) {
+
+                        $.niftyNoty({
+                            type: 'success',
+                            icon: 'pli-like-2 icon-2x',
+                            message: 'Informe Cotizaciones No Declaradas Cargado Correctamente.',
+                            container: 'floating',
+                            timer: 3000,
+                            onHidden: function () {
+                                carga.cargaListaResumenNoPagadas(3, "Todas");
+                            }
+                        });
+                    });
+
+                }
+            }
+        });
+
+    });
+
+    myDropzoneNoDeclaradas.on("error", function (file, response) {
+        debugger;
+        document.getElementById("overlay").style.display = "none";
+        myDropzoneNoDeclaradas.removeFile(file);
+        $('#md-carga-Datos-no-declaradas').modal('hide');
+        if (response == "You can't upload files of this type.") {
+            $.niftyNoty({
+                type: 'danger',
+                message: '<strong>Error..</strong><li>El Archivo debe tener formato csv</li>',
+                container: 'floating',
+                timer: 4000
+            });
+        } else {
+            $.niftyNoty({
+                type: 'danger',
+                message: `<strong>Error..</strong>${response.Message}`,
+                container: 'floating',
+                timer: 4000
+            });
+        }
+    });
+
+
+
+    $(function () {
+
+        //$('#radio-diferencias-actualizar-carga').prop('checked', false);
+        //$('#radio-diferencias-nueva-carga').prop('checked', false);
+
+
+
+        $('#dllSubEstadoCbModal').on('change', function (event) {
+            debugger;
+
+            if ($('#dllSubEstadoCbModal').val() == 103 || $('#dllSubEstadoCbModal').val() == 106) {
+                $('#divSubEstado2').css('display', 'block');
+                carga.CargaComboSubEstados($('#dllSubEstadoCbModal').val());
+
+            }
+            else {
+                $('#divSubEstado2').css('display', 'none');
+            }
+           
+        });
+
+        $('#dllSubEstadoCbModalImp').on('change', function (event) {
+            debugger;
+
+            if ($('#dllSubEstadoCbModalImp').val() == 103 || $('#dllSubEstadoCbModalImp').val() == 106) {
+                $('#divImpagasSubEstado2').css('display', 'block');
+                carga.CargaComboSubEstadosImpagas($('#dllSubEstadoCbModalImp').val());
+
+            }
+            else {
+                $('#divImpagasSubEstado2').css('display', 'none');
+            }
+
+        });
+
+
+        $('#dllSubEstadoCbModalDec').on('change', function (event) {
+            debugger;
+
+            if ($('#dllSubEstadoCbModalDec').val() == 103 || $('#dllSubEstadoCbModalDec').val() == 106) {
+                $('#divDecSubEstado2').css('display', 'block');
+                carga.CargaComboSubEstadosNoDeclaradas($('#dllSubEstadoCbModalDec').val());
+
+            }
+            else {
+                $('#divDecSubEstado2').css('display', 'none');
+            }
+
+        });
+
+
+        
+
+
+
+        //---carga lista resumen
+        carga.cargaListaResumen(1, "Todas");
+        carga.cargaListaResumenCotImpagas(2, "Todas");
+        carga.cargaListaResumenNoPagadas(3, "Todas");
+
+
+        //---------Diferencias de Cotizaciones---------
+
+        $('#radio-diferencias-actualizar-carga').on('change', function (event) {
+            if ($('#radio-diferencias-actualizar-carga').prop('checked')) {
+                $('#radio-diferencias-actualizar-carga').prop("checked", true);
+                $('#radio-diferencias-nueva-carga').prop("checked", false);
+            }
+        });
+
+        $('#radio-diferencias-nueva-carga').on('change', function (event) {
+            if ($('#radio-diferencias-nueva-carga').prop('checked')) {
+                $('#radio-diferencias-actualizar-carga').prop("checked", false);
+                $('#radio-diferencias-nueva-carga').prop("checked", true);
+            }
+        });
+
+
+        $('#md-carga-Datos').on('show.bs.modal', function (event) {
+            debugger;
+            if ($('#radio-diferencias-actualizar-carga').prop('checked') == false && $('#radio-diferencias-nueva-carga').prop('checked') == false) {
+
+                $.niftyNoty({
+                    type: 'danger',
+                    message: `<strong>Error..</strong><li>Debe seleccionar tipo de carga Nueva o Actualizar</li>`,
+                    container: 'floating',
+                    timer: 4000
+                });
+                $('#radio-diferencias-nueva-carga').focus();
+                return false;
+
+            }
+            /* if ($('#radio-diferencias-actualizar-carga').prop('checked') == true) {
+                 $.SecGetJSON(BASE_URL + "/motor/api/CobranzaPrevisional/valida-mes-contable-cargado-activo", { Proceso: 1, Estado: 'Activo' }, function (datos) {
+                     debugger;
+                     if (datos == 0) {
+                         $.niftyNoty({
+                             type: 'danger',
+                             message: `<strong>Error..</strong><li>No puede actualizar Informe, debe realizar una nueva carga</li>`,
+                             container: 'floating',
+                             timer: 4000
+                         });
+                         $('#md-carga-Datos').modal('hide');
+                         $('#radio-diferencias-nueva-carga').focus();
+                         return false;
+
+                     }
+                 });
+
+             }*/
+
+            let eventocarga = event.relatedTarget.id;
+
+            let tipoProceso = "";
+            if ($('#radio-diferencias-nueva-carga').prop('checked') == true) {
+                tipoProceso = 'Nueva';
+            } else {
+                tipoProceso = 'Actualiza';
+            }
+            myDropzone.options.url = "/motor/api/CobranzaPrevisional/carga-datos-dropzone-diferencias/" + tipoProceso;
+        });
+
+      
+
+        $('#modal_cobranza').on('show.bs.modal', function (event) {
+            $("#divSubEstado2").css("display", "none");
+            $("#dllSubEstadoCbModal2").val(-1);
+        });
+
+         //--------Cotizaciones Impagas------------------
+
+        
+        $('#modal_impagas').on('show.bs.modal', function (event) {
+            $("#divImpagasSubEstado2").css("display", "none");
+            $("#dllSubEstadoCbModalImp2").val(-1);
+        });
+        
+        $('#radio-cot-impagas-actualizar-carga').on('change', function (event) {
+            if ($('#radio-cot-impagas-actualizar-carga').prop('checked')) {
+                $('#radio-cot-impagas-actualizar-carga').prop("checked", true);
+                $('#radio-cot-impagas-nueva-carga').prop("checked", false);
+            }
+        });
+
+        $('#radio-cot-impagas-nueva-carga').on('change', function (event) {
+            if ($('#radio-cot-impagas-nueva-carga').prop('checked')) {
+                $('#radio-cot-impagas-actualizar-carga').prop("checked", false);
+                $('#radio-cot-impagas-nueva-carga').prop("checked", true);
+            }
+        });
+
+
+        $('#md-carga-Datos-cot-impagas').on('show.bs.modal', function (event) {
+
+            debugger;
+            if ($('#radio-cot-impagas-actualizar-carga').prop('checked') == false && $('#radio-cot-impagas-nueva-carga').prop('checked') == false) {
+
+                $.niftyNoty({
+                    type: 'danger',
+                    message: `<strong>Error..</strong><li>Debe seleccionar tipo de carga Nueva o Actualizar</li>`,
+                    container: 'floating',
+                    timer: 4000
+                });
+                $('#radio-cot-impagas-nueva-carga').focus();
+                return false;
+            }
+
+            let tipoProceso = "";
+            if ($('#radio-cot-impagas-nueva-carga').prop('checked') == true) {
+                tipoProceso = 'Nueva';
+            } else {
+                tipoProceso = 'Actualiza';
+            }
+
+            let eventocarga = event.relatedTarget.id;
+            myDropzoneImpagas.options.url = "/motor/api/CobranzaPrevisional/carga-datos-dropzone-cot-impagas/" + tipoProceso;
+
+        });
+
+
+        //----------Cotizaciones No Declaradas-----------
+
+        $('#radio-no-declaradas-actualizar-carga').on('change', function (event) {
+            if ($('#radio-no-declaradas-actualizar-carga').prop('checked')) {
+                $('#radio-no-declaradass-actualizar-carga').prop("checked", true);
+                $('#radio-no-declaradas-nueva-carga').prop("checked", false);
+            }
+        });
+
+        $('#radio-no-declaradas-nueva-carga').on('change', function (event) {
+            if ($('#radio-no-declaradas-nueva-carga').prop('checked')) {
+                $('#radio-no-declaradas-actualizar-carga').prop("checked", false);
+                $('#radio-no-declaradas-nueva-carga').prop("checked", true);
+            }
+        });
+
+        $('#md-carga-Datos-no-declaradas').on('show.bs.modal', function (event) {
+
+            debugger;
+            if ($('#radio-no-declaradas-actualizar-carga').prop('checked') == false && $('#radio-no-declaradas-nueva-carga').prop('checked') == false) {
+
+                $.niftyNoty({
+                    type: 'danger',
+                    message: `<strong>Error..</strong><li>Debe seleccionar tipo de carga Nueva o Actualizar</li>`,
+                    container: 'floating',
+                    timer: 4000
+                });
+                $('#radio-no-declaradas-nueva-carga').focus();
+                return false;
+            }
+
+            let tipoProceso = "";
+            if ($('#radio-no-declaradas-nueva-carga').prop('checked') == true) {
+                tipoProceso = 'Nueva';
+            } else {
+                tipoProceso = 'Actualiza';
+            }
+
+            let eventocarga = event.relatedTarget.id;
+            myDropzoneNoDeclaradas.options.url = "/motor/api/CobranzaPrevisional/carga-datos-dropzone-no-declaradas/" + tipoProceso;
+
+        });
+
+        $('#modal_declarada').on('show.bs.modal', function (event) {
+            $("#divDecSubEstado2").css("display", "none");
+            $("#dllSubEstadoCbModalDec2").val(-1);
+        });
+
+     
+
+
+
+    });
+
+
+
+</script>

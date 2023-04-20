@@ -55,6 +55,7 @@
     <Compile Include="CargaExcelRRLLEntity.cs" />
     <Compile Include="CargasFamiliaresEntity.cs" />
     <Compile Include="CarteraFFVVEntity.cs" />
+    <Compile Include="CobranzaPrevisionalEntity.cs" />
     <Compile Include="ContrasenaEntity.cs" />
     <Compile Include="CargoEntity.cs" />
     <Compile Include="CarteraEmpresaEntity.cs" />
