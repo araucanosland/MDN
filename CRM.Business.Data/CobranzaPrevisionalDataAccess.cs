@@ -26,6 +26,25 @@ namespace CRM.Business.Data
 
 
 
+        public static int ValidaUsuarioCarga(string Rutejecutivo)
+        {
+            try
+            {
+                Parametros parametros = new Parametros()
+            {
+                new Parametro("@RutEjecutivo", Rutejecutivo),
+         
+            };
+                return DBHelper.InstanceCRM.ObtenerEscalar<int>("previsional.sp_Valida_Usuario_Carga", parametros);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
+
         public static string ValidaListaResumen(int Codigo, string Estado, int Periodo)
         {
             try
@@ -301,6 +320,7 @@ namespace CRM.Business.Data
                 new Parametro("@AsignacionFamiliar",data.AsignacionFamiliar),
                 new Parametro("@MontoDeclarado",data.MontoDeclarado),
                 new Parametro("@TotalTrabajadores",data.TotalTrabajadores),
+                new Parametro("@EstadoPlanilla",data.EstadoPlanilla),
                 new Parametro("@Estado",data.Estado)
 
         };

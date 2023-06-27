@@ -31,7 +31,7 @@ var appCobranzaPrev = new Vue({
     methods: {
 
         obtenerEstados() {
-            debugger;
+            
             let padre = 0;
             fetch(`http://${motor_api_server}:4002/cobranza-previsional/lista-estados/${padre}`, {
                 method: 'GET',
@@ -44,7 +44,7 @@ var appCobranzaPrev = new Vue({
                 });
         },
         obtenerSubEstados(padre) {
-            debugger;
+           
             fetch(`http://${motor_api_server}:4002/cobranza-previsional/lista-estados/${padre}`, {
                 method: 'GET',
                 mode: 'cors',
@@ -318,6 +318,15 @@ var appModalDiferencia = new Vue({
                 }));
                 return false;
             }
+           
+            if ($('#txtobservacionDiferencia').val().length < 10) {
+                $(Swal.fire({
+                    title: 'Debe ingresar al menos 10 caractéres en campo observación',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                }));
+                return false;
+            }
 
             const formData = {
                 rut: $('#txtRutDif').val(),
@@ -331,9 +340,9 @@ var appModalDiferencia = new Vue({
                 subestado2: $('select[name="dllSubEstadoCbModal2"] option:selected').text(),
             };
 
-            debugger;
+          
             $.SecPostJSON(BASE_URL + "/motor/api/CobranzaPrevisional/guarda-gestion-diferencia-cotizacion", formData, function (respuesta) {
-                debugger;
+             
                 Swal.fire({
                     title: 'Gestion ingresada correctamente!',
                     icon: 'success',
@@ -344,7 +353,7 @@ var appModalDiferencia = new Vue({
                 $("#dllSubEstadoCbModal2").val(-1);
 
             }).fail(function (errMsg) {
-                debugger;
+               
                 $.niftyNoty({
                     type: "warning",
                     container: "floating",
@@ -510,7 +519,7 @@ var appModalImpagas = new Vue({
                 return false;
             }
 
-            debugger;
+    
             if ($("#dllSubEstadoCbModalImp").val() == 103 || $("#dllSubEstadoCbModalImp").val() == 106) {
                 if ($('select[name="dllSubEstadoCbModalImp2"] option:selected').text() == "Seleccione...") {
                     $(Swal.fire({
@@ -531,7 +540,15 @@ var appModalImpagas = new Vue({
                 }));
                 return false;
             }
-          
+            if ($('#txtobservacionImp').val().length < 10) {          
+                $(Swal.fire({
+                    title: 'Debe ingresar al menos 10 caractéres en campo observación',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                }));
+                return false;
+            }
+
 
             const formData = {
                 rut: $('#txtRutImp').val(),
@@ -544,9 +561,9 @@ var appModalImpagas = new Vue({
                 subestado2: $('select[name="dllSubEstadoCbModalImp2"] option:selected').text(),
             };
 
-            debugger;
+       
             $.SecPostJSON(BASE_URL + "/motor/api/CobranzaPrevisional/guarda-gestion-cotizaciones-impagas", formData, function (respuesta) {
-                debugger;
+               
                 Swal.fire({
                     title: 'Gestion ingresada correctamente!',
                     icon: 'success',
@@ -557,7 +574,7 @@ var appModalImpagas = new Vue({
                 $("#dllSubEstadoCbModalImp2").val(-1);
 
             }).fail(function (errMsg) {
-                debugger;
+             
                 $.niftyNoty({
                     type: "danger",
                     container: "floating",
@@ -612,6 +629,9 @@ var appModalImpagas = new Vue({
         }
     }
 });
+
+
+
 $('#modal_impagas').on('show.bs.modal', async (event) => {
     let dv = $(event.relatedTarget).data('dv')
     let rut = $(event.relatedTarget).data('rut')
@@ -691,6 +711,7 @@ var appModalDeclarado = new Vue({
             })
                 .then(response => response.json())
                 .then(datos => {
+             
                     this.dataModalHist = datos;
                     return datos
                 })
@@ -736,6 +757,16 @@ var appModalDeclarado = new Vue({
                 }));
                 return false;
             }
+           
+            if ($('#txtobservacionDec').val().length < 10) {
+                $(Swal.fire({
+                    title: 'Debe ingresar al menos 10 caractéres en campo observación',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                }));
+                return false;
+            }
+
 
             const formData = {
                 rut: $('#txtRutDec').val(),
@@ -749,9 +780,9 @@ var appModalDeclarado = new Vue({
                 subestado2: $('select[name="dllSubEstadoCbModalDec2"] option:selected').text(),
             };
 
-            debugger;
+      
             $.SecPostJSON(BASE_URL + "/motor/api/CobranzaPrevisional/guarda-gestion-cotizaciones-no-declaradas", formData, function (respuesta) {
-                debugger;
+              
                 Swal.fire({
                     title: 'Gestion ingresada correctamente!',
                     icon: 'success',
@@ -761,7 +792,7 @@ var appModalDeclarado = new Vue({
                 $("#dllSubEstadoCbModalDec2").val(-1);
 
             }).fail(function (errMsg) {
-                debugger;
+        
                 $.niftyNoty({
                     type: "warning",
                     container: "floating",

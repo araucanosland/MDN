@@ -47,7 +47,7 @@
 <div id="page-content">
     <div class="tab-base">
         <!--Nav Tabs-->
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" id="myTab">
             <li class="active">
                 <a data-toggle="tab" href="#tab-proceso-carga" aria-expanded="true" id="tab_carga" class="tab-principal">CARGA DE NOMINAS</a>
             </li>
@@ -198,7 +198,7 @@
                                 <label for="radio-no-declaradas-nueva-carga">Nueva Carga</label>
                                 <div class="col-lg-12" style="margin-top: -20px; margin-left: 250px;">
                                     <div class="input-group">
-                                        <button id="btn_carga_no_declaradas" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#md-carga-Datos-no-declaradas" data-backdrop="static" data-keyboard="false">Cotizaciones No Declaradas</button>
+                                        <button id="btn_carga_no_declaradas" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#md-carga-Datos-no-declaradas" data-backdrop="static" data-keyboard="false">Cotizaciones Declaradas y No Pagadas</button>
                                     </div>
                                 </div>
 
@@ -814,8 +814,8 @@
                                     <a href="#">
                                         <h4 class="list-group-item-heading"><strong>Gestor: </strong>{{gestion.rut_ejecutivo != undefined && gestion.rut_ejecutivo}}</h4>
                                         <p class="list-group-item-text">
-                                            <strong>Fecha Gestión: </strong>{{gestion.fecha_gestion != undefined && gestion.fecha_gestion.toFechaHoraPrueba()}}, @*<strong>Fecha Compromiso: </strong>
-                                                {{gestion.fechaCompromiso != undefined && gestion.fechaCompromiso !=null ? gestion.fechaCompromiso: '------'}}*@
+                                            <strong>Fecha Gestión: </strong>
+                                              {{gestion.fecha_gestion != undefined && gestion.fecha_gestion.toFechaHoraPrueba()}}, 
                                         </p>
                                         <p class="list-group-item-text">
                                             <strong>Estado: </strong>{{gestion.estado != undefined && gestion.estado != null ? gestion.estado: '------'}}
@@ -904,7 +904,7 @@
         <div class="modal-content" style="border-radius: 6px;">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i class="pci-cross pci-circle"></i></button>
-                <h4 class="modal-title">Cargar Proceso Cotizaciones No Declaradas </h4>
+                <h4 class="modal-title">Cargar Proceso Cotizaciones Declaradas y No Pagadas </h4>
             </div>
             <form id="form_registro_no_declaradas" action="#" method="post">
                 <div class="panel-body">
@@ -954,6 +954,23 @@
 <script>
 
     var carga = {
+        ValidaUsuarioCarga: function () {
+            $("#bdy_datos").html("");
+            $.SecGetJSON(BASE_URL + "/motor/api/CobranzaPrevisional/valida-usuario-carga", { Rut: getCookie("Rut") }, function (respuesta) {
+        
+                if (respuesta == 1) {
+                    
+                    $('#tab_carga').css('display', 'block');
+                   
+                }
+                else {
+                    $('#tab_carga').css('display', 'none');  
+                    $('#myTab a[href="#tab-diferencia-cotiz"]').tab('show');
+                }
+            });
+
+        },          
+
         cargaListaResumen: function (codigo, estado) {
             $("#bdy_datos").html("");
             $.SecGetJSON(BASE_URL + "/motor/api/CobranzaPrevisional/lista-Resumen", { codigo, estado }, function (respuesta) {
@@ -1008,9 +1025,9 @@
             });
         },
         CargaComboSubEstados: function (IdSubPadre) {
-            debugger;
+       
             $.SecGetJSON(BASE_URL + "/motor/api/CobranzaPrevisional/lista-subMenu-2",{ IdSubPadre }, function (datos) {
-                debugger;
+             
                 $("#dllSubEstadoCbModal2").html("");
                 $("#dllSubEstadoCbModal2").append($("<option>").val("-1").html("Seleccione...").data("id", "-1").data("nombre", "Seleccione..."));
                 $.each(datos, function (i, estado) {
@@ -1021,9 +1038,9 @@
             });
         },
         CargaComboSubEstadosImpagas: function (IdSubPadre) {
-            debugger;
+          
             $.SecGetJSON(BASE_URL + "/motor/api/CobranzaPrevisional/lista-subMenu-2", { IdSubPadre }, function (datos) {
-                debugger;
+           
                 $("#dllSubEstadoCbModalImp2").html("");
                 $("#dllSubEstadoCbModalImp2").append($("<option>").val("-1").html("Seleccione...").data("id", "-1").data("nombre", "Seleccione..."));
                 $.each(datos, function (i, estado) {
@@ -1034,13 +1051,13 @@
             });
         },
         CargaComboSubEstadosNoDeclaradas: function (IdSubPadre) {
-            debugger;
+           
             $.SecGetJSON(BASE_URL + "/motor/api/CobranzaPrevisional/lista-subMenu-2", { IdSubPadre }, function (datos) {
                 
                 $("#dllSubEstadoCbModalDec2").html("");
                 $("#dllSubEstadoCbModalDec2").append($("<option>").val("-1").html("Seleccione...").data("id", "-1").data("nombre", "Seleccione..."));
                 $.each(datos, function (i, estado) {
-                    debugger;
+                 
                     $("#dllSubEstadoCbModalDec2").append($("<option>").val(estado.Id).html(estado.Nombre).data("id", estado.Id).data("nombre", estado.Nombre));
                 });
 
@@ -1048,7 +1065,13 @@
         },
     }
 
+    function formatoFecha(value, row, index) {
+       
+        if (value != null) {
+            return value.toFecha();
+        }
 
+    }
 
     //----------------DROP ZONE Diferencia cotizacion
 
@@ -1100,7 +1123,7 @@
                 }
             },
             callback: function (result) {
-                debugger;
+             
                 var tipoProceso = "";
                 if ($('#radio-diferencias-actualizar-carga').prop('checked') == true) {
                     tipoProceso = "Actualizar";
@@ -1177,7 +1200,7 @@
     });
 
     myDropzoneImpagas.on("complete", function (file) {
-        debugger;
+     
         var hoy = new Date();
         var periodo = (hoy.getMonth() + 1).toString().paddingLeft("00") + hoy.getFullYear().toString();
         document.getElementById("overlay").style.display = "none";
@@ -1212,7 +1235,7 @@
                 }
             },
             callback: function (result) {
-                debugger;
+              
                 var tipoProceso = "";
                 if ($('#radio-cot-impagas-actualizar-carga').prop('checked') == true) {
                     tipoProceso = "Actualizar";
@@ -1225,7 +1248,7 @@
                         Token: getCookie("Token"),
                         TipoProceso : tipoProceso
                     }
-                    debugger;
+                  
                     $.SecPostJSON(BASE_URL + "/motor/api/CobranzaPrevisional/proceso-carga-datos-cot-impagas", WebProceso, function (respuesta) {
 
                         $.niftyNoty({
@@ -1286,7 +1309,7 @@
     });
 
     myDropzoneNoDeclaradas.on("complete", function (file) {
-        debugger;
+    
         var hoy = new Date();
         var periodo = (hoy.getMonth() + 1).toString().paddingLeft("00") + hoy.getFullYear().toString();
         document.getElementById("overlay").style.display = "none";
@@ -1321,7 +1344,7 @@
                 }
             },
             callback: function (result) {
-                debugger;
+               
                 var tipoProceso = "";
                 if ($('#radio-no-declaradas-actualizar-carga').prop('checked') == true) {
                     tipoProceso = "Actualizar";
@@ -1334,7 +1357,7 @@
                         Token: getCookie("Token"),
                         TipoProceso: tipoProceso
                     }
-                    debugger;
+                    
                     $.SecPostJSON(BASE_URL + "/motor/api/CobranzaPrevisional/proceso-carga-no-declaradas", WebProceso, function (respuesta) {
 
                         $.niftyNoty({
@@ -1356,7 +1379,7 @@
     });
 
     myDropzoneNoDeclaradas.on("error", function (file, response) {
-        debugger;
+
         document.getElementById("overlay").style.display = "none";
         myDropzoneNoDeclaradas.removeFile(file);
         $('#md-carga-Datos-no-declaradas').modal('hide');
@@ -1381,13 +1404,13 @@
 
     $(function () {
 
-        //$('#radio-diferencias-actualizar-carga').prop('checked', false);
-        //$('#radio-diferencias-nueva-carga').prop('checked', false);
+
+        carga.ValidaUsuarioCarga();
 
 
 
         $('#dllSubEstadoCbModal').on('change', function (event) {
-            debugger;
+            
 
             if ($('#dllSubEstadoCbModal').val() == 103 || $('#dllSubEstadoCbModal').val() == 106) {
                 $('#divSubEstado2').css('display', 'block');
@@ -1401,7 +1424,7 @@
         });
 
         $('#dllSubEstadoCbModalImp').on('change', function (event) {
-            debugger;
+            
 
             if ($('#dllSubEstadoCbModalImp').val() == 103 || $('#dllSubEstadoCbModalImp').val() == 106) {
                 $('#divImpagasSubEstado2').css('display', 'block');
@@ -1416,7 +1439,7 @@
 
 
         $('#dllSubEstadoCbModalDec').on('change', function (event) {
-            debugger;
+            
 
             if ($('#dllSubEstadoCbModalDec').val() == 103 || $('#dllSubEstadoCbModalDec').val() == 106) {
                 $('#divDecSubEstado2').css('display', 'block');
@@ -1458,7 +1481,7 @@
 
 
         $('#md-carga-Datos').on('show.bs.modal', function (event) {
-            debugger;
+   
             if ($('#radio-diferencias-actualizar-carga').prop('checked') == false && $('#radio-diferencias-nueva-carga').prop('checked') == false) {
 
                 $.niftyNoty({
@@ -1533,7 +1556,6 @@
 
         $('#md-carga-Datos-cot-impagas').on('show.bs.modal', function (event) {
 
-            debugger;
             if ($('#radio-cot-impagas-actualizar-carga').prop('checked') == false && $('#radio-cot-impagas-nueva-carga').prop('checked') == false) {
 
                 $.niftyNoty({
@@ -1577,7 +1599,6 @@
 
         $('#md-carga-Datos-no-declaradas').on('show.bs.modal', function (event) {
 
-            debugger;
             if ($('#radio-no-declaradas-actualizar-carga').prop('checked') == false && $('#radio-no-declaradas-nueva-carga').prop('checked') == false) {
 
                 $.niftyNoty({

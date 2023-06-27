@@ -15,6 +15,13 @@ namespace CRM.Controllers
     public class CobranzaPrevisionalController : ApiController
     {
 
+        [HttpGet]
+        [Route("valida-usuario-carga")]
+        public int UsuarioValidoTab(string Rut)
+        {
+            int retorno = CobranzaPrevisionalDataAccess.ValidaUsuarioCarga(Rut);
+            return retorno;
+        }
 
 
         [HttpPost]
@@ -154,7 +161,7 @@ namespace CRM.Controllers
 
                         using (var files = new StreamReader(filePath, System.Text.Encoding.Default, false))
                         {
-                        
+
                             //------------Insertar Datos
                             while ((line = files.ReadLine()) != null)
                             {
@@ -193,11 +200,16 @@ namespace CRM.Controllers
                                     }
                                     string Fallas = "";
 
-                                    if (Rut == "0" || !Rut.All(char.IsDigit))
+                                    if (Rut == "0" || !Rut.All(char.IsDigit) || Rut == "")
                                     {
                                         Fallas = Fallas + "<li>Rut</li>";
                                     }
-                                    
+
+                                    if (Dv == "")
+                                    {
+                                        Fallas = Fallas + "<li>Dv</li>";
+                                    }
+
                                     if (!UltimaCotizacion.All(char.IsDigit))
                                     {
                                         Fallas = Fallas + "<li>Ultima Cotizacion</li>";
@@ -255,6 +267,7 @@ namespace CRM.Controllers
                                     CobPre.AsignacionFamiliar = AsignacionFamiliar;
                                     CobPre.MontoDeclarado = MontoDeclarado;
                                     CobPre.TotalTrabajadores = TotalTrabajadores;
+                                    CobPre.EstadoPlanilla = "";
                                     CobPre.Estado = "En Proceso";
 
                                     CobPrevisional.Add(CobPre);
@@ -396,19 +409,23 @@ namespace CRM.Controllers
 
                             while ((line = files.ReadLine()) != null)
                             {
+                                if (i == 1400)
+                                {
+
+                                }
 
                                 if (i == 0)
                                 {
                                     int validaColumnas = line.Split(';').Length;
                                     if (validaColumnas != 17)
                                     {
-                                        return BadRequest("El archivo no corresponde a Cotizaciones No Pagadas");
+                                        return BadRequest("El archivo no corresponde a Cotizaciones Declaradas y No Pagadas");
                                     }
 
                                     if (line.Split(';')[0] != "OFIC" && line.Split(';')[1] != "RUT" && line.Split(';')[2] != "DV" && line.Split(';')[3] != "RAZON SOCIAL" && line.Split(';')[4] != "SUC" && line.Split(';')[5] != "N° CARATULA" && line.Split(';')[6] != "CODIGO BARRA" && line.Split(';')[7] != "PERIODO" && line.Split(';')[8] != "FECHA" && line.Split(';')[9] != "RENTA FONASA" && line.Split(';')[10] != "RENTA ISAPRE" && line.Split(';')[11] != "TOTAL RENTAS" && line.Split(';')[12] != "COTIZ." && line.Split(';')[13] != "ASIG. FAMILIAR" && line.Split(';')[14] != "MONTO DECLARADO" && line.Split(';')[15] != "TOT. TRABAJ." && line.Split(';')[16] != "ESTADO")
                                     {
 
-                                        return BadRequest("El archivo no corresponde a Cotizaciones No Pagadas");
+                                        return BadRequest("El archivo no corresponde a Cotizaciones Declaradas y No Pagadas");
                                     }
 
                                 }
@@ -439,10 +456,16 @@ namespace CRM.Controllers
                                     }
                                     string Fallas = "";
 
-                                    if (Rut == "0" || !Rut.All(char.IsDigit))
+                                    if (Rut == "0" || !Rut.All(char.IsDigit) || Rut == "")
                                     {
                                         Fallas = Fallas + "<li>Rut</li>";
                                     }
+
+                                    if (Dv == "")
+                                    {
+                                        Fallas = Fallas + "<li>Dv</li>";
+                                    }
+
 
                                     if (!Caratula.All(char.IsDigit))
                                     {
@@ -456,10 +479,20 @@ namespace CRM.Controllers
                                     {
                                         Fallas = Fallas + "<li>Periodo</li>";
                                     }
-                                    //if (!Fecha.Replace("/", "").All(char.IsDigit))
-                                    //{
-                                    //    Fallas = Fallas + "<li>Fecha</li>";
-                                    //}
+
+                                    DateTime FechaValidada = DateTime.Parse(Fecha);
+
+                                    if (!Fecha.Replace("-", "").All(char.IsDigit))
+                                    {
+                                        Fallas = Fallas + "<li>Fecha debe de tener Formato dd-mm-aaaa</li>";
+                                    }
+
+                                    if (FechaValidada.Year.ToString() == "1")
+                                    {
+                                        Fallas = Fallas + "<li>Fecha</li>";
+                                    }
+
+
                                     if (!RentaFonasa.Replace(".", "").Replace("-", "").All(char.IsDigit))
                                     {
                                         Fallas = Fallas + "<li>Renta Fonasa</li>";
@@ -535,7 +568,7 @@ namespace CRM.Controllers
                                     CobPre.AsignacionFamiliar = AsignacionFamiliar;
                                     CobPre.MontoDeclarado = MontoDeclarado;
                                     CobPre.TotalTrabajadores = TotalTrabajadores.Replace(".", "");
-                                    CobPre.EstadoPlanilla = Estado;
+                                    CobPre.EstadoPlanilla = Estado.Trim();
                                     CobPre.Estado = "En Proceso";
 
                                     CobPrevisional.Add(CobPre);
@@ -709,17 +742,21 @@ namespace CRM.Controllers
                                     }
                                     string Fallas = "";
 
-                                    if (Rut == "0" || !Rut.All(char.IsDigit))
+                                    if (Rut == "0" || !Rut.All(char.IsDigit) || Rut == "")
                                     {
                                         Fallas = Fallas + "<li>Rut</li>";
                                     }
 
+                                    if (Dv == "")
+                                    {
+                                        Fallas = Fallas + "<li>Dv</li>";
+                                    }
 
                                     if (!Oficina.All(char.IsDigit))
                                     {
                                         Fallas = Fallas + "<li>Oficina</li>";
                                     }
-                                   
+
                                     if (!Sucursal.All(char.IsDigit))
                                     {
                                         Fallas = Fallas + "<li>Sucursal</li>";
@@ -810,6 +847,7 @@ namespace CRM.Controllers
                                     CobPre.AsignacionFamiliar = AsignacionFamiliar;
                                     CobPre.MontoDeclarado = MontoDeclarado;
                                     CobPre.TotalTrabajadores = TotalTrabajadores;
+                                    CobPre.EstadoPlanilla = "";
                                     CobPre.Estado = "En Proceso";
 
                                     CobPrevisional.Add(CobPre);

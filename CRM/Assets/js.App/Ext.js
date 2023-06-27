@@ -255,13 +255,18 @@ String.prototype.toFechaHora = function () {
 }
 
 String.prototype.toFechaHoraPrueba = function () {
+    debugger;
     var x = this.split("T")
     var fec = x[0]
     var hor = x[1]
     var x = hor.split(".")
 
+    var valida = hor.split(":")
+    var horaActual = valida[0] - 4;
+    var formatoHora = horaActual + ":"+valida[1]+ ":" + valida[2];
     var y = fec.split("-")
-    return y[2] + '-' + y[1] + '-' + y[0] + '  ' + "( " + x[0] + " Hrs. " + ")";
+    var horaFinal = formatoHora.split(".");
+    return y[2] + '-' + y[1] + '-' + y[0] + '  ' + "( " + horaFinal[0] + " Hrs. " + ")";
 }
 
 String.prototype.toFecha = function () {
